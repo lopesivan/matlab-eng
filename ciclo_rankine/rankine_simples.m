@@ -55,11 +55,11 @@ fprintf('\n--------------------------------------------------\n');
 fprintf('\nadmitindo que o liquido seja incompressivel.\n\n');
 
 % calculo do trabalho da bomba, em kJ/kg
-wb = v1*(palta - pbaixa);
+wb = v1*(palta*1000 - pbaixa*1000);
 % h2
 h2 = h1 + wb;
 
-fprintf('trabalho da bomba: %d\n', wb);
+fprintf('wb: %d\n', wb);
 fprintf('h2: %d\n', h2);
 
 fprintf('\n--------------------------------------------------\n');
