@@ -83,7 +83,7 @@ fprintf('Ciclo de Rankine com reaquecimento\n\n');
 fprintf('trabalho da turbina de alta potencia = %0.5f kJ/kg\n', wta);
 fprintf('trabalho de turbina de baixa potencia = %0.5f kJ/kg\n', wtb);
 fprintf('trabalho total da turbina = %0.5f kJ/kg\n', wt);
-fprintf('trabalho da bomba = %0.5f kJ/kg', wb);
+fprintf('trabalho da bomba = %0.5f kJ/kg\n', wb);
 fprintf('trabalho da bomba = %0.5f kJ/kg\n', wb);
 fprintf('calor da caldeira = %0.5f kJ/kg\n', qh);
 fprintf('rendimento = %0.5f %%\n', nrp);
