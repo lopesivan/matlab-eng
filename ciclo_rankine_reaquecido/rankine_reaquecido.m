@@ -6,7 +6,7 @@
 % t3 - pressão de entrada na turbina (ponto 3)
 % p4 - pressão expandida no primeiro processo (ponto 4)
 % t5 - temperatura na saida do aquecimento (ponto 5)
-% p6 - pressão do condesador (ponto 6)
+% p6 - pressão do condensador (ponto 6)
 %
 % exemplo 9.3, Fundamentos da Termodinâmica Clássica - Gordon, Richard...
 % 4ª edição
@@ -78,7 +78,7 @@ nrp = nr*100;
 
 fprintf('--------------------------------------------------\n');
 
-fprintf('ciclo de rankine\n');
+fprintf('Ciclo de Rankine com reaquecimento\n\n');
 
 fprintf('trabalho da turbina de alta potencia = %0.5f kJ/kg\n', wta);
 fprintf('trabalho de turbina de baixa potencia = %0.5f kJ/kg\n', wtb);
