@@ -4,12 +4,23 @@
 % entrada:
 % pa - pressão alta  (saida da caldeira)
 % pb - pressão baixa (condensador)
+%
+% Fundamentos da Termodinâmica Clássica - Gordon, Richard... 4ª edição
+%
+% Enunciado do exemplo 9.1:
+% Determine o rendimento de um ciclo de Rankine que utiliza água como
+% fluido de trabalho e no qual a pressão no condensador é iqual a 10kPa. A
+% pressão na caldeira é de 2MPa. O vapor deixa a caldeira como vapor
+% saturado.
+%
+% exemplo:
+% - rankine(2, 0.01)
 function saida = rankine(pa, pb)
 
 if nargin ~= 2, saida = NaN; return, end
 
 %% conversão MPa -> bar
-pa_bar = pa*10;
+pa_bar = pa*10; 
 pb_bar = pb*10;
 %% liquido saturado
 h1 = XSteam('hL_p', pb_bar);     % entalpia
@@ -46,4 +57,4 @@ fprintf('rendimento = %0.5f %%\n', nrp);
 fprintf('--------------------------------------------------\n');
 
 %% saida
-saida = nr;
+saida = nr;                      % rendimento
