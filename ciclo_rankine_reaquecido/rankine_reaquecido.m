@@ -2,11 +2,11 @@
 % Felipe Bandeira
 %
 % entrada:
-% p3 - alta pressão de entrada na turbina (ponto 3)
-% t3 - pressão de entrada na turbina (ponto 3)
-% p4 - pressão expandida no primeiro processo (ponto 4)
-% t5 - temperatura na saida do aquecimento (ponto 5)
-% p6 - pressão do condensador (ponto 6)
+% p3(MPa) - alta pressão de entrada na turbina (ponto 3)
+% t3(ºC)  - pressão de entrada na turbina (ponto 3)
+% p4(MPa) - pressão expandida no primeiro processo (ponto 4)
+% t5(ºC)  - temperatura na saida do aquecimento (ponto 5)
+% p6(MPa) - pressão do condensador (ponto 6)
 %
 % exemplo 9.3, Fundamentos da Termodinâmica Clássica - Gordon, Richard...
 % 4ª edição
@@ -83,7 +83,6 @@ fprintf('Ciclo de Rankine com reaquecimento\n\n');
 fprintf('trabalho da turbina de alta potencia = %0.5f kJ/kg\n', wta);
 fprintf('trabalho de turbina de baixa potencia = %0.5f kJ/kg\n', wtb);
 fprintf('trabalho total da turbina = %0.5f kJ/kg\n', wt);
-fprintf('trabalho da bomba = %0.5f kJ/kg\n', wb);
 fprintf('trabalho da bomba = %0.5f kJ/kg\n', wb);
 fprintf('calor da caldeira = %0.5f kJ/kg\n', qh);
 fprintf('rendimento = %0.5f %%\n', nrp);
