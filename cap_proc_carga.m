@@ -20,7 +20,7 @@ por = 0.25;
 while ind < 4
    v1 = f(t1);
    % verifica qual o tempo em que a tensão atigem n%
-   if v1 > vs*por
+   if v1 >= vs*por
        tp(ind) = t1;
        ind = ind + 1;    % muda o indice
        por = por + 0.25; % aumenta a porcentagem em passos de 25%
