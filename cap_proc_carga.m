@@ -1,5 +1,13 @@
-%Processo de carregamento do capacitor
+% Processo de carregamento de um capacitor
 % Felipe Bandeira
+%
+%      R
+% ----/\/\----
+% |          |
+% + VS      --- C
+% -         ---
+% |          |
+% ------------
 %
 % Entrada:
 % t = tempo (segundos)
@@ -15,7 +23,7 @@ function saida = cap_proc_carga(t, vs, res, cap)
 f = @(t) vs*(1-exp(-t/(res*cap)));
 
 t1 = 0;
-ind = 1;          % indice para o vetor com os tempo
+ind = 1;          % indice para o vetor com os tempos
 por = 0.25;
 tp = zeros(1, 3); % otimização
 while ind < 4
@@ -29,12 +37,12 @@ while ind < 4
    t1 = t1 + 0.001;      % aumenta o tempo em passo de 1ms
 end
 
-% tensão em um determinado tempo
+% tensão em um determinado instante
 saida.v = f(t);       
 
-% função em função apenas do tempo
+% f em função apenas do tempo
 saida.f = f;    
 
-saida.t25 = tp(1); % tempo quando a tensão é 25% do total
-saida.t50 = tp(2); % tempo quando a tensão é 50% do total
-saida.t90 = tp(3); % tempo quando a tensão é 75% do total
+saida.t25 = tp(1); % tempo quando a tensão é 25% do total(vs)
+saida.t50 = tp(2); % tempo quando a tensão é 50% do total(vs)
+saida.t90 = tp(3); % tempo quando a tensão é 75% do total(vs)
