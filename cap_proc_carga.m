@@ -29,7 +29,7 @@ while ind < 4
 end
 
 % tensão em um determinado tempo
-saida.v = vs*(1-exp(-t/(res*cap)));       
+saida.v = f(t);       
 
 % função em função apenas do tempo
 saida.f = f;    
