@@ -2,7 +2,7 @@
 % Felipe Bandeira
 %
 % Entrada:
-% t = tempo (segundos)
+% t = tempo (Segundos)
 % io = corrente inicial (Amperes)
 % res = resistência vista pelo indutor (Ohms)
 % ind = indutância (Henry)

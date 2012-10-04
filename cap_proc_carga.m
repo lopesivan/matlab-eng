@@ -22,27 +22,19 @@ function saida = cap_proc_carga(t, vs, res, cap)
 
 f = @(t) vs*(1-exp(-t/(res*cap)));
 
-t1 = 0;
-ind = 1;          % indice para o vetor com os tempos
-por = 0.25;
-tp = zeros(1, 3); % otimização
-while ind < 4
-   v1 = f(t1);
-   % verifica qual o tempo em que a tensão atigem n%
-   if v1 >= vs*por
-       tp(ind) = t1;
-       ind = ind + 1;    % muda o indice
-       por = por + 0.25; % aumenta a porcentagem em passos de 25%
-   end
-   t1 = t1 + 0.001;      % aumenta o tempo em passo de 1ms
-end
+%% Busca as porcentagens em determinados tempos
 
-% tensão em um determinado instante
-saida.v = f(t);       
+f25 = @(t) vs*(1-exp(-t/(res*cap))) - vs*0.25;
+f50 = @(t) vs*(1-exp(-t/(res*cap))) - vs*0.50;
+f95 = @(t) vs*(1-exp(-t/(res*cap))) - vs*0.95;
 
-% f em função apenas do tempo
-saida.f = f;    
+t25 = fzero(f25, 0);
+t50 = fzero(f50, 0);
+t95 = fzero(f95, 0);
+%% Atualiza a saida
+saida.v = f(t);  % tensão em um determinado instante
+saida.f = f;     % f em função apenas do tempo
 
-saida.t25 = tp(1); % tempo quando a tensão é 25% do total(vs)
-saida.t50 = tp(2); % tempo quando a tensão é 50% do total(vs)
-saida.t90 = tp(3); % tempo quando a tensão é 75% do total(vs)
+saida.t25 = t25; % tempo quando a tensão esta 25% do total(vs)
+saida.t50 = t50; % tempo quando a tensão esta 50% do total(vs)
+saida.t95 = t95; % tempo quando a tensão esta 95% do total(vs)
