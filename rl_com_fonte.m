@@ -9,6 +9,7 @@
 % l = indutância (Henrys)
 
 function saida = rl_com_fonte(t, io, vs, r, l)
+
 % para t > 0
 f = @(t) (vs/r)+(io-(vs/r))*exp(-t/(l/r));
 
