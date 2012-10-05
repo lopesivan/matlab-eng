@@ -1,3 +1,13 @@
+% Circuito RL com fonte
+% Felipe Bandeira
+%
+% Entrada:
+% t = tempo (Segundos)
+% io = corrente inicial (Amperes)
+% vs = tensão de alimentação (Volts)
+% r = resistência vista por L (Ohms)
+% l = indutância (Henrys)
+
 function saida = rl_com_fonte(t, io, vs, r, l)
 % para t > 0
 f = @(t) (vs/r)+(io-(vs/r))*exp(-t/(l/r));
