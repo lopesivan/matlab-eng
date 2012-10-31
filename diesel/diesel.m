@@ -1,10 +1,28 @@
+% Ciclo Diesel
+% Felipe Bandeira
+%
+% Entrada:
+% p1(MPa) - pressão no processo de compressão
+% t1(ºC) - temperatura no processo de compressão
+% qh(kJ/kg) - calor transferido
+% r - relação de compressão
+%
+% Exemplo 9.12
+% Um ciclo-padrão de ar Diesel apresenta relação de compressão iqual a 18 e
+% o calor transferido ao fluido de trabalho, por ciclo, é 1800 kJ/kg. 
+% Sabendo que no inicio do processo de compressão, a pressão é iqual a 
+% 0.1 MPa e a temperatura é de 15ºC, determine:
+% 1. a pressão e temperatura em cada ponto do ciclo
+% 2. o rendimento térmico
+% 3. a pressão média efetiva
+
 function saida = diesel(p1, t1, qh, r)
 
 % constantes tabeladas
 k = 1.4;
 Rg = .287;
 cp = 1.0035;
-cv = .7165
+cv = .7165;
 
 % conversão para Kelvin
 t1 = t1+273.15;
