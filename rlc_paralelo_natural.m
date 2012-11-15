@@ -1,4 +1,4 @@
-% Circuito RLC série, resposta natural
+% Circuito RLC paralelo, resposta natural
 % Felipe Bandeira
 % 15/nov/2012, Fortaleza-CE
 %
@@ -10,23 +10,16 @@
 % i1 - 2ª condição inicial para a equação i'(t)
 %
 % Saida:
-% ei - equação da corrente no loop
+% ei - equação da tensão sobre os componentes
 % alfa - coeficiente de amortecimento
 % w0 - frequência de ressonância
 % wd - frequência amortecida
 % 
-% Exemplos:
-% caso superamortecida:
-% - rlc_serie_natural(30, 3, 1/27, 0, -16/3, 1)
-% caso criticamente amortecida:
-% - rlc_serie_natural(100, 2.5, 1e-3, 0, -9.6, 1)
-% caso subamortecida:
-% - rlc_serie_natural(1, 1, 1, 1, 1, 1)
 
-function saida = rlc_serie_natural(R, L, C, i0, i1, DEBUG)
+function saida = rlc_paralelo_natural(R, L, C, i0, i1, DEBUG)
 
 % coeficiente de amortecimento
-alfa = R/(2*L);
+alfa = 1/(2*R*C)
 % frequência de ressonância
 w0 = 1/sqrt(L*C);
 
