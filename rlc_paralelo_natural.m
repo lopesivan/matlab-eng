@@ -19,7 +19,7 @@
 function saida = rlc_paralelo_natural(R, L, C, i0, i1, DEBUG)
 
 % coeficiente de amortecimento
-alfa = 1/(2*R*C)
+alfa = 1/(2*R*C);
 % frequência de ressonância
 w0 = 1/sqrt(L*C);
 
@@ -35,12 +35,13 @@ syms t A1 A2;
 % caso superamortecida
 if alfa > w0
    
-    fprintf('caso superamortecida\n');
-    
+    disp('caso superamortecida');
+   
     s1 = -alfa+sqrt(alfa^2-w0^2);
     s2 = -alfa-sqrt(alfa^2-w0^2);
     
-    f1 = (A1*exp(s1*t)+A2*exp(s2*t))-i0;
+    f1 = (A1*exp(s1*t)+A2*exp(s2*t))-i0;  
+    
     % encontra a derivada da função principal e substitui t por 0
     f2 = subs(diff(f1, t)-i1, t, 0);
     f1 = subs(f1, t, 0);
@@ -50,6 +51,10 @@ if alfa > w0
     f = simplify((sol.A1*exp(s1*t)+sol.A2*exp(s2*t)));
     
     if DEBUG == 1
+        disp('s1 e s2:');
+        disp(s1);
+        disp(s2);
+        
         disp('equações:');
         disp(f1);
         disp(f2);
@@ -92,6 +97,9 @@ else
     disp('caso subamortecida');
     
     wd = sqrt(w0^2-alfa^2); % frequência amortecida
+    
+    disp('wd:');
+    disp(wd);
     
     f1 = (exp(-alfa*t)*(A1*cos(wd*t)+A2*sin(wd*t)))-i0;
     f2 = subs(diff(f1, t)-i1, t, 0);
