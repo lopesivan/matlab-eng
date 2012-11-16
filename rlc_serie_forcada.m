@@ -1,38 +1,12 @@
-% Circuito RLC série, resposta natural
-% Felipe Bandeira
-% 15/nov/2012, Fortaleza-CE
-%
 % Entrada:
 % R - resistência (ohm)
 % L - indutância (henry)
 % C - capacitância (faraday)
+% rf - resposta forçada (apenas constantes)
 % i0 - condição inicial para a equação i(t)
 % i1 - 2ª condição inicial para a equação i'(t)
-%
-% Saida:
-% ei - equação da corrente no loop
-% alfa - coeficiente de amortecimento
-% w0 - frequência de ressonância
-% wd - frequência amortecida
-% 
-% Exemplos:
-% caso superamortecida:
-% - rlc_serie_natural(30, 3, 1/27, 0, -16/3, 1)
-% caso criticamente amortecida:
-% - rlc_serie_natural(100, 2.5, 1e-3, 0, -9.6, 1)
-% caso subamortecida:
-% - rlc_serie_natural(1, 1, 1, 1, 1, 1)
 
-function saida = rlc_serie_natural(R, L, C, i0, i1, DEBUG)
-
-if nargin<2
-    disp('testando os 3 casos');
-    rlc_serie_natural(30, 3, 1/27, 0, -16/3, 1); 
-    rlc_serie_natural(100, 2.5, 1e-3, 0, -9.6, 1);
-    rlc_serie_natural(1, 1, 1, 1, 1, 1);
-    disp('fim do teste');
-    return
-end
+function saida = rlc_serie_forcada(R, L, C, rf,  i0, i1, DEBUG)
 
 % coeficiente de amortecimento
 alfa = R/(2*L);
@@ -60,14 +34,14 @@ if alfa > w0
     disp(s1);
     disp(s2);
     
-    f1 = (A1*exp(s1*t)+A2*exp(s2*t))-i0;
+    f1 = rf+(A1*exp(s1*t)+A2*exp(s2*t))-i0;
     % encontra a derivada da função principal e substitui t por 0
     f2 = subs(diff(f1, t)-i1, t, 0);
     f1 = subs(f1, t, 0);
     % resolve para A1, A2
     sol = solve(f1, f2, A1, A2);
     % tenta simplificar a equação
-    f = simplify((sol.A1*exp(s1*t)+sol.A2*exp(s2*t)));
+    f = simplify(rf+(sol.A1*exp(s1*t)+sol.A2*exp(s2*t)));
     
     if DEBUG == 1
         disp('equações:');
@@ -87,11 +61,11 @@ elseif alfa == w0
 
     fprintf('caso criticamente amortecida\n');
     
-    f1 = (A2+A1*t)*exp(-alfa*t)-i0;
+    f1 = rf+(A2+A1*t)*exp(-alfa*t)-i0;
     f2 = subs(diff(f1, t)-i1, t, 0);
     f1 = subs(f1, t, 0); 
     sol = solve(f1, f2, A1, A2);
-    f = simplify((sol.A2+sol.A1*t)*exp(-alfa*t));
+    f = simplify(rf+(sol.A2+sol.A1*t)*exp(-alfa*t));
     
     if DEBUG == 1
         disp('equações:');
@@ -116,11 +90,11 @@ else
     disp('wd:');
     disp(wd);
     
-    f1 = (exp(-alfa*t)*(A1*cos(wd*t)+A2*sin(wd*t)))-i0;
+    f1 = rf+(exp(-alfa*t)*(A1*cos(wd*t)+A2*sin(wd*t)))-i0;
     f2 = subs(diff(f1, t)-i1, t, 0);
     f1 = subs(f1, t, 0);
     sol = solve(f1, f2, A1, A2);
-    f = simplify(exp(-alfa*t)*(sol.A1*cos(wd*t)+sol.A2*sin(wd*t)));
+    f = simplify(rf+exp(-alfa*t)*(sol.A1*cos(wd*t)+sol.A2*sin(wd*t)));
     
     if DEBUG == 1    
         disp('equações:');
