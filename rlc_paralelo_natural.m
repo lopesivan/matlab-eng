@@ -35,7 +35,9 @@ syms t A1 A2;
 % caso superamortecida
 if alfa > w0
    
+    disp('--------------------');
     disp('caso superamortecida');
+    disp('--------------------');
    
     s1 = -alfa+sqrt(alfa^2-w0^2);
     s2 = -alfa-sqrt(alfa^2-w0^2);
@@ -70,7 +72,9 @@ if alfa > w0
 %caso criticamente amortecida    
 elseif alfa == w0
 
-    fprintf('caso criticamente amortecida\n');
+    disp('----------------------------');
+    disp('caso criticamente amortecida');
+    disp('----------------------------');
     
     f1 = (A2+A1*t)*exp(-alfa*t)-i0;
     f2 = subs(diff(f1, t)-i1, t, 0);
@@ -94,12 +98,11 @@ elseif alfa == w0
 % caso subamortecida    
 else
 
+    disp('------------------');
     disp('caso subamortecida');
+    disp('------------------');
     
     wd = sqrt(w0^2-alfa^2); % frequência amortecida
-    
-    disp('wd:');
-    disp(wd);
     
     f1 = (exp(-alfa*t)*(A1*cos(wd*t)+A2*sin(wd*t)))-i0;
     f2 = subs(diff(f1, t)-i1, t, 0);
@@ -111,6 +114,9 @@ else
         disp('equações:');
         disp(f1);
         disp(f2);
+
+        disp('wd:');
+        disp(wd);
         
         disp('constantes:');
         disp(sol.A1);
@@ -124,6 +130,8 @@ else
 end
 
 saida.f = f;
+saida.alfa = alfa;
+saida.w0 = w0;
 
 end
     
