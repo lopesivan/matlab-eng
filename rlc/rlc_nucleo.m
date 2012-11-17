@@ -13,6 +13,13 @@ end
 w0 = 1/sqrt(L*C);
 wd = 0;
 
+if DEBUG == 1
+    disp('alfa:');
+    disp(alfa);
+    disp('w0:');
+    disp(w0);
+end
+
 s2 = 0;
 s1 = 0;
 
