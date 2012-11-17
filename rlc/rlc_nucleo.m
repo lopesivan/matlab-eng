@@ -1,6 +1,21 @@
+% Núcleo para todos os calculos envolvendo RLC em série ou paralelo.
+% Felipe Bandeira, 17/11/2012. Fortaleza-CE
+%
+% entrada:
+% R - resistência
+% L - indutância
+% C - capacitância
+% rf - resposta forçada, apenas constantes
+% f0 - condição inicial(t=0) para f(t)
+% f1 - segunda condição inicial para f'(t)
+% serie - informa se o circuito é série ou paralelo
+% DEBUG - no modo debug são mostrados todos os passos importantes
+%
 function retorno = rlc_nucleo(R, L, C, rf, f0, f1, serie, DEBUG)
 
 % -------------------------------------------------------------------------
+
+% cálcula o coeficiente de amortecimento
 if serie == 1
     alfa = R/(2*L);
 elseif serie == 2
@@ -10,7 +25,10 @@ else
     return;
 end
 
+% frequência de ressonância
 w0 = 1/sqrt(L*C);
+
+% frquência amortecida
 wd = 0;
 
 if DEBUG == 1
@@ -40,8 +58,10 @@ if alfa > w0
     
     fn = A1*exp(s1*t)+A2*exp(s2*t);
     
+    % encontra os valores das constantes A1 e A2
     sol = solve_eq_dif(fn, f0, f1, rf, DEBUG);
     
+    % tenta simplificar a equação
     f = simplify(rf+(sol.A1*exp(s1*t)+sol.A2*exp(s2*t)));
     
     if DEBUG == 1        
