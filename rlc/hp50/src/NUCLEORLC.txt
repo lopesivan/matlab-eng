@@ -1,0 +1,19 @@
+%%HP: T(3)A(R)F(.);
+\<< \-> R L C RF F0 F1 S
+  \<< { A W0 WD F FF } PURGE
+    IF S 1. ==
+    THEN R 2. L * / EVAL 'A' STO
+    ELSE 1. 2. R C * * / 'A' EVAL STO
+    END 1. L C * \v/ / 'W0' STO
+    IF A W0 >
+    THEN "superamortecida" '-A+\v/(A^2.-W0^2.)' EVAL 'S1' STO '-A-\v/(A^2.-W0^2.)' EVAL 'S2' STO 'A1*EXP(S1*t)+A2*EXP(S2*t)' 'F' STO
+    END
+    IF A W0 ==
+    THEN "crticamente
+amortecida" '(A2+A1*t)*EXP(-A*t)' 'F' STO
+    END
+    IF A W0 <
+    THEN "subamortecida" W0 2. ^ A 2. ^ - \v/ 'WD' STO 'EXP(-A*t)*(A1*COS(WD*t)+A2*SIN(WD*t))' 'F' STO
+    END F EVAL F0 - RF + DUP t \.d t 0. = SUBST F1 - EVAL SWAP t 0. = SUBST EVAL 2. \->LIST SIS2 F SWAP SUBST SWAP SUBST EVAL RF + 'FF' STO FF R L C RF F0 F1 S 7. \->LIST 'ENT' STO
+  \>>
+\>>

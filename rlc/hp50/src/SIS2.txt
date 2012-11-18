@@ -1,0 +1,17 @@
+%%HP: T(3)A(R)F(.);
+\<< DUP TYPE 'J' STO
+  IF J 5. ==
+  THEN DUP SIZE EVAL 'D' STO OBJ\-> DROP
+  ELSE DEPTH 'D' STO
+  END
+  IF D 1. \<=
+  THEN "erro: sem elementos" MSGBOX { D J } PURGE KILL
+  END D COL\-> DUP OBJ\-> EVAL \->LIST 'eq' STO LNAME DUP SIZE EVAL 'M' STO
+  IF D M \=/
+  THEN "erro: incoerencia na quantidade
+Eq:" D + "
+Var:" M + + MSGBOX { J D M } PURGE DROP2 KILL
+  END LINSOLVE SWAP DROP SWAP DROP OBJ\-> DROP DEPTH 1. SWAP
+  FOR I EQ\-> EVAL \->NUM = D ROLL
+  NEXT D \->LIST 'sol' STO sol OBJ\-> DROP { M D J } PURGE
+\>>
