@@ -11,7 +11,23 @@
 % serie - informa se o circuito é série ou paralelo
 % DEBUG - no modo debug são mostrados todos os passos importantes
 %
+% saida:
+% retorno.fn - função final
+% constantes - retorno.A1
+%              retorno.A2
+%              retorno.s1
+%              retorno.s2
+%              retorno.alfa
+%              retorno.w0
+%              retorno.wd
+% tipo de oscilação - retorno.tipo
+%
 function retorno = rlc_nucleo(R, L, C, rf, f0, f1, serie, DEBUG)
+
+if nargin ~= 8
+    disp('erro: sem argumentos validos');
+    return;
+end
 
 % -------------------------------------------------------------------------
 
@@ -21,14 +37,14 @@ if serie == 1
 elseif serie == 2
     alfa = 1/(2*R*C);
 else
-    disp('padrão rlc desconhecido');
+    disp('erro: padrão rlc desconhecido');
     return;
 end
 
 % frequência de ressonância
 w0 = 1/sqrt(L*C);
 
-% frquência amortecida
+% frequência amortecida
 wd = 0;
 
 if DEBUG == 1
