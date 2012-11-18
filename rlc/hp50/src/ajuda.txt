@@ -1,0 +1,39 @@
+Felipe Bandeira, 18/11/2012.
+Fortaleza-CE
+
+---------------------------------------------------------------------------
+
+NUCLEORLC
+
+encontra a equacao final para circuitos serie ou paralelo, RLC.
+
+entrada:
+R - resistencia
+L - indutancia
+C - capacitancia
+RF - resposta forcada
+F0 - condicao inicial
+F1 - condicao inicial
+S - serie(S==1), paralelo(S~=1)
+
+variaveis criadas:
+A = alfa
+W0 = ressonancia
+Wd = amortecimento
+S1 = raize para o caso superamortecido
+S2 = raize para o caso superamortecido
+F = equacao caracteristica
+FF = equacao final
+
+---------------------------------------------------------------------------
+
+SIS2
+
+LINSOLVE otimizado.
+
+** BUG em algums sistemas em ponto flutuante.
+
+entrada:
+- lista com as funcoes
+- funcoes colocadas na pilha, quantidade definida pelo numero de elementos
+pilha.
