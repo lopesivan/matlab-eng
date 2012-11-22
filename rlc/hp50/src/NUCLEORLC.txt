@@ -9,7 +9,7 @@
     THEN "superamortecida" '-A+\v/(A^2.-W0^2.)' EVAL 'S1' STO '-A-\v/(A^2.-W0^2.)' EVAL 'S2' STO 'A1*EXP(S1*t)+A2*EXP(S2*t)' 'F' STO
     END
     IF A W0 ==
-    THEN "crticamente
+    THEN "criticamente
 amortecida" '(A2+A1*t)*EXP(-A*t)' 'F' STO
     END
     IF A W0 <
