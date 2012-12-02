@@ -11,7 +11,7 @@
 % r - modulo
 % theta - ângulo em graus
 
-function saida = complx_ret_polar(x, y)
+function saida = complex_ret_polar(x, y)
 
 if nargin ~= 2
     disp('erro: argumentos');
