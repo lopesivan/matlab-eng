@@ -1,4 +1,5 @@
 Resolução de circuitos RLC, série ou paralelo.
+*CORRENTE CONTINUA*
 
 *** em desenvolvimento
 
