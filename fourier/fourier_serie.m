@@ -16,6 +16,7 @@
 % f = função de Fourier
 %
 % Exemplo:
+%
 % fourier_serie_2c(T, [-1 1], [0 1 2 ], 10)
 %                   
 %   ^ f(t)
