@@ -10,7 +10,7 @@
 % r2 - modulo do número 2
 % t2 - ângulo do número 2
 %
-% saida:
+% saída:
 % r - modulo final
 % theta - ângulo final
 

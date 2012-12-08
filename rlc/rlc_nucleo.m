@@ -11,7 +11,7 @@
 % serie - informa se o circuito é série ou paralelo
 % DEBUG - no modo debug são mostrados todos os passos importantes
 %
-% saida:
+% saída:
 % retorno.fn - função final
 % constantes - retorno.A1
 %              retorno.A2

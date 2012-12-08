@@ -8,7 +8,7 @@
 % ts = tempo inicial e final do evento ft
 % N = número de interação do somatório
 % 
-% Saida:
+% Saída:
 % a0 = componente DC
 % an = enésima constante de Fourier
 % bn = enésima constante de Fourier
@@ -17,7 +17,7 @@
 %
 % Exemplo:
 %
-% fourier_serie_2c(T, [-1 1], [0 1 2 ], 10)
+% fourier_serie(2, [-1 1], [0 1 2 ], 10)
 %                   
 %   ^ f(t)
 %   |
@@ -73,6 +73,8 @@ sf = a0 + symsum(an*cos(n*w0*t)+bn*sin(n*w0*t), n, 1, N);
 
 % cria uma função para  manipulação
 f = @(a) subs(sf, t, a);
+
+% buscando as hamônicas
 
 ezplot(f, [0, 10*T]);
 

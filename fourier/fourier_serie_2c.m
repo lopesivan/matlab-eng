@@ -7,7 +7,7 @@
 % ts = tempo inicial e final do evento ft
 % N = número de interação do somatório
 % 
-% Saida:
+% Saída:
 % a0 = componente DC
 % an = enésima constante de Fourier
 % bn = enésima constante de Fourier
@@ -28,16 +28,22 @@
 
 function subterfugio = fourier_serie_2c(T, ft, ts, N)
 
-if length(ft) > 2
-    disp('erro: só em permitido 2 elementos para ft');
+if length(ts) <= 2
+    disp('erro: numero de pontos no tempo menor que 2');
     subterfugio = NaN;
     return;
 end
 
 if length(ts) > 3
-    disp('erro: só em permitido 3 elementos para ts');
+    disp('erro: numero de pontos no tempo superior a 2');
     subterfugio = NaN;
     return;
+end
+
+if length(ft) > 2
+    disp('erro: numero de amostras superior a 2');
+    subterfugio = NaN;
+    return
 end
 
 % frequência fundamental

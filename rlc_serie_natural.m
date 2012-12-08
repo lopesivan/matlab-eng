@@ -9,7 +9,7 @@
 % i0 - condição inicial para a equação i(t)
 % i1 - 2ª condição inicial para a equação i'(t)
 %
-% Saida:
+% saída:
 % ei - equação da corrente no loop
 % alfa - coeficiente de amortecimento
 % w0 - frequência de ressonância

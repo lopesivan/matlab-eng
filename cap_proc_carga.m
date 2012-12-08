@@ -31,7 +31,7 @@ f95 = @(t) vs*(1-exp(-t/(res*cap))) - vs*0.95;
 t25 = fzero(f25, 0);
 t50 = fzero(f50, 0);
 t95 = fzero(f95, 0);
-%% Atualiza a saida
+%% Atualiza a saída
 saida.v = f(t);  % tensão em um determinado instante
 saida.f = f;     % f em função apenas do tempo
 

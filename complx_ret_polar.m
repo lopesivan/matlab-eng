@@ -7,7 +7,7 @@
 % x - parte real
 % y - parte imaginaria
 %
-% saida:
+% saída:
 % r - modulo
 % theta - ângulo em graus
 
