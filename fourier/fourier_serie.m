@@ -30,10 +30,10 @@
 %
 %   |--- T ---|
 
-function subterfugio = fourier_serie(T, ft, ts, N)
+function subterfugio = fourier_serie(T, ft, ts, N, DEBUG)
 
 % comentários existem?
-if nargin ~= 4
+if nargin ~= 5
     disp('erro: nao ha comentarios suficientes');
     disp('aviso: utilizando valores padroes');
     T = 2;
@@ -47,6 +47,13 @@ if length(ft)+1 ~= length(ts)
     subterfugio = NaN;
     return;
 end
+
+%try
+%    t = DEBUG;
+%catch
+%    disp('debug [DESLIGADO]');
+%    DEBUG = 0;
+%end
 
 syms t n;
 
@@ -75,11 +82,17 @@ sf = a0 + symsum(an*cos(n*w0*t)+bn*sin(n*w0*t), n, 1, N);
 f = @(a) subs(sf, t, a);
 
 % buscando as hamônicas
+An = sqrt(an^2+bn^2);
+tn = atan(bn/an);
 
-ezplot(f, [0, 10*T]);
+if DEBUG > 0
+    ezplot(f, [0, 10*T]);
+end
 
 subterfugio.a0 = a0;
 subterfugio.an = an;
 subterfugio.bn = bn;
 subterfugio.sf = sf;
 subterfugio.f = f;
+subterfugio.An = An;
+subterfugio.tn = tn;
