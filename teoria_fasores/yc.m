@@ -2,7 +2,7 @@
 % entrada:
 % c = capacitância
 % w = frequência angular
-% saida:
+% saída:
 % z = admitância
 function Y = yc(c, w)
 

@@ -2,7 +2,7 @@
 % entrada:
 % c = indutância
 % w = frequência angular
-% saida:
+% saída:
 % z = impedância
 function z = zl(l, w)
 

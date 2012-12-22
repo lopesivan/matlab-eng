@@ -2,7 +2,7 @@
 % entrada:
 % c = capacitância
 % w = frequência angular
-% saida:
+% saída:
 % z = impedância
 function z = zc(c, w)
 

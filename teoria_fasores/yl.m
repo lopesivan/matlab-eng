@@ -2,7 +2,7 @@
 % entrada:
 % c = indutância
 % w = frequência angular
-% saida:
+% saída:
 % z = admitância
 function Y = yl(l, w)
 
