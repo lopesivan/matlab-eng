@@ -1,0 +1,19 @@
+Teoria dos fasores para análise de circuitos em regime permanente em uma
+rede de corrente alternada.
+
+DR = conversão graus para radianos.
+
+NUMC = converge dois números para a forma complexa, nivel 2 fica a parte real
+e nivel 1 fica a parte imaginaria.
+
+PARAL = impedâncias em paralelo.
+
+RD = conversão radianos para graus
+
+ZC = impedância do capacitor
+
+ZL = impedância do indutor
+
+ZPCD = converte um número da forma polar complexa para a forma retangular
+complexa.
+

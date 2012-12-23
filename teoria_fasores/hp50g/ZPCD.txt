@@ -1,0 +1,5 @@
+%%HP: T(3)A(R)F(.);
+\<< \-> R O
+  \<< O DR COS R * O DR SIN R * i * +
+  \>>
+\>>

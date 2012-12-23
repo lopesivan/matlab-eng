@@ -1,0 +1,8 @@
+%%HP: T(3)A(R)F(.);
+\<< DEPTH 'D' STO
+  IF D 1 \<=
+  THEN "Sem elementos na pilha" MSGBOX 'D' PURGE KILL
+  END DEPTH \->LIST 'L' STO 1 L SIZE
+  FOR I 1 'L' I GET /
+  NEXT DEPTH \->LIST \GSLIST 1 SWAP / EVAL { D L } PURGE
+\>>
