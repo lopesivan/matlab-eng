@@ -1,5 +1,5 @@
 %%HP: T(3)A(R)F(.);
 \<< \-> D
-  \<< D \pi * 180. / \->NUM
+  \<< D \pi * 180. / EVAL "GRAUS\->RAD" MSGDEBUG
   \>>
 \>>

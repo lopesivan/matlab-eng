@@ -1,0 +1,8 @@
+%%HP: T(3)A(R)F(.);
+\<< \-> S
+  \<<
+    IF DEBUG 1. ==
+    THEN S MSGBOX
+    END
+  \>>
+\>>

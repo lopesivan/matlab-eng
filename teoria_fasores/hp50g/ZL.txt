@@ -1,5 +1,5 @@
 %%HP: T(3)A(R)F(.);
 \<< \-> L W
-  \<< i W L * * EVAL
+  \<< i W L * * EVAL "IMPEDANCIA INDUTOR" MSGDEBUG
   \>>
 \>>

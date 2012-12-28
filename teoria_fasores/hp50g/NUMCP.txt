@@ -1,0 +1,5 @@
+%%HP: T(3)A(R)F(.);
+\<< \-> R O
+  \<< "Z forma polar" MSGDEBUG O i * EXP R * \->NUM
+  \>>
+\>>

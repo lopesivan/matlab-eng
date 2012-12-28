@@ -3,7 +3,7 @@ rede de corrente alternada.
 
 DR = conversão graus para radianos.
 
-NUMC = converge dois números para a forma complexa, nivel 2 fica a parte real
+NUMC = converte dois números para a forma complexa, nivel 2 fica a parte real
 e nivel 1 fica a parte imaginaria.
 
 PARAL = impedâncias em paralelo.
@@ -17,3 +17,8 @@ ZL = impedância do indutor
 ZPCD = converte um número da forma polar complexa para a forma retangular
 complexa.
 
+NUMCP = converter dois números para a forma complexa, entrada do raio e angulo(graus)
+
+MSGDEBUG = para facilitar a documentação de cada função foi criada uma variavel de
+controle(DEBUG) se 1 mostra uma mensagem para se 0 não mostra nada, isso não influencia
+no funcionamento do programa.
