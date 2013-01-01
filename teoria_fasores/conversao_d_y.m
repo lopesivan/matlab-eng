@@ -1,4 +1,4 @@
-% Conversão Y -> D
+% Conversão D -> Y
 % 
 % seja a rede Y e D:
 % a ------ Zc ------- b
@@ -9,15 +9,14 @@
 % |        |          |
 % |------- c ---------|
 
-function subterfugio = conversao_y_d(z1, z2, z3)
+function subterfugio = conversao_d_y(za, zb, zc)
 
-a = z1*z2+z2*z3+z3*z1;
+a = za+zb+zc;
 
-za = a/z1;
-zb = a/z2;
-zc = a/z3;
+z1 = (zb*zc)/a;
+z2 = (zc*za)/a;
+z3 = (za*zb)/a;
 
-subterfugio.za = za;
-subterfugio.zb = zb;
-subterfugio.zc = zc;
-
+subterfugio.z1 = z1;
+subterfugio.z2 = z2;
+subterfugio.z3 = z3;
