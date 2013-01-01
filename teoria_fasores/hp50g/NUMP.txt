@@ -1,0 +1,5 @@
+%%HP: T(3)A(R)F(.);
+\<< \-> R O
+  \<< O COS R * \->NUM O SIN R * \->NUM R\->C "CONSTROI Z FORMA POLAR" MSGDEBUG
+  \>>
+\>>
