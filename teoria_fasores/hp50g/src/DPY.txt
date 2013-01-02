@@ -1,0 +1,5 @@
+%%HP: T(3)A(D)F(.);
+\<< \-> RA RB RC
+  \<< { R3 R2 R1 } PURGE RA RB RC + + DUP RB RC * SWAP / R1 STO DUP RC RA * SWAP / R2 STO RA RB * SWAP / R3 STO 'R1' R1 = 'R2' R2 = 'R3' R3 = { R3 R2 R1 } PURGE
+  \>>
+\>>
