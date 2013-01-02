@@ -1,0 +1,6 @@
+%%HP: T(3)A(D)F(.);
+\<<
+  IF DEPTH 0. ==
+  THEN 300. .1 BEEP 300. .1 BEEP "Sem elementos na pilha" MSGBOX KILL
+  END DEPTH \->LIST 1. 'PC' STO+ STACK 2. \->LIST 'STACK' STO 300. .1 BEEP
+\>>
