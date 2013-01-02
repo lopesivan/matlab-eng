@@ -1,24 +1,24 @@
 Teoria dos fasores para análise de circuitos em regime permanente em uma
 rede de corrente alternada.
 
-DR = conversão graus para radianos.
-
-NUMC = converte dois números para a forma complexa, nivel 2 fica a parte real
-e nivel 1 fica a parte imaginaria.
-
-PARAL = impedâncias em paralelo.
-
-RD = conversão radianos para graus
-
-ZC = impedância do capacitor
-
 ZL = impedância do indutor
+ZC = impedância do capacitor
+YPD = transformação Y -> D
+YL = admitância do indutor
+YC = admitância do capacitor
+REPETE = repete o conteudo do stack colocando-o em uma lista
+RD = conversão radianos para graus
+RARET = muda o CAS para coordenadas retangulares e radianos
+PUSHS = salva o stack da calculadora em outro stack
+POPS = recupera o stack antigo da calculadora, retirando o ultimo elemento.
+PARAL = impedâncias em paralelo.
+NUMP = pega o raio e o ângulo e transforma em um número complexo
+NUMC = pega dois números reais e transforma em um número complexo
+MSGDEBUS = utilizado por muitos programas para emitir uma simples mensagem e som.
+GRPOL = muda o CAS para coordenadas polares e graus
+FW = frequencia(Hz) para frequencia angular(rad/s)
+DR = conversão graus para radianos.
+DPY = transformação D -> Y
 
-ZPCD = converte um número da forma polar complexa para a forma retangular
-complexa.
 
-NUMCP = converter dois números para a forma complexa, entrada do raio e angulo(graus)
-
-MSGDEBUG = para facilitar a documentação de cada função foi criada uma variavel de
-controle(DEBUG) se 1 mostra uma mensagem para se 0 não mostra nada, isso não influencia
-no funcionamento do programa.
+Felipe Bandeira, 02/01/2012. Fortaleza-CE
