@@ -3,7 +3,7 @@
 % - raio
 % - ângulo ( em graus )
 % Saída:
-% número complexo na forma retangular
+% - número complexo na forma retangular
 function z_cart = z_polar_graus_cart(raio, angulo)
 
 x = raio*cosd(angulo);
