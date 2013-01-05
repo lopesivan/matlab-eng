@@ -1,11 +1,11 @@
-%%HP: T(3)A(D)F(.);
-\<<
+%%HP: T(3)A(R)F(.);
+\<< DEPTH 'E' STO
   WHILE 1.
   REPEAT "
   
-RAIO?" "" INPUT STR\-> DEPTH 'D' STO
-    IF D 2. ==
-    THEN 'D' PURGE DROP2 KILL
+RAIO?" "" INPUT STR\-> DEPTH 'D' STO D E - 'F' STO
+    IF F 2 ==
+    THEN { D E F } PURGE DROP2 KILL
     END "
 
 ANGULO?" "" INPUT STR\-> NUMP "
