@@ -1,4 +1,4 @@
-%%HP: T(3)A(R)F(.);
+%%HP: T(3)A(D)F(.);
 \<< DEPTH 'D' STO
   IF D 1. \<=
   THEN "Sem elementos na pilha" MSGBOX 'D' PURGE KILL

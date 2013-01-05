@@ -1,8 +1,11 @@
-%%HP: T(3)A(R)F(.);
+%%HP: T(3)A(D)F(.);
 \<< \-> S
   \<<
     IF DEBUG 1. ==
     THEN S MSGBOX
+    END
+    IF SOM 1. ==
+    THEN 100. .05 BEEP
     END
   \>>
 \>>

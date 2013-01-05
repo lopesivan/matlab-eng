@@ -1,4 +1,4 @@
-%%HP: T(3)A(R)F(.);
+%%HP: T(3)A(D)F(.);
 \<< \-> C W
   \<< i W C * * INV EVAL "IMPEDANCIA CAPACITOR" MSGDEBUG
   \>>

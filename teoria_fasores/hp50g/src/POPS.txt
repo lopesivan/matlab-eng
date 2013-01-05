@@ -2,6 +2,6 @@
 \<<
   IF PC 0. >
   THEN STACK EVAL DROP EVAL PC 1. - 'PC' STO STACK EVAL SWAP DROP 'STACK' STO 500. .1 BEEP
-  ELSE 500. .1 BEEP 500. .1 BEEP "Sem elementos na pilha" MSGBOX
+  ELSE 500. .1 BEEP 500. .1 BEEP "Sem elementos na pilha de retorno" MSGBOX
   END
 \>>

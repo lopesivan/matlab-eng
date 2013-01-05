@@ -1,3 +1,3 @@
-%%HP: T(3)A(R)F(.);
+%%HP: T(3)A(D)F(.);
 \<< DEG CYLIN "CAS: POLAR, GRAUS" MSGDEBUG
 \>>
