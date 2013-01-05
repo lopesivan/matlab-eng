@@ -1,15 +1,15 @@
 %%HP: T(3)A(D)F(.);
 \<<
-  WHILE 1
+  WHILE 1.
   REPEAT "
   
 RAIO?" "" INPUT STR\-> DEPTH 'D' STO
-    IF D 2 ==
+    IF D 2. ==
     THEN 'D' PURGE DROP2 KILL
     END "
 
 ANGULO?" "" INPUT STR\-> NUMP "
 
-NOME?" "" INPUT STR\-> STO
+NOME?" { "" { 0. 0. } \Ga } INPUT STR\-> STO
   END
 \>>
