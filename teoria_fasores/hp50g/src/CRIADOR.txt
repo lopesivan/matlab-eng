@@ -1,0 +1,15 @@
+%%HP: T(3)A(D)F(.);
+\<<
+  WHILE 1
+  REPEAT "
+  
+RAIO?" "" INPUT STR\-> DEPTH 'D' STO
+    IF D 2 ==
+    THEN 'D' PURGE DROP2 KILL
+    END "
+
+ANGULO?" "" INPUT STR\-> NUMP "
+
+NOME?" "" INPUT STR\-> STO
+  END
+\>>
