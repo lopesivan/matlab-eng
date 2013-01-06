@@ -1,0 +1,17 @@
+%%HP: T(3)A(D)F(.);
+\<< "IMPEDANCIA" { { "CAPACITIVA" 1. } { "INDUTIVA" 0. } } 1. CHOOSE \-> CH
+  \<<
+    IF CH 0. ==
+    THEN "CONSTRUCAO FINALIZADA" MSGBOX KILL
+    END 'T' STO "NOME BASE" { "" { 0. 0. } \Ga } INPUT OBJ\-> 'N' STO "VALOR DO COMPONENTE" { "" { 0. 0. } V } INPUT OBJ\-> 'V' STO "QUANTAS FONTES" { "" { 0. 0. } V } INPUT OBJ\-> 1. SWAP
+    FOR I "FREQUENCIA ANGULAR
+DA FONTE:
+  
+  " I + { "" { 0. 0. } V } INPUT OBJ\-> V SWAP
+      IF T 0. ==
+      THEN ZL
+      ELSE ZC
+      END N I 96. + CHR + OBJ\-> STO
+    NEXT { V N T } PURGE
+  \>>
+\>>
