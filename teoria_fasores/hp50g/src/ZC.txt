@@ -1,5 +1,9 @@
-%%HP: T(3)A(D)F(.);
+%%HP: T(3)A(R)F(.);
 \<< \-> C W
-  \<< i W C * * INV EVAL "IMPEDANCIA CAPACITOR" MSGDEBUG
+  \<<
+    IF W 0. \=/
+    THEN i W C * * INV EVAL
+    ELSE "AO INFINITO E ALEM..." MSGBOX \oo
+    END "IMPEDANCIA CAPACITOR" MSGDEBUG
   \>>
 \>>

@@ -1,0 +1,29 @@
+%%HP: T(3)A(R)F(.);
+\<< "CONF. MSGBOX" { { "MSGBOX LIGADO" 1. } { "MSGBOX DESLIGADO" 2. } } 1. CHOOSE \-> D
+  \<<
+    IF D 1. ==
+    THEN \-> M
+      \<<
+        IF M 1. ==
+        THEN 1. 'DEBUG' STO
+        END
+        IF M 2. ==
+        THEN 0. 'DEBUG' STO
+        END "CONF. SOM" { { "SOM LIGADO" 1. } { "SOM DESLIGADO" 2. } } 1. CHOOSE \-> A
+        \<<
+          IF A 1. ==
+          THEN \-> B
+            \<<
+              IF B 1. ==
+              THEN 1. 'SOM' STO
+              END
+              IF B 2. ==
+              THEN 0. 'SOM' STO
+              END
+            \>>
+          END
+        \>>
+      \>>
+    END
+  \>>
+\>>
