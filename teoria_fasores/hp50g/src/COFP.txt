@@ -1,0 +1,9 @@
+%%HP: T(3)A(R)F(.);
+\<< \-> FP Z W
+  \<< Z RE 2. ^ Z IM 2. ^ + Z RE FP ACOS TAN * Z IM - / DUP 0. <
+    IF
+    THEN W * INV NEG 'C' SWAP =
+    ELSE W * 'L' SWAP =
+    END "CORRECAO DO FATOR DE POTENCIA(FP) DE UMA CARGA Z" MSGDEBUG
+  \>>
+\>>

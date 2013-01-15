@@ -1,0 +1,8 @@
+%%HP: T(3)A(R)F(.);
+\<< \-> F T
+  \<< 0. T F 2. ^ LNAME DUP SIZE EVAL 1. >
+    IF
+    THEN "ERRO: MUITAS VARIAVEIS" MSGBOX KILL
+    END OBJ\-> DROP \.S T / \v/ \->NUM { IERR } PURGE "VALOR EFICAZ" MSGDEBUG
+  \>>
+\>>

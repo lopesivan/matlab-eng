@@ -1,0 +1,11 @@
+%%HP: T(3)A(R)F(.);
+\<< "AJUDA" { { "COFP" 1. } { "RMS" 2. } { "POTMZ" 3. } { "POTM" 4. } { "DEFA" 5. } { "SUPER" 6. } { "NUMP" 7. } { "CRIADOR" 8. } { "SIS2" 9. } { "REPETE" 10. } } 1. CHOOSE 0. ==
+  IF
+  THEN KILL
+  END \-> O
+  \<<
+    IF O 1. ==
+    THEN
+    END
+  \>>
+\>>

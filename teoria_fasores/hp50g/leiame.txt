@@ -6,10 +6,14 @@ ZC = impedância do capacitor
 YPD = transformação Y -> D
 YL = admitância do indutor
 YC = admitância do capacitor
+SIS2 = resolve um sistema linear
+RMS = aplica a teoria do valor eficaz
 REPETE = repete o conteudo do stack colocando-o em uma lista
 RD = conversão radianos para graus
 RARET = muda o CAS para coordenadas retangulares e radianos
 PUSHS = salva o stack da calculadora em outro stack
+POTMZ = Potência média de um carga, com entrada da corrente e valor da carga
+POTM = Potência média de um carga, com entrada tensão e corrente
 POPS = recupera o stack antigo da calculadora, retirando o ultimo elemento.
 PARAL = impedâncias em paralelo.
 NUMP = pega o raio e o ângulo e transforma em um número complexo
@@ -19,6 +23,11 @@ GRPOL = muda o CAS para coordenadas polares e graus
 FW = frequencia(Hz) para frequencia angular(rad/s)
 DR = conversão graus para radianos.
 DPY = transformação D -> Y
+DEFA = mede a defasagem entre duas senoides
+CRIADOR = cria varios números complexos
+CONF = configura o modo debug
+COFP = corrige o fator de potência
+AJUDA = ajuda
 
 
 Felipe Bandeira, 02/01/2012. Fortaleza-CE

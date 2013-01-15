@@ -1,0 +1,5 @@
+%%HP: T(3)A(R)F(.);
+\<< \-> V I
+  \<< V ABS I ABS * 2. / V ARG I ARG - COS * \->NUM "POTENCIA MEDIA" MSGDEBUG
+  \>>
+\>>
