@@ -92,8 +92,6 @@ function z = criador()
 
                 lista_numeros(contador_numeros) = cellstr(nome);
 
-                %eval(['global ', nome]);
-
                 if modo.polar == 0
 
                     p_real = input('parte real: ');
