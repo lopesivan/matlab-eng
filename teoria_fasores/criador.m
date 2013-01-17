@@ -70,6 +70,19 @@ function z = criador()
             while 1
             
                 nome = input('nome: ', 's');
+                
+                nome_repetido = 0;
+                
+                for c = 1:contador_numeros
+                   if strcmp(nome, lista_numeros(c))
+                       disp('erro: esse nome já existe... minha bitch');
+                       nome_repetido = 1;
+                   end
+                end
+                
+                if nome_repetido == 1
+                    continue;
+                end
 
                 if strcmp(nome, '-s')
                    break; 
