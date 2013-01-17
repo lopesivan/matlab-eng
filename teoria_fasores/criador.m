@@ -137,7 +137,7 @@ function z = criador()
             fprintf('\npolar = %u', modo.polar);
             fprintf('\ngraus = %u', modo.graus);
 
-        %% deleta todos os números existentes(padrão "_cz")
+        %% deleta todos os números existentes
         elseif strcmp(arg, 'd') || strcmp(arg, 'deleta tudo')
             
             if contador_numeros > 0
