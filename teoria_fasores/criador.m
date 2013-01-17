@@ -13,16 +13,16 @@ function z = criador()
     lista_numeros = cell(0);           
     contador_numeros = 0;
 
+    % sistema polar ativo por padrão
+    modo.polar = 1;
+    % ângulo em graus por padrão
+    modo.graus = 1;    
+
     % LOOP PRINCIPAL
     while 1
         % entrada do comando e seus possíveis argumentos
         disp(' ');
         arg = input('criador>> ', 's');
-
-        % sistema polar ativo por padrão
-        modo.polar = 1;
-        % ângulo em graus por padrão
-        modo.graus = 1;
 
         %% finaliza o criador
         if strcmp(arg, 's') || strcmp(arg, 'sair')
