@@ -1,28 +1,30 @@
-% Potência complexa de um sistema de 2 cargas em paralelos
+% Potência complexa de um sistema de n cargas em paralelos
 % entrada:
-% potn = potência em Watts
-% fpn = fator de potência, se negativa = adiantada ou positiva = atrasada.
-% exemplo:
-% potencia_2_cargas(2e3, -0.75, 4e3, 0.95, v)
-function potencia = potencia_2_cargas(pot1, fp1, pot2, fp2, vrms)
-% calculo individual para cada carga
+% potn = vetor com as potência das cargas
+% fpn = fator de potência das cargas
+function potencia = potencia_n_cargas(potn, fpn, vrms)
+%% processamento da entrada
 
-% potência aparente da carga 1
-s1 = pot1/fp1;
-% potência reativa da carga 1
-angulo1 = acos(fp1);
-q1 = s1*sin(angulo1);
+if length(potn) ~= length(fpn)
+    disp('erro: dimensões não são compatíveis');
+    return;
+end
 
-% potência aparente da carga 2
-s2 = pot2/fp2;
-% potência reativa da carga 2
-angulo2 = acos(fp2);
-q2 = s2*sin(angulo2);
+dimensao = length(potn);
+fprintf('processando %u cargas\n', dimensao);
 
-%% calculos para a potencia
+qn = zeros(1);
+for posicao = 1:dimensao
+    sn = potn(posicao)/fpn(posicao);    % calcúlo da aparente
+    ang = acos(fpn(posicao));           % ângulo da carga    
+    qn(posicao) = sn*sin(ang);          % potência reativa
+end
 
-pt = pot1+pot2;
-qt = q1+q2;        
+
+%% calcúlos para a potência
+
+pt = sum(potn);
+qt = sum(qn);       
 
 % potência complexa total
 pc = pt + 1i * qt;
@@ -33,6 +35,7 @@ at = abs(pc);   % potência aparente total
 angulo = angle(pc); % fator resultante das duas cargas
 angulo_graus = radtodeg(angulo);
 
+% fator de potência visto pela fonte
 fator_potencia = cos(angulo);
 
 % com a tensão eficaz sobre as cargas é possivel obter a corrente
@@ -41,7 +44,7 @@ fator_potencia = cos(angulo);
 % S = Vrms * conj(Irms)
 % Irms = conj(S/Vrms)
 
-if nargin >= 5
+if nargin >= 3
     % corrente total
     irms = conj(pc/vrms); 
    
@@ -67,7 +70,7 @@ potencia.complexa = pc;
 potencia.aparente_total = at;
 potencia.real_total = rt;
 
-if nargin >= 5
+if nargin >= 3
     potencia.corrente = irms;
     potencia.carga = Zt;
 end
@@ -78,4 +81,3 @@ potencia.angulo = angulo;
 potencia.angulo_graus = angulo_graus;
 potencia.fator_potencia = fator_potencia;
 potencia.fator_tipo = tipo_fator;
-
