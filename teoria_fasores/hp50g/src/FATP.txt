@@ -1,5 +1,5 @@
 %%HP: T(3)A(D)F(.);
 \<< \-> V I
-  \<< V I POTM V ABS 2. \v/ / I ABS 2. \v/ / * /
+  \<< V I POTM V ABS 2. \v/ / I ABS 2. \v/ / * / "FATOR DE POTENCIA ENTRE TENSAO E CORRENTE COMPLEXA" MSGDEBUG
   \>>
 \>>

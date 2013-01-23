@@ -1,5 +1,5 @@
 %%HP: T(3)A(D)F(.);
 \<< \-> V I
-  \<< V ABS I ABS * 2. /
+  \<< V ABS I ABS * 2. / "POTENCIA APARENTE V E I MAXIMOS" MSGDEBUG
   \>>
 \>>

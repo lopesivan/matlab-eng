@@ -1,5 +1,5 @@
-%%HP: T(3)A(R)F(.);
+%%HP: T(3)A(D)F(.);
 \<< \-> I Z
-  \<< I ABS 2. ^ Z RE * 2. / EVAL
+  \<< I ABS 2. ^ Z RE * 2. / EVAL "POTENCIA MEDIA CORRENTE DA CARGA" MSGDEBUG
   \>>
 \>>
