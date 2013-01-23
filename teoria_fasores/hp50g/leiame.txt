@@ -15,6 +15,7 @@ PUSHS = salva o stack da calculadora em outro stack
 POTMZ = Potência média de um carga, com entrada da corrente e valor da carga
 POTM = Potência média de um carga, com entrada tensão e corrente
 POPS = recupera o stack antigo da calculadora, retirando o ultimo elemento.
+PAVI = potência aparente, tensão e corrente maxima da senoide
 PARAL = impedâncias em paralelo.
 NUMP = pega o raio e o ângulo e transforma em um número complexo
 NUMC = pega dois números reais e transforma em um número complexo
