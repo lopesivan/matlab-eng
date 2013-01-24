@@ -3,7 +3,7 @@
 % potn = potência em Watts
 % fpn = fator de potência, se negativa = adiantada ou positiva = atrasada.
 % exemplo:
-% potencia_2_cargas(2e3, -0.75, 4e3, 0.95, v)
+% potencia_2_cargas(2e3, -0.75, 4e3, 0.95, 311.127)
 function potencia = potencia_2_cargas(pot1, fp1, pot2, fp2, vrms)
 % calculo individual para cada carga
 
