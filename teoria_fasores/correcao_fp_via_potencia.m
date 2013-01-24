@@ -36,7 +36,7 @@
 % capacitor de 1.6e-3 F ou 1.6mF
 % o item (b) é resolvido da mesma forma, logo:
 % correcao_fp_via_potencia(7.0711, 15.9155, 0.8, 6, 0.6)
-% que nos da:
+% que nos dá:
 % um capacitor de 700uF.
 function correcao = correcao_fp_via_potencia(vrms, freq, fpdesejado, pt, fp)
 potencia = potencia_n_cargas(pt, fp, abs(vrms));
