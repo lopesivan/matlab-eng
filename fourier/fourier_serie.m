@@ -35,7 +35,6 @@ function subterfugio = fourier_serie(T, ft, ts, N, DEBUG)
 % comentários existem?
 if nargin ~= 5
     disp('erro: nao ha comentarios suficientes');
-    disp('aviso: utilizando valores padroes');
     T = 2;
     ft = [2 1];
     ts = [0 1 2];
