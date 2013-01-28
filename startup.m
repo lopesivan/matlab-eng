@@ -1,12 +1,9 @@
-disp('aviso: iniciando, startup.m');
+% startup.m, Felipe Bandeira. Fortaleza-CE.
 
-disp('* mudando o diretorio');
-%cd D:\matematica\github ;
+disp('a: startup.m');
 cd D:\matematica\codigos_matlab ;
-
-disp('* mudando o formato dos numeros');
+fprintf('dir: %s', pwd);
+fprintf('\na: shorteng');
 format shorteng;
-
-disp('aviso: finalizado, startup.m');
-
+fprintf('\na: fim\n');
 clear all;
