@@ -6,4 +6,5 @@ fprintf('dir: %s', pwd);
 fprintf('\na: shorteng');
 format shorteng;
 fprintf('\na: fim\n');
+
 clear all;
