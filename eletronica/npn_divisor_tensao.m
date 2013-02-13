@@ -1,40 +1,33 @@
 % divisor de tensão clássico
-% entrada:
-% R1 - resistor superior do divisor de tensão
-% R2 - resistor inferior do divisor de tensão
-% RC - resistor do coletor
-% RE - resistor do emissor
-% VCC - tensão de alimentação
+function dados = npn_divisor_tensao(r1, r2, re, rc, vcc, bcc)
 
-function subterfugio = npn_divisor_tensao(R1, R2, RC, RE, VCC)
+% poxa nada? sério?!
+if nargin == 0
+    img = imread('fig_npn_divisor_tensao.png');
+    imshow(img);
+    return;
+end
 
-% constantes
-VBE = 0.7;
+vbe = 0.7; % silício
 
-% corrente na base
-I = VCC/(R1+R2);
-% valor considerado pequeno
-IBp = I/20;
-% tensão na base
-VB = R2*I;
-% tensão no emissor
-VE = VB - VBE;
-% corrente no emissor
-IE = VE/RE;
-% tensão no coletor
-IC = IE;
-VC = VCC - IC*RC;
-% tensão coletor-emissor
-VCE = VC - VE;
-% ganho de corrente de entrada(base) e corrente saída(coletor)
-ganho = IC/I;
+is = vcc/(rc+re);               % corrente de saturação
+vth = (r2*vcc)/(r1+r2);         % tensão na base
+rth = (r1*r2)/(r1+r2);          % resistência vista pelo terminal da base
+ie = (vth-vbe)/re;              % corrente no emissor
+ic = ie;                        % corrente no coletor
+vc = vcc - ic*rc;               % tensão no coletor
+ve = vth - vbe;                 % tensão no emissor
+vce = vc-ve;                    % tensão coletor emissor
+ib = (vth-0.7)/(rth+re+re*bcc); % corrente na base
 
-subterfugio.I = I;
-subterfugio.IBp = IBp;
-subterfugio.VB = VB;
-subterfugio.VE = VE;
-subterfugio.IE = IE;
-subterfugio.IC = IC;
-subterfugio.VC = VC;
-subterfugio.VCE = VCE;
-subterfugio.ganho = ganho;
+%% saída
+
+dados.is = is;
+dados.vth = vth;
+dados.rth = rth;
+dados.ie = ie;
+dados.ic = ic;
+dados.vc = vc;
+dados.ve = ve;
+dados.vce = vce;
+dados.ib = ib;
