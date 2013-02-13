@@ -5,7 +5,7 @@ from glob import glob
 from os import walk, getcwd, path, remove
 
 dir_atual = '.'
-formatos_simulacao = [".smv"]
+formatos_simulacao = [".smv", ".dat"]
 
 print 'pasta atual:', getcwd()
 
