@@ -23,7 +23,7 @@ vbe_moll = 25e-3;
 re = vbe_moll/npn_dados.ie;             % resistência do emissor
 A = -rc/re;                             % ganho
 zent = 1/(1/r1 + 1/r2 + 1/(bcc*re));    % impedância de entrada
-vout_th = A*(vin*zent/(zent+rf));       % tensão théveni de saída
+vout_th = A*(vin*zent/(zent+rf));       % tensão thévenin de saída
 vout = (vout_th*rl)/(rl+rc);            % tensão na carga rl
 
 %% saída

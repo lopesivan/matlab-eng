@@ -12,6 +12,13 @@
 function dados = retificador_meia_onda(vrms, carga, freq, ond)
 %% contas
 
+if nargin == 0
+    img = imread('fig_retificador_meia_onda.png');
+    imshow(img);
+    disp('erro: nenhum comando');
+    return;
+end
+
 vpico = vrms*sqrt(2);   % v = vpico*sin(a*t+p)
 vcc = vpico/pi;         % tensão média
 icc = vcc/carga;        % corrente no diodo

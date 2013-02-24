@@ -14,6 +14,15 @@
 function dados = retificador_onda_completa(vrms, carga, freq, ond)
 %% contas
 
+if nargin == 0
+    % exemplo:
+    % retificador_onda_completa((28.2843*2)/sqrt(2), 1e3, 60, 1)
+    img = imread('fig_retificador_onda_completa.png');
+    imshow(img);
+    disp('erro: nenhum comando');
+    return;
+end
+
 vpico = vrms*sqrt(2);       % tensão de pico
 % derivação central
 vsaida = vpico/2;           % tensão de pico retificada

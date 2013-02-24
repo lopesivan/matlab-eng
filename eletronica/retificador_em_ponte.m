@@ -13,6 +13,13 @@
 % cap = capacitor para filtro
 function dados = retificador_em_ponte(vrms, carga, freq, ond)
 
+if nargin == 0
+    img = imread('fig_retificador_ponte.png');
+    imshow(img);
+    disp('erro: nenhum comando');
+    return;
+end
+
 vpico = vrms*sqrt(2);
 vsaida = vpico;
 vcc = (2*vpico)/pi;
