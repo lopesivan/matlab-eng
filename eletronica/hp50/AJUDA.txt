@@ -1,0 +1,5 @@
+TDTE = projeto para um polarização por divisor de tensão, transistor npn
+TDQI = valores de corrente e tensão em pontos estratégicos da polarização por divisor de tensão
+TDAC = projeto para amplificador de pequenos sinais
+RETPO = retificador com ponte de diodos
+COOR = muda o sistema de coordenadas
