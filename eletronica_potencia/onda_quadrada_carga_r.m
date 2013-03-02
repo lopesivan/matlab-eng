@@ -21,6 +21,7 @@ Is1_max = Vs1_max / resistencia_carga;
 % cada chave conduz por um espaço de tempo iqual a T/2. Então:
 Tcond = 1/(2*frequencia);
 
+% saída
 subterfugio.Vrmax = Vrmax;
 subterfugio.Irmax = Irmax;
 subterfugio.Vs1_max = Vs1_max;

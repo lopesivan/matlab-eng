@@ -28,7 +28,7 @@ Vs1_max = tensao_barramento;
 % na carga. Desse modo:
 Is1_max = Iomax;
 
-%% saida
+%% saída
 
 subterfugio.Tscond = Tscond;
 subterfugio.Vomax = Vomax;
