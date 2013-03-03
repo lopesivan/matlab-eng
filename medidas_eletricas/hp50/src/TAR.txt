@@ -1,0 +1,9 @@
+%%HP: T(3)A(R)F(.);
+\<< "CLIENTE" { { "Potencia Instalada" "Potencia instalada (kVA)" 0. } { "Carga Instalada" "Carga instalada no cliente" 0. } } { 1. 0. } { 0. 0. } { 150. 196. } INFORM 0. ==
+  IF
+  THEN KILL
+  END EVAL "Tarifacao COELCE" { { "C.P" "Consumo na ponta (kWh)" 0. } { "C.F.P" "Consumo fora da ponta (kWh)" 0. } { "D.P" "Demanda na ponta(kW)" 0. } { "D.F.P" "Demanda fora da ponta" 0. } { "UFER" "Reativa excedente na ponta" 0. } { "UFERFP" "Reativo excedente fora da ponta" 0. } { "UFDR" "Demanda reativa na ponta" 0. } { "UFDRFP" "Demanda reativa fora da ponta" 0. } } { 2. 0. } { 0. 0. 0. 0. 0. 0. 0. 0. } { 2243. 20195. 96. 96. 1546. 0. 0. 0. } INFORM 1. ==
+  IF
+  THEN "PERIODO" { { "Seco" 1. } { "Umido" 2. } } 1. CHOOSE CALCU
+  END
+\>>
