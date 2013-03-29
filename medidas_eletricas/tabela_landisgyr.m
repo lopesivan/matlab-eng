@@ -33,15 +33,15 @@ q_reg = s(1)-linha_inicial_valores+1;
 disp('quantidade de registros:');
 disp(q_reg);
 
-%% adquirindo os valores, na ponta e fora da ponta
+%% variaveis principais
 maxima_demanda_ponta = 0;
 maxima_demanda_fora_ponta = 0;
 consumo_ponta = 0;
 consumo_fora_ponta = 0;
 ufer_ponta = 0;
 ufer_fora_ponta = 0;
-ufdr_ponta = 0;
-ufdr_fora_ponta = 0;
+dmcr_ponta = 0;
+dmcr_fora_ponta = 0;
 
 cont1 = 0;
 cont2 = 0;
@@ -51,10 +51,7 @@ ca2 = 0;
 cr = 0;
 cr2 = 0;
 
-fp_ponta = 0;
-fp_fora_ponta = 0;
-
-%% loop principal
+%% loop principal, adquirindo os valores, na ponta e fora da ponta
 for t = linha_inicial_valores:s
     %disp(num(t, col_registro));
     
@@ -68,11 +65,12 @@ for t = linha_inicial_valores:s
         % consumo, .25 h = 15 min
         consumo_ponta = consumo_ponta + num(t, col_w)*.25;
         
-        % ufer e ufdr na ponta, indutiva
+        % ufer e dmcr na ponta, indutiva
         if strcmp(txt(t, col_sr), 'L')
             ca = ca + num(t, col_w);
             cr = cr + num(t, col_var_indutiva);
             cont1 = cont1+1;
+            
             if cont1 > 3                    
                 % consumo ativo e reativo integralizado em 1 hora
                 ca = ca/4;
@@ -86,11 +84,12 @@ for t = linha_inicial_valores:s
                     ufer_ponta = ufer_ponta + (fator_potencia_multa/fp - 1)*ca;
                     
                     uf = ca*(fator_potencia_multa/fp);
-                    if uf > ufdr_ponta
-                        ufdr_ponta = uf;
+                    if uf > dmcr_ponta
+                        dmcr_ponta = uf;
                     end
                 end
                
+                % reseta para a nova integralização
                 ca = 0;
                 cr = 0;
             end         
@@ -112,6 +111,7 @@ for t = linha_inicial_valores:s
             ca2 = ca2 + num(t, col_w);
             cr2 = cr2 + num(t, col_var_indutiva);
             cont2 = cont2+1;
+            
             if cont2 > 3                    
                 % consumo ativo e reativo integralizado em 1 hora
                 ca2 = ca2/4;
@@ -125,11 +125,12 @@ for t = linha_inicial_valores:s
                     ufer_fora_ponta = ufer_fora_ponta + (fator_potencia_multa/fp - 1)*ca2;
                     
                     uf = ca2*(fator_potencia_multa/fp);
-                    if uf > ufdr_fora_ponta
-                        ufdr_fora_ponta = uf;
+                    if uf > dmcr_fora_ponta
+                        dmcr_fora_ponta = uf;
                     end
                 end
                
+                % reseta para a nova integralização
                 ca2 = 0;
                 cr2 = 0;
             end                       
@@ -138,7 +139,7 @@ for t = linha_inicial_valores:s
     
 end
 
-%% valores adquiridos
+%% valores calculados
 disp('maxima demanda na ponta (kW):');
 disp(maxima_demanda_ponta);
 disp('maxima demanda fora da ponta (kW):');
@@ -154,7 +155,21 @@ disp(ufer_ponta);
 disp('UFER fora da ponta:');
 disp(ufer_fora_ponta);
 
-disp('UFDR ponta:');
-disp(ufdr_ponta);
-disp('UFDR fora da ponta:');
-disp(ufdr_fora_ponta);
+disp('DMCR ponta:');
+disp(dmcr_ponta);
+disp('DMCR fora da ponta:');
+disp(dmcr_fora_ponta);
+
+% saída do programa
+medidas.maxima_demanda_ponta = maxima_demanda_ponta;
+medidas.maxima_demanda_fora_ponta = maxima_demanda_fora_ponta;
+
+medidas.consumo_ponta = consumo_ponta;
+medidas.consumo_fora_ponta = consumo_fora_ponta;
+
+medidas.ufer_ponta = ufer_ponta;
+medidas.ufer_fora_ponta = ufer_fora_ponta;
+
+medidas.dmcr_ponta = dmcr_ponta;
+medidas.dmcr_fora_ponta = dmcr_fora_ponta;
+
