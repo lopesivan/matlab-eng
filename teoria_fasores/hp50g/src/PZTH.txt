@@ -1,0 +1,5 @@
+%%HP: T(3)A(R)F(.);
+\<< \-> VTH ZTH
+  \<< VTH ABS 2. ^ ZTH RE 8. * / \->NUM "POTENCIA MAXIMA" MSGDEBUG
+  \>>
+\>>

@@ -1,0 +1,5 @@
+%%HP: T(3)A(R)F(.);
+\<< \-> A B C
+  \<< 'X' PURGE A X 2 ^ * B X * C + + X ISOL
+  \>>
+\>>
