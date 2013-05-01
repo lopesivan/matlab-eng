@@ -27,7 +27,7 @@ if X1 < 0
     componente.tipo = 'capacitor';
     componente.C = C;
 elseif X1 > 0
-    L = w*X1;
+    L = X1/w;
     componente.tipo = 'indutor';
     componente.L = L;
 else
