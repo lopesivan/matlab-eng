@@ -1,0 +1,1 @@
+python "D:\matematica\codigos_matlab\eletronica_potencia\limpa_conteudo_simulacao.py"
