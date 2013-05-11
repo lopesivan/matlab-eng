@@ -15,6 +15,7 @@
 % V(I) = Potencial no nó I
 % Matrizes P(I) e Q(I) estão definidas na equação
 
+%clear
 %input('Arquivo de dados')
 
 B = zeros(ND, 1);
