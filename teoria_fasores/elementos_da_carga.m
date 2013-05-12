@@ -10,7 +10,7 @@ capacitor = 0;
 if (imag(carga) > 0)
     indutor = imag(carga)/(frequencia*2*pi);
 elseif (imag(carga) < 0)
-    capacitor = abs(imag(carga))*frequencia*2*pi;
+    capacitor = 1/(abs(imag(carga))*frequencia*2*pi);
 end
 
 componente.resistencia = R;
