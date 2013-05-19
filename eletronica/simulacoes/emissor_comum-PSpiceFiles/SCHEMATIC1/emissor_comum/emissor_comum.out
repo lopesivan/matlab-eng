@@ -1,0 +1,146 @@
+
+**** 05/19/13 08:50:33 ******* PSpice 16.0.0 (July 2006) ****** ID# 0 ********
+
+ ** Profile: "SCHEMATIC1-emissor_comum"  [ D:\matematica\codigos_matlab\eletronica\simulacoes\emissor_comum-pspicefiles\schematic1\em
+
+
+ ****     CIRCUIT DESCRIPTION
+
+
+******************************************************************************
+
+
+
+
+** Creating circuit file "emissor_comum.cir" 
+** WARNING: THIS AUTOMATICALLY GENERATED FILE MAY BE OVERWRITTEN BY SUBSEQUENT SIMULATIONS
+
+*Libraries: 
+* Profile Libraries :
+* Local Libraries :
+* From [PSPICE NETLIST] section of C:\OrCAD\OrCAD_16.0\tools\PSpice\PSpice.ini file:
+.lib "nom.lib" 
+
+*Analysis directives: 
+.TRAN  0 3 0 1e-5 
+.PROBE V(alias(*)) I(alias(*)) W(alias(*)) D(alias(*)) NOISE(alias(*)) 
+.INC "..\SCHEMATIC1.net" 
+
+
+
+**** INCLUDING SCHEMATIC1.net ****
+* source EMISSOR_COMUM
+C_C3         0 N00372  10u  
+V_V1         N00792 0  
++SIN 0 7.0711e-3 1000 0 0 0
+Q_Q1         N00320 N00256 N00372 Q2N2222A/ZTX 
+R_R1         N00256 N00298  20k  
+R_R2         0 N00256  10k  
+R_R3         0 N00372  10k  
+R_R4         N00320 N00298  10k  
+R_R6         N00256 N00564  1k  
+V_V2         N00298 0 30
+R_R7         0 N00352  10k  
+C_C1         N00320 N00352  10u  
+C_C2         N00792 N00564  10u  
+
+**** RESUMING emissor_comum.cir ****
+.END
+
+**** 05/19/13 08:50:33 ******* PSpice 16.0.0 (July 2006) ****** ID# 0 ********
+
+ ** Profile: "SCHEMATIC1-emissor_comum"  [ D:\matematica\codigos_matlab\eletronica\simulacoes\emissor_comum-pspicefiles\schematic1\em
+
+
+ ****     BJT MODEL PARAMETERS
+
+
+******************************************************************************
+
+
+
+
+               Q2N2222A/ZTX    
+               NPN             
+       LEVEL    1            
+          IS   30.611000E-15 
+          BF  220            
+          NF    1.00124      
+         VAF  104            
+         IKF     .52         
+         ISE    7.500000E-15 
+          NE    1.41         
+          BR    4            
+          NR    1.005        
+         VAR   28            
+         IKR     .24         
+         ISC   10.652500E-12 
+          NC    1.3728       
+         ISS    0            
+          RB     .13         
+          RE     .22         
+          RC     .12         
+         CJE   27.010000E-12 
+         VJE     .75         
+         CJC    9.120000E-12 
+         VJC     .4089       
+         MJC     .3508       
+        XCJC    1            
+         CJS    0            
+         VJS     .75         
+          TF  325.000000E-12 
+          TR  100.000000E-09 
+          KF    0            
+          AF    1            
+          CN    2.42         
+           D     .87         
+
+
+**** 05/19/13 08:50:33 ******* PSpice 16.0.0 (July 2006) ****** ID# 0 ********
+
+ ** Profile: "SCHEMATIC1-emissor_comum"  [ D:\matematica\codigos_matlab\eletronica\simulacoes\emissor_comum-pspicefiles\schematic1\em
+
+
+ ****     INITIAL TRANSIENT SOLUTION       TEMPERATURE =   27.000 DEG C
+
+
+******************************************************************************
+
+
+
+ NODE   VOLTAGE     NODE   VOLTAGE     NODE   VOLTAGE     NODE   VOLTAGE
+
+
+(N00256)    9.9725 (N00298)   30.0000 (N00320)   20.6920 (N00352)    0.0000     
+
+(N00372)    9.3492 (N00564)    9.9725 (N00792)    0.0000 
+
+
+
+
+    VOLTAGE SOURCE CURRENTS
+    NAME         CURRENT
+
+    V_V1         0.000E+00
+    V_V2        -1.932E-03
+
+    TOTAL POWER DISSIPATION   5.80E-02  WATTS
+
+
+
+          JOB CONCLUDED
+
+**** 05/19/13 08:50:33 ******* PSpice 16.0.0 (July 2006) ****** ID# 0 ********
+
+ ** Profile: "SCHEMATIC1-emissor_comum"  [ D:\matematica\codigos_matlab\eletronica\simulacoes\emissor_comum-pspicefiles\schematic1\em
+
+
+ ****     JOB STATISTICS SUMMARY
+
+
+******************************************************************************
+
+
+
+  Total job time (using Solver 1)   =       17.07
+
