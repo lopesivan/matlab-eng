@@ -1,17 +1,6 @@
-% filtro
+function saida = filtroButter(sinal, ordem, frequenciaAmostragem)
 
-fs = 10e3; %frequencia de amostragem
-t = T; % tempo de amostragem
+[B, A] = butter(ordem, 20/(frequenciaAmostragem/2));
+saida = filter(B, A, sinal);
 
-% constantes
-[B, A] = butter(2, 20/(fs/2));
-
-% Filtragem
-figure
-y1 = filter(B, A, Z21);
-y2 = filter(B, A, Z31);
-
-
-plot(t, y1); 
-hold on;
-plot(t, y2, '-r');
+end
