@@ -12,5 +12,5 @@ if __name__ == '__main__':
     r = r1haste(pa, l, d)
     print 'resistencia: ', r
     
-    saida = raw_input('[q] e [ENTER] para sair')
+    saida = raw_input('ENTER] para sair')
 
