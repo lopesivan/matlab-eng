@@ -4,6 +4,7 @@ from pylab import arange, plot, show
 
 print 'Calculos para sistemas de aterramento'
 print 'Felipe Bandeira, 22/06/2013'
+print 
 
 def ajuda():
     print 'aviso: nada implementado'
@@ -49,7 +50,7 @@ def entradaHastesLinha():
 
     return [pa, l, e, d, q]
 
-def levadaCurvaK(pa, l, e, d, q, fim, passo):
+def levantaCurvaK(pa, l, e, d, q, fim, passo):
     numeroHastes = arange(2, fim, passo)
     res = []
     for i in numeroHastes:
@@ -64,7 +65,7 @@ def curvaK():
     fim = input('quantidade final de hastes: ')
     passo = input('passo: ')
 
-    levadaCurvaK(en[0], en[1], en[2], en[3], en[4], fim, passo)
+    levantaCurvaK(en[0], en[1], en[2], en[3], en[4], fim, passo)
     
 
 def calculosResistividade():
@@ -93,7 +94,7 @@ if __name__ == '__main__':
     print 'h - ajuda'
     print 's - extermina o programa'
     print 'c - inicia os calculos para sistema aterramento'
-    print 'k - levada a curva K de uma malha'
+    print 'k - levanta a curva K de uma malha'
     
     while True:
         cmd = raw_input('>>')
