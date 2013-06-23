@@ -1,13 +1,7 @@
+# -*- coding: cp1252 -*-
 import r1haste
 import rnhastes
 from pylab import arange, plot, show
-
-print 'Calculos para sistemas de aterramento'
-print 'Felipe Bandeira, 22/06/2013'
-print 
-
-def ajuda():
-    print 'aviso: nada implementado'
 
 def entradaPhold():
     try:
@@ -73,7 +67,7 @@ def calculosResistividade():
     print '[0] - calculo para 1 haste'
     print '[1] - calculo para n hastes'
     
-    a = raw_input('>')
+    a = raw_input('>>>')
     
     if a == '0':
         en = entradaPhold()
@@ -84,23 +78,34 @@ def calculosResistividade():
         res = rnhastes.resistenciaHastesLinha(en[0], en[1], en[2], en[3], en[4])
             
     else:
-        pass
+        print 'aviso: opcao nao disponivel'
+        return 0
 
     print '_'*50
     print 'resistencia calculada:', res
-    
-if __name__ == '__main__':
+
+def ajudaBasica():
     print 'lista de comandos disponiveis:'
     print 'h - ajuda'
     print 's - extermina o programa'
     print 'c - inicia os calculos para sistema aterramento'
     print 'k - levanta a curva K de uma malha'
+    print 'e - inicia o processo de estratificacao solo'
+    print 
     
+if __name__ == '__main__':
+
+    print 'Calculos para sistemas de aterramento'
+    print 'Felipe Bandeira, 22/06/2013'
+    print 
+
+    ajudaBasica()
+
     while True:
         cmd = raw_input('>>')
 
         if cmd == 'h':
-            ajuda()
+            ajudaBasica()
         elif cmd == 's':
             exit()
         elif cmd == 'c':
@@ -108,7 +113,4 @@ if __name__ == '__main__':
         elif cmd == 'k':
             curvaK()
         else:
-            pass
-
-    
-        
+            pass        

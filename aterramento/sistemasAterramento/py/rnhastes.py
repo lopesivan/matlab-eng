@@ -61,8 +61,4 @@ if __name__ == '__main__':
     q = 8       #quantidade de hastes
 
     print resistenciaHastesLinha(pa, l, e, d, q)
-
-    saida = raw_input('ENTER] para sair')
-
-    
-
+    #saida = raw_input('ENTER] para sair')
