@@ -74,6 +74,7 @@ def lerPlanilha(planilha, debug = None):
     return matrizDados
 
 def resistividadeMediaPlanilha(mDados, desvioPadrao = 0.5, debug = None):
+
     [nLinha, nColuna] = shape(mDados)
 
     mediaResistividade = []
@@ -81,9 +82,18 @@ def resistividadeMediaPlanilha(mDados, desvioPadrao = 0.5, debug = None):
     maximoValor = 0
     minimoValor = mDados[0, 1]
 
+    profundidadeTeste = []
+    for l in range(nLinha):
+        profundidadeTeste.append(mDados[l, 0])
+
+    if debug:
+        print 'Profundidades encontradas,'
+        print profundidadeTeste
+
     # calcula os valores medios sem considerar os desvio padrão
     for l in range(nLinha):
         for c in range(1, nColuna):
+
             if mDados[l, c] > maximoValor:
                 maximoValor = mDados[l, c]
             if mDados[l, c] < minimoValor:
@@ -99,28 +109,61 @@ def resistividadeMediaPlanilha(mDados, desvioPadrao = 0.5, debug = None):
         print 'Resistividade média,'
         print mediaResistividade
 
-    tabelaCalculo = zeros(shape = (nLinha, nColuna))
-    resistividadeCorrigida = []
+    # tabelaCalculo = zeros(shape = (nLinha, nColuna))
+    
     q = 0
+    media = 0
+    resistividadeCorrigida = []
 
+    # loop para a correção da tabela de resistividade média considerando
+    # o desvio padrão de normalmente 50%
     for l in range(nLinha):
         for c in range(1, nColuna):
-            pass
+
+            if((abs(mDados[l, c]-mediaResistividade[l]))/mediaResistividade[l]) >= desvioPadrao:
+                
+                if debug:
+                    print 'Valor com desvio maior que ', desvioPadrao*100, ' %'
+                    print mDados[l, c]
+                    print 'linha,', l
+                    print 'coluna,', c
+
+            else:
+
+                media = media + mDados[l, c]
+                q=q+1
+
+        resistividadeCorrigida.append(media*q**-1)
+        media = 0
+        q = 0
+
+    if debug:
+        print 'Resistividade corrigida,'
+        print resistividadeCorrigida
+
+    return [profundidadeTeste, resistividadeCorrigida]
+
 
 if __name__ == '__main__':
     global pho, es, chuteInicial
     planilha = "tabelaExemplo2_12GeraldoKindermann.xlsx"
     
     # testa a estratificação em duas camadas
+    print 'Inciando teste de estratificação em 2 camadas,'
     pho = [320, 245, 182, 162, 168, 152]
     es = [2.5, 5, 7.5, 10, 12.5, 15]
     chuteInicial = [0, 0, 0]
 
     print estratifica2Camadas()
+    print '**fim'
 
     # testa a leitura da planilha com os dados
+    print 'Iniciando teste leitura de uma planilha'
     m = lerPlanilha(planilha, debug = True)
-    resistividadeMediaPlanilha(m, debug = True)
-
+    [p, r] = resistividadeMediaPlanilha(m, debug = True)
+    print 'Retorno,'
+    print p
+    print r
+    print '**fim'
 
     #saida = raw_input('[ENTER] para sair')

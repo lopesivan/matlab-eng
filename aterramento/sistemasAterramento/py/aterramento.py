@@ -2,6 +2,9 @@
 import r1haste
 import rnhastes
 from pylab import arange, plot, show
+from tkFileDialog import askopenfilename
+from Tkinter import Tk
+
 
 def entradaPhold():
     try:
@@ -84,6 +87,13 @@ def calculosResistividade():
     print '_'*50
     print 'resistencia calculada:', res
 
+def planilhaExcel():
+    mainTkinter = Tk()
+    nome = askopenfilename()
+    mainTkinter.destroy()
+    print nome
+
+
 def ajudaBasica():
     print 'lista de comandos disponiveis:'
     print 'h - ajuda'
@@ -91,6 +101,8 @@ def ajudaBasica():
     print 'c - inicia os calculos para sistema aterramento'
     print 'k - levanta a curva K de uma malha'
     print 'e - inicia o processo de estratificacao solo'
+    print 'a - ler uma planilha de dados'
+    print ' - ler um arquivo csv'
     print 
     
 if __name__ == '__main__':
@@ -112,5 +124,11 @@ if __name__ == '__main__':
             calculosResistividade()
         elif cmd == 'k':
             curvaK()
+        elif cmd == 'e':
+            pass
+        elif cmd == 'a':
+            planilhaExcel()
+        elif cmd == 'q':
+            pass
         else:
             pass        
