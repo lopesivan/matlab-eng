@@ -1,5 +1,8 @@
+# -*- coding: cp1252 -*-
+from __future__ import division
 import r1haste
 from math import sqrt, pi, log
+from numpy import zeros
 
 def resistenciaMutua(pa, l, e):
     bhm = sqrt(l**2 + e**2)
@@ -50,7 +53,46 @@ def resistenciaHastesLinha(pa, l, e, d, q):
 
     return resitenciaEquivalente
 
+def quadradoCheio(m, n, esp, pa, l, d, debug = None):
+    '''
+    entrada,
+    m - quantidade de hastes colocadas em linha
+    n - quantidade de hastes colocas em coluna
+    esp - espaçamento entre duas hastes
+    p - restividade aparente
+    l - comprimento da haste
+    d - diametro da haste
+    '''
+    r = zeros(shape = (m, n))
+    r1 = r1haste.r1haste(pa, l, d)
+    
+    if debug:
+        print r1
 
+    for i in range(1, m+1):
+        for j in range(1, n+1):
+            for x in range(1, m+1):
+                for y in range(1, n+1):
+                    if (i==x) and (j==y):
+                        r[i-1, j-1] = r[i-1, j-1]+r1
+                        
+                        if debug:
+                            print r
+                    else:
+                        e = sqrt((i-x)**2+(j-y)**2)*esp
+                        b = sqrt(l**2+e**2)
+                        a = resistenciaMutua(pa, l, e)
+                        r[i-1, j-1] = r[i-1, j-1]+a
+
+    if debug:
+        print r
+
+    Ra = 0
+    for i in range(1, m+1):
+        for j in range(1, n+1):
+            Ra = Ra + 1/r[i-1, j-1]
+
+    return 1/Ra
 
 if __name__ == '__main__':
 
@@ -61,4 +103,5 @@ if __name__ == '__main__':
     q = 8       #quantidade de hastes
 
     print resistenciaHastesLinha(pa, l, e, d, q)
+    print quadradoCheio(2, 2, 2, pa, l, d, debug = True)
     #saida = raw_input('ENTER] para sair')

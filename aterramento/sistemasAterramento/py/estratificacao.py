@@ -9,6 +9,10 @@ from numpy import zeros, shape
 infinito = 20 # :)
 numeroMaximoFuncoes = 1e8
 
+pho = []
+es = []
+chuteInicial = []
+
 def iniciaConstantes(ex = None, debug = None):
     global pho, es, chuteInicial
 
@@ -48,21 +52,26 @@ def funcaoEstratificacao(x):
 def estratifica2Camadas(debug = None):
 
     if debug:
+        d = 1
         t = time()
+    else:
+        d = 0
 
     # aplica a formula de redução basica encontrada do scipy
     #return fmin(funcaoEstratificacao, chuteInicial, maxfun = numeroMaximoFuncoes)
-
-
     #print fmin(funcaoEstratificacao, chuteInicial, maxfun = numeroMaximoFuncoes)
 
-    val = fmin_slsqp(funcaoEstratificacao, chuteInicial)
+    val = fmin_slsqp(funcaoEstratificacao, chuteInicial, iprint = d)
 
     if debug:
         print val
         print 'tempo execucao(seg), ', time()-t
 
     return val
+
+def p2solo2Camadas(p1, k):
+    # apenas para um solo de 2 camadas
+    return -((k+1)*p1)/(k-1)    
 
 def lerPlanilha(planilha, debug = None):
     # p = open_workbook(planilha)
@@ -172,6 +181,19 @@ def resistividadeMediaPlanilha(mDados, desvioPadrao = 0.5, debug = None):
 
     return [profundidadeTeste, resistividadeCorrigida]
 
+def resistividadeAparente2Camadas(debug = None):
+    [p1, k, h] = estratifica2Camadas()
+    p2 = p2solo2Camadas(p1, k)
+
+    print 'p2, ', p2
+
+    #Aplicando as fórmulas de HUMMEL
+
+    #coeficiente de divergência
+    beta = p2/p1
+
+
+
 
 if __name__ == '__main__':
     planilha = "tabelaExemplo2_12GeraldoKindermann.xlsx"
@@ -206,5 +228,7 @@ if __name__ == '__main__':
     print
     print '**fim'
     print '_'*80
+
+    resistividadeAparente2Camadas()
 
     #saida = raw_input('[ENTER] para sair')
