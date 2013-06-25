@@ -102,7 +102,7 @@ def ajudaBasica():
     print 'k - levanta a curva K de uma malha'
     print 'e - inicia o processo de estratificacao solo'
     print 'a - ler uma planilha de dados'
-    print ' - ler um arquivo csv'
+    print 'q - ler um arquivo csv'
     print 
     
 if __name__ == '__main__':

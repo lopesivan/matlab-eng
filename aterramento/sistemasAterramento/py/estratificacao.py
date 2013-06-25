@@ -1,19 +1,37 @@
 # -*- coding: cp1252 -*-
-from scipy.optimize import fmin, fmin_bfgs
+from __future__ import division
+from scipy.optimize import fmin, fmin_slsqp
 from math import sqrt
 from time import time
 from xlrd import open_workbook
 from numpy import zeros, shape
 
-infinito = 10 # :)
+infinito = 20 # :)
 numeroMaximoFuncoes = 1e8
+
+def iniciaConstantes(ex = None, debug = None):
+    global pho, es, chuteInicial
+
+    if ex == None:
+        pho = [320, 245, 182, 162, 168, 152]
+        es = [2.5, 5, 7.5, 10, 12.5, 15]
+        chuteInicial = [0, 0, 0]    
+    elif ex == 0:
+        pho = [996, 974, 858, 696, 549, 361, 276, 230, 210]
+        es = [1, 2, 4, 6, 8, 12, 16, 22, 32]
+        chuteInicial = [0, 0, 0]
+
+    if debug:
+        print 'pho, ', pho
+        print 'es, ', es
+        print 'chute, ', chuteInicial
 
 def funcaoEstratificacao(x):
     '''
     entrada:
-    x[0] = p1
-    x[1]= k
-    x[2] = h
+    x[0] = p1 - resistividade da primeira camada
+    x[1] = k  - coeficiente de reflexão
+    x[2] = h  - altura da primeira camada
     '''    
 
     # aplicação da fórmula encontrada no livro do Geraldo volume 2
@@ -27,13 +45,24 @@ def funcaoEstratificacao(x):
         f = f + (pho[i]-x[0]*(4*s1+1))**2
     return f
 
-def estratifica2Camadas():
-    t = time()
+def estratifica2Camadas(debug = None):
+
+    if debug:
+        t = time()
 
     # aplica a formula de redução basica encontrada do scipy
-    return fmin(funcaoEstratificacao, chuteInicial, maxfun = numeroMaximoFuncoes)
-    
-    print time()-t
+    #return fmin(funcaoEstratificacao, chuteInicial, maxfun = numeroMaximoFuncoes)
+
+
+    #print fmin(funcaoEstratificacao, chuteInicial, maxfun = numeroMaximoFuncoes)
+
+    val = fmin_slsqp(funcaoEstratificacao, chuteInicial)
+
+    if debug:
+        print val
+        print 'tempo execucao(seg), ', time()-t
+
+    return val
 
 def lerPlanilha(planilha, debug = None):
     # p = open_workbook(planilha)
@@ -145,17 +174,26 @@ def resistividadeMediaPlanilha(mDados, desvioPadrao = 0.5, debug = None):
 
 
 if __name__ == '__main__':
-    global pho, es, chuteInicial
     planilha = "tabelaExemplo2_12GeraldoKindermann.xlsx"
     
     # testa a estratificação em duas camadas
     print 'Inciando teste de estratificação em 2 camadas,'
-    pho = [320, 245, 182, 162, 168, 152]
-    es = [2.5, 5, 7.5, 10, 12.5, 15]
-    chuteInicial = [0, 0, 0]
 
-    print estratifica2Camadas()
+    iniciaConstantes(debug = True)
+    print 'saida, ', estratifica2Camadas(debug = True)
+
+    print '_'*80
+    print 'testando individualmente a funcao de estratificacao'
+    print 'saida, ', funcaoEstratificacao([364.67, -0.43, -2.827])
+
+    print '_'*80
+
+    iniciaConstantes(0, debug = True)
+    print 'saida, ', estratifica2Camadas(debug = True)
+
+    print
     print '**fim'
+    print '_'*80
 
     # testa a leitura da planilha com os dados
     print 'Iniciando teste leitura de uma planilha'
@@ -164,6 +202,9 @@ if __name__ == '__main__':
     print 'Retorno,'
     print p
     print r
+
+    print
     print '**fim'
+    print '_'*80
 
     #saida = raw_input('[ENTER] para sair')
