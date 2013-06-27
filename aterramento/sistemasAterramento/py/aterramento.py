@@ -1,4 +1,5 @@
 # -*- coding: cp1252 -*-
+from __future__ import division
 import r1haste
 import rnhastes
 from pylab import arange, plot, show
@@ -194,6 +195,7 @@ def ajudaBasica():
     print '[e] - inicia o processo de estratificacao do solo'
     print '[a] - ler uma planilha de dados'
     print '[q] - ler um arquivo csv'
+    print '[p] - solucao de problemas comuns'
     print 
 
 def sistema():

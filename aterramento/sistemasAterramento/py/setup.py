@@ -5,7 +5,7 @@
 
 from cx_Freeze import setup, Executable
 
-build_exe_options = {"packages": ["os", "matplotlib.backends.backend_tkagg"], "excludes": ["tkinter"]}
+build_exe_options = {"packages": ["os", "matplotlib.backends.backend_tkagg", "scipy.optimize.linesearch", "scipy.optimize.minpack2", "scipy.optimize.minpack", "scipy.optimize._minpack", "scipy.optimize._lbfgsb", "scipy.optimize.lbfgsb"], "excludes": [""]}
 
 executables = [
     Executable('aterramento.py')
