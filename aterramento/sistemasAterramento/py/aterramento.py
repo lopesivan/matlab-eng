@@ -12,7 +12,23 @@ versao = '0.1beta'
 
 #variaveis de controle do sistema
 usaValoresArquivo = 1
+debugAterramento = 0
 
+def verificaVariaveisProfResi():
+    global profundidade, resistividadeMedia
+    try:
+        if len(profundidade) > 0:
+            if len(profundidade) == len(resistividadeMedia):
+                return 0
+            else:
+                print 'erro: tamanho dos vetores de profundidade e resistividade nao sao os mesmos'
+                return 2
+        else:
+            print 'erro: nada em profundidade'
+            return 1
+    except:
+        print 'erro: impossivel ler profundidade'
+        return 3
 def entradaPhold():
     try:
         pa = input('resistividade do solo(ohm*m): ')
@@ -98,8 +114,7 @@ def curvaK():
     levantaCurvaK(en[0], en[1], en[2], en[3], en[4], fim, passo)
     
 
-def calculosResistividade():
-    
+def calculosResistividade(): 
     print '[0] - calculo para 1 haste'
     print '[1] - calculo para n hastes em paralelo(linha)'
     print '[2] - quadrado cheio'
@@ -128,8 +143,7 @@ def calculosResistividade():
     print 'resistencia calculada:', res
 
 def planilhaExcel(p = None, debug = True):
-
-    global profundidade, resisitividadeMedia
+    global profundidade, resistividadeMedia
 
     if p == None:
         mainTkinter = Tk()
@@ -141,14 +155,14 @@ def planilhaExcel(p = None, debug = True):
         planilha = p
 
     mDados = estratificacao.lerPlanilha(planilha)
-    [profundidade, resisitividadeMedia] = estratificacao.resistividadeMediaPlanilha(mDados)        
+    [profundidade, resistividadeMedia] = estratificacao.resistividadeMediaPlanilha(mDados)        
 
     if debug:
         print 'Valores disponiveis da tabela,'
         print mDados
         print 'profundidade | resisitividade media'
         for i in range(len(profundidade)):
-            print profundidade[i], resisitividadeMedia[i]
+            print profundidade[i], resistividadeMedia[i]
 
     print 'aviso: valores de profundidade e resistivdade foram atualizados'
 
@@ -167,18 +181,18 @@ def estratificacaoSolo():
 
     # print estratificacao.estratifica2Camadas()
 
-    try:
-        estratificacao.pho = resisitividadeMedia;
-        estratificacao.es = profundidade;
-        estratificacao.chuteInicial = [0, 0, 0]
-    except:
-        print "erro: nao e' possivel encontrar os valores de resisitivdade e profundidade"
+    if verificaVariaveisProfResi():
         return
 
-    [p1, k, h] = estratificacao.estratifica2Camadas()    
-    print 'Resistividade primeira camada, ', p1
-    print 'Indice de reflexao, ', k
-    print 'Profundidade da primeira camada, ', h
+    estratificacao.pho = resistividadeMedia
+    estratificacao.es = profundidade
+
+    [p1, k, h] = estratificacao.estratifica2Camadas(debugAterramento)  
+    p2 = estratificacao.p2solo2Camadas(p1, k)  
+    print 'Resistividade da primeira camada(ohm*m), ', p1
+    print 'resisitivdade da segunda camada(ohm*m), ', p2
+    print 'coeficiente de reflexao, ', k
+    print 'Profundidade da primeira camada(m), ', h
 
     pass
 
@@ -187,30 +201,32 @@ def lerCSV():
 
 def ajudaBasica():
     print 'lista de comandos disponiveis:'
-    print '[h] - ajuda'
-    print '[o] - sistema de calculos'
-    print '[s] - extermina o programa'
-    print '[c] - inicia os calculos para sistema aterramento'
-    print '[k] - levanta a curva K de uma malha'
-    print '[e] - inicia o processo de estratificacao do solo'
-    print '[a] - ler uma planilha de dados'
-    print '[q] - ler um arquivo csv'
-    print '[p] - solucao de problemas comuns'
+    print 'h - ajuda'
+    print 'o - sistema de calculos'
+    print 's - extermina o programa'
+    print 'c - inicia os calculos para sistema aterramento'
+    print 'k - levanta a curva K de uma malha'
+    print 'e - inicia o processo de estratificacao do solo'
+    print 'a - ler uma planilha de dados'
+    print 'q - ler um arquivo csv'
+    print 'p - plota curva h-pho'
     print 
 
-def sistema():
+def sistema(): 
     global usaValoresArquivo
-    global profundidade, resisitividadeMedia
+    global profundidade
+    global resistividadeMedia
+    global debugAterramento 
 
     print 'Controle do sistema,'
     print 'Usa variaveis adquiridas apartir de um arquivo, @', usaValoresArquivo
 
-    if raw_input('mostrar variaveis[s/N]?') == 's':
+    if raw_input('mostrar variaveis aterramento[s/N]?') == 's':
         try:
-            if len(profundidade)>0 and len(resisitividadeMedia):
+            if len(profundidade)>0 and len(resistividadeMedia):
                 print 'profundidade | resisitividade media'
                 for i in range(len(profundidade)):
-                    print profundidade[i], resisitividadeMedia[i]
+                    print profundidade[i], resistividadeMedia[i]
         except:
             print 'aviso: nada para mostrar'
             print 'carregue um arquivo antes desta acao'
@@ -222,6 +238,26 @@ def sistema():
         except:
             pass
 
+    if debugAterramento == 0:
+        if raw_input('entrar no modo de debug[s/N]?') == 's':
+            debugAterramento = 1
+            print 'debug ativado'
+        else:
+            print 'atual, ', debugAterramento
+    else:
+        if raw_input('sair do modo de debug[s/N]?') == 's':
+            debugAterramento = 0
+            print 'debug desativado'
+        else:
+            print 'atual, ', debugAterramento     
+
+def plotPhoH():
+    if verificaVariaveisProfResi():
+        return
+        
+    plot(profundidade, resistividadeMedia)
+    show()
+
 def exterminaPrograma(): exit()
 def nada(): pass
 
@@ -232,7 +268,8 @@ dicionarioComandos = {  'h' : ajudaBasica,
                         'k' : curvaK,
                         'e' : estratificacaoSolo,
                         'a' : planilhaExcel,
-                        'q' : lerCSV
+                        'q' : lerCSV, 
+                        'p' : plotPhoH
                     }
 
 def cmds(cmd): return dicionarioComandos.get(cmd, nada)()

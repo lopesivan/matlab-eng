@@ -1,39 +1,68 @@
 # -*- coding: cp1252 -*-
 from __future__ import division
-from scipy.optimize import fmin, fmin_slsqp, anneal, basinhopping, brute
-from math import sqrt
+from scipy.optimize import fmin, fmin_slsqp, anneal, basinhopping, brute, leastsq
+from math import sqrt, pi
 from time import time
 from xlrd import open_workbook
-from numpy import zeros, shape
+from numpy import zeros, shape, arange
 from pylab import arange, plot, show
 
-infinito = 20 # :)
+infinito = 10 # :)
 numeroMaximoFuncoes = 1e8
 
 pho = []
 es = []
-chuteInicial = []
+coeficienteReflexao = 0
+chuteInicial = [0, 0, 0]
+
+infinitoEndrenyi = 100
+
+# implementando as restrições para a função de otimização
+# no caso foram adotados,
+# resistividade da primeira camada varia de 0.1 a 1000 ohm*m
+# coeficiente de reflexao de -1 a 1
+# profundidade da primeira camada de 0.1 a 100 m
+limites = [(0.1, 1000), (-1, 1), (0.1, 100)]
+
+debugPlot = None
 
 def iniciaConstantes(ex = None, debug = None):
-    global pho, es, chuteInicial
+    global pho, es, chuteInicial, limites
 
-    if ex == None:
+    # valores encontrados no Geraldo
+    if ex == 0:
+
         pho = [320, 245, 182, 162, 168, 152]
         es = [2.5, 5, 7.5, 10, 12.5, 15]
-        chuteInicial = [0, 0, 0]    
-    elif ex == 0:
+        #chuteInicial = [0, 0, 0] 
+
+    elif ex == 1:
+
         pho = [996, 974, 858, 696, 549, 361, 276, 230, 210]
         es = [1, 2, 4, 6, 8, 12, 16, 22, 32]
-        chuteInicial = [0, 0, 0]
-    elif ex == 1:
+        #chuteInicial = [0, 0, 0]
+
+    elif ex == 2:
+
         pho = [684, 611, 415, 294, 237, 189, 182]
         es = [1, 2, 4, 6, 8, 16, 32]
-        chuteInicial = [0, 0, 0]
+        #chuteInicial = [0, 0, 0]
 
-    if debug:
-        print 'pho, ', pho
-        print 'es, ', es
-        print 'chute, ', chuteInicial
+    # tabela do Mamede
+    elif ex == 3:
+        pho = [470.22200000000004, 
+               467.07600000000002, 
+               450.27600000000007, 
+               409.14800000000002, 
+               397.28800000000001]
+        es = [2.0, 4.0, 8.0, 16.0, 32.0]
+        #chuteInicial = [100, 1, 1]
+
+
+    # if debug:
+    #     print 'pho, ', pho
+    #     print 'es, ', es
+    #     print 'chute, ', chuteInicial
 
 def funcaoEstratificacao(x):
     '''
@@ -52,13 +81,21 @@ def funcaoEstratificacao(x):
             s1 = s1 + ((x[1]**n)/sqrt(1+((2*n*x[2])/es[i])**2) - (x[1]**n)/sqrt(4+((2*n*x[2])/es[i])**2))
         # continua acumulando os dados
         f = f + (pho[i]-x[0]*(4*s1+1))**2
+
     return f
 
 def estratifica2Camadas(debug = None):
+    global coeficienteReflexao
 
     if debug:
         d = 1
         t = time()
+
+        print 'funcao de estratificacao, usando,'
+        print 'pho, ', pho
+        print 'es, ', es
+        print 'chute, ', chuteInicial
+
     else:
         d = 0
 
@@ -68,115 +105,19 @@ def estratifica2Camadas(debug = None):
     #val = anneal(funcaoEstratificacao, chuteInicial)
     #val = basinhopping(funcaoEstratificacao, chuteInicial)
 
-
     # FUNCIONA
     # Minimize a function using Sequential Least SQuares Programming
     # Python interface function for the SLSQP Optimization subroutine originally implemented by Dieter Kraft.
+    [x, fun, nit, status, mes] = fmin_slsqp(funcaoEstratificacao, 
+                                            chuteInicial, 
+                                            bounds = limites, 
+                                            iprint = d, 
+                                            full_output = 1)
 
-    """
-    Minimize a function using Sequential Least SQuares Programming
 
-    Python interface function for the SLSQP Optimization subroutine
-    originally implemented by Dieter Kraft.
-
-    Parameters
-    ----------
-    func : callable f(x,*args)
-        Objective function.
-    x0 : 1-D ndarray of float
-        Initial guess for the independent variable(s).
-    eqcons : list
-        A list of functions of length n such that
-        eqcons[j](x,*args) == 0.0 in a successfully optimized
-        problem.
-    f_eqcons : callable f(x,*args)
-        Returns a 1-D array in which each element must equal 0.0 in a
-        successfully optimized problem.  If f_eqcons is specified,
-        eqcons is ignored.
-    ieqcons : list
-        A list of functions of length n such that
-        ieqcons[j](x,*args) >= 0.0 in a successfully optimized
-        problem.
-    f_ieqcons : callable f(x,*args)
-        Returns a 1-D ndarray in which each element must be greater or
-        equal to 0.0 in a successfully optimized problem.  If
-        f_ieqcons is specified, ieqcons is ignored.
-    bounds : list
-        A list of tuples specifying the lower and upper bound
-        for each independent variable [(xl0, xu0),(xl1, xu1),...]
-    fprime : callable `f(x,*args)`
-        A function that evaluates the partial derivatives of func.
-    fprime_eqcons : callable `f(x,*args)`
-        A function of the form `f(x, *args)` that returns the m by n
-        array of equality constraint normals.  If not provided,
-        the normals will be approximated. The array returned by
-        fprime_eqcons should be sized as ( len(eqcons), len(x0) ).
-    fprime_ieqcons : callable `f(x,*args)`
-        A function of the form `f(x, *args)` that returns the m by n
-        array of inequality constraint normals.  If not provided,
-        the normals will be approximated. The array returned by
-        fprime_ieqcons should be sized as ( len(ieqcons), len(x0) ).
-    args : sequence
-        Additional arguments passed to func and fprime.
-    iter : int
-        The maximum number of iterations.
-    acc : float
-        Requested accuracy.
-    iprint : int
-        The verbosity of fmin_slsqp :
-
-        * iprint <= 0 : Silent operation
-        * iprint == 1 : Print summary upon completion (default)
-        * iprint >= 2 : Print status of each iterate and summary
-    disp : int
-        Over-rides the iprint interface (preferred).
-    full_output : bool
-        If False, return only the minimizer of func (default).
-        Otherwise, output final objective function and summary
-        information.
-    epsilon : float
-        The step size for finite-difference derivative estimates.
-
-    Returns
-    -------
-    out : ndarray of float
-        The final minimizer of func.
-    fx : ndarray of float, if full_output is true
-        The final value of the objective function.
-    its : int, if full_output is true
-        The number of iterations.
-    imode : int, if full_output is true
-        The exit mode from the optimizer (see below).
-    smode : string, if full_output is true
-        Message describing the exit mode from the optimizer.
-
-    See also
-    --------
-    minimize: Interface to minimization algorithms for multivariate
-        functions. See the 'SLSQP' `method` in particular.
-
-    Notes
-    -----
-    Exit modes are defined as follows ::
-
-        -1 : Gradient evaluation required (g & a)
-         0 : Optimization terminated successfully.
-         1 : Function evaluation required (f & c)
-         2 : More equality constraints than independent variables
-         3 : More than 3*n iterations in LSQ subproblem
-         4 : Inequality constraints incompatible
-         5 : Singular matrix E in LSQ subproblem
-         6 : Singular matrix C in LSQ subproblem
-         7 : Rank-deficient equality constraint subproblem HFTI
-         8 : Positive directional derivative for linesearch
-         9 : Iteration limit exceeded
-
-    Examples
-    --------
-    Examples are given :ref:`in the tutorial <tutorial-sqlsp>`.
-    """
-
-    [x, fun, nit, status, mes] = fmin_slsqp(funcaoEstratificacao, chuteInicial, iprint = d, full_output = 1)
+    #print 'leastsq,'
+    #a = leastsq(funcaoEstratificacao, chuteInicial)
+    #print a
 
     if status != 0:
         print '***'
@@ -187,6 +128,9 @@ def estratifica2Camadas(debug = None):
     if debug:
         print x
         print 'tempo execucao(seg), ', time()-t
+
+    # atualiza o coeficiente 
+    coeficienteReflexao = x[1]
 
     return x
 
@@ -265,7 +209,7 @@ def resistividadeMediaPlanilha(mDados, desvioPadrao = 0.5, debug = None):
         media = 0
 
     if debug:
-        print 'Resistividade média,'
+        print 'Resistividade media,'
         print mediaResistividade
 
     # tabelaCalculo = zeros(shape = (nLinha, nColuna))
@@ -303,7 +247,38 @@ def resistividadeMediaPlanilha(mDados, desvioPadrao = 0.5, debug = None):
     return [profundidadeTeste, resistividadeCorrigida]
 
 
-def resistividadeAparente2Camadas(debug = None):
+def curvaEndrenyiSomatorio(a):
+
+    # aplicação da curva de Endrenyi
+
+    k = coeficienteReflexao
+    s = 0
+    for n in range(1, infinitoEndrenyi+1):
+        s = s + (k**n)/sqrt(1+(2*n/a)**2)
+    s = 2*s+1
+
+    return s
+
+def curvaEndrenyi(a):
+    return 2*curvaEndrenyiSomatorio(a)-curvaEndrenyiSomatorio(2*a)
+
+def plotCurvaEndrenyi():
+    m = []
+    for i in arange(0, 10, 0.01):
+        m.append(curvaEndrenyi(i))
+
+# def resistividadeAparenteMalha(p1, a):
+#     return p1*curvaEndrenyi(a)
+
+def resistividadeAparente2CamadasMalha(ql, qc, es, d1, debug = None):
+    '''
+    Entrada:
+    ql = quantidade de hastes em linha
+    qc = quantidade de hastes em coluna
+    es = espaçamento entre duas hastes
+    d1 = profundidade que as hastes estão cravadas
+    '''
+
     [p1, k, h] = estratifica2Camadas()
     p2 = p2solo2Camadas(p1, k)
 
@@ -311,54 +286,53 @@ def resistividadeAparente2Camadas(debug = None):
 
     #Aplicando as fórmulas de HUMMEL
 
+    # Área da malha
+    A = es*(ql-1)**2
+
+    # Raio do anel equivalente do sistema de aterramento
+    r = sqrt(A/pi)
+
+    # coeficiente de penetração
+    alfa = r/d1
+
     #coeficiente de divergência
     beta = p2/p1
 
+    # aplicando a curva Endrenyi
+    m0 = curvaEndrenyi(alfa)
+
+    # resistividade aparente
+    pa = m0*p1
+
+    return [pa, A, r, alfa, beta, m0]
+
 if __name__ == '__main__':
-    planilha = "tabelaExemplo2_12GeraldoKindermann.xlsx"
+    planilhas = ["tabelaExemplo2_12GeraldoKindermann.xlsx", "subestacaoMamede.xlsx"]
     
     #--------------------------------------------------------------------------
     # testa a estratificação em duas camadas
     print 'Inciando teste de estratificacao em 2 camadas,'
 
-    iniciaConstantes(debug = True)
-     
-    [p1, k, h] = estratifica2Camadas(debug = True)
-    print 'valores,'
-    print 'p1, ', p1
-    print 'k, ', k
-    print 'h, ', abs(h)
-    print 'p2, ', p2solo2Camadas(p1, k)
+    for i in range(4):
+        iniciaConstantes(i, debug = True)
+        [p1, k, h] = estratifica2Camadas(debug = True)
+        print 'valores,'
+        print 'p1, ', p1
+        print 'k, ', k
+        print 'h, ', abs(h)
+        print 'p2, ', p2solo2Camadas(p1, k)
 
-    print '_'*80
-
-    #--------------------------------------------------------------------------
-    iniciaConstantes(0, debug = True)
-
-    [p1, k, h] = estratifica2Camadas(debug = True)
-    print 'valores,'
-    print 'p1, ', p1
-    print 'k, ', k
-    print 'h, ', abs(h)
-    print 'p2, ', p2solo2Camadas(p1, k)
-
-    print '_'*80
-
-    iniciaConstantes(1, debug = True)
-    
-    #--------------------------------------------------------------------------
-
-    [p1, k, h] = estratifica2Camadas(debug = True)
-    print 'valores,'
-    print 'p1, ', p1
-    print 'k, ', k
-    print 'h, ', abs(h)
-    print 'p2, ', p2solo2Camadas(p1, k)
-
-    print '_'*80
+        print '_'*80
 
     print 'testando individualmente a funcao de estratificacao'
+    iniciaConstantes(0, debug = True)
     print 'saida, ', funcaoEstratificacao([364.67, -0.43, -2.827])
+    print '-'*40
+    iniciaConstantes(3, debug = True)
+    print 'saida, ', funcaoEstratificacao([12, 0, 0])
+    print '-'*40
+    iniciaConstantes(3, debug = True)
+    print 'saida, ', funcaoEstratificacao([472, 0.088811995, 7.8])
 
     print
     print '**fim'
@@ -366,32 +340,39 @@ if __name__ == '__main__':
 
     #--------------------------------------------------------------------------
     # testa a leitura da planilha com os dados
-    print 'Iniciando teste leitura de uma planilha'
-    m = lerPlanilha(planilha, debug = True)
-    [prof, resi] = resistividadeMediaPlanilha(m, debug = True)
-    print 'Retorno,'
-    print prof
-    print resi
+    
+    print 'Iniciando teste leitura de uma planilha' 
 
-    pho = prof
-    es = resi
+    for i in planilhas:
+        print 'lendo planilha, ', i
+        m = lerPlanilha(i, debug = True)
+        [phoTabela, esTabela] = resistividadeMediaPlanilha(m, debug = True)
+        print 'retorno, '
+        print phoTabela
+        print esTabela
 
-    plot(prof, resi)
-    show()
+        pho = esTabela
+        es = phoTabela
 
-    print 'estratificando o solo apartir dos valores da tabela'
-    print 'OBS: este solo nao pode ser estratificado em duas camadas'
+        print pho, es
 
-    [p1, k, h] = estratifica2Camadas(debug = True)
-    print 'valores,'
-    print 'p1, ', p1
-    print 'k, ', k
-    print 'h, ', abs(h)
-    print 'p2, ', p2solo2Camadas(p1, k)  
+        if debugPlot:
+            plot(phoTabela, esTabela)
+            show()
+
+        [p1, k, h] = estratifica2Camadas(debug = True)
+        print 'valores, '
+        print 'p1, ', p1
+        print 'k, ', k
+        print 'h, ', h
+        print 'p2, ', p2solo2Camadas(p1, k)
+
+        print '-'*80
 
     print
     print '**fim'
     print '_'*80
+
 
     #--------------------------------------------------------------------------
     resistividadeAparente2Camadas()
