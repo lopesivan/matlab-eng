@@ -11,7 +11,6 @@
 from __future__ import division
 import r1haste
 from math import sqrt, pi, log
-from numpy import zeros
 
 def condutorUnico(pa, p, l, r):
 	"""

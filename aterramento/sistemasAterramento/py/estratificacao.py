@@ -3,6 +3,11 @@
 # Fortaleza-CE, 29/06/2013
 # felipeband18@gmail.com
 # graduando em Engenharia Elétrica
+#
+#-------------------------------------------------------------------------------
+# Processo de estratificação do solo
+#-------------------------------------------------------------------------------
+#
 
 from __future__ import division
 from scipy.optimize import fmin, fmin_slsqp, anneal, basinhopping, brute, leastsq
@@ -12,8 +17,10 @@ from xlrd import open_workbook
 from numpy import zeros, shape, arange
 from pylab import arange, plot, show
 import sys
+from os import getcwd
+from scipy.signal import butter
 
-# VARIAVEIS de controle
+# VARIÁVEIS de controle
 
 infinito = 20 # :)
 
@@ -282,6 +289,14 @@ def resistividadeAparente2CamadasMalha(ordem, es, d1, debug = None):
     ordem = ordem da malha
     es = espaçamento entre duas hastes
     d1 = profundidade que as hastes estão cravadas
+
+    Saida:
+    pa = resistividade aparente
+    A = área da malha
+    r = raio da malha
+    alfa = coeficiente de penetração
+    beta = coeficiente de divergência
+    m0 = curva de Endrenyi no ponto alfa
     '''
 
     [p1, k, h] = estratifica2Camadas()
@@ -313,10 +328,69 @@ def resistividadeAparente2CamadasMalha(ordem, es, d1, debug = None):
 
     return [pa, A, r, alfa, beta, m0]
 
-def 
+def resistividadeAparente1Haste(l):
+    [p1, k, h] = estratifica2Camadas()
+    p2 = p2solo2Camadas(p1, k)
+
+def resistividadeAparenteHastesAlinhadas(n, e, p1, p2, h):
+    """
+    Entrada:
+    n = número de hastes cravadas verticalmente 
+    e = espaçamento entre as hastes
+    p1 = resistividade da primeira camada
+    p2 = resistividade da segunda camada
+    h = profundidade da primeira camada
+
+    Saída:
+
+    """
+    # anel equivalente de Endrenyi
+    r = ((n-1)/2)*e
+
+    # coeficiente de penetracao
+    alfa = r/h
+
+    # coeficiente de divergência
+    beta = p2/p1
+
+    # valor de N para pela curva de Endrenyi
+    N = curvaEndrenyi(alfa)
+
+    pa = N*p1
+
+    return [pa, r, alfa, beta, N]
+
+
+def formulaHummelReducao2Camadas(p, d):
+    """
+    Entrada:
+    p - vetor com a resistividade das camadas
+    d - vetor com o espesura da n-esima camada
+
+    Saída:
+    peq = resisitividade da primeira camada
+    deq = profundidade da primeira camada
+    pn1 = resistividade da segunda camada
+    """
+    if len(p) != len(d):
+        print "erro: tamanho de p e' incoerente com o de d"
+
+    deq = 0
+    for i in d:
+        deq += i
+    den = 0
+    for i in range(len(p)):
+        den += d[i]/p[i]
+    peq = deq/den
+
+    return [peq, deq, p[len(p)-1]]
 
 if __name__ == '__main__':
-    planilhas = ["tabelaExemplo2_12GeraldoKindermann.xlsx", "subestacaoMamede.xlsx"]
+
+    dirAtual = getcwd()
+    pastaTabelas = "tabelas"
+    planilhas = [dirAtual+"\\"+pastaTabelas+"\\"+"tabelaExemplo2_12GeraldoKindermann.xlsx", 
+                 dirAtual+"\\"+pastaTabelas+"\\"+"subestacaoMamede.xlsx"]
     
     #--------------------------------------------------------------------------
     # testa a estratificação em duas camadas
@@ -394,7 +468,23 @@ if __name__ == '__main__':
     print 'resistividade aparente calculada, '
     print 'pa, ', pa
 
+    print 'resistividade para hastes alinhadas'
+    # exemplo do Kindermann
+    n = 7
+    e = 3
+    deq = 8
+    p1 = 247
+    p2 = 80
+    pa = resistividadeAparenteHastesAlinhadas(n, e, p1, p2, deq)
+    print 'pa, ', pa
+
     #--------------------------------------------------------------------------
+
+    print 'testando a formula de hummel para reducao de 2 camadas'
+    # exemplo do Kindermann
+    p = [200, 500, 65]
+    d = [1, 6, 1]
+    print 'resultado, ', formulaHummelReducao2Camadas(p, d)
 
     print
     print '**fim'

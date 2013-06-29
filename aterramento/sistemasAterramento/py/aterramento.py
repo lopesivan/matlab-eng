@@ -13,8 +13,10 @@ from Tkinter import Tk
 import estratificacao
 import configuracoes
 import sys
+import rnHorizontais
+import rAnel
 
-versao = '0.1beta'
+versao = '0.1'
 
 #variaveis de controle do sistema
 usaValoresArquivo = 1
@@ -126,6 +128,7 @@ def calculosResistividade():
     print '2 - quadrado cheio'
     print '3 - triangulo'
     print '4 - circunferencia'
+    print '5 - anel'
     
     a = raw_input('>>>')
     
@@ -146,7 +149,7 @@ def calculosResistividade():
         return 0
 
     print '_'*50
-    print 'resistencia calculada:', res
+    print 'Resistencia calculada:', res
 
 def planilhaExcel(p = None, debug = True):
     global profundidade, resistividadeMedia
@@ -183,19 +186,6 @@ def planilhaExcel(p = None, debug = True):
     print 'aviso: valores de profundidade e resistivdade foram atualizados'
 
 def estratificacaoSolo():
-    # print estratificacao.pho
-    # print estratificacao.es
-    # print estratificacao.chuteInicial
-
-    # estratificacao.pho = [320, 245, 182, 162, 168, 152]
-    # estratificacao.es = [2.5, 5, 7.5, 10, 12.5, 15]
-    # estratificacao.chuteInicial = [0, 0, 0]    
-
-    # print estratificacao.pho
-    # print estratificacao.es
-    # print estratificacao.chuteInicial
-
-    # print estratificacao.estratifica2Camadas()
 
     if verificaVariaveisProfResi():
         return
@@ -208,8 +198,8 @@ def estratificacaoSolo():
     [p1, k, h] = estratificacao.estratifica2Camadas(debugAterramento)  
     p2 = estratificacao.p2solo2Camadas(p1, k)  
     print 'Resistividade da primeira camada(ohm*m), ', p1
-    print 'resisitivdade da segunda camada(ohm*m), ', p2
-    print 'coeficiente de reflexao, ', k
+    print 'Resisitivdade da segunda camada(ohm*m), ', p2
+    print 'Coeficiente de reflexao, ', k
     print 'Profundidade da primeira camada(m), ', h
 
     pass
@@ -218,7 +208,7 @@ def lerCSV():
     pass
 
 def ajudaBasica():
-    print 'lista de comandos disponiveis:'
+    print 'Lista de comandos disponiveis:'
     print 'h - ajuda'
     print 'o - sistema de calculos'
     print 's - extermina o programa'
@@ -278,29 +268,57 @@ def plotPhoH():
     plot(profundidade, resistividadeMedia)
     show()
 
-def exterminaPrograma(): exit()
-def nada(): pass
+def exterminaPrograma(): 
+    print 'saindo...'
+    exit()
+
+def nada():
+    print 'aviso: comando nao reconhecido!'
 
 dicionarioComandos = {  'h' : ajudaBasica,
+                        'ajuda' : ajudaBasica,
+
                         'o' : sistema, 
+                        'sistema' : sistema,
+
                         's' : exterminaPrograma, 
+                        'sair' :  exterminaPrograma, 
+
                         'c' : calculosResistividade,
+                        'resistividade' : calculosResistividade,
+
                         'k' : curvaK,
+                        'curvak' : curvaK,
+
                         'e' : estratificacaoSolo,
+                        'estratificacao' : estratificacaoSolo,
+
                         'a' : planilhaExcel,
+                        'excel' : planilhaExcel,
+
                         'q' : lerCSV, 
-                        'p' : plotPhoH
+                        'csv' : lerCSV,
+
+                        'p' : plotPhoH,
+                        'ploth' : plotPhoH
+
                     }
 
-def cmds(cmd): return dicionarioComandos.get(cmd, nada)()
+# interpreta os comandos do usuário
+def cmds(cmd): 
+    return dicionarioComandos.get(cmd, nada)()
 
 if __name__ == '__main__':
 
-    print 'Calculos para sistemas de aterramento'
-    print 'Felipe Bandeira, 22/06/2013'
-    print 
+    print 'Calculos para sistemas de aterramento , v.', versao
+    print 'Felipe Bandeira, junho/2013, Fortaleza-CE'
+    print '.'*80
+    print 'digite "ajuda" para mais informacoes'
 
-    ajudaBasica()
+    #ajudaBasica()
 
     while True:
-        cmds(raw_input('>>>'))       
+        entrada = raw_input('>')
+        # converte tudo para letras minúsculas e inicia a interpretacao
+        cmds(entrada.lower())
+        
