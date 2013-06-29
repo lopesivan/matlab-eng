@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+# Felipe Bandeira da Silva
+# Fortaleza-CE, 29/06/2013
+# felipeband18@gmail.com
+# graduando em Engenharia Elétrica
+
 from __future__ import division
 import r1haste
 import rnhastes
@@ -147,15 +152,25 @@ def planilhaExcel(p = None, debug = True):
     global profundidade, resistividadeMedia
 
     if p == None:
-        mainTkinter = Tk()
-        planilha = askopenfilename()
-        mainTkinter.destroy()
-        if debug:
-            print planilha    
+        try:
+            mainTkinter = Tk()
+            planilha = askopenfilename()
+            mainTkinter.destroy()
+            if debug:
+                print planilha    
+        except:
+            planilha = None
+            return
     else:
         planilha = p
 
-    mDados = estratificacao.lerPlanilha(planilha)
+    try:
+        mDados = estratificacao.lerPlanilha(planilha)
+    except:
+        print 'aviso: nenhum arquivo'
+        planilha = None
+        return
+
     [profundidade, resistividadeMedia] = estratificacao.resistividadeMediaPlanilha(mDados)        
 
     if debug:
@@ -185,6 +200,8 @@ def estratificacaoSolo():
     if verificaVariaveisProfResi():
         return
 
+    print 'Iniciando a estratificacao do solo'
+
     estratificacao.pho = resistividadeMedia
     estratificacao.es = profundidade
 
@@ -211,6 +228,7 @@ def ajudaBasica():
     print 'a - ler uma planilha de dados'
     print 'q - ler um arquivo csv'
     print 'p - plota curva h-pho'
+    print 'l - resistividade aparente'
     print 
 
 def sistema(): 
@@ -285,4 +303,4 @@ if __name__ == '__main__':
     ajudaBasica()
 
     while True:
-        cmds(raw_input('~'))       
+        cmds(raw_input('>>>'))       

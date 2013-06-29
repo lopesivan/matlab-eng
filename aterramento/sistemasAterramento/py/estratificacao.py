@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+# Felipe Bandeira da Silva
+# Fortaleza-CE, 29/06/2013
+# felipeband18@gmail.com
+# graduando em Engenharia Elétrica
 
 from __future__ import division
 from scipy.optimize import fmin, fmin_slsqp, anneal, basinhopping, brute, leastsq
@@ -158,6 +162,7 @@ def lerPlanilha(planilha, debug = None):
     localDados = 2
     # número de linhas utilizadas pela planilha apenas para informações
     qLinhasInf = 2
+
     for s in dadosMedidos.sheets():
         if debug:
             print 'linhas,', s.nrows
@@ -249,7 +254,6 @@ def resistividadeMediaPlanilha(mDados, desvioPadrao = 0.5, debug = None):
 
     return [profundidadeTeste, resistividadeCorrigida]
 
-# a curva de Endrenyi só é valida para malha de terra
 def curvaEndrenyiSomatorio(a):
 
     # aplicação da curva de Endrenyi
@@ -272,15 +276,12 @@ def plotCurvaEndrenyi():
 
 # Calculo da resistividade aparente para uma MALHA especifica de terra
 # com espaçamento igual entre duas hastes e mesma profundidade
-def resistividadeAparente2CamadasMalha(ql, qc, es, d1, debug = None):
+def resistividadeAparente2CamadasMalha(ordem, es, d1, debug = None):
     '''
     Entrada:
-    ql = quantidade de hastes em linha
-    qc = quantidade de hastes em coluna
+    ordem = ordem da malha
     es = espaçamento entre duas hastes
     d1 = profundidade que as hastes estão cravadas
-
-    Exemplo do Geraldo Kindermann
     '''
 
     [p1, k, h] = estratifica2Camadas()
@@ -288,10 +289,12 @@ def resistividadeAparente2CamadasMalha(ql, qc, es, d1, debug = None):
 
     print 'p2, ', p2
 
-    # Aplicando as fórmulas de HUMMEL
+    ###################################
+    # Aplicando as fórmulas de HUMMEL #
+    ###################################
 
     # Área da malha
-    A = es*(ql-1)**2
+    A = (es*(ordem-1))**2
 
     # Raio do anel equivalente do sistema de aterramento
     r = sqrt(A/pi)
@@ -309,6 +312,8 @@ def resistividadeAparente2CamadasMalha(ql, qc, es, d1, debug = None):
     pa = m0*p1
 
     return [pa, A, r, alfa, beta, m0]
+
+def 
 
 if __name__ == '__main__':
     planilhas = ["tabelaExemplo2_12GeraldoKindermann.xlsx", "subestacaoMamede.xlsx"]
@@ -374,11 +379,25 @@ if __name__ == '__main__':
         print '-'*80
 
     print
+
+    #--------------------------------------------------------------------------
+    # testando os cálculos de resistividade aparente    
+
+    print 'calculando a resistividade aparente'
+
+    ordem = 4
+    espacamento = 3
+    prof = 16
+
+    pa = resistividadeAparente2CamadasMalha(ordem, espacamento, prof)
+
+    print 'resistividade aparente calculada, '
+    print 'pa, ', pa
+
+    #--------------------------------------------------------------------------
+
+    print
     print '**fim'
     print '_'*80
 
-
-    #--------------------------------------------------------------------------
-    
-
-    saida = raw_input('[ENTER] para sair')
+    #saida = raw_input('[ENTER] para sair')
