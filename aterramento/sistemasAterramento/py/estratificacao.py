@@ -1,4 +1,5 @@
-# -*- coding: cp1252 -*-
+# -*- coding: utf-8 -*-
+
 from __future__ import division
 from scipy.optimize import fmin, fmin_slsqp, anneal, basinhopping, brute, leastsq
 from math import sqrt, pi
@@ -6,16 +7,16 @@ from time import time
 from xlrd import open_workbook
 from numpy import zeros, shape, arange
 from pylab import arange, plot, show
+import sys
 
-infinito = 10 # :)
-numeroMaximoFuncoes = 1e8
+# VARIAVEIS de controle
+
+infinito = 20 # :)
 
 pho = []
 es = []
 coeficienteReflexao = 0
 chuteInicial = [0, 0, 0]
-
-infinitoEndrenyi = 100
 
 # implementando as restrições para a função de otimização
 # no caso foram adotados,
@@ -23,6 +24,8 @@ infinitoEndrenyi = 100
 # coeficiente de reflexao de -1 a 1
 # profundidade da primeira camada de 0.1 a 100 m
 limites = [(0.1, 1000), (-1, 1), (0.1, 100)]
+
+infinitoEndrenyi = 100
 
 debugPlot = None
 
@@ -246,7 +249,7 @@ def resistividadeMediaPlanilha(mDados, desvioPadrao = 0.5, debug = None):
 
     return [profundidadeTeste, resistividadeCorrigida]
 
-
+# a curva de Endrenyi só é valida para malha de terra
 def curvaEndrenyiSomatorio(a):
 
     # aplicação da curva de Endrenyi
@@ -267,9 +270,8 @@ def plotCurvaEndrenyi():
     for i in arange(0, 10, 0.01):
         m.append(curvaEndrenyi(i))
 
-# def resistividadeAparenteMalha(p1, a):
-#     return p1*curvaEndrenyi(a)
-
+# Calculo da resistividade aparente para uma MALHA especifica de terra
+# com espaçamento igual entre duas hastes e mesma profundidade
 def resistividadeAparente2CamadasMalha(ql, qc, es, d1, debug = None):
     '''
     Entrada:
@@ -277,6 +279,8 @@ def resistividadeAparente2CamadasMalha(ql, qc, es, d1, debug = None):
     qc = quantidade de hastes em coluna
     es = espaçamento entre duas hastes
     d1 = profundidade que as hastes estão cravadas
+
+    Exemplo do Geraldo Kindermann
     '''
 
     [p1, k, h] = estratifica2Camadas()
@@ -284,7 +288,7 @@ def resistividadeAparente2CamadasMalha(ql, qc, es, d1, debug = None):
 
     print 'p2, ', p2
 
-    #Aplicando as fórmulas de HUMMEL
+    # Aplicando as fórmulas de HUMMEL
 
     # Área da malha
     A = es*(ql-1)**2
@@ -295,7 +299,7 @@ def resistividadeAparente2CamadasMalha(ql, qc, es, d1, debug = None):
     # coeficiente de penetração
     alfa = r/d1
 
-    #coeficiente de divergência
+    # coeficiente de divergência
     beta = p2/p1
 
     # aplicando a curva Endrenyi
@@ -375,6 +379,6 @@ if __name__ == '__main__':
 
 
     #--------------------------------------------------------------------------
-    resistividadeAparente2Camadas()
+    
 
     saida = raw_input('[ENTER] para sair')

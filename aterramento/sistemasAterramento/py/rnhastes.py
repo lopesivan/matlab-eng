@@ -1,4 +1,5 @@
-# -*- coding: cp1252 -*-
+# -*- coding: utf-8 -*-
+
 from __future__ import division
 import r1haste
 from math import sqrt, pi, log
@@ -58,7 +59,7 @@ def quadradoCheio(m, n, esp, pa, l, d, debug = None):
     entrada,
     m - quantidade de hastes colocadas em linha
     n - quantidade de hastes colocas em coluna
-    esp - espaçamento entre duas hastes
+    esp - espaÃ§amento entre duas hastes
     p - restividade aparente
     l - comprimento da haste
     d - diametro da haste

@@ -1,4 +1,4 @@
-# -*- coding: cp1252 -*-
+# -*- coding: utf-8 -*-
 from __future__ import division
 import r1haste
 import rnhastes
@@ -7,6 +7,7 @@ from tkFileDialog import askopenfilename
 from Tkinter import Tk
 import estratificacao
 import configuracoes
+import sys
 
 versao = '0.1beta'
 
@@ -115,11 +116,11 @@ def curvaK():
     
 
 def calculosResistividade(): 
-    print '[0] - calculo para 1 haste'
-    print '[1] - calculo para n hastes em paralelo(linha)'
-    print '[2] - quadrado cheio'
-    print '[3] - triangulo'
-    print '[4] - circunferencia'
+    print '0 - calculo para 1 haste'
+    print '1 - calculo para n hastes em paralelo(linha)'
+    print '2 - quadrado cheio'
+    print '3 - triangulo'
+    print '4 - circunferencia'
     
     a = raw_input('>>>')
     
@@ -221,6 +222,11 @@ def sistema():
     print 'Controle do sistema,'
     print 'Usa variaveis adquiridas apartir de um arquivo, @', usaValoresArquivo
 
+    print 'Limites para a otimizacao,'
+    print 'p1, ', estratificacao.limites[0]
+    print 'k, ', estratificacao.limites[1]
+    print 'h, ', estratificacao.limites[2]
+
     if raw_input('mostrar variaveis aterramento[s/N]?') == 's':
         try:
             if len(profundidade)>0 and len(resistividadeMedia):
@@ -239,17 +245,13 @@ def sistema():
             pass
 
     if debugAterramento == 0:
-        if raw_input('entrar no modo de debug[s/N]?') == 's':
+        if raw_input('ENTRAR no modo de debug[s/N]?') == 's':
             debugAterramento = 1
             print 'debug ativado'
-        else:
-            print 'atual, ', debugAterramento
     else:
-        if raw_input('sair do modo de debug[s/N]?') == 's':
+        if raw_input('SAIR do modo de debug[s/N]?') == 's':
             debugAterramento = 0
             print 'debug desativado'
-        else:
-            print 'atual, ', debugAterramento     
 
 def plotPhoH():
     if verificaVariaveisProfResi():
@@ -283,4 +285,4 @@ if __name__ == '__main__':
     ajudaBasica()
 
     while True:
-        cmds(raw_input('>>'))       
+        cmds(raw_input('~'))       

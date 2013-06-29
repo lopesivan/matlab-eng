@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+
+from __future__ import division
 from math import pi, log
 
 def r1haste(pa, l, d):
