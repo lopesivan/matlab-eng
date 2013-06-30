@@ -7,7 +7,9 @@
 from __future__ import division
 import r1haste
 import rnhastes
-from pylab import arange, plot, show
+#from pylab import arange, plot, show, xlabel, ylabel
+from numpy import arange
+import matplotlib.pyplot as plt
 from tkFileDialog import askopenfilename
 from Tkinter import Tk
 import estratificacao
@@ -110,8 +112,10 @@ def levantaCurvaK(pa, l, e, d, q, fim, passo):
     for i in numeroHastes:
         res.append(rnhastes.resistenciaHastesLinha(pa, l, e, d, i))
 
-    plot(numeroHastes, res)
-    show()
+    plt.plot(numeroHastes, res)
+    plt.xlabel('Numero de Hastes')
+    plt.ylabel('Resistencia')
+    plt.show()
         
     
 def curvaK():
@@ -219,6 +223,7 @@ def ajudaBasica():
     print 'q - ler um arquivo csv'
     print 'p - plota curva h-pho'
     print 'l - resistividade aparente'
+    print 'n - mostra algumas equacoes'
     print 
 
 def sistema(): 
@@ -265,8 +270,40 @@ def plotPhoH():
     if verificaVariaveisProfResi():
         return
         
-    plot(profundidade, resistividadeMedia)
-    show()
+    plt.plot(profundidade, resistividadeMedia)
+    plt.xlabel('Profundidade [m]')
+    plt.ylabel('Resistividade Media [ohm*m]')
+    plt.title('Curva de Resistividade')
+    plt.grid(True)
+    plt.show()
+    plt.savefig('curvadeResistividade.pdf')
+
+def mostraEquacoes():
+    print 'r1 - apenas 1 haste disposta verticalmente no solo'
+    print 'h - hastes dispostas horizontalmente no solo'
+
+    tipo = raw_input('?')
+    tipo = tipo.lower()
+
+    if tipo == 'h':
+        print '0 - condutor unico'
+        print '1 - dois condutores em angulo reto'
+        print '2 - estrela 3 pontas'
+        print '3 - estrela 4 pontas'
+        print '4 - estrela 6 pontas'
+        print '5 - estrela 8 pontas'
+
+        try:
+            v = input('h?')
+        except:
+            print 'erro: entrada invalida'
+            return
+
+        rnHorizontais.mostraEquacao(v)
+
+    elif tipo == 'r1':
+        r1haste.mostraEquacao()
+
 
 def exterminaPrograma(): 
     print 'saindo...'
@@ -300,7 +337,10 @@ dicionarioComandos = {  'h' : ajudaBasica,
                         'csv' : lerCSV,
 
                         'p' : plotPhoH,
-                        'ploth' : plotPhoH
+                        'ploth' : plotPhoH,
+
+                        'n' : mostraEquacoes, 
+                        'equacoes' : mostraEquacoes
 
                     }
 
@@ -308,12 +348,24 @@ dicionarioComandos = {  'h' : ajudaBasica,
 def cmds(cmd): 
     return dicionarioComandos.get(cmd, nada)()
 
+def inicializacao():
+    print 'aviso: carregando arquivo de configuracao'
+    try:
+        print configuracoes.arquivoExcel
+        planilhaExcel(configuracoes.arquivoExcel, debug = None)
+    except:
+        print 'erro: nao foi possivel iniciar pelo arquivo de configuracao'
+        pass 
+    print 'aviso: inicializacao finalizada'
+
 if __name__ == '__main__':
 
     print 'Calculos para sistemas de aterramento , v.', versao
     print 'Felipe Bandeira, junho/2013, Fortaleza-CE'
     print '.'*80
     print 'digite "ajuda" para mais informacoes'
+
+    inicializacao()
 
     #ajudaBasica()
 

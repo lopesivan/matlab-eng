@@ -10,6 +10,16 @@ from math import sqrt, pi, log
 from numpy import zeros
 
 def resistenciaMutua(pa, l, e):
+    """
+    Entrada:
+    pa = resistividade do solo
+    l = comprimento das hastes
+    e = espacamento entre as hastes
+
+    Saída:
+    resistencia mutua entre duas hastes
+    """
+
     bhm = sqrt(l**2 + e**2)
     #print bhm
     return pa/(4*pi*l) * log(((bhm+l)**2 - e**2)/(e**2 - (bhm-l)**2))

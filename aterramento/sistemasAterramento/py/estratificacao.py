@@ -20,6 +20,7 @@ import sys
 from os import getcwd
 from scipy.signal import butter
 
+
 # VARIÁVEIS de controle
 
 infinito = 20 # :)
