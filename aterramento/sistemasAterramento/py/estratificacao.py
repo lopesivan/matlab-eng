@@ -15,7 +15,8 @@ from math import sqrt, pi
 from time import time
 from xlrd import open_workbook
 from numpy import zeros, shape, arange
-from pylab import arange, plot, show
+#from pylab import arange, plot, show
+import matplotlib.pyplot as plt
 import sys
 from os import getcwd
 from scipy.signal import butter
@@ -269,7 +270,7 @@ def curvaEndrenyiSomatorio(a):
     k = coeficienteReflexao
     s = 0
     for n in range(1, infinitoEndrenyi+1):
-        s = s + (k**n)/sqrt(1+(2*n/a)**2)
+        s = s + (k**n)/sqrt(1+((2*n/a)**2))
     s = 2*s+1
 
     return s
@@ -278,9 +279,18 @@ def curvaEndrenyi(a):
     return 2*curvaEndrenyiSomatorio(a)-curvaEndrenyiSomatorio(2*a)
 
 def plotCurvaEndrenyi():
-    m = []
-    for i in arange(0, 10, 0.01):
-        m.append(curvaEndrenyi(i))
+    #eixo das abscissas 
+
+    print 'plotando a curva de Endrenyi'
+
+    alfa = arange(0.01, 1000, 1)    
+    N = []
+    for i in alfa:
+        N.append(curvaEndrenyi(i))
+
+    plt.plot(alfa, N)
+    plt.grid(True)
+    plt.show()
 
 # Calculo da resistividade aparente para uma MALHA especifica de terra
 # com espaçamento igual entre duas hastes e mesma profundidade
@@ -441,8 +451,8 @@ if __name__ == '__main__':
         print pho, es
 
         if debugPlot:
-            plot(phoTabela, esTabela)
-            show()
+            plt.plot(phoTabela, esTabela)
+            plt.show()
 
         [p1, k, h] = estratifica2Camadas(debug = True)
         print 'valores, '
@@ -486,6 +496,8 @@ if __name__ == '__main__':
     p = [200, 500, 65]
     d = [1, 6, 1]
     print 'resultado, ', formulaHummelReducao2Camadas(p, d)
+
+    plotCurvaEndrenyi()
 
     print
     print '**fim'

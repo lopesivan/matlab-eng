@@ -17,12 +17,27 @@ import configuracoes
 import sys
 import rnHorizontais
 import rAnel
+import potenciais
+from os import getcwd, mkdir
+from os.path import basename, splitext
+from time import localtime
 
 versao = '0.1'
 
 #variaveis de controle do sistema
 usaValoresArquivo = 1
 debugAterramento = 0
+
+# identificação do arquivo do excel ou arquivo qualquer, usado na criação de 
+# arquivos com plot ou no armazenamento de variaveis
+idPlanilha = ''
+
+# diretorio para armazenamento das curvas
+dirCurvas = getcwd()+'\\curvas'
+
+def formataHora():
+    t = localtime()
+    return str(t.tm_hour)+str(t.tm_min)+str(t.tm_sec)
 
 def verificaVariaveisProfResi():
     global profundidade, resistividadeMedia
@@ -155,6 +170,27 @@ def calculosResistividade():
     print '_'*50
     print 'Resistencia calculada:', res
 
+def atualizaIdArquivo(nome = '', tipo = 'excel'):
+    global idPlanilha
+
+    if tipo == 'excel':
+
+        idPlanilha = basename(nome)
+        idPlanilha = splitext(idPlanilha)[0]
+        print 'identificacao atualizada, e, ', 
+        print idPlanilha
+
+    elif tipo == 'arquivo':
+
+        idPlanilha = nome
+        print 'identificacao atualizada, a, ', 
+        print idPlanilha
+
+    else:
+
+        print 'aviso: id limpo'
+        idPlanilha = ''
+
 def planilhaExcel(p = None, debug = True):
     global profundidade, resistividadeMedia
 
@@ -162,14 +198,21 @@ def planilhaExcel(p = None, debug = True):
         try:
             mainTkinter = Tk()
             planilha = askopenfilename()
+
+            atualizaIdArquivo(planilha)
+
             mainTkinter.destroy()
+
             if debug:
                 print planilha    
         except:
+            atualizaIdArquivo('', tipo = 'erro')
             planilha = None
             return
     else:
         planilha = p
+
+        atualizaIdArquivo(planilha)
 
     try:
         mDados = estratificacao.lerPlanilha(planilha)
@@ -224,6 +267,7 @@ def ajudaBasica():
     print 'p - plota curva h-pho'
     print 'l - resistividade aparente'
     print 'n - mostra algumas equacoes'
+    print 'ot - estratifica o solo com valore p1 k h'
     print 
 
 def sistema(): 
@@ -275,8 +319,12 @@ def plotPhoH():
     plt.ylabel('Resistividade Media [ohm*m]')
     plt.title('Curva de Resistividade')
     plt.grid(True)
+
+    plt.savefig(dirCurvas+'\\curvadeResistividade_'+idPlanilha+'_'+formataHora()+'_.png')
+    print 'aviso: arquivo com o png da figura salvo'
+    
     plt.show()
-    plt.savefig('curvadeResistividade.pdf')
+    
 
 def mostraEquacoes():
     print 'r1 - apenas 1 haste disposta verticalmente no solo'
@@ -303,7 +351,6 @@ def mostraEquacoes():
 
     elif tipo == 'r1':
         r1haste.mostraEquacao()
-
 
 def exterminaPrograma(): 
     print 'saindo...'
@@ -341,8 +388,7 @@ dicionarioComandos = {  'h' : ajudaBasica,
 
                         'n' : mostraEquacoes, 
                         'equacoes' : mostraEquacoes
-
-                    }
+                         }
 
 # interpreta os comandos do usuário
 def cmds(cmd): 
@@ -353,9 +399,18 @@ def inicializacao():
     try:
         print configuracoes.arquivoExcel
         planilhaExcel(configuracoes.arquivoExcel, debug = None)
-    except:
+    except Exception, e:
         print 'erro: nao foi possivel iniciar pelo arquivo de configuracao'
-        pass 
+        print e
+    try:
+        mkdir(dirCurvas)
+    except Exception, e:
+        print 'erro: nao foi possivel criar diretorio para as curvas, talvez ele ja exista'
+    else:
+        pass
+    finally:
+        pass
+
     print 'aviso: inicializacao finalizada'
 
 if __name__ == '__main__':
