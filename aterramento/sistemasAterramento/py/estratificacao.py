@@ -28,7 +28,7 @@ infinito = 20 # :)
 
 pho = []
 es = []
-coeficienteReflexao = 0
+
 chuteInicial = [0, 0, 0]
 
 # implementando as restrições para a função de otimização
@@ -38,7 +38,7 @@ chuteInicial = [0, 0, 0]
 # profundidade da primeira camada de 0.1 a 100 m
 limites = [(0.1, 1000), (-1, 1), (0.1, 100)]
 
-infinitoEndrenyi = 100
+infinitoEndrenyi = 1000
 
 debugPlot = None
 
@@ -101,7 +101,6 @@ def funcaoEstratificacao(x):
     return f
 
 def estratifica2Camadas(debug = None):
-    global coeficienteReflexao
 
     if debug:
         d = 1
@@ -144,9 +143,6 @@ def estratifica2Camadas(debug = None):
     if debug:
         print x
         print 'tempo execucao(seg), ', time()-t
-
-    # atualiza o coeficiente 
-    coeficienteReflexao = x[1]
 
     return x
 
@@ -263,20 +259,36 @@ def resistividadeMediaPlanilha(mDados, desvioPadrao = 0.5, debug = None):
 
     return [profundidadeTeste, resistividadeCorrigida]
 
-def curvaEndrenyiSomatorio(a):
+def curvaEndrenyiSomatorio(a, p1, p2):
 
     # aplicação da curva de Endrenyi
 
-    k = coeficienteReflexao
+    k = (p2 - p1)/(p2 + p1)
+
     s = 0
     for n in range(1, infinitoEndrenyi+1):
-        s = s + (k**n)/sqrt(1+((2*n/a)**2))
+        s += (k**n)/sqrt(1+((2*n/a)**2))
     s = 2*s+1
 
     return s
 
-def curvaEndrenyi(a):
-    return 2*curvaEndrenyiSomatorio(a)-curvaEndrenyiSomatorio(2*a)
+def curvaEndrenyi(a, p1, p2):
+    return 2*curvaEndrenyiSomatorio(a, p1, p2) - curvaEndrenyiSomatorio(2*a, p1, p2)
+
+def curvaEndrenyiSomatorioBeta(a, k):
+
+    # aplicação da curva de Endrenyi
+
+    s = 0
+    for n in range(1, infinitoEndrenyi+1):
+        s += (k**n)/sqrt(1+((2*n/a)**2))
+    s = 2*s+1
+
+    return s
+
+def curvaEdnrenyiBeta(a, b):
+    k = (b-1)/(b+1)
+    return 2*curvaEndrenyiSomatorioBeta(a, k) - curvaEndrenyiSomatorioBeta(2*a, k)
 
 def plotCurvaEndrenyi():
     #eixo das abscissas 
@@ -294,12 +306,14 @@ def plotCurvaEndrenyi():
 
 # Calculo da resistividade aparente para uma MALHA especifica de terra
 # com espaçamento igual entre duas hastes e mesma profundidade
-def resistividadeAparente2CamadasMalha(ordem, es, d1, debug = None):
+def resistividadeAparente2CamadasMalha(p1, p2, d1, A, D, debug = None):
     '''
     Entrada:
-    ordem = ordem da malha
-    es = espaçamento entre duas hastes
-    d1 = profundidade que as hastes estão cravadas
+    p1 = resistividade da primeira camada
+    p2 = resistividade da segunda camada
+    d1 = profundidade da primeira camada
+    A = área da malha
+    D = dimensão da malha
 
     Saida:
     pa = resistividade aparente
@@ -310,20 +324,20 @@ def resistividadeAparente2CamadasMalha(ordem, es, d1, debug = None):
     m0 = curva de Endrenyi no ponto alfa
     '''
 
-    [p1, k, h] = estratifica2Camadas()
-    p2 = p2solo2Camadas(p1, k)
-
-    print 'p2, ', p2
+    #[p1, k, h] = estratifica2Camadas()
+    #p2 = p2solo2Camadas(p1, k)
+    #print 'p2, ', p2
 
     ###################################
     # Aplicando as fórmulas de HUMMEL #
     ###################################
 
     # Área da malha
-    A = (es*(ordem-1))**2
+    #A = (es*(ordem-1))**2
 
     # Raio do anel equivalente do sistema de aterramento
-    r = sqrt(A/pi)
+    #r = sqrt(A/pi)
+    r = A/D
 
     # coeficiente de penetração
     alfa = r/d1
@@ -332,7 +346,7 @@ def resistividadeAparente2CamadasMalha(ordem, es, d1, debug = None):
     beta = p2/p1
 
     # aplicando a curva Endrenyi
-    m0 = curvaEndrenyi(alfa)
+    m0 = curvaEndrenyi(alfa, p1, p2)
 
     # resistividade aparente
     pa = m0*p1
@@ -365,7 +379,7 @@ def resistividadeAparenteHastesAlinhadas(n, e, p1, p2, h):
     beta = p2/p1
 
     # valor de N para pela curva de Endrenyi
-    N = curvaEndrenyi(alfa)
+    N = curvaEndrenyi(alfa, p1, p2)
 
     pa = N*p1
 
@@ -468,16 +482,16 @@ if __name__ == '__main__':
     #--------------------------------------------------------------------------
     # testando os cálculos de resistividade aparente    
 
-    print 'calculando a resistividade aparente'
+    #print 'calculando a resistividade aparente'
 
-    ordem = 4
-    espacamento = 3
-    prof = 16
+    #ordem = 4
+    #espacamento = 3
+    #prof = 16
 
-    pa = resistividadeAparente2CamadasMalha(ordem, espacamento, prof)
+    #pa = resistividadeAparente2CamadasMalha(ordem, espacamento, prof)
 
-    print 'resistividade aparente calculada, '
-    print 'pa, ', pa
+    #print 'resistividade aparente calculada, '
+    #print 'pa, ', pa
 
     print 'resistividade para hastes alinhadas'
     # exemplo do Kindermann
