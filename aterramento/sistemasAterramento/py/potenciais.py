@@ -68,7 +68,7 @@ def potencialMaximoToqueCS(ps, t, cs = 1):
 	Saída:
 	potencial
 	"""
-	vtoqueMaximo = (1000+6*cs*ps)*(0.116/sqrt(t))
+	vtoqueMaximo = (1000 + 1.5*cs*ps)*(0.116/sqrt(t))
 	return vtoqueMaximo
 
 def potencialMaximoPasso(ps, t):

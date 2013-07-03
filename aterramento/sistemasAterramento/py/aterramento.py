@@ -21,6 +21,7 @@ import potenciais
 from os import getcwd, mkdir
 from os.path import basename, splitext
 from time import localtime
+import malhaAterramento
 
 versao = '0.1'
 
@@ -267,7 +268,6 @@ def ajudaBasica():
     print 'p - plota curva h-pho'
     print 'l - resistividade aparente'
     print 'n - mostra algumas equacoes'
-    print 'ot - estratifica o solo com valore p1 k h'
     print 
 
 def sistema(): 
@@ -321,7 +321,7 @@ def plotPhoH():
     plt.grid(True)
 
     plt.savefig(dirCurvas+'\\curvadeResistividade_'+idPlanilha+'_'+formataHora()+'_.png')
-    print 'aviso: arquivo com o png da figura salvo'
+    print 'aviso: arquivo png da figura salvo na pasta <curvas>'
     
     plt.show()
     
@@ -424,8 +424,10 @@ if __name__ == '__main__':
 
     #ajudaBasica()
 
+    sintaxe = '$>'
+
     while True:
-        entrada = raw_input('>')
+        entrada = raw_input(sintaxe)
         # converte tudo para letras minúsculas e inicia a interpretacao
         cmds(entrada.lower())
         
