@@ -285,6 +285,9 @@ if __name__ == '__main__':
 	alfa = r/deq
 	beta = pn1/peq
 
+	N = estratificacao.curvaEdnrenyiBeta(alfa, beta)
+	print 'N, ', N
+
 	pa = .71*580
 
 	print 'altura, ', altura

@@ -20,7 +20,7 @@ import matplotlib.pyplot as plt
 import sys
 from os import getcwd
 from scipy.signal import butter
-
+import r1haste
 
 # VARIÁVEIS de controle
 
@@ -273,11 +273,20 @@ def curvaEndrenyiSomatorio(a, p1, p2):
     return s
 
 def curvaEndrenyi(a, p1, p2):
+    """
+    Curva de Endrenyi
+    Entrada:
+    a - alfa, coeficiente de penetração
+    p1 - resistividade da n-esima camada
+    p2 - resistividade da n-esima+1 camada
+    Saída:
+    N
+    """
     return 2*curvaEndrenyiSomatorio(a, p1, p2) - curvaEndrenyiSomatorio(2*a, p1, p2)
 
 def curvaEndrenyiSomatorioBeta(a, k):
 
-    # aplicação da curva de Endrenyi
+    # aplicação da curva de Endrenyi usando k
 
     s = 0
     for n in range(1, infinitoEndrenyi+1):
@@ -287,7 +296,17 @@ def curvaEndrenyiSomatorioBeta(a, k):
     return s
 
 def curvaEdnrenyiBeta(a, b):
+    """
+    Curva de Endrenyi
+    Entrada:
+    a - alfa, coeficiente de penetração
+    b - beta, coeficiente de divergência
+    Saída:
+    N
+    """
+
     k = (b-1)/(b+1)
+
     return 2*curvaEndrenyiSomatorioBeta(a, k) - curvaEndrenyiSomatorioBeta(2*a, k)
 
 def plotCurvaEndrenyi():
@@ -295,14 +314,25 @@ def plotCurvaEndrenyi():
 
     print 'plotando a curva de Endrenyi'
 
-    alfa = arange(0.01, 1000, 1)    
-    N = []
-    for i in alfa:
-        N.append(curvaEndrenyi(i))
+    alfa = [.1, .2, .5, 1, 2, 5, 10, 20, 50, 75, 100, 200, 500, 1000]
+    beta = .01
 
-    plt.plot(alfa, N)
-    plt.grid(True)
-    plt.show()
+    k = (beta-1)/(beta+1)
+
+    N = []
+    print 'beta, ', beta
+    print 'k, ', k
+    print 'alfa | N'
+    for i in alfa:
+        a = curvaEdnrenyiBeta(i, beta)
+        print i, a
+        N.append(a)
+
+    # plt.plot(alfa, N)
+    # plt.xlabel('alfa')
+    # plt.ylabel('N')
+    # plt.grid(True)
+    # plt.show()
 
 # Calculo da resistividade aparente para uma MALHA especifica de terra
 # com espaçamento igual entre duas hastes e mesma profundidade
@@ -390,25 +420,55 @@ def formulaHummelReducao2Camadas(p, d):
     """
     Entrada:
     p - vetor com a resistividade das camadas
+        p = [p1, p2, p3, ..., pn, pn+1]
     d - vetor com o espesura da n-esima camada
+        d = [d1, d2, d3, ..., dn]
 
     Saída:
     peq = resisitividade da primeira camada
     deq = profundidade da primeira camada
     pn1 = resistividade da segunda camada
+
+    Obs: a profundidade da segunda camada é considerada infinita
     """
-    if len(p) != len(d):
+    if (len(p)-1) != len(d):
         print "erro: tamanho de p e' incoerente com o de d"
 
     deq = 0
     for i in d:
         deq += i
     den = 0
-    for i in range(len(p)):
+    for i in range(len(p)-1):
         den += d[i]/p[i]
     peq = deq/den
 
     return [peq, deq, p[len(p)-1]]
+
+def hasteSoloVariasCamadas(p, l, d):
+    """
+    Calcula a resistencia de aterramento de uma haste cravada verticalmente 
+    em um solo com várias camadas. Conhecida como fórmula de Hummel.
+    Entrada:
+    p = vetor com a resistividade de cada camada que a haste encontrada
+    l = profundidade de cada camada que a haste vê
+    d = diâmetro da haste
+    Saída:
+    pa = resistividade aparente vista pela haste
+    r1 = resitência da haste
+    """
+
+    if len(p) != len(l):
+        print "erro: dimensao de p nao e' coerente com l"
+
+    deq = sum(l)
+    den = 0
+    for i in range(len(p)):
+        den += l[i]/p[i]
+    pa = deq/den
+
+    r1 = r1haste.r1haste(pa, deq, d)
+    return [pa, r1]
+
 
 if __name__ == '__main__':
 
@@ -506,10 +566,78 @@ if __name__ == '__main__':
     #--------------------------------------------------------------------------
 
     print 'testando a formula de hummel para reducao de 2 camadas'
+    print 'para haste unica e verticalmente no solo'
+    
+    print 'caso 1'
     # exemplo do Kindermann
-    p = [200, 500, 65]
+    p = [200, 500, 65, 96]
     d = [1, 6, 1]
     print 'resultado, ', formulaHummelReducao2Camadas(p, d)
+
+    print 'caso 2'
+    p = [300, 450, 100, 20]
+    d = [2, 3, 4]
+    print 'resultado, ', formulaHummelReducao2Camadas(p, d)
+
+    print 'caso 3'
+    p = [500, 200, 120]
+    d = [2, 5]
+    print 'resultado, ', formulaHummelReducao2Camadas(p, d)
+
+    print 'haste unica vertical cravada em um solo com varias camadas'
+    p = [500, 200, 120]
+    l = [2, 5, 3]
+    pa = hasteSoloVariasCamadas(p, l, 15e-3)
+    print pa
+
+
+    #--------------------------------------------------------------------------    
+
+    print
+
+    # curvas de Endrenyi
+
+    #--------#
+    # caso 1 #
+    #--------#
+    alfa = 1.15
+    beta = 4.3
+    
+    N = curvaEdnrenyiBeta(alfa, beta)
+
+    print 'curva de Endrenyi, caso 1'
+    print 'alfa, ', alfa
+    print 'beta, ', beta
+    print 'N, ', N
+
+    print
+
+    #--------#
+    # caso 2 #
+    #--------#
+    alfa = .3333
+    beta = .119
+    
+    N = curvaEdnrenyiBeta(alfa, beta)
+
+    print 'curva de Endrenyi, caso 2'
+    print 'alfa, ', alfa
+    print 'beta, ', beta
+    print 'N, ', N
+
+    #--------#
+    # caso 3 #
+    #--------#
+    alfa = 2.6
+    beta = .138
+    
+    N = curvaEdnrenyiBeta(alfa, beta)
+
+    print 'curva de Endrenyi, caso 3'
+    print 'alfa, ', alfa
+    print 'beta, ', beta
+    print 'N, ', N
+
 
     plotCurvaEndrenyi()
 
@@ -517,4 +645,4 @@ if __name__ == '__main__':
     print '**fim'
     print '_'*80
 
-    #saida = raw_input('[ENTER] para sair')
+    saida = raw_input('[ENTER] para sair')
