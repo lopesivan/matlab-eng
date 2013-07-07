@@ -16,6 +16,7 @@ import potenciais
 import ConfigParser
 from os import getcwd, mkdir
 from os.path import isdir, isfile
+#from decimal import *
 
 pastaTrabalho = getcwd()+'\\tabelas'
 nomeArquivoProjeto = 'projetoMalha.cfg'
@@ -32,7 +33,7 @@ projetoMalha = {
 	'hsBrita' : 0,
 
 	# configurações da malha de terra
-	'mAltura' : 0,
+	'mLargura' : 0,
 	'mComprimento' : 0,
 	'mProfundidade' : 0,
 
@@ -146,13 +147,27 @@ def formulaOnderdonkScobre(iDefeito, tDefeito, oa, om= 0, conexao = 'outra'):
 
 	scobre = iDefeito/(226.53*sqrt((1/tDefeito)*log((om-oa)/(234+oa) + 1)))
 
-	recomedacaoCondutor(scobre)
+	if recomedacaoCondutor(scobre):
+		print 'aviso projeto: mudando para 35 mm^2'
+		scobre = 35
 	return scobre
 
 def recomedacaoCondutor(scobre):
 	if scobre < 35:
-		print 'aviso: aconselha-se a utilizar um condutor de 35 mm^2 por razoes mecanicas'
-		print '       secao atual do condutor = ', scobre
+		print 'aviso projeto: aconselha-se a utilizar um condutor de 35 mm^2 por razoes mecanicas'
+		print '               secao atual do condutor = ', scobre		
+		return 1
+
+	return 0
+
+def diametroCondutor(area):
+	"""
+	Entrada:
+	area = em mm^2
+	"""
+	d = 2*sqrt((area*10**-6)/pi)
+
+	return d
 
 def numeroCondutores(a, b, eb, ea):
 	"""
@@ -170,6 +185,18 @@ def numeroCondutores(a, b, eb, ea):
 	lCabo = a*Nb+b*Na
 
 	return [Na, Nb, lCabo]
+
+def espacamentoEntreCondutores(N, a):
+	"""
+	Entrada:
+	N = número de condutores
+	a = tamanho total em um eixo
+	Saída:
+	e = espaçamento entre dois condutores
+	"""
+	e = a/(N-1)
+
+	return e
 
 def resistenciaMalhaLaurent(pa, lTotal, aMalha, h):
 	"""
@@ -190,7 +217,7 @@ def resistenciaMalhaLaurent(pa, lTotal, aMalha, h):
 	return rMalha
 
 def correcaoProfundidade(h, h0 = 1):
-	kh = sqrt(1 + h/ho)
+	kh = sqrt(1 + h/h0)
 	return kh
 
 def nCondutoresMalha(Na, Nb):
@@ -231,8 +258,12 @@ def coeficienteMalha(e, h, d, kh, N, kii = 1):
 		print 'erro: pronfudidade limitada de 0.25 a 2.5'
 		return
 
-	km = (1/(2*pi))*(log((e**2)/(16*h*d)+((e+2*h)**2)/(8*e*d)+(kii/kh)*log(8/(pi*(2*N-1)))))
+	km = (1/(2*pi))*(log((e**2)/(16*h*d)+((e+2*h)**2)/(8*e*d)-h/(4*d))+(kii/kh)*log(8/(pi*(2*N-1))))
+	
 	return km
+
+def Kii(N):
+	return 1/((2*N)**(2/N))
 
 def coeficienteIrregularidade(N):
 
@@ -251,7 +282,10 @@ def potencialMalha(pa, km, ki, iMalha, lTotal):
 		para a terra
 	lTotal = comprimento total dos condutores da malha
 	"""
+
 	vMalha = (pa*km*ki*iMalha)/lTotal
+
+	return vMalha
 
 def comprimentoTotal15(lCabo, lHastes):
 	"""
@@ -292,7 +326,7 @@ def exemploKindermann():
 	# Tempode abertura da proteção para a corrente de defeito é tdefeito = 0.6 seguintes
 	# Dimensões da malha,
 	# largura 50 m
-	# altura  = 40 m
+	# largura  = 40 m
 	# profundidade .6 m a partir da base do solo
 	# Caracteristicas do solo,
 	# ps = pbrita = 3000 ohm*m com uma camada de 20cm colocada na superficie do solo
@@ -304,10 +338,10 @@ def exemploKindermann():
 
 	print 'Resistividade aparente vista pela malha'
 
-	altura = 40
-	largura = 50
-	area = altura*largura
-	dimensao = sqrt(altura**2 + largura**2)
+	largura = 40
+	comprimento = 50
+	area = largura*largura
+	dimensao = sqrt(largura**2 + comprimento**2)
 	r = area/dimensao
 
 	deq = 12
@@ -325,8 +359,8 @@ def exemploKindermann():
 	#pa = .71*580
 	pa = N*580
 
-	print 'altura, ', altura
 	print 'largura, ', largura
+	print 'comprimento, ', comprimento
 	print 'area, ', area
 	print 'dimensao, ', dimensao
 	print 'r, ', r
@@ -414,7 +448,7 @@ def criarArquivoProjeto(novo = False, debug = False):
 	projeto.set('brita', 'hs', '.2')
 
 	projeto.add_section('malha')
-	projeto.set('malha', 'altura', '40')
+	projeto.set('malha', 'largura', '40')
 	projeto.set('malha', 'comprimento', '50')
 	projeto.set('malha', 'profundidade', '.6')
 
@@ -445,7 +479,7 @@ def lerArquivoProjeto(arquivo, debug = False):
 	projetoMalha['psBrita'] = projeto.getfloat('brita', 'ps')
 	projetoMalha['hsBrita'] = projeto.getfloat('brita', 'hs')
 
-	projetoMalha['mAltura'] = projeto.getfloat('malha', 'altura')
+	projetoMalha['mLargura'] = projeto.getfloat('malha', 'largura')
 	projetoMalha['mComprimento'] = projeto.getfloat('malha', 'comprimento')
 	projetoMalha['mProfundidade'] = projeto.getfloat('malha', 'profundidade')
 
@@ -461,15 +495,16 @@ def lerArquivoProjeto(arquivo, debug = False):
 		print projetoMalha
 
 def projetaMalhaAterramento(debug = False):
-	altura = projetoMalha.get('mAltura')
+	largura = projetoMalha.get('mLargura')
 	comprimento = projetoMalha.get('mComprimento')
+	hMalha = projetoMalha.get('mProfundidade')
 
 	deq = projetoMalha.get('deq')
 	pn1 = projetoMalha.get('pn1')	
 	peq = projetoMalha.get('peq')
 
-	area = altura*comprimento
-	dimensao = sqrt(altura**2 + comprimento**2)
+	area = largura*comprimento
+	dimensao = sqrt(largura**2 + comprimento**2)
 	r = area/dimensao
 
 	alfa = r/deq
@@ -522,6 +557,60 @@ def projetaMalhaAterramento(debug = False):
 		print 'fator de correcao, ', cs
 		print'V passo maximo, ', vPassoMaximo
 
+	# valores iniciais para o espaçamento da malha
+	ea = 3
+	eb = 3
+	[Na, Nb, lCabo] = numeroCondutores(comprimento, largura, ea, eb)
+
+	# Número de condutores é um número inteiro
+	Na = round(Na, 0)
+	Nb = round(Nb, 0)
+
+	# novo espaçamento entre dois condutores
+	ea = espacamentoEntreCondutores(Na, comprimento)
+	eb = espacamentoEntreCondutores(Nb, largura)
+
+	# calculando a resistência da malha
+	rMalha = resistenciaMalhaLaurent(pa, lCabo, area, hMalha)
+
+	iMalha = projetoMalha.get('iMalha')
+
+	vToqueMaximoMalha = rMalha * iMalha
+
+	Kh = correcaoProfundidade(hMalha)
+
+	N = nCondutoresMalha(Na, Nb)
+
+	kii = Kii(N) 
+
+	d = diametroCondutor(scobre)
+
+	Km = coeficienteMalha(max([ea, eb]), hMalha, d, Kh, N, kii)
+
+	ki = coeficienteIrregularidade(N)
+
+	vMalha = potencialMalha(pa, Km, ki, iMalha, lCabo)
+
+
+	if debug:
+		print 'numero de condutores Na, ', Na
+		print 'numero de condutores Nb, ', Nb
+		print 'comprimento do cabo, ', lCabo
+		print 'resistencia da malha, ', rMalha
+		print 'v toque maximo da malha, ', vToqueMaximoMalha
+		if vToqueMaximoMalha > vToqueMaximo:
+			print 'erro projeto: tensao de toque ultrapassa os limites'	
+
+		print 'Kh, ', Kh
+		print 'Kii, ', kii
+		print 'N, ', N
+		print 'd, ', d
+		print 'Km, ', Km
+		print 'Ki, ', ki
+
+		print 'vMalha, ', vMalha
+		if vMalha > vToqueMaximo:
+			print 'erro projeto: tensao maxima na malha ultrapassa os limites'
 
 if __name__ == '__main__':
 	#exemploKindermann()
