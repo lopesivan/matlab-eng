@@ -11,7 +11,7 @@
 
 from __future__ import division
 from scipy.optimize import fmin, fmin_slsqp, anneal, basinhopping, brute, leastsq
-from math import sqrt, pi
+from math import sqrt, pi, log
 from time import time
 from xlrd import open_workbook
 from numpy import zeros, shape, arange
@@ -21,6 +21,7 @@ import sys
 from os import getcwd
 from scipy.signal import butter
 import r1haste
+import ConfigParser
 
 # VARIÁVEIS de controle
 
@@ -38,14 +39,14 @@ chuteInicial = [0, 0, 0]
 # profundidade da primeira camada de 0.1 a 100 m
 limites = [(0.1, 1000), (-1, 1), (0.1, 100)]
 
-infinitoEndrenyi = 1000
+infinitoEndrenyi = 100
 
 debugPlot = None
 
 def iniciaConstantes(ex = None, debug = None):
     global pho, es, chuteInicial, limites
 
-    # valores encontrados no Geraldo
+    # valores encontrados no Kindermann
     if ex == 0:
 
         pho = [320, 245, 182, 162, 168, 152]
@@ -312,27 +313,42 @@ def curvaEdnrenyiBeta(a, b):
 def plotCurvaEndrenyi():
     #eixo das abscissas 
 
-    print 'plotando a curva de Endrenyi'
+    # print 'plotando a curva de Endrenyi'
 
-    alfa = [.1, .2, .5, 1, 2, 5, 10, 20, 50, 75, 100, 200, 500, 1000]
-    beta = .01
+    # alfa = [.1, .2, .5, 1, 2, 5, 10, 20, 50, 75, 100, 200, 500, 1000]
+    # beta = .01
 
-    k = (beta-1)/(beta+1)
+    # k = (beta-1)/(beta+1)
 
+    # N = []
+    # print 'beta, ', beta
+    # print 'k, ', k
+    # print 'alfa | N'
+    # for i in alfa:
+    #     a = curvaEdnrenyiBeta(i, beta)
+    #     print i, a
+    #     N.append(a)
+
+    # # plt.plot(alfa, N)
+    # # plt.xlabel('alfa')
+    # # plt.ylabel('N')
+    # # plt.grid(True)
+    # # plt.show()
+
+    #alfa = [.1, .2, .5, 1, 2, 5, 10, 20, 50, 75, 100, 200, 500, 1000]
+    beta = 0.01
+    alfa = []
     N = []
-    print 'beta, ', beta
-    print 'k, ', k
-    print 'alfa | N'
-    for i in alfa:
-        a = curvaEdnrenyiBeta(i, beta)
-        print i, a
-        N.append(a)
+    for i in arange(1, 100, 1):
+        alfa.append(i)
+        N.append(endrenyi1963(beta, i, i))
 
-    # plt.plot(alfa, N)
-    # plt.xlabel('alfa')
-    # plt.ylabel('N')
-    # plt.grid(True)
-    # plt.show()
+    plt.plot(alfa, N)
+    plt.grid(True)
+    plt.show()
+
+
+
 
 # Calculo da resistividade aparente para uma MALHA especifica de terra
 # com espaçamento igual entre duas hastes e mesma profundidade
@@ -469,6 +485,68 @@ def hasteSoloVariasCamadas(p, l, d):
     r1 = r1haste.r1haste(pa, deq, d)
     return [pa, r1]
 
+################################################################################
+# Curva de Endrenyi, Evaluation of Resistivity tests for design os station 
+# grounds in nonuniform soil.
+#
+# beta = coeficiente de diverência
+# alfa = coeficiente de penetração
+# phi = razão profundidade da malha com tamanho da camada em que a malha está presente
+# a = raio da malha
+# d0 = altura dos elementos da malha
+#
+# Os termos c1, c2, c3, k1, k2, k3 são coeficientes da solução de uma integral
+# eliptica. Ver:
+# http://en.wikipedia.org/wiki/Elliptic_integral 
+# http://mathworld.wolfram.com/EllipticIntegral.html
+# 
+# OBS: No artigo do Endrenyi ele informa que para valores de d0 = 1 e phi = 0.5
+# a margem de erro é pequena para casos praticos.
+################################################################################
+
+def c1(m, phi, alfa): 
+    return sqrt(1 + ((m+phi)/alfa)**2)
+
+def c2(m, phi, alfa): 
+    return sqrt(1 + ((m-phi)/alfa)**2)
+
+def c3(m, alfa): 
+    return sqrt(1 + ((m)/alfa)**2)
+
+def k1(m, phi, alfa): 
+    return alfa/sqrt(alfa**2 + (m+phi)**2)
+
+def k2(m, phi, alfa): 
+    return alfa/sqrt(alfa**2 + (m-phi)**2)
+
+def k3(m, alfa): 
+    return alfa/sqrt(alfa**2 + m**2)
+
+# Equacionamento válido apenas para quando p1>p2
+def endrenyi1963(beta,  alfa, a, phi = 0.5, d0 = 1):
+    # boa margem de erro
+    infE = 100
+
+    if alfa < 1:
+        print 'erro: esta funcao nao pode ser usada para p2>p1'
+
+    # coeficiente de divergência, letra micro para o Endrenyi
+    micro = (beta-1)/(beta+1)
+
+    # inicia o somátorio
+    s = 0
+    for m in range(1, infE+1):
+        #s += (micro**m)*(k1(m, phi, alfa)/c1(m, phi, alfa) + (2*k3(m, alfa))/c3(m, alfa) + k2(m, phi, alfa)/c2(m, phi, alfa))
+
+        s += (micro**m)*(k1(m, phi, alfa)/c1(m, phi, alfa) \
+             + (2*k3(m, alfa))/c3(m, alfa) \
+             + k2(m, phi, alfa)/c2(m, phi, alfa))
+
+    N = 1 + (s / (log((16*a)/d0) + k1(0, phi, alfa)/c1(0, phi, alfa)))
+
+    return N
+
+################################################################################
 
 if __name__ == '__main__':
 
@@ -644,5 +722,10 @@ if __name__ == '__main__':
     print
     print '**fim'
     print '_'*80
+
+
+    print 'Curva de proposta por Endrenyi em 1963,'
+    print endrenyi1963(.138, 2.603, 31.23, 0.5,  1)
+
 
     saida = raw_input('[ENTER] para sair')

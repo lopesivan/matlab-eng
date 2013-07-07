@@ -13,6 +13,38 @@ from __future__ import division
 from math import sqrt, log, pi
 import estratificacao
 import potenciais
+import ConfigParser
+from os import getcwd, mkdir
+from os.path import isdir, isfile
+
+pastaTrabalho = getcwd()+'\\tabelas'
+nomeArquivoProjeto = 'projetoMalha.cfg'
+nomeArquivoProjetoCompleto = pastaTrabalho+'\\'+nomeArquivoProjeto
+
+projetoMalha = {
+	# configurações do solo
+	'peq' : 0,
+	'pn1' : 0, 
+	'deq' : 0,
+
+	# configurações da brita
+	'psBrita' : 0,
+	'hsBrita' : 0,
+
+	# configurações da malha de terra
+	'mAltura' : 0,
+	'mComprimento' : 0,
+	'mProfundidade' : 0,
+
+	# informações sobre o curto
+	'iCurtoMaximo' : 0,
+	'iMalha' : 0,
+	'tDefeito' : 0,
+
+	# informações sobre o tipo de ligação
+	'condutorMalha' : '',
+	'condutorLigacoes' : ''
+} 
 
 def formulaOnderdonk(scobre, tDefeito, oa, om= 0, conexao = 'outra'):
 	"""
@@ -246,7 +278,7 @@ def kCoeficienteReflexao(p1, p2):
 	k = (p1 - p2)/(p1 + p2)
 	return k
 
-if __name__ == '__main__':
+def exemploKindermann():
 	# print estratificacao.curvaEndrenyi(1.15, 401.85, 1726.46)
 	# print estratificacao.curvaEdnrenyiBeta(2.6, .138)
 	# pa = estratificacao.resistividadeAparente2CamadasMalha(580, 80, 12, 2000, 64.03)
@@ -285,10 +317,13 @@ if __name__ == '__main__':
 	alfa = r/deq
 	beta = pn1/peq
 
-	N = estratificacao.curvaEdnrenyiBeta(alfa, beta)
+	#N = estratificacao.curvaEdnrenyiBeta(alfa, beta)
+	#print 'N, ', N
+	N = estratificacao.endrenyi1963(beta, alfa, r)
 	print 'N, ', N
 
-	pa = .71*580
+	#pa = .71*580
+	pa = N*580
 
 	print 'altura, ', altura
 	print 'largura, ', largura
@@ -344,5 +379,155 @@ if __name__ == '__main__':
 	print'V passo maximo, ', vPassoMaximo
 
 	print '-'*80
+
+	
+def criarArquivoProjeto(novo = False, debug = False):
+
+	if debug:
+		print 'criando arquivo de configuracao, '
+
+	if isfile(nomeArquivoProjetoCompleto) == True:
+
+		if debug:
+			print 'aviso: arquivo ja existe'
+
+		if novo == False:
+			return
+		else:
+			if debug:
+				print 'aviso: sobrescrevendo'
+
+	if isdir(pastaTrabalho) == False:
+		if debug:
+			print 'aviso: criando pasta <tabelas>'
+		mkdir(pastaTrabalho)	
+
+	projeto = ConfigParser.RawConfigParser()
+
+	projeto.add_section('solo')
+	projeto.set('solo', 'peq', '580')
+	projeto.set('solo', 'pn1', '80')
+	projeto.set('solo', 'deq', '12')
+
+	projeto.add_section('brita')
+	projeto.set('brita', 'ps', '3000')
+	projeto.set('brita', 'hs', '.2')
+
+	projeto.add_section('malha')
+	projeto.set('malha', 'altura', '40')
+	projeto.set('malha', 'comprimento', '50')
+	projeto.set('malha', 'profundidade', '.6')
+
+	projeto.add_section('curto')
+	projeto.set('curto', 'iCurtoMaximo', '3000')	
+	projeto.set('curto', 'iMalha', '1200')	
+	projeto.set('curto', 'tDefeito', '.6')	
+
+	projeto.add_section('condutores')
+	projeto.set('condutores', 'malha', 'solda')	
+	projeto.set('condutores', 'ligacao', 'pressao')	
+
+	with open(nomeArquivoProjetoCompleto, 'wb') as configfile:
+		projeto.write(configfile)
+
+def lerArquivoProjeto(arquivo, debug = False):
+
+	global projetoMalha
+
+	projeto = ConfigParser.ConfigParser()
+	projeto.read(arquivo)
+
+
+	projetoMalha['peq'] = projeto.getfloat('solo', 'peq')
+	projetoMalha['pn1'] = projeto.getfloat('solo', 'pn1')
+	projetoMalha['deq'] = projeto.getfloat('solo', 'deq')
+
+	projetoMalha['psBrita'] = projeto.getfloat('brita', 'ps')
+	projetoMalha['hsBrita'] = projeto.getfloat('brita', 'hs')
+
+	projetoMalha['mAltura'] = projeto.getfloat('malha', 'altura')
+	projetoMalha['mComprimento'] = projeto.getfloat('malha', 'comprimento')
+	projetoMalha['mProfundidade'] = projeto.getfloat('malha', 'profundidade')
+
+	projetoMalha['iCurtoMaximo'] = projeto.getfloat('curto', 'iCurtoMaximo')
+	projetoMalha['iMalha'] = projeto.getfloat('curto', 'iMalha')
+	projetoMalha['tDefeito'] = projeto.getfloat('curto', 'tDefeito')
+
+	projetoMalha['condutorMalha'] = projeto.get('condutores', 'malha')
+	projetoMalha['condutorLigacoes'] = projeto.get('condutores', 'ligacao')
+
+
+	if debug:
+		print projetoMalha
+
+def projetaMalhaAterramento(debug = False):
+	altura = projetoMalha.get('mAltura')
+	comprimento = projetoMalha.get('mComprimento')
+
+	deq = projetoMalha.get('deq')
+	pn1 = projetoMalha.get('pn1')	
+	peq = projetoMalha.get('peq')
+
+	area = altura*comprimento
+	dimensao = sqrt(altura**2 + comprimento**2)
+	r = area/dimensao
+
+	alfa = r/deq
+	beta = pn1/peq
+
+	N = estratificacao.endrenyi1963(beta, alfa, r)
+
+	pa = peq*N
+
+	if debug:
+		print '-'*80
+		print 'dimensao, ', dimensao
+		print 'raio da malha, ', r
+		print 'alfa, ', alfa
+		print 'beta, ', beta
+		print 'N de Endrenyi, ', N
+		print 'resistividade aparente, vista pela malha', pa
+
+	iCurtoMaximo = projetoMalha.get('iCurtoMaximo')
+	iDefeito = .6*iCurtoMaximo
+	tDefeito = 	projetoMalha.get('tDefeito')
+
+	if debug:
+		print '-'*80
+		print 'corrente de curto, ', iCurtoMaximo
+		print 'corrente de defeito, ', iDefeito
+
+	# calculando a bitola dos cabos da malha
+	scobre = formulaOnderdonkScobre(iDefeito, tDefeito, 30, conexao = projetoMalha.get('condutorMalha'))
+	# calculando a bitola dos cabos de ligações
+	scobreCabo = formulaOnderdonkScobre(iCurtoMaximo, tDefeito, 30, conexao = projetoMalha.get('condutorLigacoes'))
+
+	if debug:
+		print '-'*80
+		print 's cabo de ligacao, ', scobreCabo
+		print 'seccao do condutor de cobre, ', scobre
+
+	psBrita = projetoMalha.get('psBrita')
+	hsBrita = projetoMalha.get('hsBrita')
+
+	k = kCoeficienteReflexao(pa, psBrita)
+	cs = potenciais.fatorCorrecaoBrita(hsBrita, pa, psBrita)
+	vToqueMaximo = potenciais.potencialMaximoToqueCS(psBrita, tDefeito, cs)
+	vPassoMaximo = potenciais.potencialMaximoPassoCS(psBrita, tDefeito, cs)
+
+	if debug:
+		print '-'*80
+		print 'k, ', k 
+		print 'V toque maximo, ', vToqueMaximo
+		print 'fator de correcao, ', cs
+		print'V passo maximo, ', vPassoMaximo
+
+
+if __name__ == '__main__':
+	#exemploKindermann()
+	
+	criarArquivoProjeto(novo = False, debug = True)
+	lerArquivoProjeto(nomeArquivoProjetoCompleto, debug = True)
+	projetaMalhaAterramento(debug = True)
 
 	saida = raw_input('[ENTER] para sair')
