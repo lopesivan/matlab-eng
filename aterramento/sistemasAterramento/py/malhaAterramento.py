@@ -47,6 +47,10 @@ projetoMalha = {
 	'condutorLigacoes' : ''
 } 
 
+projetoResultado = {
+	
+}
+
 def formulaOnderdonk(scobre, tDefeito, oa, om= 0, conexao = 'outra'):
 	"""
  	Dimensionamento térmico de um condutor do tipo cobre a suportar 
@@ -312,6 +316,11 @@ def kCoeficienteReflexao(p1, p2):
 	k = (p1 - p2)/(p1 + p2)
 	return k
 
+def comprimentoMinimoCondutor(pa, km, ki, iMalha, vToqueMaximo):
+	lMinimo = (pa*km*ki*iMalha)/vToqueMaximo
+
+	return lMinimo
+
 def exemploKindermann():
 	# print estratificacao.curvaEndrenyi(1.15, 401.85, 1726.46)
 	# print estratificacao.curvaEdnrenyiBeta(2.6, .138)
@@ -494,6 +503,10 @@ def lerArquivoProjeto(arquivo, debug = False):
 	if debug:
 		print projetoMalha
 
+def mostraDadosProjeto():
+	print 'entrada para o projeto,'
+	print projetoMalha
+
 def projetaMalhaAterramento(debug = False):
 	largura = projetoMalha.get('mLargura')
 	comprimento = projetoMalha.get('mComprimento')
@@ -585,11 +598,13 @@ def projetaMalhaAterramento(debug = False):
 
 	d = diametroCondutor(scobre)
 
-	Km = coeficienteMalha(max([ea, eb]), hMalha, d, Kh, N, kii)
+	km = coeficienteMalha(max([ea, eb]), hMalha, d, Kh, N, kii)
 
 	ki = coeficienteIrregularidade(N)
 
-	vMalha = potencialMalha(pa, Km, ki, iMalha, lCabo)
+	vMalha = potencialMalha(pa, km, ki, iMalha, lCabo)
+
+	lMinimo = comprimentoMinimoCondutor(pa, km, ki, iMalha, vToqueMaximo)
 
 
 	if debug:
@@ -605,12 +620,14 @@ def projetaMalhaAterramento(debug = False):
 		print 'Kii, ', kii
 		print 'N, ', N
 		print 'd, ', d
-		print 'Km, ', Km
+		print 'km, ', km
 		print 'Ki, ', ki
 
 		print 'vMalha, ', vMalha
 		if vMalha > vToqueMaximo:
 			print 'erro projeto: tensao maxima na malha ultrapassa os limites'
+
+		print 'comprimento minimo condutor, ', lMinimo
 
 if __name__ == '__main__':
 	#exemploKindermann()
@@ -619,4 +636,4 @@ if __name__ == '__main__':
 	lerArquivoProjeto(nomeArquivoProjetoCompleto, debug = True)
 	projetaMalhaAterramento(debug = True)
 
-	saida = raw_input('[ENTER] para sair')
+	#saida = raw_input('[ENTER] para sair')

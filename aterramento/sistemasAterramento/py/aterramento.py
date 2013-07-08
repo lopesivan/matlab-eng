@@ -22,6 +22,7 @@ from os import getcwd, mkdir
 from os.path import basename, splitext
 from time import localtime
 import malhaAterramento
+from sympy import pprint, symbols, Sum
 
 versao = '0.1'
 
@@ -268,6 +269,7 @@ def ajudaBasica():
     print 'p - plota curva h-pho'
     print 'l - resistividade aparente'
     print 'n - mostra algumas equacoes'
+    print 'm - abre arquivo de configuracao para projeto de malha'
     print 
 
 def sistema(): 
@@ -352,6 +354,22 @@ def mostraEquacoes():
     elif tipo == 'r1':
         r1haste.mostraEquacao()
 
+def projetoMalha():
+
+    try:
+        mainTkinter = Tk()
+        arquivo = askopenfilename()
+        mainTkinter.destroy()  
+        print 'usando,'
+        print arquivo
+    except:
+        print 'erro:'
+        return 
+
+    malhaAterramento.lerArquivoProjeto(arquivo)
+    malhaAterramento.mostraDadosProjeto()
+    malhaAterramento.projetaMalhaAterramento(debug = True)
+
 def exterminaPrograma(): 
     print 'saindo...'
     exit()
@@ -359,36 +377,40 @@ def exterminaPrograma():
 def nada():
     print 'aviso: comando nao reconhecido!'
 
-dicionarioComandos = {  'h' : ajudaBasica,
-                        'ajuda' : ajudaBasica,
+dicionarioComandos = {  
+    'h' : ajudaBasica,
+    'ajuda' : ajudaBasica,
 
-                        'o' : sistema, 
-                        'sistema' : sistema,
+    'o' : sistema, 
+    'sistema' : sistema,
 
-                        's' : exterminaPrograma, 
-                        'sair' :  exterminaPrograma, 
+    's' : exterminaPrograma, 
+    'sair' :  exterminaPrograma, 
 
-                        'c' : calculosResistividade,
-                        'resistividade' : calculosResistividade,
+    'c' : calculosResistividade,
+    'resistividade' : calculosResistividade,
 
-                        'k' : curvaK,
-                        'curvak' : curvaK,
+    'k' : curvaK,
+    'curvak' : curvaK,
 
-                        'e' : estratificacaoSolo,
-                        'estratificacao' : estratificacaoSolo,
+    'e' : estratificacaoSolo,
+    'estratificacao' : estratificacaoSolo,
 
-                        'a' : planilhaExcel,
-                        'excel' : planilhaExcel,
+    'a' : planilhaExcel,
+    'excel' : planilhaExcel,
 
-                        'q' : lerCSV, 
-                        'csv' : lerCSV,
+    'q' : lerCSV, 
+    'csv' : lerCSV,
 
-                        'p' : plotPhoH,
-                        'ploth' : plotPhoH,
+    'p' : plotPhoH,
+    'ploth' : plotPhoH,
 
-                        'n' : mostraEquacoes, 
-                        'equacoes' : mostraEquacoes
-                         }
+    'n' : mostraEquacoes, 
+    'equacoes' : mostraEquacoes,
+
+    'm' : projetoMalha,
+    'malha' : projetoMalha
+}
 
 # interpreta os comandos do usuário
 def cmds(cmd): 
@@ -413,7 +435,19 @@ def inicializacao():
 
     print 'aviso: inicializacao finalizada'
 
+def artMain():
+    m, u, ln, oo, k0, c0, km1, km2, km3, cm1, cm2, cm3, d0, a, N= symbols('m, u, ln, oo, k0, c0, km1, km2, km3, cm1, cm2, cm3, d0, a, N')
+    f = 1 + Sum((u**m*(km1/cm1 + (2*km2)/cm2 + km3/cm3))/(ln(16*a/d0) + k0/c0),(m, 1, oo))
+    pprint(f)
+
 if __name__ == '__main__':
+
+    # print
+    # print 
+    # artMain()
+    # print 
+    # print 
+
 
     print 'Calculos para sistemas de aterramento , v.', versao
     print 'Felipe Bandeira, junho/2013, Fortaleza-CE'

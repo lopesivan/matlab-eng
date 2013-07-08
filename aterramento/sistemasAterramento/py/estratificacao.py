@@ -75,6 +75,20 @@ def iniciaConstantes(ex = None, debug = None):
         es = [2.0, 4.0, 8.0, 16.0, 32.0]
         #chuteInicial = [100, 1, 1]
 
+    ############################################################################
+    # estudo de caso encontrado em, Estimation of tow layer soil parameters using
+    # finite wenner resistivity expressions. Hans R. Seedher....
+    elif ex==4:
+        pho = [693.74, 251.62, 84.56, 37.64, 25.32]
+        es = [1, 2, 3, 4, 5]
+    elif ex == 5:
+        pho = [123.33, 189.99, 258.93, 320.27, 374.13]
+        es = [2, 4, 6, 8, 10]
+    elif ex == 6:
+        pho = [102.26, 113.07, 129.77, 147.52, 163.95]
+        es = [2, 4, 6, 8, 10]
+
+    ############################################################################
 
     # if debug:
     #     print 'pho, ', pho
@@ -559,7 +573,11 @@ if __name__ == '__main__':
     # testa a estratificação em duas camadas
     print 'Inciando teste de estratificacao em 2 camadas,'
 
-    for i in range(4):
+    for i in range(7):
+
+        print
+        print 'caso, ', i
+
         iniciaConstantes(i, debug = True)
         [p1, k, h] = estratifica2Camadas(debug = True)
         print 'valores,'
