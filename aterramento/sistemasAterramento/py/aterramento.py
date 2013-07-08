@@ -18,7 +18,7 @@ import sys
 import rnHorizontais
 import rAnel
 import potenciais
-from os import getcwd, mkdir
+from os import getcwd, mkdir, system
 from os.path import basename, splitext
 from time import localtime
 import malhaAterramento
@@ -257,19 +257,23 @@ def lerCSV():
     pass
 
 def ajudaBasica():
+    print
     print 'Lista de comandos disponiveis:'
-    print 'h - ajuda'
-    print 'o - sistema de calculos'
-    print 's - extermina o programa'
-    print 'c - inicia os calculos para sistema aterramento'
-    print 'k - levanta a curva K de uma malha'
-    print 'e - inicia o processo de estratificacao do solo'
-    print 'a - ler uma planilha de dados'
-    print 'q - ler um arquivo csv'
-    print 'p - plota curva h-pho'
-    print 'l - resistividade aparente'
-    print 'n - mostra algumas equacoes'
-    print 'm - abre arquivo de configuracao para projeto de malha'
+    print 'h = ajuda'
+    print 'o = sistema de calculos'
+    print 's = extermina o programa'
+    print 'c = inicia os calculos para sistema aterramento'
+    print 'k = levanta a curva K de uma malha'
+    print 'e = inicia o processo de estratificacao do solo'
+    print 'a = ler uma planilha de dados'
+    print 'q = ler um arquivo csv'
+    print 'p = plota curva h-pho'
+    print 'l = resistividade aparente'
+    print 'n = mostra algumas equacoes'
+    print 'm = abre arquivo de configuracao para projeto de malha'
+
+def ajudaCompleta():
+    limpaTela()
     print 
 
 def sistema(): 
@@ -379,7 +383,7 @@ def nada():
 
 dicionarioComandos = {  
     'h' : ajudaBasica,
-    'ajuda' : ajudaBasica,
+    'ajuda' : ajudaCompleta,
 
     'o' : sistema, 
     'sistema' : sistema,
@@ -440,28 +444,30 @@ def artMain():
     f = 1 + Sum((u**m*(km1/cm1 + (2*km2)/cm2 + km3/cm3))/(ln(16*a/d0) + k0/c0),(m, 1, oo))
     pprint(f)
 
-if __name__ == '__main__':
+def limpaTela():
+    return system('cls')
 
-    # print
-    # print 
-    # artMain()
-    # print 
-    # print 
-
-
+def mensagemInicial():
     print 'Calculos para sistemas de aterramento , v.', versao
     print 'Felipe Bandeira, junho/2013, Fortaleza-CE'
-    print '.'*80
+    print
     print 'digite "ajuda" para mais informacoes'
+    print 
 
+if __name__ == '__main__':
+
+    limpaTela()
+    mensagemInicial()
     inicializacao()
+    ajudaBasica()
 
-    #ajudaBasica()
-
-    sintaxe = '$>'
+    if configuracoes.limpaTelaInicializacao == 1:
+        limpaTela()
+    else:
+        print
 
     while True:
-        entrada = raw_input(sintaxe)
+        entrada = raw_input(configuracoes.textoPrompt)
         # converte tudo para letras minúsculas e inicia a interpretacao
         cmds(entrada.lower())
         
