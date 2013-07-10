@@ -8,7 +8,7 @@ from __future__ import division
 import r1haste
 import rnhastes
 #from pylab import arange, plot, show, xlabel, ylabel
-from numpy import arange
+from numpy import arange, linspace
 import matplotlib.pyplot as plt
 from tkFileDialog import askopenfilename
 from Tkinter import Tk
@@ -23,6 +23,7 @@ from os.path import basename, splitext
 from time import localtime
 import malhaAterramento
 from sympy import pprint, symbols, Sum
+from scipy.interpolate import UnivariateSpline
 
 versao = '0.1'
 
@@ -320,15 +321,24 @@ def plotPhoH():
     if verificaVariaveisProfResi():
         return
         
+    #plt.subplot(211)
     plt.plot(profundidade, resistividadeMedia)
     plt.xlabel('Profundidade [m]')
     plt.ylabel('Resistividade Media [ohm*m]')
     plt.title('Curva de Resistividade')
     plt.grid(True)
 
+
     plt.savefig(dirCurvas+'\\curvadeResistividade_'+idPlanilha+'_'+formataHora()+'_.png')
     print 'aviso: arquivo png da figura salvo na pasta <curvas>'
     
+    #plt.show()
+    #s = UnivariateSpline(profundidade, resistividadeMedia, s=1)
+    #xs = linspace(0, profundidade[len(profundidade)-1], 1000)
+    #ys = s(xs)
+    #plt.subplot(212)
+    #plt.plot(xs, ys)
+
     plt.show()
     
 

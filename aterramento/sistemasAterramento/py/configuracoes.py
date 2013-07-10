@@ -8,4 +8,4 @@ arquivoExcel = 'D:/matematica/codigos_matlab/aterramento/sistemasAterramento/py/
 
 limpaTelaInicializacao = 0
 
-textoPrompt = ">>>"
+textoPrompt = "]"
