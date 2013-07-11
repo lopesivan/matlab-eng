@@ -6,6 +6,33 @@
 #
 #-------------------------------------------------------------------------------
 # Dimensionamento de uma malha de aterramento
+#
+# Teoria, Kindermann:
+# Dimensionar uma malha de terra é verificar se potenciais que surgem na superfície 
+# do solo, quando da ocorreência do máximo defeito à terra, são inferiores aos 
+# máximos potenciais de passo e toque que uma pessoa pode suportar sem a ocorrência
+# de fibrilação ventricular. Além disso, deve ser dimensionado o condutor da malha, de
+# forma a suportar os esforços mecânicos e térmicosa que estarão sujeitos ao longo de
+# sua vida útil. É fundamental também, levar-se em conta que o valor da resistência de
+# terra da malha deve ser compatível com a sensibilidade da proteção. Isto é, o relé de
+# sobrecorrente de neutro deve atuar adequadamente para o nível de corrente de curto
+# circuito à terra no final do trecho protegido. Deve-se ressaltar que o dimensionamento
+# de uma malha de terra é um processo iterativo. Parte-se de uma malha inicial e
+# verificam se os potenciais, na superfície do solo, quando do máximo defeito à terra, 
+# são inferiores aos valores máximo suportáveis por um ser humano.
+#
+# Itens necessários ao Projeto:
+# 1 - Medições pelo método de Wenner, a fim de se obter a estratificação do solo.
+# 2 - O uso de brita aumenta a segurança para o ser humano e mantem o solo com suas
+# propriedades, normalmente a resistividade do solo é ps = 3000 ohm.m, caso não exista
+# brita adotar ps = p1, onde p1 é a resisitividade da primeira camada.
+# 3 - Corrente de curto-circuito máxima entre fase e terra no local da malha de terra
+# Imaximo = 3*I0.
+# 4 - Percentual da corrente de curto-circuito máxima que realmente escoa pela malha.
+# 5 - Tempo de defeito para a máxima corrente de curto-circuito fase-terra
+# 6 - Área da malha pretendida
+# 7 - Valor máximo da resitência de terra de modo a ser compatível com a sensibilidade da
+# proteção.
 #-------------------------------------------------------------------------------
 #
 
@@ -52,8 +79,7 @@ projetoResultado = {
 }
 
 def formulaOnderdonk(scobre, tDefeito, oa, om= 0, conexao = 'outra'):
-	"""
- 	Dimensionamento térmico de um condutor do tipo cobre a suportar 
+	"""Dimensionamento térmico de um condutor do tipo cobre a suportar 
  	corrente de curto
 
  	Entrada:
@@ -103,8 +129,7 @@ def formulaOnderdonk(scobre, tDefeito, oa, om= 0, conexao = 'outra'):
 
 
 def formulaOnderdonkScobre(iDefeito, tDefeito, oa, om= 0, conexao = 'outra'):
-	"""
- 	Dimensionamento térmico de um condutor do tipo cobre a suportar 
+	"""Dimensionamento térmico de um condutor do tipo cobre a suportar 
  	corrente de curto
 
  	Entrada:
@@ -123,7 +148,7 @@ def formulaOnderdonkScobre(iDefeito, tDefeito, oa, om= 0, conexao = 'outra'):
 
  	Saída:
 
- 	iDefeito = corrente de defeito em Amperes, através do condutor
+ 	scobre = seccão do condutor de cobre em mm^2
 	"""
 
 	if conexao == 'pressao':
@@ -165,9 +190,12 @@ def recomedacaoCondutor(scobre):
 	return 0
 
 def diametroCondutor(area):
-	"""
+	"""Diametro do condutor
 	Entrada:
 	area = em mm^2
+
+	Saída:
+	d = diâmetro em mm
 	"""
 	d = 2*sqrt((area*10**-6)/pi)
 
@@ -180,6 +208,11 @@ def numeroCondutores(a, b, eb, ea):
 	b = largura da malha [m]
 	eb = espaçamento em b entre dois condutores [m]
 	ea = espaçamento em a entre dois condutores [m]
+
+	Saída:
+	Na = número de condutores no eixo x
+	Nb = número de condutores no eixo y
+	lCabo = comprimento minimo para os cabos da malha
 	"""
 
 	Na = a/ea + 1
@@ -195,6 +228,7 @@ def espacamentoEntreCondutores(N, a):
 	Entrada:
 	N = número de condutores
 	a = tamanho total em um eixo
+
 	Saída:
 	e = espaçamento entre dois condutores
 	"""
@@ -202,9 +236,11 @@ def espacamentoEntreCondutores(N, a):
 
 	return e
 
-def resistenciaMalhaLaurent(pa, lTotal, aMalha, h):
-	"""
-	Aproximação da resistência da malha
+def resistenciaMalhaSverak(pa, lTotal, aMalha, h):
+	"""Aproximação da resistência da malha pela fórmula de Sverak
+	Está resistência da malha representa a resistência elétrica da malha até o 
+	infinito. Seu valor deverá ser menor do que a máxima resistência limite da
+	sensibilidade(ajuste) do relé de neutro.
 
 	Entrada:
 	pa = resistividade aparente do solo
@@ -215,6 +251,10 @@ def resistenciaMalhaLaurent(pa, lTotal, aMalha, h):
 	Saída:
 	resistencia de aterramento da malha
 	"""
+
+	if h < 0.25 or h > 2.5:
+		print 'erro: Valores de profundidade da malha nao satisfaz a equacao'
+		return 1e6
 
 	rMalha = pa*(1/lTotal + (1/sqrt(20*aMalha)*(1 + 1/(1 + h*sqrt(20/aMalha)))))
 
@@ -276,8 +316,8 @@ def coeficienteIrregularidade(N):
 	return ki
 
 def potencialMalha(pa, km, ki, iMalha, lTotal):
-	"""
-	Potência de malha máximo se encontra nos cantos da malha
+	"""Potência de malha máximo se encontra nos cantos da malha
+	
 	Entrada:
 	pa = resistividade aparente do solo
 	km = coeficiente de malha
@@ -292,7 +332,9 @@ def potencialMalha(pa, km, ki, iMalha, lTotal):
 	return vMalha
 
 def comprimentoTotal15(lCabo, lHastes):
-	"""
+	"""No caso de malhas onde são colocadas hastes cravadas nos cantos e/ou 
+	no perímetro, as correntes têm maior facilidade de escoar mais profundamente
+	no solo, alterando, portanto, o potencial de malha.
 	comprimento virtual ponderado em 15%   do total
 	"""
 	lTotal = lCabo + 1.15*lHastes
@@ -584,7 +626,7 @@ def projetaMalhaAterramento(debug = False):
 	eb = espacamentoEntreCondutores(Nb, largura)
 
 	# calculando a resistência da malha
-	rMalha = resistenciaMalhaLaurent(pa, lCabo, area, hMalha)
+	rMalha = resistenciaMalhaSverak(pa, lCabo, area, hMalha)
 
 	iMalha = projetoMalha.get('iMalha')
 

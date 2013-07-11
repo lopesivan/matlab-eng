@@ -262,9 +262,18 @@ def resistividadeMediaPlanilha(mDados, desvioPadrao = 0.5, debug = None):
             else:
 
                 media = media + mDados[l, c]
+
                 q=q+1
 
-        resistividadeCorrigida.append(media*q**-1)
+        try:
+            resistividadeCorrigida.append(media*q**-1)
+        except:
+            print 'erro: possivel erro na medicao em,'
+            print 'linha, ', l
+            print 'coluno, ', c
+            print 'PARE COM ISSO PORFAVORRR!!!!'
+            resistividadeCorrigida.append(0)
+            #exit()
         media = 0
         q = 0
 
