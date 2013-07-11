@@ -274,7 +274,14 @@ def ajudaBasica():
     print 'm = abre arquivo de configuracao para projeto de malha'
 
 def ajudaCompleta():
-    limpaTela()
+    #limpaTela()
+
+    print """32132nfdsfd
+    fdefd
+    fefwe
+
+    """
+
     print 
 
 def sistema(): 
