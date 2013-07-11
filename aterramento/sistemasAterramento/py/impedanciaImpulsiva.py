@@ -16,11 +16,6 @@ def zpDir(dir, nivelRecursao = 50, ddir = None, debug = 0):
 	Busca recursiva dos arquivos
 	"""
 
-	arquivoTensao = ''
-	arquivoCorrente = ''
-
-	idArquivoTensao = ['0.CSV', '1.CSV'] 
-	idArquivoCorrente = ['1.CSV', '2.CSV']
 	idArquivoCSV = 'csv'
 
 	qArquivos = 0
@@ -57,11 +52,12 @@ def zpDir(dir, nivelRecursao = 50, ddir = None, debug = 0):
 				#	cf = csv.reader(f)
 
 				if debug:
+					print '*'*80
 					print 'arquivos <csv> no diretorio atual'					
 					print arquivos
 					print
 
-				zpArquivo(arquivos)
+				zpArquivo(arquivos, plot = 0)
 
 			elif qArquivos > 2 and debug:
 				print 'erro: mais de um arquivo <csv> no diretorio'
@@ -80,7 +76,7 @@ def zpDir(dir, nivelRecursao = 50, ddir = None, debug = 0):
 	return sucesso
 
 
-def zpArquivo(arq):
+def zpArquivo(arq, plot = 0):
 	tensao = csv.reader(open(arq[0], 'rb'))
 	corrente = csv.reader(open(arq[1], 'rb'))
 
@@ -121,23 +117,27 @@ def zpArquivo(arq):
 	#plt.plot(t[len(t)/2:], v2[len(t)/2:])
 	#plt.plot(t, v2, t, i2)
 
-	plt.subplot(311)
-	plt.ylabel('tensao')
-	plt.plot(t, v2)
+	if plot == 1 or rTerra < 0:
+		plt.subplot(311)
+		plt.ylabel('tensao')
+		plt.plot(t, v2)
 
-	plt.subplot(312)
-	plt.ylabel('corrente')
-	plt.plot(t, i2)
+		plt.grid(True)
 
-	plt.subplot(313)
-	plt.ylabel('z = v/i')
-	plt.plot(t, z)
+		plt.subplot(312)
+		plt.ylabel('corrente')
+		plt.plot(t, i2)
 
-	plt.xlabel('tempo(s)')
+		plt.grid(True)
 
-	plt.grid(True)
-	plt.show()
+		plt.subplot(313)
+		plt.ylabel('z = v/i')
+		plt.plot(t, z)
 
+		plt.xlabel('tempo(s)')
+
+		plt.grid(True)
+		plt.show()
 
 if __name__ == '__main__':
 	print 'Impedancia Impulsiva'
