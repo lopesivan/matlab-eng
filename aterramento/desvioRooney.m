@@ -1,7 +1,7 @@
 % malhaTerraGeraldo('tabelaExemplo2_12GeraldoKindermann.xlsx')
-function saida = malhaTerraGeraldo(axls)
+function saida = desvioRooney(dadosMedidos)
 
-dadosMedidos = xlsread(axls)
+% dadosMedidos = xlsread(axls);
 [linhaTamanho, colunaTamanho] = size(dadosMedidos);
 mediaResistividade = [];
 media = 0;
@@ -26,12 +26,16 @@ for L = 1:linhaTamanho
     media = 0;
 end
 
-disp('Resistividade Média:');
-for L = 1:linhaTamanho
-    fprintf('Distância= %d -> Resistividade média= %f\n', dadosMedidos(L, 1), mediaResistividade(L));
-end
+% disp('Resistividade Média:');
+% for L = 1:linhaTamanho
+%     fprintf('Distância= %d -> Resistividade média= %f\n', dadosMedidos(L, 1), mediaResistividade(L));
+% end
 
+%disp(mediaResistividade')
+%disp(dadosMedidos(:, 1))
 tabelaCalculos = [dadosMedidos(:, 1), mediaResistividade'];
+
+%disp(tabelaCalculos)
 
 q = 0;
 media = 0;
@@ -40,8 +44,8 @@ resistividadeCorrigida = [];
 for L = 1:linhaTamanho
     for C = 2:colunaTamanho
         if (abs(dadosMedidos(L, C)-tabelaCalculos(L, 2))/tabelaCalculos(L, 2)) >= .5
-            disp('Valor com desvio maior que 50%');
-            disp(dadosMedidos(L, C));           
+            %disp('Valor com desvio maior que 50%');
+            %disp(dadosMedidos(L, C));           
         else
             media = media + dadosMedidos(L, C);
             q = q + 1;
@@ -54,26 +58,26 @@ for L = 1:linhaTamanho
     
 end
 
-tabelaCalculos = [dadosMedidos(:, 1), mediaResistividade', resistividadeCorrigida'];
+%tabelaCalculos = [dadosMedidos(:, 1), mediaResistividade', resistividadeCorrigida'];
+tabelaCalculos = [dadosMedidos(:, 1), resistividadeCorrigida'];
 
-profundidaCravamento = xlsread(axls, 2);
+%profundidaCravamento = xlsread(axls, 2);
 
-R = [];
-for Q = 1:size(tabelaCalculos, 1)
-    R(Q) = resistencia(tabelaCalculos(Q, 3), tabelaCalculos(Q, 1), profundidaCravamento);
-end
+% R = [];
+% for Q = 1:size(tabelaCalculos, 1)
+%     R(Q) = resistencia(tabelaCalculos(Q, 3), tabelaCalculos(Q, 1), profundidaCravamento);
+% end
 
 
 % tabela com valores
 % espaçamento, resistividade com erros, resitividade corrigida, resistência
 % média
-tabelaCalculos = [dadosMedidos(:, 1), mediaResistividade', resistividadeCorrigida', R'];
+%tabelaCalculos = [dadosMedidos(:, 1), mediaResistividade', resistividadeCorrigida', R'];
 
 % grafico de resistividade
-plot(tabelaCalculos(:, 1), tabelaCalculos(:, 3));
-grid on;
+%plot(tabelaCalculos(:, 1), tabelaCalculos(:, 3));
+%grid on;
 
 saida = tabelaCalculos;
-%saida = dadosMedidos;
 
 end
