@@ -10,8 +10,9 @@
 #
 
 from __future__ import division
-from scipy.optimize import fmin, fmin_slsqp, anneal, basinhopping, brute, leastsq
-from math import sqrt, pi, log
+#from scipy.optimize import fmin, fmin_slsqp, anneal, basinhopping, brute, leastsq
+from scipy.optimize import fmin_slsqp
+from math import sqrt, pi, log, exp
 from time import time
 from xlrd import open_workbook
 from numpy import zeros, shape, arange
@@ -19,9 +20,16 @@ from numpy import zeros, shape, arange
 import matplotlib.pyplot as plt
 import sys
 from os import getcwd
-from scipy.signal import butter
+#from scipy.signal import butter
 import r1haste
 import ConfigParser
+
+#import sympy
+
+from scipy.integrate import quad, romberg, dblquad
+from scipy.special import jn, jv
+from scipy import inf
+
 
 # VARIÁVEIS de controle
 
@@ -49,6 +57,9 @@ def iniciaConstantes(ex = None, debug = None):
     # valores encontrados no Kindermann
     if ex == 0:
 
+        # OBSERVAÇÃO
+        # Estes valores mostrado no livro do Kindermann não caracterizam um solo
+        # de 2 camadas. A otimização para duas pode não ser satifatória.
         pho = [320, 245, 182, 162, 168, 152]
         es = [2.5, 5, 7.5, 10, 12.5, 15]
         #chuteInicial = [0, 0, 0] 
@@ -570,9 +581,110 @@ def endrenyi1963(beta,  alfa, a, phi = 0.5, d0 = 1):
     return N
 
 ################################################################################
+# Equacionamento para estratificação do solo em várias camadas
+# Documentação utilizada:
+# [1] T. Takahashi, T. Kawase: Calculation of earth resistance for a deep- driven rod in a multi-layer earth structure
+#pTT = [1, 100]
+#hTT = [1, 1]
 
-if __name__ == '__main__':
+def kiTT(pTT, hTT, i):
+    if i == 0:
+        return 1
+    i-=1
+    return (pTT[i+1]-pTT[i])/(pTT[i+1]+pTT[i])
 
+def alfaTT(pTT, hTT, N1, N2, la):
+    N1-=1
+    N2-=1
+
+    if N1 == N2:
+        return 1
+
+    r = alfaTT(pTT, hTT, N1, N2+1, la)+ \
+        kiTT(pTT, hTT, N2+1)* \
+        betaTT(pTT, hTT, N1, N2+1, la)* \
+        exp(-2*la*hTT[N2+1])
+
+    return r
+
+def betaTT(pTT, hTT, N1, N2, la):
+    N1-=1
+    N2-=1
+
+    if N1 == N2:
+        return 0
+
+    r = kiTT(pTT, hTT, N2+1)* \
+        alfaTT(pTT, hTT, N1, N2+1, la)+ \
+        betaTT(pTT, hTT, N1, N2+1, la)* \
+        exp(-2*la*hTT[N2+1])
+
+    return r
+
+def HsTT(hTT):
+    return sum(hTT)
+
+def HNMenos1(hTT, N):
+    r = 0
+    for  i in hTT[:(N-1)]:
+        r+=i
+
+    return r
+
+def parteA_TakahashiKawase(h, p, l, N, a):
+    r = 0
+    for i in range(1, N):
+        r+=h[i]/p[i]
+    r+=(l-HNMenos1(h, N))/p[N-1]
+    r=(1/(2*pi))*(1/r)
+
+    return r
+
+def parteB_TakahashiKawase(h, p, l, N, a):
+    r = 0
+    for s in range(1, N+1):
+        for i in range(s):
+            (1-kiTT(p, h, i))
+
+            superFuncao = lambda la, t: \
+                ((alfaTT(p, h, N, s, la)*exp(-la*t)+ \
+                betaTT(p, h, N, s, la)*exp(-2*la*HsTT(h))*exp(la*t))/ \
+                (alfaTT(p, h, N, 1, la)-betaTT(p, h, N, 1, la)*exp(-2*la*h[0])))* \
+                jn(0, la*a)
+
+            print 'valor de s, ', s
+            print 'valor de i, ', i
+            print superFuncao(1, 1)
+            #res = dblquad(superFuncao, 0, inf, lambda t: HNMenos1(h, N), lambda t: HsTT(h))[0]
+            #print res
+
+    return r
+
+def testeTT():
+    pTT = [1, 100]
+    hTT = [1, 1]
+    N = 2
+    l = 30
+    a = 1
+
+    print '- '*40
+    print u'Iniciando teste para as funções de Takahashi e Kawase'
+    print
+    print 'alfa   , ', alfaTT(pTT, hTT, N, 1, 1)
+    print 'beta   , ', betaTT(pTT, hTT, N, 1, 1)
+    print 'Hs     , ', HsTT(hTT)
+    print 'HN-1   , ', HNMenos1(hTT, N)
+    print 'parte A, ', parteA_TakahashiKawase(hTT, pTT, l, N, a)
+    print 'parte B, ', parteB_TakahashiKawase(hTT, pTT, l, N, a)
+
+    return 0
+
+
+
+################################################################################
+# ROTINAS DE TESTE
+################################################################################
+def testeEstratificacaoArquivos():
     dirAtual = getcwd()
     pastaTabelas = "tabelas"
     planilhas = [dirAtual+"\\"+pastaTabelas+"\\"+"tabelaExemplo2_12GeraldoKindermann.xlsx", 
@@ -644,6 +756,7 @@ if __name__ == '__main__':
 
     print
 
+def testeResistividadeAparente():
     #--------------------------------------------------------------------------
     # testando os cálculos de resistividade aparente    
 
@@ -693,13 +806,11 @@ if __name__ == '__main__':
     p = [500, 200, 120]
     l = [2, 5, 3]
     pa = hasteSoloVariasCamadas(p, l, 15e-3)
-    print pa
-
-
-    #--------------------------------------------------------------------------    
+    print pa    
 
     print
 
+def testeCurvasEndrenyi():
     # curvas de Endrenyi
 
     #--------#
@@ -754,5 +865,15 @@ if __name__ == '__main__':
     print 'Curva de proposta por Endrenyi em 1963,'
     print endrenyi1963(.138, 2.603, 31.23, 0.5,  1)
 
+################################################################################
 
-    saida = raw_input('[ENTER] para sair')
+if __name__ == '__main__':     
+
+    print u'Biblioteca: Estratificação'
+
+    #testeEstratificacaoArquivos()
+    #testeResistividadeAparente()
+    #testeCurvasEndrenyi()
+    testeTT()
+
+    #saida = raw_input('[ENTER] para sair')
