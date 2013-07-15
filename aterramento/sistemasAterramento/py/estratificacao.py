@@ -28,7 +28,7 @@ import ConfigParser
 
 from scipy.integrate import quad, romberg, dblquad
 from scipy.special import jn, jv
-from scipy import inf
+from scipy import Inf
 
 
 # VARIÁVEIS de controle
@@ -633,7 +633,7 @@ def HNMenos1(hTT, N):
 
 def parteA_TakahashiKawase(h, p, l, N, a):
     r = 0
-    for i in range(1, N):
+    for i in range(0, N-1):
         r+=h[i]/p[i]
     r+=(l-HNMenos1(h, N))/p[N-1]
     r=(1/(2*pi))*(1/r)
@@ -646,23 +646,37 @@ def parteB_TakahashiKawase(h, p, l, N, a):
         for i in range(s):
             (1-kiTT(p, h, i))
 
-            superFuncao = lambda la, t: \
-                ((alfaTT(p, h, N, s, la)*exp(-la*t)+ \
-                betaTT(p, h, N, s, la)*exp(-2*la*HsTT(h))*exp(la*t))/ \
-                (alfaTT(p, h, N, 1, la)-betaTT(p, h, N, 1, la)*exp(-2*la*h[0])))* \
-                jn(0, la*a)
-
-            print 'valor de s, ', s
-            print 'valor de i, ', i
-            print superFuncao(1, 1)
-            #res = dblquad(superFuncao, 0, inf, lambda t: HNMenos1(h, N), lambda t: HsTT(h))[0]
-            #print res
+            f = lambda t, la: (exp(-la*t)/(1-0.818*exp(-2*la)))*jn(0, la)
+            r = (1-.818)*dblquad(f, 0, Inf, lambda t: 1, lambda t: 2)[0]
 
     return r
 
+def duasCamadasTakahashiKawase():
+    #f = lambda t, la: (exp(-la*t)/(1-0.818*exp(-2*la)))*jn(0, la)
+    #r = (1-.818)*dblquad(f, 0, Inf, lambda t: 1, lambda t: 2)[0]    
+    k1 = 0.818
+    h = 1
+    l = 2
+    x = 1
+    p1 = 10
+    I1 = 1
+
+
+    a = lambda t, la: (exp(-la*t)/(1-k1*exp(-2*la*h)))*jv(0, la*x)
+    r1 = (1-k1)*dblquad(a, 0, Inf, lambda t: h, lambda t: l)[0]
+
+    b = lambda t, la: ((exp(-la*t)+k1*exp(-2*la*h)*exp(-la*t))/(1-k1*exp(-2*la*h)))*jv(0, la*x)
+    r2 = dblquad(b, 0, Inf, lambda t: 0, lambda t: h, full_output = True)[0]
+
+    f = (r1+r2)*((p1*I1)/2*pi)
+
+    print 'r1, ', r1
+    print 'r2, ', r2
+    print 'f , ', f
+
 def testeTT():
-    pTT = [1, 100]
-    hTT = [1, 1]
+    pTT = [10, 100]
+    hTT = [5, 0]
     N = 2
     l = 30
     a = 1
@@ -676,6 +690,10 @@ def testeTT():
     print 'HN-1   , ', HNMenos1(hTT, N)
     print 'parte A, ', parteA_TakahashiKawase(hTT, pTT, l, N, a)
     print 'parte B, ', parteB_TakahashiKawase(hTT, pTT, l, N, a)
+
+    print 
+    print 'Solo em duas camadas'
+    duasCamadasTakahashiKawase()
 
     return 0
 
