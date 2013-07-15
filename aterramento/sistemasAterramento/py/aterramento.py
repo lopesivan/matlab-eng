@@ -233,7 +233,7 @@ def planilhaExcel(p = None, debug = True):
         for i in range(len(profundidade)):
             print profundidade[i], resistividadeMedia[i]
 
-    print 'aviso: valores de profundidade e resistivdade foram atualizados'
+    print 'aviso: valores de profundidade e resistividade foram atualizados'
 
 def estratificacaoSolo():
 
