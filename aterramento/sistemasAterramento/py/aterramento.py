@@ -82,7 +82,7 @@ def entradaHastesLinha():
         q = input('quantidade de hastes: ')
     
     except:
-        print 'erro: entrada invalida, usando valores padroes'
+        print u'erro: entrada invalida, usando valores padrões'
         
         pa = 100    #resistividade aparente do solo
         l = 2.4     #comprimento da haste
@@ -90,11 +90,11 @@ def entradaHastesLinha():
         d = 0.0127  #diametro da haste
         q = 8       #quantidade de hastes
 
-        print 'resistividade aparente do solo(ohm*m):', pa
-        print 'comprimento da haste(m): ', l
-        print 'espacamento entre os eletrodos(m): ', e
-        print 'diametro da haste(m): ', d
-        print 'quantidade de hastes: ', q
+        print u'resistividade aparente do solo(ohm*m):', pa
+        print u'comprimento da haste(m): ', l
+        print u'espaçamento entre os eletrodos(m): ', e
+        print u'diametro da haste(m): ', d
+        print u'quantidade de hastes: ', q
 
     return [pa, l, e, d, q]
 
@@ -107,7 +107,7 @@ def entradaHastesQuadradoCheio():
         m = input('quantidade de hastes na linha')
         n = input('quantidade de hastes na coluna')
     except:
-        print 'erro: entrada invalida, usando valores padroes'        
+        print u'erro: entrada invalida, usando valores padrões'        
         pa = 100
         l = 2.4
         e = 2
@@ -115,12 +115,12 @@ def entradaHastesQuadradoCheio():
         m = 2
         n = 2
 
-        print 'resistividade aparente do solo(ohm*m):', pa
-        print 'comprimento da haste(m): ', l
-        print 'espacamento entre os eletrodos(m): ', e
-        print 'diametro da haste(m): ', d
-        print 'na linha: ', m
-        print 'na coluna: ', n
+        print u'resistividade aparente do solo(ohm*m):', pa
+        print u'comprimento da haste(m): ', l
+        print u'espaçamento entre os eletrodos(m): ', e
+        print u'diâmetro da haste(m): ', d
+        print u'na linha: ', m
+        print u'na coluna: ', n
 
     return [m, n, e, pa, l, d]
 
@@ -145,12 +145,12 @@ def curvaK():
     
 
 def calculosResistividade(): 
-    print '0 - calculo para 1 haste'
-    print '1 - calculo para n hastes em paralelo(linha)'
-    print '2 - quadrado cheio'
-    print '3 - triangulo'
-    print '4 - circunferencia'
-    print '5 - anel'
+    print u'0 - cálculo para 1 haste'
+    print u'1 - cálculo para n hastes em paralelo(linha)'
+    print u'2 - quadrado cheio'
+    print u'3 - triângulo'
+    print u'4 - circunfêrencia'
+    print u'5 - anel'
     
     a = raw_input('>>>')
     
@@ -167,11 +167,11 @@ def calculosResistividade():
         res = rnhastes.quadradoCheio(en[0], en[1], en[2], en[3], en[4], en[5])
 
     else:
-        print 'aviso: opcao nao disponivel'
+        print u'aviso: opção não disponivel'
         return 0
 
     print '_'*50
-    print 'Resistencia calculada:', res
+    print u'Resistência calculada:', res
 
 def atualizaIdArquivo(nome = '', tipo = 'excel'):
     global idPlanilha
@@ -180,13 +180,13 @@ def atualizaIdArquivo(nome = '', tipo = 'excel'):
 
         idPlanilha = basename(nome)
         idPlanilha = splitext(idPlanilha)[0]
-        print 'identificacao atualizada, e, ', 
+        print u'identificação atualizada, e, ', 
         print idPlanilha
 
     elif tipo == 'arquivo':
 
         idPlanilha = nome
-        print 'identificacao atualizada, a, ', 
+        print u'identificação atualizada, a, ', 
         print idPlanilha
 
     else:
@@ -201,35 +201,47 @@ def planilhaExcel(p = None, debug = True):
         try:
             mainTkinter = Tk()
             planilha = askopenfilename()
-
-            atualizaIdArquivo(planilha)
-
             mainTkinter.destroy()
+
+            if len(planilha) > 0:
+                atualizaIdArquivo(planilha, tipo = 'excel')
+            else:
+                print u'Parabêns, é sempre bom selecionar um arquivo'
+                print 'aviso: nada atualizado'
+                return 1
 
             if debug:
                 print planilha    
         except:
             atualizaIdArquivo('', tipo = 'erro')
             planilha = None
-            return
+            print 'erro: na planilha'
+            return 1
     else:
         planilha = p
-
-        atualizaIdArquivo(planilha)
+        try:
+            a = open(planilha, 'rb')
+        except:
+            print u'erro: planilha não encontrada'
+            return 
+            atualizaIdArquivo(planilha, tipo = 'excel')
+        atualizaIdArquivo(planilha, tipo = 'arquivo')
+        
+    #atualizaIdArquivo(planilha)
 
     try:
         mDados = estratificacao.lerPlanilha(planilha)
     except:
         print 'aviso: nenhum arquivo'
         planilha = None
-        return
+        return 2
 
     [profundidade, resistividadeMedia] = estratificacao.resistividadeMediaPlanilha(mDados)        
 
     if debug:
         print 'Valores disponiveis da tabela,'
         print mDados
-        print 'profundidade | resisitividade media'
+        print u'profundidade | resisitividade média'
         for i in range(len(profundidade)):
             print profundidade[i], resistividadeMedia[i]
 
@@ -259,26 +271,24 @@ def lerCSV():
 
 def ajudaBasica():
     print
-    print 'Lista de comandos disponiveis:'
-    print 'h = ajuda'
-    print 'o = sistema de calculos'
-    print 's = extermina o programa'
-    print 'c = inicia os calculos para sistema aterramento'
-    print 'k = levanta a curva K de uma malha'
-    print 'e = inicia o processo de estratificacao do solo'
-    print 'a = ler uma planilha de dados'
-    print 'q = ler um arquivo csv'
-    print 'p = plota curva h-pho'
-    print 'l = resistividade aparente'
-    print 'n = mostra algumas equacoes'
-    print 'm = abre arquivo de configuracao para projeto de malha'
+    print u'Lista de comandos disponiveis:'
+    print u'h = ajuda'
+    print u'o = sistema de calculos'
+    print u's = extermina o programa'
+    print u'c = inicia os calculos para sistema aterramento'
+    print u'k = levanta a curva K de uma malha'
+    print u'e = inicia o processo de estratificação do solo'
+    print u'a = ler uma planilha de dados'
+    #print u'q = ler um arquivo csv'
+    print u'p = plota curva h-pho'
+    print u'l = resistividade aparente'
+    print u'n = mostra algumas equações'
+    print u'm = abre arquivo de configuracão para projeto de malha'
 
 def ajudaCompleta():
-    #limpaTela()
+    limpaTela()
 
-    print """32132nfdsfd
-    fdefd
-    fefwe
+    print u"""pyAterramento
 
     """
 
@@ -290,15 +300,16 @@ def sistema():
     global resistividadeMedia
     global debugAterramento 
 
-    print 'Controle do sistema,'
-    print 'Usa variaveis adquiridas apartir de um arquivo, @', usaValoresArquivo
+    print u'Controle do sistema,'
+    print u'Usa variáveis adquiridas apartir de um arquivo, @', usaValoresArquivo
 
-    print 'Limites para a otimizacao,'
+    print u'Limites para a otimização,'
     print 'p1, ', estratificacao.limites[0]
     print 'k, ', estratificacao.limites[1]
     print 'h, ', estratificacao.limites[2]
 
-    if raw_input('mostrar variaveis aterramento[s/N]?') == 's':
+    print u'mostrar variáveis aterramento[s/N]?',
+    if raw_input() == 's':
         try:
             if len(profundidade)>0 and len(resistividadeMedia):
                 print 'profundidade | resisitividade media'
@@ -308,7 +319,8 @@ def sistema():
             print 'aviso: nada para mostrar'
             print 'carregue um arquivo antes desta acao'
 
-    if raw_input('carregar o arquivo de configuracao[s/N]?') == 's':
+    print u'carregar o arquivo de configuracao[s/N]?',
+    if raw_input() == 's':
         try:
             print configuracoes.arquivoExcel
             planilhaExcel(configuracoes.arquivoExcel, debug = None)
@@ -440,8 +452,10 @@ def cmds(cmd):
 def inicializacao():
     print 'aviso: carregando arquivo de configuracao'
     try:
-        print configuracoes.arquivoExcel
-        planilhaExcel(configuracoes.arquivoExcel, debug = None)
+        
+        if planilhaExcel(configuracoes.arquivoExcel, debug = None) == 0:
+            print configuracoes.arquivoExcel
+
     except Exception, e:
         print 'erro: nao foi possivel iniciar pelo arquivo de configuracao'
         print e
@@ -485,6 +499,6 @@ if __name__ == '__main__':
 
     while True:
         entrada = raw_input(configuracoes.textoPrompt)
-        # converte tudo para letras minúsculas e inicia a interpretacao
+        # converte tudo para letras minúsculas e inicia a interpretação
         cmds(entrada.lower())
         
