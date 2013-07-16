@@ -43,7 +43,7 @@ def eqTakahashiKawase():
 	s = 2
 
 	h = [1, 1]
-	p = [p1, p2]
+	p = [p1, p2]kk
 
 	ac = 0
 	for i in range(0, N):
