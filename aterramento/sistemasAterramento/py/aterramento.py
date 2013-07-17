@@ -24,6 +24,8 @@ from time import localtime
 import malhaAterramento
 from sympy import pprint, symbols, Sum
 from scipy.interpolate import UnivariateSpline
+import ConfigParser
+from os.path import isdir, isfile
 
 versao = '0.1'
 
@@ -38,9 +40,46 @@ idPlanilha = ''
 # diretorio para armazenamento das curvas
 dirCurvas = getcwd()+'\\curvas'
 
+sistemaVar = {
+    # se 0 a entrada para o diâmetro da haste é dada em m
+    # se 1 a entrada para o diâmetro da haste é dada em mm
+    # se 2 a entrada para o diâmetro da haste é dada em polegas
+    'unidadeHaste' : 0,
+
+    'usaValoresArquivo' : 1,
+    'debugAterramento' : 0, 
+    'idPlanilha' : '',
+}
+
+nomeArquivoConfiguracao = 'configuracoes.cfg'
+
 def formataHora():
     t = localtime()
     return str(t.tm_hour)+str(t.tm_min)+str(t.tm_sec)
+
+def lerDRHaste(msg = 'diametro da haste'):
+    """Ler o diâmetro ou raio da haste com o cuidado com as unidades
+    entrada:
+    msg - mensagem a ser mostrada
+    """
+
+    x = sistemaVar['unidadeHaste']
+
+    try:
+        if  x == 0:
+            print msg+' (m)',
+            a = input()
+            return a
+        elif x == 1:
+            print msg+' (mm)',
+            a = input()
+            return a/1000
+        elif x == 2:
+            msg+' (polegadas)',
+            a = input()
+            return a/.0254
+    except:
+        return -1
 
 def verificaVariaveisProfResi():
     global profundidade, resistividadeMedia
@@ -57,11 +96,14 @@ def verificaVariaveisProfResi():
     except:
         print 'erro: impossivel ler profundidade'
         return 3
+
 def entradaPhold():
     try:
         pa = input('resistividade do solo(ohm*m): ')
         l = input('comprimento da haste(m): ')
-        d = input('diametro da haste(m): ')
+        d = lerDRHaste()
+        if d == -1:
+            raise Exception()
     except:
         print 'erro: entrada invalida, usando valores padroes'
         pa = 100
@@ -77,7 +119,11 @@ def entradaHastesLinha():
     try:
         pa = input('resistividade do solo(ohm*m): ')
         l = input('comprimento da haste(m): ')
-        d = input('diametro da haste(m): ')
+
+        d = lerDRHaste()
+        if d == -1:
+            raise Exception()
+
         e = input('espacamento entre duas hastes(m): ')
         q = input('quantidade de hastes: ')
     
@@ -102,7 +148,11 @@ def entradaHastesQuadradoCheio():
     try:
         pa = input('resistividade do solo(ohm*m): ')
         l = input('comprimento da haste(m): ')
-        d = input('diametro da haste(m): ')
+
+        d = lerDRHaste()
+        if d == -1:
+            raise Exception()
+
         e = input('espacamento entre duas hastes(m): ')
         m = input('quantidade de hastes na linha')
         n = input('quantidade de hastes na coluna')
@@ -152,7 +202,7 @@ def calculosResistividade():
     print u'4 - circunfêrencia'
     print u'5 - anel'
     
-    a = raw_input('>>>')
+    a = raw_input(']]')
     
     if a == '0':
         en = entradaPhold()
@@ -266,39 +316,40 @@ def estratificacaoSolo():
 
     pass
 
-def lerCSV():
-    pass
-
 def ajudaBasica():
-    print
-    print u'Lista de comandos disponiveis:'
-    print u'h = ajuda'
-    print u'o = sistema de calculos'
-    print u's = extermina o programa'
-    print u'c = inicia os calculos para sistema aterramento'
-    print u'k = levanta a curva K de uma malha'
-    print u'e = inicia o processo de estratificação do solo'
-    print u'a = ler uma planilha de dados'
-    #print u'q = ler um arquivo csv'
-    print u'p = plota curva h-pho'
-    print u'l = resistividade aparente'
-    print u'n = mostra algumas equações'
-    print u'm = abre arquivo de configuracão para projeto de malha'
+
+    print u"""
+Lista de comandos disponíveis
+
+    h, ajuda            exibe ajuda básica ou completa
+    o, sistema          configura o sistema de cálculos
+    s, sair             finaliza o programa
+    c, topologias       cálcula a resistência de uma topologia 
+                        específica de aterramento. 
+    k, curvak           levanta a curva K
+    e, estratificacao   inicia o processo de estratificação do solo
+    a, excel            ler uma planilha(excel) de dados
+    p, plothp           plota curva h-pho
+    l, aparente         resistividade aparente 
+    n, equacoes         mostra algumas equações
+    m, malha            abre um arquivo para o projeto de malha
+    """
 
 def ajudaCompleta():
     limpaTela()
 
-    print u"""pyAterramento
+    ajudaBasica()
+
+    print u"""
 
     """
-
-    print 
 
 def sistema(): 
     global usaValoresArquivo
     global profundidade
     global resistividadeMedia
-    global debugAterramento 
+    global debugAterramento
+    global sistemaVar
 
     print u'Controle do sistema,'
     print u'Usa variáveis adquiridas apartir de um arquivo, @', usaValoresArquivo
@@ -335,6 +386,68 @@ def sistema():
         if raw_input('SAIR do modo de debug[s/N]?') == 's':
             debugAterramento = 0
             print 'debug desativado'
+
+    print u'Atualmente o diâmetro/raio da haste é informado em', 
+    if sistemaVar['unidadeHaste'] == 0:
+        print u'metros'
+    elif sistemaVar['unidadeHaste'] == 1:
+        print u'milímetros'
+    elif sistemaVar['unidadeHaste'] == 2:
+        print u'polegadas'
+
+    print u' deseja mudar[s/N]?',
+    if raw_input() == 's':
+        print u'0 - metros'
+        print u'1 - milímetros'
+        print u'2 - polegadas'
+
+        try:
+            a = input('>')
+        except:
+            print u'erro: entrada inválida'
+            a = 100
+
+        if a >= 0 and a <= 2:
+            sistemaVar['unidadeHaste'] = a
+        elif a == 100:
+            pass
+        else:
+            print u'erro: valor inválido'
+
+def criaArquivoConfiguracao(novo = False, debug = False):
+    if debug:
+        print 'criando arquivo de configuracao, '
+
+    if isfile(nomeArquivoConfiguracao) == True:
+
+        if debug:
+            print 'aviso: arquivo ja existe'
+            return
+
+        if novo == False:
+            return
+        else:
+            if debug:
+                print 'aviso: sobrescrevendo'
+
+    projeto = ConfigParser.RawConfigParser()
+
+    projeto.add_section('sistema')
+    projeto.set('sistema', 'prompt', ']')
+
+    projeto.add_section('projMalha')
+    projeto.set('projMalha', 'dir', '.')
+
+    projeto.add_section('tabela')
+    projeto.set('tabela', 'dir', '.')
+
+    with open(nomeArquivoConfiguracao, 'wb') as configfile:
+        projeto.write(configfile)
+
+
+def lerArquivoConfiguracao(silencioso = 1):
+    global sistemaVar
+
 
 def plotPhoH():
     if verificaVariaveisProfResi():
@@ -421,7 +534,7 @@ dicionarioComandos = {
     'sair' :  exterminaPrograma, 
 
     'c' : calculosResistividade,
-    'resistividade' : calculosResistividade,
+    'topologias' : calculosResistividade,
 
     'k' : curvaK,
     'curvak' : curvaK,
@@ -432,11 +545,8 @@ dicionarioComandos = {
     'a' : planilhaExcel,
     'excel' : planilhaExcel,
 
-    'q' : lerCSV, 
-    'csv' : lerCSV,
-
     'p' : plotPhoH,
-    'ploth' : plotPhoH,
+    'plothp' : plotPhoH,
 
     'n' : mostraEquacoes, 
     'equacoes' : mostraEquacoes,
@@ -450,25 +560,25 @@ def cmds(cmd):
     return dicionarioComandos.get(cmd, nada)()
 
 def inicializacao():
-    print 'aviso: carregando arquivo de configuracao'
+    print u'aviso: carregando arquivo de configuração'
     try:
         
         if planilhaExcel(configuracoes.arquivoExcel, debug = None) == 0:
             print configuracoes.arquivoExcel
 
     except Exception, e:
-        print 'erro: nao foi possivel iniciar pelo arquivo de configuracao'
+        print u'erro: não foi possivel iniciar pelo arquivo de configuração'
         print e
     try:
         mkdir(dirCurvas)
     except Exception, e:
-        print 'erro: nao foi possivel criar diretorio para as curvas, talvez ele ja exista'
+        print u'erro: não foi possivel criar diretório para as curvas, talvez ele já exista'
     else:
         pass
     finally:
         pass
 
-    print 'aviso: inicializacao finalizada'
+    print u'aviso: inicialização finalizada'
 
 def artMain():
     m, u, ln, oo, k0, c0, km1, km2, km3, cm1, cm2, cm3, d0, a, N= symbols('m, u, ln, oo, k0, c0, km1, km2, km3, cm1, cm2, cm3, d0, a, N')
@@ -479,10 +589,10 @@ def limpaTela():
     return system('cls')
 
 def mensagemInicial():
-    print 'Calculos para sistemas de aterramento , v.', versao
-    print 'Felipe Bandeira, junho/2013, Fortaleza-CE'
+    print u'Cálculos para sistemas de aterramento , v.', versao
+    print u'Felipe Bandeira, junho/2013, Fortaleza-CE'
     print
-    print 'digite "ajuda" para mais informacoes'
+    print u'digite "ajuda" para mais informações'
     print 
 
 if __name__ == '__main__':
@@ -491,6 +601,7 @@ if __name__ == '__main__':
     mensagemInicial()
     inicializacao()
     ajudaBasica()
+    criaArquivoConfiguracao(False, False)
 
     if configuracoes.limpaTelaInicializacao == 1:
         limpaTela()
@@ -498,7 +609,10 @@ if __name__ == '__main__':
         print
 
     while True:
+
         entrada = raw_input(configuracoes.textoPrompt)
-        # converte tudo para letras minúsculas e inicia a interpretação
-        cmds(entrada.lower())
         
+        if entrada == "":
+            continue
+
+        cmds(entrada.lower())
