@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 from tkFileDialog import askopenfilename
 from Tkinter import Tk
 import estratificacao
-import configuracoes
+#import configuracoes
 import sys
 import rnHorizontais
 import rAnel
@@ -31,7 +31,6 @@ versao = '0.1'
 
 #variaveis de controle do sistema
 usaValoresArquivo = 1
-debugAterramento = 0
 
 # identificação do arquivo do excel ou arquivo qualquer, usado na criação de 
 # arquivos com plot ou no armazenamento de variaveis
@@ -49,6 +48,20 @@ sistemaVar = {
     'usaValoresArquivo' : 1,
     'debugAterramento' : 0, 
     'idPlanilha' : '',
+    'arqMalha' : '',
+    'arqTabela' : '',
+    'prompt' : '>',
+    'limpaTelaInicial' : 'nao',
+    'debugAterramento' : 'nao',
+
+    'p1LimSuperior' : 1000,
+    'p1LimInferior' : 0.1,
+
+    'kLimSuperior' : 1,
+    'kLimInferior' : -1,
+
+    'h1LimSuperior' : 100,
+    'h1LimInferior' : 0.1
 }
 
 nomeArquivoConfiguracao = 'configuracoes.cfg'
@@ -66,20 +79,26 @@ def lerDRHaste(msg = 'diametro da haste'):
     x = sistemaVar['unidadeHaste']
 
     try:
-        if  x == 0:
+        if  x == 'm':
             print msg+' (m)',
             a = input()
             return a
-        elif x == 1:
+        elif x == 'mm':
             print msg+' (mm)',
             a = input()
             return a/1000
-        elif x == 2:
+        elif x == 'pol':
             msg+' (polegadas)',
             a = input()
             return a/.0254
     except:
         return -1
+
+def fDebug():
+    if sistemaVar['debugAterramento'] == 'sim':
+        return 1
+    else:
+        return 0
 
 def verificaVariaveisProfResi():
     global profundidade, resistividadeMedia
@@ -286,7 +305,7 @@ def planilhaExcel(p = None, debug = True):
         planilha = None
         return 2
 
-    [profundidade, resistividadeMedia] = estratificacao.resistividadeMediaPlanilha(mDados)        
+    [profundidade, resistividadeMedia] = estratificacao.resistividadeMediaPlanilha(mDados, debug = fDebug())        
 
     if debug:
         print 'Valores disponiveis da tabela,'
@@ -307,7 +326,7 @@ def estratificacaoSolo():
     estratificacao.pho = resistividadeMedia
     estratificacao.es = profundidade
 
-    [p1, k, h] = estratificacao.estratifica2Camadas(debugAterramento)  
+    [p1, k, h] = estratificacao.estratifica2Camadas()  
     p2 = estratificacao.p2solo2Camadas(p1, k)  
     print 'Resistividade da primeira camada(ohm*m), ', p1
     print 'Resisitivdade da segunda camada(ohm*m), ', p2
@@ -333,6 +352,9 @@ Lista de comandos disponíveis
     l, aparente         resistividade aparente 
     n, equacoes         mostra algumas equações
     m, malha            abre um arquivo para o projeto de malha
+
+    lerconf             ler o arquivo de configuração
+    cls                 limpa a terminal
     """
 
 def ajudaCompleta():
@@ -348,7 +370,6 @@ def sistema():
     global usaValoresArquivo
     global profundidade
     global resistividadeMedia
-    global debugAterramento
     global sistemaVar
 
     print u'Controle do sistema,'
@@ -378,76 +399,123 @@ def sistema():
         except:
             pass
 
-    if debugAterramento == 0:
+    if sistemaVar['debugAterramento'] == 'nao':
         if raw_input('ENTRAR no modo de debug[s/N]?') == 's':
-            debugAterramento = 1
+            sistemaVar['debugAterramento'] = 'sim'
             print 'debug ativado'
     else:
         if raw_input('SAIR do modo de debug[s/N]?') == 's':
-            debugAterramento = 0
+            sistemaVar['debugAterramento'] = 'nao'
             print 'debug desativado'
 
     print u'Atualmente o diâmetro/raio da haste é informado em', 
-    if sistemaVar['unidadeHaste'] == 0:
+    if sistemaVar['unidadeHaste'] == 'm':
         print u'metros'
-    elif sistemaVar['unidadeHaste'] == 1:
+    elif sistemaVar['unidadeHaste'] == 'mm':
         print u'milímetros'
-    elif sistemaVar['unidadeHaste'] == 2:
+    elif sistemaVar['unidadeHaste'] == 'pol':
         print u'polegadas'
 
     print u' deseja mudar[s/N]?',
     if raw_input() == 's':
-        print u'0 - metros'
-        print u'1 - milímetros'
-        print u'2 - polegadas'
+        print u'm   - metros'
+        print u'mm  - milímetros'
+        print u'pol - polegadas'
 
         try:
-            a = input('>')
+            a = raw_input('>')
         except:
             print u'erro: entrada inválida'
             a = 100
 
-        if a >= 0 and a <= 2:
+        if a == 'm' or a == 'mm' or a == 'pol':
             sistemaVar['unidadeHaste'] = a
         elif a == 100:
             pass
         else:
             print u'erro: valor inválido'
 
-def criaArquivoConfiguracao(novo = False, debug = False):
-    if debug:
-        print 'criando arquivo de configuracao, '
 
-    if isfile(nomeArquivoConfiguracao) == True:
+    print u'mostra todas as varíaveis do sistema[s/N]?',
+    if raw_input() == 's':
+        print
+        for a, b in sistemaVar.iteritems():
+            print str(a)+'  :  '+str(b)
 
-        if debug:
-            print 'aviso: arquivo ja existe'
-            return
+    print
 
-        if novo == False:
-            return
-        else:
-            if debug:
-                print 'aviso: sobrescrevendo'
+def criaArquivoConfiguracao(novo = False):
 
-    projeto = ConfigParser.RawConfigParser()
+    if novo:
+        if isfile(nomeArquivoConfiguracao) == True:
+            if fDebug():
+                print u'aviso: arquivo já existe, sobre escrevendo'
+    else:
+        print u'aviso: nada para fazer aqui'
+        return 0
 
-    projeto.add_section('sistema')
-    projeto.set('sistema', 'prompt', ']')
 
-    projeto.add_section('projMalha')
-    projeto.set('projMalha', 'dir', '.')
+    configuracao = ConfigParser.RawConfigParser()
 
-    projeto.add_section('tabela')
-    projeto.set('tabela', 'dir', '.')
+    #----------------------------------------------------------------
+    configuracao.add_section('sistema')
+    configuracao.set('sistema', 'prompt', ']')
+    configuracao.set('sistema', 'unidadeHaste', 'mm')
+    configuracao.set('sistema', 'limpaTelaInicial', 'sim')
+    configuracao.set('sistema', 'debugAterramento', 'nao')
+
+    #----------------------------------------------------------------
+    configuracao.set('estratificacao', 'p1LimSuperior', '1000')
+    configuracao.set('estratificacao', 'p1LimInferior', '0.1')
+
+    configuracao.set('estratificacao', 'kLimSuperior', '1')
+    configuracao.set('estratificacao', 'kLimInferior', '-1')
+
+    configuracao.set('estratificacao', 'h1LimSuperior', '100')
+    configuracao.set('estratificacao', 'h1LimInferior', '0.1')
+
+    #----------------------------------------------------------------
+    configuracao.add_section('projMalha')
+    configuracao.set('projMalha', 'dir', '/tabelas')
+
+    configuracao.add_section('tabela')
+    configuracao.set('tabela', 'dir', '/tabelas')
+
+
 
     with open(nomeArquivoConfiguracao, 'wb') as configfile:
-        projeto.write(configfile)
+        configuracao.write(configfile)
 
 
-def lerArquivoConfiguracao(silencioso = 1):
+def lerArquivoConfiguracao(arquivo):
     global sistemaVar
+    configuracao = ConfigParser.ConfigParser()
 
+    try:
+        configuracao.read(arquivo)
+
+        sistemaVar['prompt'] = configuracao.get('sistema', 'prompt')
+        sistemaVar['limpaTelaInicial'] = configuracao.get('sistema', 'limpaTelaInicial')
+        sistemaVar['debugAterramento'] = configuracao.get('sistema', 'debugAterramento')
+        sistemaVar['unidadeHaste'] = configuracao.get('sistema', 'unidadeHaste')
+        sistemaVar['arqMalha'] = configuracao.get('projMalha', 'dir')
+        sistemaVar['arqTabela'] = configuracao.get('tabela', 'dir')
+
+
+        sistemaVar['p1LimSuperior'] = configuracao.getfloat('estratificacao', 'p1LimSuperior')
+        sistemaVar['p1LimInferior'] = configuracao.getfloat('estratificacao', 'p1LimInferior')
+
+        sistemaVar['kLimSuperior'] = configuracao.getfloat('estratificacao', 'kLimSuperior')
+        sistemaVar['kLimInferior'] = configuracao.getfloat('estratificacao', 'kLimInferior')
+
+        sistemaVar['h1LimSuperior'] = configuracao.getfloat('estratificacao', 'h1LimSuperior')
+        sistemaVar['h1LimInferior'] = configuracao.getfloat('estratificacao', 'h1LimInferior')
+
+    except:
+        return -1
+
+    if fDebug():
+        print sistemaVar
 
 def plotPhoH():
     if verificaVariaveisProfResi():
@@ -512,9 +580,9 @@ def projetoMalha():
         print 'erro:'
         return 
 
-    malhaAterramento.lerArquivoProjeto(arquivo)
+    malhaAterramento.lerArquivoProjeto(arquivo, debug = fDebug())
     malhaAterramento.mostraDadosProjeto()
-    malhaAterramento.projetaMalhaAterramento(debug = True)
+    malhaAterramento.projetaMalhaAterramento(debug = fDebug)
 
 def exterminaPrograma(): 
     print 'saindo...'
@@ -522,6 +590,40 @@ def exterminaPrograma():
 
 def nada():
     print 'aviso: comando nao reconhecido!'
+
+def inicializacao():
+    #print u'aviso: carregando arquivo de configuração'
+
+    if lerArquivoConfiguracao(nomeArquivoConfiguracao) == -1:
+        if fDebug():
+            print 'erro: arquivo de configuração contém erros'
+        criaArquivoConfiguracao(False)
+
+    if fDebug():
+        print u'arquivo de inicialização lido com sucesso'
+
+    try:
+        mkdir(dirCurvas)
+    except Exception, e:
+        if fDebug():
+            print u'aviso: não foi possivel criar diretório para as curvas, talvez ele já exista'
+
+    if fDebug():
+        print u'aviso: inicialização finalizada'
+
+def artMain():
+    m, u, ln, oo, k0, c0, km1, km2, km3, cm1, cm2, cm3, d0, a, N= symbols('m, u, ln, oo, k0, c0, km1, km2, km3, cm1, cm2, cm3, d0, a, N')
+    f = 1 + Sum((u**m*(km1/cm1 + (2*km2)/cm2 + km3/cm3))/(ln(16*a/d0) + k0/c0),(m, 1, oo))
+    pprint(f)
+
+def limpaTela():
+    return system('cls')
+
+def mensagemInicial():
+    print u'Cálculos para sistemas de aterramento , v.', versao
+    print u'Felipe Bandeira, junho/2013, Fortaleza-CE'
+    print
+    print u'digite "ajuda" para mais informações'
 
 dicionarioComandos = {  
     'h' : ajudaBasica,
@@ -552,65 +654,29 @@ dicionarioComandos = {
     'equacoes' : mostraEquacoes,
 
     'm' : projetoMalha,
-    'malha' : projetoMalha
+    'malha' : projetoMalha,
+
+    'cls' : limpaTela,
 }
 
 # interpreta os comandos do usuário
 def cmds(cmd): 
     return dicionarioComandos.get(cmd, nada)()
 
-def inicializacao():
-    print u'aviso: carregando arquivo de configuração'
-    try:
-        
-        if planilhaExcel(configuracoes.arquivoExcel, debug = None) == 0:
-            print configuracoes.arquivoExcel
-
-    except Exception, e:
-        print u'erro: não foi possivel iniciar pelo arquivo de configuração'
-        print e
-    try:
-        mkdir(dirCurvas)
-    except Exception, e:
-        print u'erro: não foi possivel criar diretório para as curvas, talvez ele já exista'
-    else:
-        pass
-    finally:
-        pass
-
-    print u'aviso: inicialização finalizada'
-
-def artMain():
-    m, u, ln, oo, k0, c0, km1, km2, km3, cm1, cm2, cm3, d0, a, N= symbols('m, u, ln, oo, k0, c0, km1, km2, km3, cm1, cm2, cm3, d0, a, N')
-    f = 1 + Sum((u**m*(km1/cm1 + (2*km2)/cm2 + km3/cm3))/(ln(16*a/d0) + k0/c0),(m, 1, oo))
-    pprint(f)
-
-def limpaTela():
-    return system('cls')
-
-def mensagemInicial():
-    print u'Cálculos para sistemas de aterramento , v.', versao
-    print u'Felipe Bandeira, junho/2013, Fortaleza-CE'
-    print
-    print u'digite "ajuda" para mais informações'
-    print 
-
 if __name__ == '__main__':
 
     limpaTela()
     mensagemInicial()
     inicializacao()
-    ajudaBasica()
-    criaArquivoConfiguracao(False, False)
+    #ajudaBasica()
 
-    if configuracoes.limpaTelaInicializacao == 1:
+    if sistemaVar['limpaTelaInicial'] == 'sim':
         limpaTela()
     else:
         print
 
     while True:
-
-        entrada = raw_input(configuracoes.textoPrompt)
+        entrada = raw_input(sistemaVar['prompt'])
         
         if entrada == "":
             continue

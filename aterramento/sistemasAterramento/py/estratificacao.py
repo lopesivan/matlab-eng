@@ -381,9 +381,6 @@ def plotCurvaEndrenyi():
     plt.grid(True)
     plt.show()
 
-
-
-
 # Calculo da resistividade aparente para uma MALHA especifica de terra
 # com espaçamento igual entre duas hastes e mesma profundidade
 def resistividadeAparente2CamadasMalha(p1, p2, d1, A, D, debug = None):
