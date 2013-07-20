@@ -20,25 +20,27 @@ import rAnel
 import potenciais
 from os import getcwd, mkdir, system
 from os.path import basename, splitext
-from time import localtime
+from time import localtime, time
 import malhaAterramento
 from sympy import pprint, symbols, Sum
 from scipy.interpolate import UnivariateSpline
 import ConfigParser
 from os.path import isdir, isfile
+from getpass import getuser
+import random
 
 versao = '0.1'
 
-#variaveis de controle do sistema
-usaValoresArquivo = 1
+################################################################################################
+# GLOBAIS
+################################################################################################
 
 # identificação do arquivo do excel ou arquivo qualquer, usado na criação de 
 # arquivos com plot ou no armazenamento de variaveis
 idPlanilha = ''
-
 # diretorio para armazenamento das curvas
 dirCurvas = getcwd()+'\\curvas'
-
+# Dicionário com todas as principais variáveis de controle do sistema
 sistemaVar = {
     # se 0 a entrada para o diâmetro da haste é dada em m
     # se 1 a entrada para o diâmetro da haste é dada em mm
@@ -50,7 +52,7 @@ sistemaVar = {
     'idPlanilha' : '',
     'arqMalha' : '',
     'arqTabela' : '',
-    'prompt' : '>',
+    'prompt' : ']',
     'limpaTelaInicial' : 'nao',
     'debugAterramento' : 'nao',
 
@@ -66,32 +68,47 @@ sistemaVar = {
 
 nomeArquivoConfiguracao = 'configuracoes.cfg'
 
+alteracoes = 0
+
+################################################################################################
+
+def hal9000():
+    random.seed(time())
+    if random.randint(0, 9) == 0:
+        print """
+        "I'm sorry, Dave. I'm afraid I can't do that."
+
+                                                HAL 9000
+        """
+        #print "I'm sorry,"+getuser()+". I'm afraid I can't do that."
+
+        espera = raw_input()
+        limpaTela()
+    else:
+        print u'erro: comando não encontrado'
+
 def formataHora():
     t = localtime()
     return str(t.tm_hour)+str(t.tm_min)+str(t.tm_sec)
 
 def lerDRHaste(msg = 'diametro da haste'):
-    """Ler o diâmetro ou raio da haste com o cuidado com as unidades
+    """Ler o diâmetro ou raio da haste com o cuidado com as unidades.
     entrada:
     msg - mensagem a ser mostrada
     """
 
     x = sistemaVar['unidadeHaste']
 
-    try:
-        if  x == 'm':
-            print msg+' (m)',
-            a = input()
-            return a
-        elif x == 'mm':
-            print msg+' (mm)',
-            a = input()
-            return a/1000
-        elif x == 'pol':
-            msg+' (polegadas)',
-            a = input()
-            return a/.0254
-    except:
+    if x == 'm':
+        print msg+'(m): ',
+        return input()
+    elif x == 'mm':
+        print msg+'(mm):',
+        return input()
+    elif x == 'pol':
+        print msg+'(pol): ',
+        return input()
+    else:
         return -1
 
 def fDebug():
@@ -242,77 +259,114 @@ def calculosResistividade():
     print '_'*50
     print u'Resistência calculada:', res
 
-def atualizaIdArquivo(nome = '', tipo = 'excel'):
-    global idPlanilha
+# def atualizaIdArquivo(nome = '', tipo = 'excel'):
+#     global idPlanilha
 
-    if tipo == 'excel':
+#     if tipo == 'excel':
 
-        idPlanilha = basename(nome)
-        idPlanilha = splitext(idPlanilha)[0]
-        print u'identificação atualizada, e, ', 
-        print idPlanilha
+#         idPlanilha = basename(nome)
+#         idPlanilha = splitext(idPlanilha)[0]
+#         print u'identificação atualizada, e, ', 
+#         print idPlanilha
 
-    elif tipo == 'arquivo':
+#     elif tipo == 'arquivo':
 
-        idPlanilha = nome
-        print u'identificação atualizada, a, ', 
-        print idPlanilha
+#         idPlanilha = nome
+#         print u'identificação atualizada, a, ', 
+#         print idPlanilha
 
-    else:
+#     else:
 
-        print 'aviso: id limpo'
-        idPlanilha = ''
+#         print 'aviso: id limpo'
+#         idPlanilha = ''
 
-def planilhaExcel(p = None, debug = True):
+# def planilhaExcel(p = None, debug = True):
+#     global profundidade, resistividadeMedia
+
+#     if p == None:
+#         try:
+#             mainTkinter = Tk()
+#             planilha = askopenfilename()
+#             mainTkinter.destroy()
+
+#             if len(planilha) > 0:
+#                 atualizaIdArquivo(planilha, tipo = 'excel')
+#             else:
+#                 print u'Parabêns, é sempre bom selecionar um arquivo'
+#                 print 'aviso: nada atualizado'
+#                 return 1
+
+#             if debug:
+#                 print planilha    
+#         except:
+#             atualizaIdArquivo('', tipo = 'erro')
+#             planilha = None
+#             print 'erro: na planilha'
+#             return 1
+#     else:
+#         planilha = p
+#         try:
+#             a = open(planilha, 'rb')
+#         except:
+#             print u'erro: planilha não encontrada'
+#             return 
+#             atualizaIdArquivo(planilha, tipo = 'excel')
+#         atualizaIdArquivo(planilha, tipo = 'arquivo')
+        
+#     #atualizaIdArquivo(planilha)
+
+#     try:
+#         mDados = estratificacao.lerPlanilha(planilha)
+#     except:
+#         print 'aviso: nenhum arquivo'
+#         planilha = None
+#         return 2
+
+#     [profundidade, resistividadeMedia] = estratificacao.resistividadeMediaPlanilha(mDados, debug = fDebug())        
+
+#     if debug:
+#         print 'Valores disponiveis da tabela,'
+#         print mDados
+#         print u'profundidade | resisitividade média'
+#         for i in range(len(profundidade)):
+#             print profundidade[i], resistividadeMedia[i]
+
+#     print 'aviso: valores de profundidade e resistividade foram atualizados'
+
+def lerTabelaExcel():
     global profundidade, resistividadeMedia
 
-    if p == None:
-        try:
-            mainTkinter = Tk()
-            planilha = askopenfilename()
-            mainTkinter.destroy()
-
-            if len(planilha) > 0:
-                atualizaIdArquivo(planilha, tipo = 'excel')
-            else:
-                print u'Parabêns, é sempre bom selecionar um arquivo'
-                print 'aviso: nada atualizado'
-                return 1
-
-            if debug:
-                print planilha    
-        except:
-            atualizaIdArquivo('', tipo = 'erro')
-            planilha = None
-            print 'erro: na planilha'
-            return 1
-    else:
-        planilha = p
-        try:
-            a = open(planilha, 'rb')
-        except:
-            print u'erro: planilha não encontrada'
-            return 
-            atualizaIdArquivo(planilha, tipo = 'excel')
-        atualizaIdArquivo(planilha, tipo = 'arquivo')
-        
-    #atualizaIdArquivo(planilha)
+    if len(sistemaVar['arqTabela']) > 0:
+        print u'usar o último arquivo[S/n]?',
+        if raw_input() == 'n':       
+            try:
+                mainTkinter = Tk()
+                sistemaVar['arqTabela'] = askopenfilename()
+                mainTkinter.destroy() 
+                if len(sistemaVar['arqTabela']) > 0:
+                    print 'usando,'
+                    print sistemaVar['arqTabela']
+                    atualizaArquivoConf()
+                else:
+                    print u'erro: erro na seleção do arquivo'
+                    return 
+            except:
+                print u'erro: no arquivo do excel'
+                return 
 
     try:
-        mDados = estratificacao.lerPlanilha(planilha)
+        mDados = estratificacao.lerPlanilha(sistemaVar['arqTabela'])
     except:
-        print 'aviso: nenhum arquivo'
-        planilha = None
-        return 2
+        print u'erro: não foi possível ler o arquivo do excel'
+        return
 
     [profundidade, resistividadeMedia] = estratificacao.resistividadeMediaPlanilha(mDados, debug = fDebug())        
 
-    if debug:
-        print 'Valores disponiveis da tabela,'
-        print mDados
-        print u'profundidade | resisitividade média'
-        for i in range(len(profundidade)):
-            print profundidade[i], resistividadeMedia[i]
+    print 'Valores disponiveis da tabela,'
+    print mDados
+    print u'profundidade | resisitividade média'
+    for i in range(len(profundidade)):
+        print profundidade[i], resistividadeMedia[i]
 
     print 'aviso: valores de profundidade e resistividade foram atualizados'
 
@@ -321,7 +375,7 @@ def estratificacaoSolo():
     if verificaVariaveisProfResi():
         return
 
-    print 'Iniciando a estratificacao do solo'
+    print u'Iniciando a estratificação do solo'
 
     estratificacao.pho = resistividadeMedia
     estratificacao.es = profundidade
@@ -340,7 +394,7 @@ def ajudaBasica():
     print u"""
 Lista de comandos disponíveis
 
-    h, ajuda            exibe ajuda básica ou completa
+    h, ajuda            exibe ajuda básica
     o, sistema          configura o sistema de cálculos
     s, sair             finaliza o programa
     c, topologias       cálcula a resistência de uma topologia 
@@ -358,27 +412,28 @@ Lista de comandos disponíveis
     """
 
 def ajudaCompleta():
-    limpaTela()
+    #limpaTela()
 
-    ajudaBasica()
-
-    print u"""
-
-    """
+    ajudaBasica()   
 
 def sistema(): 
-    global usaValoresArquivo
     global profundidade
     global resistividadeMedia
     global sistemaVar
+    global alteracoes
 
     print u'Controle do sistema,'
-    print u'Usa variáveis adquiridas apartir de um arquivo, @', usaValoresArquivo
+    print u'Usa variáveis adquiridas apartir de um arquivo, @', sistemaVar['usaValoresArquivo']
 
     print u'Limites para a otimização,'
     print 'p1, ', estratificacao.limites[0]
     print 'k, ', estratificacao.limites[1]
     print 'h, ', estratificacao.limites[2]
+
+    print u'alterar os limites para a otimização em duas camadas[s/N]?',
+    if raw_input() == 's':
+        if alteraLimitesOtimizacao() == -1:
+            return -1
 
     print u'mostrar variáveis aterramento[s/N]?',
     if raw_input() == 's':
@@ -394,17 +449,19 @@ def sistema():
     print u'carregar o arquivo de configuracao[s/N]?',
     if raw_input() == 's':
         try:
-            print configuracoes.arquivoExcel
-            planilhaExcel(configuracoes.arquivoExcel, debug = None)
+            lerArquivoConfiguracao()
+            print u'aviso: arquivo de configuração lido com sucesso'
         except:
-            pass
+            print u'erro: não foi possível carregar o arquivo de configuração'
 
     if sistemaVar['debugAterramento'] == 'nao':
         if raw_input('ENTRAR no modo de debug[s/N]?') == 's':
+            alteracoes += 1
             sistemaVar['debugAterramento'] = 'sim'
             print 'debug ativado'
     else:
         if raw_input('SAIR do modo de debug[s/N]?') == 's':
+            alteracoes += 1
             sistemaVar['debugAterramento'] = 'nao'
             print 'debug desativado'
 
@@ -418,6 +475,7 @@ def sistema():
 
     print u' deseja mudar[s/N]?',
     if raw_input() == 's':
+        alteracoes += 1
         print u'm   - metros'
         print u'mm  - milímetros'
         print u'pol - polegadas'
@@ -436,13 +494,24 @@ def sistema():
             print u'erro: valor inválido'
 
 
-    print u'mostra todas as varíaveis do sistema[s/N]?',
+    print u'mostra varSistema[s/N]?',
     if raw_input() == 's':
         print
         for a, b in sistemaVar.iteritems():
             print str(a)+'  :  '+str(b)
 
     print
+
+    if alteracoes == 1:
+        print u'salvar alteração[s/N]?',
+        if raw_input() == 's':
+            atualizaArquivoConf(nomeArquivoConfiguracao)
+            alteracoes = 0
+    elif alteracoes > 1:
+        print u'salvar alteraçções[s/N]?'
+        if raw_input() == 's':
+            atualizaArquivoConf(nomeArquivoConfiguracao)
+            alteracoes = 0
 
 def criaArquivoConfiguracao(novo = False):
 
@@ -465,6 +534,7 @@ def criaArquivoConfiguracao(novo = False):
     configuracao.set('sistema', 'debugAterramento', 'nao')
 
     #----------------------------------------------------------------
+    configuracao.add_section('estratificacao')
     configuracao.set('estratificacao', 'p1LimSuperior', '1000')
     configuracao.set('estratificacao', 'p1LimInferior', '0.1')
 
@@ -487,7 +557,7 @@ def criaArquivoConfiguracao(novo = False):
         configuracao.write(configfile)
 
 
-def lerArquivoConfiguracao(arquivo):
+def lerArquivoConfiguracao(arquivo = 'configuracoes.cfg'):
     global sistemaVar
     configuracao = ConfigParser.ConfigParser()
 
@@ -514,8 +584,86 @@ def lerArquivoConfiguracao(arquivo):
     except:
         return -1
 
+    atualizaLimitesOtimizacao()
+
     if fDebug():
         print sistemaVar
+
+def atualizaArquivoConf(arquivo = 'configuracoes.cfg'):
+    if not isfile(arquivo):
+        print u'erro: arquivo de configuração não existe'
+        print u'      não foi possível atualizar o mesmo' 
+        return
+
+    print u'aviso: atualizando o arquivo de configuração'
+
+    configuracao = ConfigParser.RawConfigParser()
+
+    #----------------------------------------------------------------
+    configuracao.add_section('sistema')
+    configuracao.set('sistema', 'prompt', sistemaVar['prompt'])
+    configuracao.set('sistema', 'unidadeHaste', sistemaVar['unidadeHaste'])
+    configuracao.set('sistema', 'limpaTelaInicial', sistemaVar['limpaTelaInicial'])
+    configuracao.set('sistema', 'debugAterramento', sistemaVar['debugAterramento'])
+
+    #----------------------------------------------------------------
+    configuracao.add_section('estratificacao')
+    configuracao.set('estratificacao', 'p1LimSuperior', sistemaVar['p1LimSuperior'])
+    configuracao.set('estratificacao', 'p1LimInferior', sistemaVar['p1LimInferior'])
+
+    configuracao.set('estratificacao', 'kLimSuperior', sistemaVar['kLimSuperior'])
+    configuracao.set('estratificacao', 'kLimInferior', sistemaVar['kLimInferior'])
+
+    configuracao.set('estratificacao', 'h1LimSuperior', sistemaVar['h1LimSuperior'])
+    configuracao.set('estratificacao', 'h1LimInferior', sistemaVar['h1LimInferior'])
+
+    #----------------------------------------------------------------
+    configuracao.add_section('projMalha')
+    configuracao.set('projMalha', 'dir', sistemaVar['arqMalha'])
+
+    configuracao.add_section('tabela')
+    configuracao.set('tabela', 'dir', sistemaVar['arqTabela'])
+
+    with open(nomeArquivoConfiguracao, 'wb') as configfile:
+        configuracao.write(configfile)
+
+    atualizaLimitesOtimizacao()
+
+def atualizaLimitesOtimizacao():
+
+    estratificacao.limites = [ (sistemaVar['p1LimInferior'], sistemaVar['p1LimSuperior']), \
+                               (sistemaVar['kLimInferior'], sistemaVar['kLimSuperior']), \
+                               (sistemaVar['h1LimInferior'], sistemaVar['h1LimSuperior'])]
+
+def alteraLimitesOtimizacao():
+
+    try:
+        print u'Limite superior de p1: ',
+        p1s = input()
+        print u'Limite inferior de p1: ',
+        p1i = input()
+
+        print u'Limite superior de k: ',
+        ks = input()        
+        print u'Limite inferior de k: ',
+        ki = input()        
+
+        print u'Limite superior de h1: ',
+        h1s = input()        
+        print u'Limite inferior de h1: ',
+        h1i = input()        
+    except:
+        print u'erro: entrada inválida'
+        return -1
+
+    sistemaVar['p1LimSuperior'] = p1s
+    sistemaVar['p1LimInferior'] = p1i
+    sistemaVar['kLimSuperior'] = ks
+    sistemaVar['kLimInferior'] = ki
+    sistemaVar['h1LimSuperior'] = h1s
+    sistemaVar['h1LimInferior'] = h1i
+
+    atualizaArquivoConf()
 
 def plotPhoH():
     if verificaVariaveisProfResi():
@@ -569,27 +717,36 @@ def mostraEquacoes():
         r1haste.mostraEquacao()
 
 def projetoMalha():
+    global sistemaVar
 
-    try:
-        mainTkinter = Tk()
-        arquivo = askopenfilename()
-        mainTkinter.destroy()  
-        print 'usando,'
-        print arquivo
-    except:
-        print 'erro:'
-        return 
+    if len(sistemaVar['arqMalha']) > 0:
+        print u'usar o último arquivo[S/n]?',
+        if raw_input() == 'n':       
+            try:
+                mainTkinter = Tk()
+                sistemaVar['arqMalha'] = askopenfilename()
+                mainTkinter.destroy() 
+                if len(sistemaVar['arqMalha']) > 0:
+                    print 'usando,'
+                    print sistemaVar['arqMalha']
+                    atualizaArquivoConf()
+                else:
+                    print u'erro: erro na seleção do arquivo'
+                    return 
+            except:
+                print u'erro: no arquivo de configuração do projeto'
+                return 
 
-    malhaAterramento.lerArquivoProjeto(arquivo, debug = fDebug())
+    malhaAterramento.lerArquivoProjeto(sistemaVar['arqMalha'], debug = fDebug())
     malhaAterramento.mostraDadosProjeto()
-    malhaAterramento.projetaMalhaAterramento(debug = fDebug)
+    malhaAterramento.projetaMalhaAterramento(debug = fDebug())
 
 def exterminaPrograma(): 
     print 'saindo...'
     exit()
 
 def nada():
-    print 'aviso: comando nao reconhecido!'
+    hal9000()
 
 def inicializacao():
     #print u'aviso: carregando arquivo de configuração'
@@ -616,8 +773,12 @@ def artMain():
     f = 1 + Sum((u**m*(km1/cm1 + (2*km2)/cm2 + km3/cm3))/(ln(16*a/d0) + k0/c0),(m, 1, oo))
     pprint(f)
 
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
 def limpaTela():
     return system('cls')
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 def mensagemInicial():
     print u'Cálculos para sistemas de aterramento , v.', versao
@@ -644,8 +805,8 @@ dicionarioComandos = {
     'e' : estratificacaoSolo,
     'estratificacao' : estratificacaoSolo,
 
-    'a' : planilhaExcel,
-    'excel' : planilhaExcel,
+    'a' : lerTabelaExcel,
+    'excel' : lerTabelaExcel,
 
     'p' : plotPhoH,
     'plothp' : plotPhoH,
@@ -662,6 +823,10 @@ dicionarioComandos = {
 # interpreta os comandos do usuário
 def cmds(cmd): 
     return dicionarioComandos.get(cmd, nada)()
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# MAIN
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 if __name__ == '__main__':
 

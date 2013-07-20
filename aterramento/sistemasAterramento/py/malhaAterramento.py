@@ -78,7 +78,7 @@ projetoResultado = {
 	
 }
 
-def formulaOnderdonk(scobre, tDefeito, oa, om= 0, conexao = 'outra'):
+def formulaOnderdonk(scobre, tDefeito, oa, om= 0, conexao = 'outra', debug = False):
 	"""Dimensionamento térmico de um condutor do tipo cobre a suportar 
  	corrente de curto
 
@@ -102,23 +102,28 @@ def formulaOnderdonk(scobre, tDefeito, oa, om= 0, conexao = 'outra'):
 	"""
 
 	if conexao == 'pressao':
-		print 'aviso: conexao pressao'
+		if debug:
+			print 'aviso: conexao pressao'
 		om = 250
 
 	elif conexao == 'solda':
-		print 'aviso: conexao solda'
+		if debug:
+			print 'aviso: conexao solda'
 		om = 450
 
 	elif conexao == 'brasagem':
-		print 'aviso: conexao brasagem'
+		if debug:
+			print 'aviso: conexao brasagem'
 		om = 550
 
 	elif conexao == 'exotermica':
-		print 'aviso: conexao exotermica'
+		if debug:
+			print 'aviso: conexao exotermica'
 		om = 850
 
 	elif conexao == 'outra':
-		print 'aviso: conexao diferente'
+		if debug:
+			print 'aviso: conexao diferente'
 
 	else:
 		print 'erro: conexao desconhecida'
@@ -128,7 +133,7 @@ def formulaOnderdonk(scobre, tDefeito, oa, om= 0, conexao = 'outra'):
 	return iDefeito
 
 
-def formulaOnderdonkScobre(iDefeito, tDefeito, oa, om= 0, conexao = 'outra'):
+def formulaOnderdonkScobre(iDefeito, tDefeito, oa, om= 0, conexao = 'outra', debug = False):
 	"""Dimensionamento térmico de um condutor do tipo cobre a suportar 
  	corrente de curto
 
@@ -152,23 +157,28 @@ def formulaOnderdonkScobre(iDefeito, tDefeito, oa, om= 0, conexao = 'outra'):
 	"""
 
 	if conexao == 'pressao':
-		print 'aviso: conexao pressao'
+		if debug:
+			print 'aviso: conexao pressao'
 		om = 250
 
 	elif conexao == 'solda':
-		print 'aviso: conexao solda'
+		if debug:
+			print 'aviso: conexao solda'
 		om = 450
 
 	elif conexao == 'brasagem':
-		print 'aviso: conexao brasagem'
+		if debug:
+			print 'aviso: conexao brasagem'
 		om = 550
 
 	elif conexao == 'exotermica':
-		print 'aviso: conexao exotermica'
+		if debug:
+			print 'aviso: conexao exotermica'
 		om = 850
 
 	elif conexao == 'outra':
-		print 'aviso: conexao diferente'
+		if debug:
+			print 'aviso: conexao diferente'
 
 	else:
 		print 'erro: conexao desconhecida'
@@ -176,18 +186,12 @@ def formulaOnderdonkScobre(iDefeito, tDefeito, oa, om= 0, conexao = 'outra'):
 
 	scobre = iDefeito/(226.53*sqrt((1/tDefeito)*log((om-oa)/(234+oa) + 1)))
 
-	if recomedacaoCondutor(scobre):
-		print 'aviso projeto: mudando para 35 mm^2'
-		scobre = 35
-	return scobre
-
-def recomedacaoCondutor(scobre):
 	if scobre < 35:
-		print 'aviso projeto: aconselha-se a utilizar um condutor de 35 mm^2 por razoes mecanicas'
-		print '               secao atual do condutor = ', scobre		
-		return 1
+		if debug:
+			print 'aviso projeto: aconselha-se a utilizar um condutor de 35 mm^2 por razoes mecanicas'
+		scobre = 35
 
-	return 0
+	return scobre
 
 def diametroCondutor(area):
 	"""Diametro do condutor
@@ -588,9 +592,9 @@ def projetaMalhaAterramento(debug = False):
 		print 'corrente de defeito, ', iDefeito
 
 	# calculando a bitola dos cabos da malha
-	scobre = formulaOnderdonkScobre(iDefeito, tDefeito, 30, conexao = projetoMalha.get('condutorMalha'))
+	scobre = formulaOnderdonkScobre(iDefeito, tDefeito, 30, conexao = projetoMalha.get('condutorMalha'), debug = debug)
 	# calculando a bitola dos cabos de ligações
-	scobreCabo = formulaOnderdonkScobre(iCurtoMaximo, tDefeito, 30, conexao = projetoMalha.get('condutorLigacoes'))
+	scobreCabo = formulaOnderdonkScobre(iCurtoMaximo, tDefeito, 30, conexao = projetoMalha.get('condutorLigacoes'), debug = debug)
 
 	if debug:
 		print '-'*80
