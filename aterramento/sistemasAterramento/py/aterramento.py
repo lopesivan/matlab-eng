@@ -30,7 +30,8 @@ import hashlib
 import getpass
 from uuid import getnode as get_mac
 from math import exp, sqrt
-from subprocess import call
+import subprocess
+import modRelatorioEstratificacao
 
 #from subprocess import call
 #call(["ls", "-l"])
@@ -45,9 +46,11 @@ versao = '0.1'
 # arquivos com plot ou no armazenamento de variaveis
 idPlanilha = ''
 # diretorio para armazenamento das curvas
-dirCurvas = getcwd()+'\\curvas'
+ndirCurvas = 'curvas'
+dirCurvas = getcwd()+'\\'+ndirCurvas
 # diretória para armazenamento dos resultados
-dirResultados = getcwd()+'\\resultados'
+ndirResultados = 'resultados'
+dirResultados = getcwd()+'\\'+ndirResultados
 
 # Dicionário com todas as principais variáveis de controle do sistema
 sistemaVar = {
@@ -83,7 +86,7 @@ sistemaResultados = {
 }
 
 nomeArquivoConfiguracao = 'configuracoes.cfg'
-
+nomeRelatorioEstratificacao = 'relatorio_estratificacao.tex'
 alteracoes = 0
 
 profundidade = 0
@@ -473,6 +476,7 @@ Lista de comandos disponíveis
     cls                 limpa a terminal
 
     dados               mostra as variaveis principais utilizada nos calculos
+    relatorio           inicia a geração de um relatório
     """
 
 def ajudaCompleta():
@@ -843,38 +847,42 @@ def projetoMalha():
     malhaAterramento.mostraDadosProjeto()
     malhaAterramento.projetaMalhaAterramento(debug = fDebug())
 
-def geraRelatorioLatexEstratificacao():
+def geraRelatorioLatex():
+    print u'Deseja gerar relatório para a estratificação[S/n]?',
+    if raw_input() != 'n':    
+        cmdPdfLatex = r'pdflatex .\resultados\%s -output-directory .\resultados' % (nomeRelatorioEstratificacao)
 
-    docLatex = r"""
-\documentclass{article}
+        arquivoLatex = open(dirResultados+'\\'+nomeRelatorioEstratificacao, 'wb')
+        arquivoLatex.write(modRelatorioEstratificacao.docLatex)
+        arquivoLatex.close()
 
-\usepackage{siunitx}
+        #call([cmdPdfLatex, argPdfLatex], shell = True)
+        #call(r"pdflatex .\resultados\relatorio_estratificacao.tex -output-directory .\resultados", shell = True)
+        try:
+            a = subprocess.call(cmdPdfLatex , shell = True)
+        except:
+            print u'erro: não foi possivel gerar o arquivo de relatório'
 
-\begin{document}
-\begin{table}
-  \begin{center}
-    \begin{tabular}{SSSS}
-    1.21e+00 & 3.52e-01 & -5.53e-01 & 7.28e-01 \\
-    -1.61e+00 & 6.72e-01 & 5.75e-01 & -1.00e+00 \\
-    3.60e-01 & 1.68e-01 & -1.65e+00 & 2.10e-01 \\
-    5.73e-01 & -7.29e-03 & 1.65e+00 & -1.37e+00
-    \end{tabular}
-  \end{center}
-\end{table}
-\end{document}
+        limpaTela()
 
-"""
+        fRelatorioGerado = 1
+    else:
+        fRelatorioGerado = 0
 
-    nomeRelatorioEstratificacao = 'relatorio_estratificacao.tex'
+    if fRelatorioGerado:
+        print u'aviso: relatório gerado com sucesso'
+        print u'       use <ver relatorio> para ver o resultado'
+        return 0
+    else:
+        return -1
 
-    cmdPdfLatex = 'pdflatex'
-    argPdfLatex = ' \\resultados\\%s -output-directory \\resultados' % (nomeRelatorioEstratificacao)
-
-    arquivoLatex = open(dirResultados+'\\'+nomeRelatorioEstratificacao, 'wb')
-    arquivoLatex.write(docLatex)
-    arquivoLatex.close()
-
-    #call([cmdPdfLatex, argPdfLatex])
+def verRelatorio():
+    cmdPdfLatex = r'.\%s\%s.pdf' % (ndirResultados, nomeRelatorioEstratificacao[:-4])
+    if not isfile(cmdPdfLatex):
+        print u'erro: é de extrema importância a geração do relatório antes de sua visualização'
+        print u'      use <relatorio> para a geração do mesmo'
+    else:
+        subprocess.call(cmdPdfLatex, shell = True)
 
 def exterminaPrograma(): 
     print 'saindo...'
@@ -964,7 +972,9 @@ dicionarioComandos = {
     'a' : lerTabelaExcel,
     'excel' : lerTabelaExcel,
 
-    'relatorio' : geraRelatorioLatexEstratificacao,
+    'relatorio' : geraRelatorioLatex,
+
+    'ver relatorio' :  verRelatorio,
 
     'p' : plotPhoH,
     'plothp' : plotPhoH,
