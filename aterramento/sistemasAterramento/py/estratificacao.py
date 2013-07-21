@@ -716,6 +716,33 @@ def testeTT():
 
     return 0
 
+################################################################################
+# SUNDE
+################################################################################
+
+def funSundePrimordial(p1, h1, a):
+    """Função inicial para a curva teórica usando as curvas de bessel
+    Entrada:
+    a - espaçamento entre os condutores ou profundidade da camada
+    Saída:
+    resistividade para a profundidade "a"
+    """
+    f = lambda m: exp(-2*m*h1)*(jv(0, m*a)-jv(0, 2*m*a))
+    return 2*pi*a*quad(f, 0, Inf)[0]
+
+def sundeAlgo(p):
+    kln1 = []
+    for i in range(len(p)-1):
+        kln1.append((p[i+1]-p[i])/(p[i+1]+p[i]))
+
+    print kln1
+
+def sundeAlgoritmo():
+    print '>'*80
+    print 'Iniciando o teste para o algoritimo de Sunde'
+
+    iniciaConstantes(3) # valores do Mamede
+    sundeAlgo(pho)
 
 ################################################################################
 # ROTINAS DE TESTE
@@ -910,9 +937,8 @@ if __name__ == '__main__':
     #testeEstratificacaoArquivos()
     #testeResistividadeAparente()
     #testeCurvasEndrenyi()
-    testeTT()
-    #testeAlgoritimoSunde()
-
+    #testeTT()
+    sundeAlgoritmo()
     #saida = raw_input('[ENTER] para sair')
 
 
