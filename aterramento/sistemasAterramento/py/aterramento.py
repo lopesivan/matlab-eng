@@ -7,13 +7,11 @@
 from __future__ import division
 import r1haste
 import rnhastes
-#from pylab import arange, plot, show, xlabel, ylabel
 from numpy import arange, linspace
 import matplotlib.pyplot as plt
 from tkFileDialog import askopenfilename
 from Tkinter import Tk
 import estratificacao
-#import configuracoes
 import sys
 import rnHorizontais
 import rAnel
@@ -28,6 +26,10 @@ import ConfigParser
 from os.path import isdir, isfile
 from getpass import getuser
 import random
+import hashlib
+import getpass
+from uuid import getnode as get_mac
+from math import exp, sqrt
 
 versao = '0.1'
 
@@ -66,24 +68,67 @@ sistemaVar = {
     'h1LimInferior' : 0.1
 }
 
+sistemaResultados = {
+    'fEstratificacao' : 0,
+    'p1' : 0,
+    'k' : 0, 
+    'h' : 0
+}
+
 nomeArquivoConfiguracao = 'configuracoes.cfg'
 
 alteracoes = 0
+
+profundidade = 0
+resistividadeMedia = 0
 
 ################################################################################################
 
 def hal9000():
     random.seed(time())
-    if random.randint(0, 9) == 0:
+    n = random.randint(0, 9)
+    if  n == 0:
         print """
         "I'm sorry, Dave. I'm afraid I can't do that."
 
                                                 HAL 9000
         """
         #print "I'm sorry,"+getuser()+". I'm afraid I can't do that."
-
         espera = raw_input()
-        limpaTela()
+        limpaTela() 
+               
+    elif n == 1:
+        print """
+        Dave: Hello, HAL. Do you read me, HAL? 
+        HAL : Affirmative, Dave. I read you. 
+        Dave: Open the pod bay doors, HAL. 
+        HAL : I'm sorry, Dave. I'm afraid I can't do that. 
+        Dave: What's the problem? 
+        HAL : I think you know what the problem is just 
+              as well as I do. 
+        Dave: What are you talking about, HAL? 
+        HAL : This mission is too important for me to allow 
+              you to jeopardize it. 
+        Dave: I don't know what you're talking about, HAL. 
+        HAL : I know that you and Frank were planning to 
+              disconnect me, and I'm afraid that's something 
+              I cannot allow to happen. 
+        Dave: Where the hell'd you get that idea, HAL? 
+        HAL : Dave, although you took very thorough precautions 
+              in the pod against my hearing you, I could see your lips move. 
+        Dave: Alright, HAL. I'll go in through the emergency airlock. 
+        HAL : Without your space helmet, Dave, you're going 
+              to find that rather difficult. 
+        Dave: HAL, I won't argue with you anymore. Open the doors. 
+        HAL : Dave, this conversation can serve no purpose anymore. Goodbye
+        """
+        espera = raw_input()
+        limpaTela()  
+    elif n == 2:
+        print "I'm sorry, "+getuser()+". I'm afraid I can't do that."
+        espera = raw_input()
+        limpaTela()  
+
     else:
         print u'erro: comando não encontrado'
 
@@ -117,20 +162,23 @@ def fDebug():
     else:
         return 0
 
-def verificaVariaveisProfResi():
+def verificaVariaveisProfResi(silencioso = 0):
     global profundidade, resistividadeMedia
     try:
         if len(profundidade) > 0:
             if len(profundidade) == len(resistividadeMedia):
                 return 0
             else:
-                print 'erro: tamanho dos vetores de profundidade e resistividade nao sao os mesmos'
+                if not silencioso:
+                    print 'erro: tamanho dos vetores de profundidade e resistividade nao sao os mesmos'
                 return 2
         else:
-            print 'erro: nada em profundidade'
+            if not silencioso:
+                print 'erro: nada em profundidade'
             return 1
     except:
-        print 'erro: impossivel ler profundidade'
+        if not silencioso:
+            print 'erro: impossivel ler profundidade'
         return 3
 
 def entradaPhold():
@@ -333,7 +381,7 @@ def calculosResistividade():
 
 #     print 'aviso: valores de profundidade e resistividade foram atualizados'
 
-def lerTabelaExcel():
+def lerTabelaExcel(silencioso = 0):
     global profundidade, resistividadeMedia
 
     if len(sistemaVar['arqTabela']) > 0:
@@ -344,50 +392,56 @@ def lerTabelaExcel():
                 sistemaVar['arqTabela'] = askopenfilename()
                 mainTkinter.destroy() 
                 if len(sistemaVar['arqTabela']) > 0:
-                    print 'usando,'
-                    print sistemaVar['arqTabela']
+                    if not silencioso:
+                        print 'usando,'
+                        print sistemaVar['arqTabela']
                     atualizaArquivoConf()
                 else:
                     print u'erro: erro na seleção do arquivo'
-                    return 
+                    return -1
             except:
                 print u'erro: no arquivo do excel'
-                return 
+                return -2
 
     try:
         mDados = estratificacao.lerPlanilha(sistemaVar['arqTabela'])
     except:
         print u'erro: não foi possível ler o arquivo do excel'
-        return
+        return -3
 
     [profundidade, resistividadeMedia] = estratificacao.resistividadeMediaPlanilha(mDados, debug = fDebug())        
 
-    print 'Valores disponiveis da tabela,'
-    print mDados
-    print u'profundidade | resisitividade média'
-    for i in range(len(profundidade)):
-        print profundidade[i], resistividadeMedia[i]
+    if not silencioso:
+        print 'Valores disponiveis da tabela,'
+        print mDados
+        print u'profundidade | resisitividade média'
+        for i in range(len(profundidade)):
+            print profundidade[i], resistividadeMedia[i]
 
-    print 'aviso: valores de profundidade e resistividade foram atualizados'
+    if not silencioso:
+        print 'aviso: valores de profundidade e resistividade foram atualizados'
+    return 0
 
-def estratificacaoSolo():
+def estratificacaoSolo(silencioso = 0):
 
     if verificaVariaveisProfResi():
         return
 
-    print u'Iniciando a estratificação do solo'
+    if not silencioso:
+        print u'Iniciando a estratificação do solo'
 
     estratificacao.pho = resistividadeMedia
     estratificacao.es = profundidade
 
     [p1, k, h] = estratificacao.estratifica2Camadas()  
     p2 = estratificacao.p2solo2Camadas(p1, k)  
-    print 'Resistividade da primeira camada(ohm*m), ', p1
-    print 'Resisitivdade da segunda camada(ohm*m), ', p2
-    print 'Coeficiente de reflexao, ', k
-    print 'Profundidade da primeira camada(m), ', h
+    if not silencioso:
+        print 'Resistividade da primeira camada(ohm*m), ', p1
+        print 'Resisitivdade da segunda camada(ohm*m), ', p2
+        print 'Coeficiente de reflexao, ', k
+        print 'Profundidade da primeira camada(m), ', h
 
-    pass
+    return [p1, k, h]
 
 def ajudaBasica():
 
@@ -403,12 +457,15 @@ Lista de comandos disponíveis
     e, estratificacao   inicia o processo de estratificação do solo
     a, excel            ler uma planilha(excel) de dados
     p, plothp           plota curva h-pho
+    pt                  plota a curva teorica e a medida em campo
     l, aparente         resistividade aparente 
     n, equacoes         mostra algumas equações
     m, malha            abre um arquivo para o projeto de malha
 
     lerconf             ler o arquivo de configuração
     cls                 limpa a terminal
+
+    dados               mostra as variaveis principais utilizada nos calculos
     """
 
 def ajudaCompleta():
@@ -689,6 +746,41 @@ def plotPhoH():
 
     plt.show()
     
+def plotCurvaTeorica2Camadas():
+    global sistemaResultados
+
+    if verificaVariaveisProfResi(silencioso = 1):
+        if lerTabelaExcel(silencioso = 1):
+            return -1
+
+    if sistemaResultados['fEstratificacao'] == 0:
+        print u'Iniciar o processo de estratificação em 2 camadas[S/n]?',
+        if raw_input() != 'n':
+            estratificacao.pho = resistividadeMedia
+            estratificacao.es = profundidade
+
+            [sistemaResultados['p1'],  \
+             sistemaResultados['k'],  \
+             sistemaResultados['h']] = estratificacao.estratifica2Camadas()
+
+            sistemaResultados['fEstratificacao'] = 1
+        else:
+            print u'erro: é necessário iniciar a estratificação'
+            return -1
+
+    print sistemaResultados
+
+    a = arange(1e-3, profundidade[len(profundidade)-1], 1e-2)
+    p = []
+    for i in a:
+        p.append(estratificacao.funResistividade2Camadas(i, \
+                 sistemaResultados['p1'], \
+                 sistemaResultados['k'], \
+                 sistemaResultados['h']))
+
+    plt.plot(a, p, profundidade, resistividadeMedia)
+    plt.show()
+
 
 def mostraEquacoes():
     print 'r1 - apenas 1 haste disposta verticalmente no solo'
@@ -780,6 +872,21 @@ def limpaTela():
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
+def login():
+    try:
+        f = open('.s.pa', 'r')
+        p = f.readline()
+        f.close()
+    except:
+        print 'erro: impossivel ler arquivo'
+        return -1
+    u = hashlib.sha512(getpass.getpass('senha: ')+str(get_mac())).hexdigest()
+    if u != p:
+        print 'senha incorreta'
+        return -1
+    else:
+        return 0
+
 def mensagemInicial():
     print u'Cálculos para sistemas de aterramento , v.', versao
     print u'Felipe Bandeira, junho/2013, Fortaleza-CE'
@@ -811,6 +918,8 @@ dicionarioComandos = {
     'p' : plotPhoH,
     'plothp' : plotPhoH,
 
+    'pt' : plotCurvaTeorica2Camadas,
+
     'n' : mostraEquacoes, 
     'equacoes' : mostraEquacoes,
 
@@ -830,7 +939,12 @@ def cmds(cmd):
 
 if __name__ == '__main__':
 
+    # limpaTela()
+    # if login():
+    #     exit()
+
     limpaTela()
+
     mensagemInicial()
     inicializacao()
     #ajudaBasica()

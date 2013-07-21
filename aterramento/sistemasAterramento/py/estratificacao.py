@@ -15,7 +15,7 @@ from scipy.optimize import fmin_slsqp
 from math import sqrt, pi, log, exp
 from time import time
 from xlrd import open_workbook
-from numpy import zeros, shape, arange
+from numpy import zeros, shape, arange, linspace
 #from pylab import arange, plot, show
 import matplotlib.pyplot as plt
 import sys
@@ -171,6 +171,22 @@ def estratifica2Camadas(debug = None):
         print 'tempo execucao(seg), ', time()-t
 
     return x
+
+def funResistividade2Camadas(a, p1, k, h):
+    """Função para a resistividade em um solo estratificado em 2 camadas
+    Entrada:
+    a = espaçamento ou profundidade
+    p1 = resistividade da primeira camada
+    k = coeficiente de reflexão
+    h = profundidade da primeira camada
+    Saída:
+    resistividade no ponto(profundidade) a
+    """
+
+    f = 0
+    for n in range(1, 11):
+        f+=(k**n)/sqrt(1+(2*n*h/a)**2) - (k**n)/sqrt(4+(2*n*h/a)**2)
+    return p1*(1+4*f)
 
 def p2solo2Camadas(p1, k):
     # apenas para um solo de 2 camadas
@@ -651,36 +667,42 @@ def parteB_TakahashiKawase(h, p, l, N, a):
 def duasCamadasTakahashiKawase():
     #f = lambda t, la: (exp(-la*t)/(1-0.818*exp(-2*la)))*jn(0, la)
     #r = (1-.818)*dblquad(f, 0, Inf, lambda t: 1, lambda t: 2)[0]    
-    k1 = 0.818
-    h = 1
-    l = 2
-    x = 1
-    p1 = 10
-    I1 = 1
+    # k1 = 0.818
+    # h = 1
+    # l = 2
+    # x = 1
+    # p1 = 10
+    # I1 = 1
 
 
-    a = lambda t, la: (exp(-la*t)/(1-k1*exp(-2*la*h)))*jv(0, la*x)
-    r1 = (1-k1)*dblquad(a, 0, Inf, lambda t: h, lambda t: l)[0]
+    # a = lambda t, la: (exp(-la*t)/(1-k1*exp(-2*la*h)))*jv(0, la*x)
+    # r1 = (1-k1)*dblquad(a, 0, Inf, lambda t: h, lambda t: l)[0]
 
-    b = lambda t, la: ((exp(-la*t)+k1*exp(-2*la*h)*exp(-la*t))/(1-k1*exp(-2*la*h)))*jv(0, la*x)
-    r2 = dblquad(b, 0, Inf, lambda t: 0, lambda t: h, full_output = True)[0]
+    # b = lambda t, la: ((exp(-la*t)+k1*exp(-2*la*h)*exp(-la*t))/(1-k1*exp(-2*la*h)))*jv(0, la*x)
+    # r2 = dblquad(b, 0, Inf, lambda t: 0, lambda t: h, full_output = True)[0]
 
-    f = (r1+r2)*((p1*I1)/2*pi)
+    # f = (r1+r2)*((p1*I1)/2*pi)
 
-    print 'r1, ', r1
-    print 'r2, ', r2
-    print 'f , ', f
+    # print 'r1, ', r1
+    # print 'r2, ', r2
+    # print 'f , ', f
+    pass
 
 def testeTT():
-    pTT = [10, 100]
-    hTT = [5, 0]
-    N = 2
+
+    iniciaConstantes(3)
+
+    pTT = pho
+    hTT = es
+    N = len(pTT)
     l = 30
     a = 1
 
     print '- '*40
     print u'Iniciando teste para as funções de Takahashi e Kawase'
     print
+    print 'pTT    ,', pTT
+    print 'hTT    ,', hTT
     print 'alfa   , ', alfaTT(pTT, hTT, N, 1, 1)
     print 'beta   , ', betaTT(pTT, hTT, N, 1, 1)
     print 'Hs     , ', HsTT(hTT)
@@ -690,10 +712,9 @@ def testeTT():
 
     print 
     print 'Solo em duas camadas'
-    duasCamadasTakahashiKawase()
+    #duasCamadasTakahashiKawase()
 
     return 0
-
 
 
 ################################################################################
@@ -890,5 +911,10 @@ if __name__ == '__main__':
     #testeResistividadeAparente()
     #testeCurvasEndrenyi()
     testeTT()
+    #testeAlgoritimoSunde()
 
     #saida = raw_input('[ENTER] para sair')
+
+
+# configuração do power shell
+# %HOMEDRIVE%%HOMEPATH%
