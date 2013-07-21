@@ -30,6 +30,10 @@ import hashlib
 import getpass
 from uuid import getnode as get_mac
 from math import exp, sqrt
+from subprocess import call
+
+#from subprocess import call
+#call(["ls", "-l"])
 
 versao = '0.1'
 
@@ -42,6 +46,9 @@ versao = '0.1'
 idPlanilha = ''
 # diretorio para armazenamento das curvas
 dirCurvas = getcwd()+'\\curvas'
+# diretória para armazenamento dos resultados
+dirResultados = getcwd()+'\\resultados'
+
 # Dicionário com todas as principais variáveis de controle do sistema
 sistemaVar = {
     # se 0 a entrada para o diâmetro da haste é dada em m
@@ -836,6 +843,39 @@ def projetoMalha():
     malhaAterramento.mostraDadosProjeto()
     malhaAterramento.projetaMalhaAterramento(debug = fDebug())
 
+def geraRelatorioLatexEstratificacao():
+
+    docLatex = r"""
+\documentclass{article}
+
+\usepackage{siunitx}
+
+\begin{document}
+\begin{table}
+  \begin{center}
+    \begin{tabular}{SSSS}
+    1.21e+00 & 3.52e-01 & -5.53e-01 & 7.28e-01 \\
+    -1.61e+00 & 6.72e-01 & 5.75e-01 & -1.00e+00 \\
+    3.60e-01 & 1.68e-01 & -1.65e+00 & 2.10e-01 \\
+    5.73e-01 & -7.29e-03 & 1.65e+00 & -1.37e+00
+    \end{tabular}
+  \end{center}
+\end{table}
+\end{document}
+
+"""
+
+    nomeRelatorioEstratificacao = 'relatorio_estratificacao.tex'
+
+    cmdPdfLatex = 'pdflatex'
+    argPdfLatex = ' \\resultados\\%s -output-directory \\resultados' % (nomeRelatorioEstratificacao)
+
+    arquivoLatex = open(dirResultados+'\\'+nomeRelatorioEstratificacao, 'wb')
+    arquivoLatex.write(docLatex)
+    arquivoLatex.close()
+
+    #call([cmdPdfLatex, argPdfLatex])
+
 def exterminaPrograma(): 
     print 'saindo...'
     exit()
@@ -858,7 +898,13 @@ def inicializacao():
         mkdir(dirCurvas)
     except Exception, e:
         if fDebug():
-            print u'aviso: não foi possivel criar diretório para as curvas, talvez ele já exista'
+            print u'aviso: não foi possivel criar diretório para as curvas, talvez ele já exista'        
+
+    try:
+        mkdir(dirResultados)
+    except:
+        if fDebug():
+            print u'aviso: não foi possivel criar diretório para os resultados, talvez ele já exista'
 
     if fDebug():
         print u'aviso: inicialização finalizada'
@@ -917,6 +963,8 @@ dicionarioComandos = {
 
     'a' : lerTabelaExcel,
     'excel' : lerTabelaExcel,
+
+    'relatorio' : geraRelatorioLatexEstratificacao,
 
     'p' : plotPhoH,
     'plothp' : plotPhoH,
