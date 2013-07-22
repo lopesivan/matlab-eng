@@ -12,6 +12,9 @@ import hashlib
 import getpass
 import subprocess
 import argparse
+import codecs
+sys.stdout = codecs.getwriter('cp860')(sys.stdout)
+#sys.stdout = codecs.getwriter('utf_8')(sys.stdout)
 
 from numpy import arange, linspace
 #from sympy import pprint, symbols, Sum
@@ -992,7 +995,7 @@ def mensagemInicial():
     print u'Cálculos para sistemas de aterramento , v.', versao
     print u'Felipe Bandeira, junho/2013, Fortaleza-CE'
     print
-    print u'digite "ajuda" para mais informações'
+    print u'digite <ajuda> para mais informações'
 
 ################################################################################################
 # COMANDOS CADASTRADOS
