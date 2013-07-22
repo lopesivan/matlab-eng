@@ -5,38 +5,44 @@
 # graduando em Engenharia Elétrica
 
 from __future__ import division
-import r1haste
-import rnhastes
-from numpy import arange, linspace
-import matplotlib.pyplot as plt
-from tkFileDialog import askopenfilename
-from Tkinter import Tk
-import estratificacao
+
 import sys
-import rnHorizontais
-import rAnel
-import potenciais
-from os import getcwd, mkdir, system
-from os.path import basename, splitext
-from time import localtime, time
-import malhaAterramento
-from sympy import pprint, symbols, Sum
-from scipy.interpolate import UnivariateSpline
-import ConfigParser
-from os.path import isdir, isfile
-from getpass import getuser
 import random
 import hashlib
 import getpass
-from uuid import getnode as get_mac
-from math import exp, sqrt
 import subprocess
+import argparse
+
+from numpy import arange, linspace
+from sympy import pprint, symbols, Sum
+from scipy.interpolate import UnivariateSpline
+import matplotlib.pyplot as plt
+
+from tkFileDialog import askopenfilename
+from Tkinter import Tk
+
+import estratificacao
+import r1haste
+import rnhastes
+import rnHorizontais
+import malhaAterramento
+import rAnel
+import potenciais
 import modRelatorioEstratificacao
 
-#from subprocess import call
-#call(["ls", "-l"])
+from os import getcwd, mkdir, system
+from os.path import basename, splitext
+from os.path import isdir, isfile
 
+from time import localtime, time
+import ConfigParser
+from getpass import getuser
+from uuid import getnode as get_mac
+from math import exp, sqrt
+
+################################################################################################
 versao = '0.1'
+################################################################################################
 
 ################################################################################################
 # GLOBAIS
@@ -477,6 +483,7 @@ Lista de comandos disponíveis
 
     dados               mostra as variaveis principais utilizada nos calculos
     relatorio           inicia a geração de um relatório
+    ver relatorio       ver o relatorio gerado
     """
 
 def ajudaCompleta():
@@ -884,11 +891,16 @@ def verRelatorio():
     else:
         subprocess.call(cmdPdfLatex, shell = True)
 
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# CONTROLE DO PROGRAMA
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
 def exterminaPrograma(): 
     print 'saindo...'
     exit()
 
 def nada():
+    # ESPECIAL ;)
     hal9000()
 
 def inicializacao():
@@ -950,6 +962,10 @@ def mensagemInicial():
     print
     print u'digite "ajuda" para mais informações'
 
+################################################################################################
+# COMANDOS CADASTRADOS
+################################################################################################
+
 dicionarioComandos = {  
     'h' : ajudaBasica,
     'ajuda' : ajudaCompleta,
@@ -988,6 +1004,8 @@ dicionarioComandos = {
     'malha' : projetoMalha,
 
     'cls' : limpaTela,
+
+    'lerconf' : lerArquivoConfiguracao,
 }
 
 # interpreta os comandos do usuário
@@ -1004,21 +1022,24 @@ if __name__ == '__main__':
     # if login():
     #     exit()
 
-    limpaTela()
-
-    mensagemInicial()
-    inicializacao()
-    #ajudaBasica()
-
-    if sistemaVar['limpaTelaInicial'] == 'sim':
-        limpaTela()
+    if len(sys.argv) > 1:
+        print sys.argv
     else:
-        print
+        limpaTela()
 
-    while True:
-        entrada = raw_input(sistemaVar['prompt'])
-        
-        if entrada == "":
-            continue
+        mensagemInicial()
+        inicializacao()
+        #ajudaBasica()
 
-        cmds(entrada.lower())
+        if sistemaVar['limpaTelaInicial'] == 'sim':
+            limpaTela()
+        else:
+            print
+
+        while True:
+            entrada = raw_input(sistemaVar['prompt'])
+            
+            if entrada == "":
+                continue
+
+            cmds(entrada.lower())
