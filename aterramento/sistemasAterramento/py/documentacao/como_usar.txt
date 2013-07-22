@@ -1,0 +1,21 @@
+PROCEDIMENTOS PARA USO DO SOFTWARE:
+
+Instale na sua maquina:
+
+Python versao 2.7, 64bit:
+	http://python.org/ftp/python/2.7.5/python-2.7.5.amd64.msi
+
+Bibliotecas:
+NUMPY
+SCIPY
+SYMPY
+MATPLOTLIB
+XLREAD
+SFEPY
+
+Todas podem ser encontradas aqui - http://www.lfd.uci.edu/~gohlke/pythonlibs/
+Observação importante: existe uma sutil diferenca entre as versoes para 64bit e 32bit
+
+Coloque o python como uma variavel de ambiente do windows, execute o programa pelo prompt.
+
+
