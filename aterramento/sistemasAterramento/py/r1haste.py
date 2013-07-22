@@ -6,7 +6,7 @@
 
 from __future__ import division
 from math import pi, log
-from sympy import symbols, pprint
+#from sympy import symbols, pprint
 
 def r1haste(pa, l, d):
 	"""
@@ -22,8 +22,9 @@ def r1haste(pa, l, d):
 	return pa/(2*pi*l) * log(4*l/d)
 
 def mostraEquacao():
-	pa, l, d, log, pi = symbols('pa l d log pi')
-	pprint(pa/(2*pi*l) * log(4*l/d))
+	# pa, l, d, log, pi = symbols('pa l d log pi')
+	# pprint(pa/(2*pi*l) * log(4*l/d))
+	return -1
 
 
 if __name__ == '__main__':

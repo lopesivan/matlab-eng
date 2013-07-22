@@ -14,7 +14,7 @@ import subprocess
 import argparse
 
 from numpy import arange, linspace
-from sympy import pprint, symbols, Sum
+#from sympy import pprint, symbols, Sum
 from scipy.interpolate import UnivariateSpline
 import matplotlib.pyplot as plt
 
@@ -945,10 +945,10 @@ def inicializacao():
     if fDebug():
         print u'aviso: inicialização finalizada'
 
-def artMain():
-    m, u, ln, oo, k0, c0, km1, km2, km3, cm1, cm2, cm3, d0, a, N= symbols('m, u, ln, oo, k0, c0, km1, km2, km3, cm1, cm2, cm3, d0, a, N')
-    f = 1 + Sum((u**m*(km1/cm1 + (2*km2)/cm2 + km3/cm3))/(ln(16*a/d0) + k0/c0),(m, 1, oo))
-    pprint(f)
+# def artMain():
+#     m, u, ln, oo, k0, c0, km1, km2, km3, cm1, cm2, cm3, d0, a, N= symbols('m, u, ln, oo, k0, c0, km1, km2, km3, cm1, cm2, cm3, d0, a, N')
+#     f = 1 + Sum((u**m*(km1/cm1 + (2*km2)/cm2 + km3/cm3))/(ln(16*a/d0) + k0/c0),(m, 1, oo))
+#     pprint(f)
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 

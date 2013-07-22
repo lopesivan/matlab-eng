@@ -1,0 +1,1 @@
+python .\pyinstaller\pyinstaller.py ..\aterramento.py --onefile --icon=globe_3.ico
