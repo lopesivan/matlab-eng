@@ -400,24 +400,31 @@ def calculosResistividade():
 def lerTabelaExcel(silencioso = 0):
     global profundidade, resistividadeMedia
 
-    if len(sistemaVar['arqTabela']) > 0:
+    a = 0
+    if isfile(sistemaVar['arqTabela']) and len(sistemaVar['arqTabela']) > 0:
         print u'usar o último arquivo[S/n]?',
-        if raw_input() == 'n':       
-            try:
-                mainTkinter = Tk()
-                sistemaVar['arqTabela'] = askopenfilename()
-                mainTkinter.destroy() 
-                if len(sistemaVar['arqTabela']) > 0:
-                    if not silencioso:
-                        print 'usando,'
-                        print sistemaVar['arqTabela']
-                    atualizaArquivoConf()
-                else:
-                    print u'erro: erro na seleção do arquivo'
-                    return -1
-            except:
-                print u'erro: no arquivo do excel'
-                return -2
+        if raw_input() == 'n': 
+            a = 1
+    else:
+        a = 1
+
+    if a == 1:      
+        try:
+            mainTkinter = Tk()
+            sistemaVar['arqTabela'] = askopenfilename()
+            mainTkinter.destroy() 
+            if len(sistemaVar['arqTabela']) > 0:
+                if not silencioso:
+                    print 'usando,'
+                    print sistemaVar['arqTabela']
+                atualizaArquivoConf()
+            else:
+                print u'erro: erro na seleção do arquivo'
+                return -1
+        except:
+            print u'erro: no arquivo do excel'
+            return -2
+
 
     try:
         mDados = estratificacao.lerPlanilha(sistemaVar['arqTabela'])
@@ -850,27 +857,36 @@ def mostraEquacoes():
 def projetoMalha():
     global sistemaVar
 
+    a = 0
     if len(sistemaVar['arqMalha']) > 0:
         print u'usar o último arquivo[S/n]?',
         if raw_input() == 'n':       
-            try:
-                mainTkinter = Tk()
-                sistemaVar['arqMalha'] = askopenfilename()
-                mainTkinter.destroy() 
-                if len(sistemaVar['arqMalha']) > 0:
-                    print 'usando,'
-                    print sistemaVar['arqMalha']
-                    atualizaArquivoConf()
-                else:
-                    print u'erro: erro na seleção do arquivo'
-                    return 
-            except:
-                print u'erro: no arquivo de configuração do projeto'
-                return 
+            a = 1
+    else:
+        a = 1
 
-    malhaAterramento.lerArquivoProjeto(sistemaVar['arqMalha'], debug = fDebug())
-    malhaAterramento.mostraDadosProjeto()
-    malhaAterramento.projetaMalhaAterramento(debug = fDebug())
+    if a == 1:
+        try:
+            mainTkinter = Tk()
+            sistemaVar['arqMalha'] = askopenfilename()
+            mainTkinter.destroy() 
+            if len(sistemaVar['arqMalha']) > 0:
+                print 'usando,'
+                print sistemaVar['arqMalha']
+                atualizaArquivoConf()
+            else:
+                print u'erro: erro na seleção do arquivo'
+                return 
+        except:
+            print u'erro: no arquivo de configuração do projeto'
+            return 
+
+    try:
+        malhaAterramento.lerArquivoProjeto(sistemaVar['arqMalha'], debug = fDebug())
+        malhaAterramento.mostraDadosProjeto()
+        malhaAterramento.projetaMalhaAterramento(debug = fDebug())
+    except:
+        print u'erro: problema no projeto da malha'
 
 def geraRelatorioLatex():
     print u'Deseja gerar relatório para a estratificação[S/n]?',
@@ -915,7 +931,7 @@ def verRelatorio():
 
 def exterminaPrograma(): 
     print 'saindo...'
-    exit()
+    sys.exit()
 
 def nada():
     # ESPECIAL ;)
