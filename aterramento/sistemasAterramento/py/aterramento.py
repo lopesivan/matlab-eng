@@ -529,6 +529,17 @@ def sistema():
         except:
             print u'erro: não foi possível carregar o arquivo de configuração'
 
+    if sistemaVar['limpaTelaInicial'] == 'nao':
+        print u'Limpar a tela no inicio do programa[s/N]?',
+        if raw_input() == 's':
+            alteracoes += 1
+            sistemaVar['limpaTelaInicial'] = 'sim'
+    else:
+        print u'NÃO limpar a tela no inicio do programa[s/N]?',
+        if raw_input() == 's':
+            alteracoes += 1
+            sistemaVar['limpaTelaInicial'] = 'nao'
+
     if sistemaVar['debugAterramento'] == 'nao':
         if raw_input('ENTRAR no modo de debug[s/N]?') == 's':
             alteracoes += 1
@@ -547,6 +558,11 @@ def sistema():
         print u'milímetros'
     elif sistemaVar['unidadeHaste'] == 'pol':
         print u'polegadas'
+    else:
+        print u'erro: arquivo de configuração existe?'
+        print u'      alterando para polegadas'
+        sistemaVar['unidadeHaste'] == 'pol'
+        alteracoes += 1
 
     print u' deseja mudar[s/N]?',
     if raw_input() == 's':
@@ -592,8 +608,7 @@ def criaArquivoConfiguracao(novo = False):
 
     if novo:
         if isfile(nomeArquivoConfiguracao) == True:
-            if fDebug():
-                print u'aviso: arquivo já existe, sobre escrevendo'
+            print u'aviso: arquivo já existe, sobre escrevendo'
     else:
         print u'aviso: nada para fazer aqui'
         return 0
@@ -626,14 +641,17 @@ def criaArquivoConfiguracao(novo = False):
     configuracao.add_section('tabela')
     configuracao.set('tabela', 'dir', '/tabelas')
 
-
-
     with open(nomeArquivoConfiguracao, 'wb') as configfile:
         configuracao.write(configfile)
 
 
 def lerArquivoConfiguracao(arquivo = 'configuracoes.cfg'):
     global sistemaVar
+
+    if not isfile(arquivo):
+        print u'erro: arquivo de configuração não existe'
+        return -1
+
     configuracao = ConfigParser.ConfigParser()
 
     try:
@@ -906,10 +924,8 @@ def nada():
 def inicializacao():
     #print u'aviso: carregando arquivo de configuração'
 
-    if lerArquivoConfiguracao(nomeArquivoConfiguracao) == -1:
-        if fDebug():
-            print 'erro: arquivo de configuração contém erros'
-        criaArquivoConfiguracao(False)
+    if lerArquivoConfiguracao(nomeArquivoConfiguracao):
+        criaArquivoConfiguracao(True)
 
     if fDebug():
         print u'arquivo de inicialização lido com sucesso'
