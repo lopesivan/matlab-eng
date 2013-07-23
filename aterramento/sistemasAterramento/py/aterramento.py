@@ -13,7 +13,7 @@ import getpass
 import subprocess
 import argparse
 import codecs
-sys.stdout = codecs.getwriter('cp860')(sys.stdout)
+#sys.stdout = codecs.getwriter('cp860')(sys.stdout)
 #sys.stdout = codecs.getwriter('utf_8')(sys.stdout)
 
 from numpy import arange, linspace
@@ -46,6 +46,8 @@ from math import exp, sqrt
 ################################################################################################
 versao = '0.1'
 ################################################################################################
+
+SAL = 'validade12'
 
 ################################################################################################
 # GLOBAIS
@@ -628,32 +630,31 @@ def criaArquivoConfiguracao(novo = False):
 
     #----------------------------------------------------------------
     configuracao.add_section('sistema')
-    configuracao.set('sistema', 'prompt', ']')
-    configuracao.set('sistema', 'unidadeHaste', 'mm')
-    configuracao.set('sistema', 'limpaTelaInicial', 'sim')
-    configuracao.set('sistema', 'debugAterramento', 'nao')
+    configuracao.set('sistema', 'prompt', sistemaVar['prompt'])
+    configuracao.set('sistema', 'unidadeHaste', sistemaVar['unidadeHaste'])
+    configuracao.set('sistema', 'limpaTelaInicial', sistemaVar['limpaTelaInicial'])
+    configuracao.set('sistema', 'debugAterramento', sistemaVar['debugAterramento'])
 
     #----------------------------------------------------------------
     configuracao.add_section('estratificacao')
-    configuracao.set('estratificacao', 'p1LimSuperior', '1000')
-    configuracao.set('estratificacao', 'p1LimInferior', '0.1')
+    configuracao.set('estratificacao', 'p1LimSuperior', sistemaVar['p1LimSuperior'])
+    configuracao.set('estratificacao', 'p1LimInferior', sistemaVar['p1LimInferior'])
 
-    configuracao.set('estratificacao', 'kLimSuperior', '1')
-    configuracao.set('estratificacao', 'kLimInferior', '-1')
+    configuracao.set('estratificacao', 'kLimSuperior', sistemaVar['kLimSuperior'])
+    configuracao.set('estratificacao', 'kLimInferior', sistemaVar['kLimInferior'])
 
-    configuracao.set('estratificacao', 'h1LimSuperior', '100')
-    configuracao.set('estratificacao', 'h1LimInferior', '0.1')
+    configuracao.set('estratificacao', 'h1LimSuperior', sistemaVar['h1LimSuperior'])
+    configuracao.set('estratificacao', 'h1LimInferior', sistemaVar['h1LimInferior'])
 
     #----------------------------------------------------------------
     configuracao.add_section('projMalha')
-    configuracao.set('projMalha', 'dir', '/tabelas')
+    configuracao.set('projMalha', 'dir', sistemaVar['arqMalha'])
 
     configuracao.add_section('tabela')
-    configuracao.set('tabela', 'dir', '/tabelas')
+    configuracao.set('tabela', 'dir', sistemaVar['arqTabela'])
 
     with open(nomeArquivoConfiguracao, 'wb') as configfile:
         configuracao.write(configfile)
-
 
 def lerArquivoConfiguracao(arquivo = 'configuracoes.cfg'):
     global sistemaVar
@@ -984,7 +985,7 @@ def login():
     except:
         print 'erro: impossivel ler arquivo'
         return -1
-    u = hashlib.sha512(getpass.getpass('senha: ')+str(get_mac())).hexdigest()
+    u = hashlib.sha512(getpass.getpass('senha: ')+SAL+str(get_mac())).hexdigest()
     if u != p:
         print 'senha incorreta'
         return -1
@@ -1052,10 +1053,13 @@ def cmds(cmd):
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 if __name__ == '__main__':
+    #sys.stdout = codecs.getwriter('utf-8')(sys.stdout)
+    charVga = codecs.getwriter('cp850')
+    sys.stdout = charVga(sys.stdout)
 
-    # limpaTela()
-    # if login():
-    #     exit()
+    limpaTela()
+    if login():
+        sys.exit(0)
 
     if len(sys.argv) > 1:
         print sys.argv
