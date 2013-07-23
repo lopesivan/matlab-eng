@@ -68,7 +68,7 @@ def estrela8Pontas(pa, p, l, r):
 	return (pa/(8*pi*l))*(log((l**2)/(2*r*p)) + 10.98 - 22.04*p/l + 52.16*((p/l)**2) - 299.52*((p/l)**4))
 
 def mostraEquacao(eq = 'condutorUnico'):
-	pa, p, l, r, log, pi = symbols('pa p l r log pi')
+	#pa, p, l, r, log, pi = symbols('pa p l r log pi')
 
 	print 'equacao ',
 

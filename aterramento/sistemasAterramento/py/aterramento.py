@@ -16,23 +16,6 @@ import codecs
 #sys.stdout = codecs.getwriter('cp860')(sys.stdout)
 #sys.stdout = codecs.getwriter('utf_8')(sys.stdout)
 
-from numpy import arange, linspace
-#from sympy import pprint, symbols, Sum
-from scipy.interpolate import UnivariateSpline
-import matplotlib.pyplot as plt
-
-from tkFileDialog import askopenfilename
-from Tkinter import Tk
-
-import estratificacao
-import r1haste
-import rnhastes
-import rnHorizontais
-import malhaAterramento
-import rAnel
-import potenciais
-import modRelatorioEstratificacao
-
 from os import getcwd, mkdir, system
 from os.path import basename, splitext
 from os.path import isdir, isfile
@@ -43,15 +26,38 @@ from getpass import getuser
 from uuid import getnode as get_mac
 from math import exp, sqrt
 
+from numpy import arange, linspace
+#from sympy import pprint, symbols, Sum
+from scipy.interpolate import UnivariateSpline
+import matplotlib.pyplot as plt
+
+from tkFileDialog import askopenfilename
+from Tkinter import Tk
+
+from IPython import embed
+
+#----#----#----#----#----#----#----#----#----#----#----#----#----#----#----#----
+# MINHAS BIBLIOTECAS
+#----#----#----#----#----#----#----#----#----#----#----#----#----#----#----#----
+import estratificacao
+import r1haste
+import rnhastes
+import rnHorizontais
+import malhaAterramento
+import rAnel
+import potenciais
+import modRelatorioEstratificacao
+#----#----#----#----#----#----#----#----#----#----#----#----#----#----#----#----
+
 ################################################################################################
 versao = '0.1'
 ################################################################################################
 
+# Sal para o login
 SAL = 'validade12'
 
 ################################################################################################
 # GLOBAIS
-################################################################################################
 
 # identificação do arquivo do excel ou arquivo qualquer, usado na criação de 
 # arquivos com plot ou no armazenamento de variaveis
@@ -259,8 +265,8 @@ def entradaHastesQuadradoCheio():
             raise Exception()
 
         e = input('espacamento entre duas hastes(m): ')
-        m = input('quantidade de hastes na linha')
-        n = input('quantidade de hastes na coluna')
+        m = input('quantidade de hastes colocadas horizontalmente')
+        n = input('quantidade de hastes colocadas verticalmente')
     except:
         print u'erro: entrada invalida, usando valores padrões'        
         pa = 100
@@ -274,8 +280,8 @@ def entradaHastesQuadradoCheio():
         print u'comprimento da haste(m): ', l
         print u'espaçamento entre os eletrodos(m): ', e
         print u'diâmetro da haste(m): ', d
-        print u'na linha: ', m
-        print u'na coluna: ', n
+        print u'horizontais: ', m
+        print u'verticais: ', n
 
     return [m, n, e, pa, l, d]
 
@@ -288,8 +294,7 @@ def levantaCurvaK(pa, l, e, d, q, fim, passo):
     plt.plot(numeroHastes, res)
     plt.xlabel('Numero de Hastes')
     plt.ylabel('Resistencia')
-    plt.show()
-        
+    plt.show() 
     
 def curvaK():
     en = entradaHastesLinha()
@@ -298,7 +303,6 @@ def curvaK():
 
     levantaCurvaK(en[0], en[1], en[2], en[3], en[4], fim, passo)
     
-
 def calculosResistividade(): 
     print u'0 - cálculo para 1 haste'
     print u'1 - cálculo para n hastes em paralelo(linha)'
@@ -453,7 +457,7 @@ def lerTabelaExcel(silencioso = 0):
 def estratificacaoSolo(silencioso = 0):
 
     if verificaVariaveisProfResi():
-        return
+        return -1
 
     if not silencioso:
         print u'Iniciando a estratificação do solo'
@@ -621,10 +625,11 @@ def criaArquivoConfiguracao(novo = False):
     if novo:
         if isfile(nomeArquivoConfiguracao) == True:
             print u'aviso: arquivo já existe, sobre escrevendo'
+        else:
+            print u'aviso: criando arquivo'
     else:
         print u'aviso: nada para fazer aqui'
         return 0
-
 
     configuracao = ConfigParser.RawConfigParser()
 
@@ -675,7 +680,6 @@ def lerArquivoConfiguracao(arquivo = 'configuracoes.cfg'):
         sistemaVar['arqMalha'] = configuracao.get('projMalha', 'dir')
         sistemaVar['arqTabela'] = configuracao.get('tabela', 'dir')
 
-
         sistemaVar['p1LimSuperior'] = configuracao.getfloat('estratificacao', 'p1LimSuperior')
         sistemaVar['p1LimInferior'] = configuracao.getfloat('estratificacao', 'p1LimInferior')
 
@@ -697,7 +701,7 @@ def atualizaArquivoConf(arquivo = 'configuracoes.cfg'):
     if not isfile(arquivo):
         print u'erro: arquivo de configuração não existe'
         print u'      não foi possível atualizar o mesmo' 
-        return
+        return -1
 
     print u'aviso: atualizando o arquivo de configuração'
 
@@ -771,7 +775,7 @@ def alteraLimitesOtimizacao():
 
 def plotPhoH():
     if verificaVariaveisProfResi():
-        return
+        return -1
         
     #plt.subplot(211)
     plt.plot(profundidade, resistividadeMedia)
@@ -851,7 +855,7 @@ def mostraEquacoes():
             v = input('h?')
         except:
             print 'erro: entrada invalida'
-            return
+            return -1
 
         rnHorizontais.mostraEquacao(v)
 
@@ -880,10 +884,10 @@ def projetoMalha():
                 atualizaArquivoConf()
             else:
                 print u'erro: erro na seleção do arquivo'
-                return 
+                return -1
         except:
             print u'erro: no arquivo de configuração do projeto'
-            return 
+            return -1
 
     try:
         malhaAterramento.lerArquivoProjeto(sistemaVar['arqMalha'], debug = fDebug())
@@ -928,6 +932,9 @@ def verRelatorio():
         print u'      use <relatorio> para a geração do mesmo'
     else:
         subprocess.call(cmdPdfLatex, shell = True)
+
+def chamaIpython():
+    embed()
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # CONTROLE DO PROGRAMA
@@ -1042,6 +1049,8 @@ dicionarioComandos = {
     'cls' : limpaTela,
 
     'lerconf' : lerArquivoConfiguracao,
+
+    'ipython' : chamaIpython,
 }
 
 # interpreta os comandos do usuário
@@ -1050,19 +1059,25 @@ def cmds(cmd):
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # MAIN
+loginComSenha = False
+habilitaCodificacao = False
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 if __name__ == '__main__':
-    #sys.stdout = codecs.getwriter('utf-8')(sys.stdout)
-    charVga = codecs.getwriter('cp850')
-    sys.stdout = charVga(sys.stdout)
 
-    limpaTela()
-    if login():
-        sys.exit(0)
+    if habilitaCodificacao:
+        sys.stdout = codecs.getwriter('utf-8')(sys.stdout)
+        charVga = codecs.getwriter('cp850')
+        sys.stdout = charVga(sys.stdout)
+
+    if loginComSenha:
+        limpaTela()
+        if login():
+            sys.exit(0)
 
     if len(sys.argv) > 1:
         print sys.argv
+        sys.exit(0)
     else:
         limpaTela()
 

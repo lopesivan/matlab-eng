@@ -71,8 +71,8 @@ def resistenciaHastesLinha(pa, l, e, d, q):
 def quadradoCheio(m, n, esp, pa, l, d, debug = None):
     '''
     entrada,
-    m - quantidade de hastes colocadas em linha
-    n - quantidade de hastes colocas em coluna
+    m - quantidade de hastes colocadas horizontalmente
+    n - quantidade de hastes colocadas verticalmente
     esp - espaÃ§amento entre duas hastes
     p - restividade aparente
     l - comprimento da haste
