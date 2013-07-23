@@ -29,9 +29,13 @@ def sendemail(from_addr, to_addr_list, cc_addr_list,
 if __name__ == '__main__':
 
   msg = """
+  Programa pyAterramento
+  Informacoes:
   Data = %s
   Usuario = %s
+  ****************************************
   MAC = %s
+  ****************************************
   """ % (time.ctime(), getuser(), str(get_mac()))
 
   print 'Enviando...'
