@@ -1,9 +1,8 @@
-__stringtab: STRING, 50 0 1
-__stringdata: STRING, 51 0 2
-_sys_init: CODE, 40 0 6
-_putch: CODE, 55 0 1
-_main: CODE, 46 0 4
-__initialization: CODE, 53 0 0
-_isr: CODE, 4 0 16
-_printf: CODE, 21 0 19
-Total: 49
+_configuraClock: CODE, 101 0 6
+_main: CODE, 53 0 25
+__initialization: CODE, 107 0 0
+_isr: CODE, 4 0 5
+_configuraPortas: CODE, 90 0 11
+_geraTremPulso: CODE, 78 0 12
+_geraPulso: CODE, 10 0 43
+Total: 102
