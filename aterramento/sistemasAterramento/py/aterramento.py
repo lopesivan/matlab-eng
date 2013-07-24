@@ -46,7 +46,7 @@ import rnHorizontais
 import malhaAterramento
 import rAnel
 import potenciais
-import modRelatorioEstratificacao
+import relatorioEstratificacao
 #----#----#----#----#----#----#----#----#----#----#----#----#----#----#----#----
 
 ################################################################################################
@@ -108,6 +108,12 @@ alteracoes = 0
 
 profundidade = 0
 resistividadeMedia = 0
+
+dicRelatorioEstratificacaoLatex = {
+    'nomeAutor' : 'Felipe',
+    'sobreNomeAutor' : 'Bandeira',
+    'instituicao' :  'LAMOTRIZ - UFC',
+}
 
 ################################################################################################
 
@@ -896,17 +902,49 @@ def projetoMalha():
     except:
         print u'erro: problema no projeto da malha'
 
+def testaLatex():
+
+    conteudo = r'''\documentclass{article}
+\begin{document}
+...
+\textbf{\huge %(school)s \\}
+\vspace{1cm}
+\textbf{\Large %(title)s \\}
+...
+\end{document}
+'''
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-c', '--course', default = 'engenharia')
+    parser.add_argument('-t', '--title', default = 'aqui')
+    parser.add_argument('-n', '--name', default = 'felipe')
+    parser.add_argument('-s', '--school', default = 'My U')
+
+    args = parser.parse_args()
+    a = conteudo%args.__dict__
+
+    print a
+    print args.__dict__    
+
+def preparaRelatorioEstratificacaoLatex():
+    #print docLatex%dicRelatorioEstratificacaoLatex
+
+    with open(dirResultados+'\\'+nomeRelatorioEstratificacao, 'w') as f:
+        f.write(relatorioEstratificacao.docLatex%dicRelatorioEstratificacaoLatex)
+
 def geraRelatorioLatex():
     print u'Deseja gerar relatório para a estratificação[S/n]?',
     if raw_input() != 'n':    
         cmdPdfLatex = r'pdflatex .\resultados\%s -output-directory .\resultados' % (nomeRelatorioEstratificacao)
 
-        arquivoLatex = open(dirResultados+'\\'+nomeRelatorioEstratificacao, 'wb')
-        arquivoLatex.write(modRelatorioEstratificacao.docLatex)
-        arquivoLatex.close()
+        #arquivoLatex = open(dirResultados+'\\'+nomeRelatorioEstratificacao, 'wb')
+        #arquivoLatex.write(relatorioEstratificacao.docLatex)
+        #arquivoLatex.close()
 
         #call([cmdPdfLatex, argPdfLatex], shell = True)
         #call(r"pdflatex .\resultados\relatorio_estratificacao.tex -output-directory .\resultados", shell = True)
+
+        preparaRelatorioEstratificacaoLatex()
+
         try:
             a = subprocess.call(cmdPdfLatex , shell = True)
         except:
@@ -1051,6 +1089,10 @@ dicionarioComandos = {
     'lerconf' : lerArquivoConfiguracao,
 
     'ipython' : chamaIpython,
+
+    'tl' : testaLatex,
+
+    'pl' : preparaRelatorioEstratificacaoLatex,
 }
 
 # interpreta os comandos do usuário
