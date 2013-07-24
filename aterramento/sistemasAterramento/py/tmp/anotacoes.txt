@@ -1,0 +1,57 @@
+You can start by defining the template tex file as a string:
+
+content=r'''\documentclass{article}
+\begin{document}
+...
+\textbf{\huge %(school)s \\}
+\vspace{1cm}
+\textbf{\Large %(title)s \\}
+...
+\end{document}
+'''
+Next, use argparse to accept values for the course, title, name and school:
+
+parser=argparse.ArgumentParser()
+parser.add_argument('-c', '--course')
+parser.add_argument('-t', '--title')
+parser.add_argument('-n', '--name',) 
+parser.add_argument('-s', '--school', default='My U')
+A bit of string formatting is all it takes to stick the args into content:
+
+args=parser.parse_args()
+content%args.__dict__
+After writing the content out to a file, cover.tex,
+
+with open('cover.tex','w') as f:
+    f.write(content%args.__dict__)
+you could use subprocess to call pdflatex cover.tex.
+
+proc=subprocess.Popen(shlex.split('pdflatex cover.tex'))
+proc.communicate()
+You could add an lpr command here too to add printing to the workflow.
+
+Remove unneeded files:
+
+os.unlink('cover.tex')
+os.unlink('cover.log')
+The script could then be called like this:
+
+make_cover.py -c "Hardest Class Ever" -t "Theoretical Theory" -n Me
+That's basically all there is to it.
+
+Relevant modules used:
+
+argparse
+subprocess
+shlex
+os
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+
