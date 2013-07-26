@@ -112,8 +112,8 @@ int main(void) {
 
     while (1) {
         if(botao1Pressionado()){
-            //geraPulso();
-            geraTremPulso(4);
+            geraPulso();
+            //geraTremPulso(4);
             __delay_ms(100);
             while(botao1Pressionado());
         }

@@ -1,8 +1,7 @@
-_configuraClock: CODE, 101 0 6
-_main: CODE, 53 0 25
-__initialization: CODE, 107 0 0
+_configuraClock: CODE, 88 0 6
+_main: CODE, 53 0 24
+__initialization: CODE, 94 0 0
 _isr: CODE, 4 0 5
-_configuraPortas: CODE, 90 0 11
-_geraTremPulso: CODE, 78 0 12
+_configuraPortas: CODE, 77 0 11
 _geraPulso: CODE, 10 0 43
-Total: 102
+Total: 89

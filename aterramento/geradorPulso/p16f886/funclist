@@ -1,0 +1,17 @@
+__stringtab: STRING, 256 0 6
+__stringdata: STRING, 264 0 95
+_lcd_putch: CODE, 642 0 9
+_main: CODE, 21 0 119
+lcd_cursor_ddram@_numlines: STRING, 262 0 2
+__initialization: CODE, 600 0 12
+_lcd_clear: CODE, 546 0 19
+_lcd_goto: CODE, 632 0 10
+_isr: CODE, 659 0 1
+_msgInicial: CODE, 462 0 42
+_configuraPortas: CODE, 565 0 18
+_lcd_write: CODE, 359 0 55
+_geraTremPulso: CODE, 616 0 16
+_geraPulso: CODE, 414 0 48
+_lcd_string: CODE, 504 0 42
+_lcd_init: CODE, 140 0 107
+Total: 601
