@@ -62,10 +62,10 @@ SAL = 'validade12'
 # identificação do arquivo do excel ou arquivo qualquer, usado na criação de 
 # arquivos com plot ou no armazenamento de variaveis
 idPlanilha = ''
-# diretorio para armazenamento das curvas
+# diretório para armazenamento das curvas
 ndirCurvas = 'curvas'
 dirCurvas = getcwd()+'\\'+ndirCurvas
-# diretória para armazenamento dos resultados
+# diretório para armazenamento dos resultados
 ndirResultados = 'resultados'
 dirResultados = getcwd()+'\\'+ndirResultados
 

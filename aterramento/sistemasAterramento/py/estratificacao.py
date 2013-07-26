@@ -6,6 +6,10 @@
 #
 #------------------------------------------------------------------------------
 # Processo de estratificação do solo
+# 
+# - estratificação do solo em duas camadas
+# - curvas de Endrevyi
+# - formúlas de Hummel
 #------------------------------------------------------------------------------
 #
 
