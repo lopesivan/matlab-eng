@@ -4,37 +4,33 @@
 # felipeband18@gmail.com
 # graduando em Engenharia Elétrica
 #
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 # Processo de estratificação do solo
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 #
 
 from __future__ import division
-#from scipy.optimize import fmin, fmin_slsqp, anneal, basinhopping, brute, leastsq
 from scipy.optimize import fmin_slsqp
 from math import sqrt, pi, log, exp
 from time import time
 from xlrd import open_workbook
 from numpy import zeros, shape, arange, linspace
-#from pylab import arange, plot, show
 import matplotlib.pyplot as plt
 import sys
 from os import getcwd
-#from scipy.signal import butter
 import r1haste
 import ConfigParser
-
-#import sympy
-
 from scipy.integrate import quad, romberg, dblquad
 from scipy.special import jn, jv
 from scipy import Inf
 
-
+#------------------------------------------------------------------------------
 # VARIÁVEIS de controle
-
+#------------------------------------------------------------------------------
 infinito = 20 # :)
 
+# as variáveis pho e es são usadas pelo funcção de estratificação do solo 
+# em duas camadas, devem ser atualizadas para que função funcione corretamente
 pho = []
 es = []
 
@@ -101,6 +97,13 @@ def iniciaConstantes(ex = None, debug = None):
 
     ############################################################################
 
+    elif ex == 7:
+        pho = [102.26, 113.07, -129.77, 147.52, 163.95]
+        es = [2, 4, 6, 8, 10]
+
+    elif ex == 8:
+        pho = []
+        es = []
     # if debug:
     #     print 'pho, ', pho
     #     print 'es, ', es
@@ -132,19 +135,24 @@ def estratifica2Camadas(debug = None):
         d = 1
         t = time()
 
-        print 'funcao de estratificacao, usando,'
-        print 'pho, ', pho
-        print 'es, ', es
-        print 'chute, ', chuteInicial
+        print u'função de estratificação, usando,'
+        print u'pho, ', pho
+        print u'es, ', es
+        print u'chute, ', chuteInicial
+
+        if len(pho) == 0 or len(es) == 0:
+            print u'erro: o vetor de profundidade ou espaçamento deve ser atualizado com valores coerentes'
+            return [0, 0, 0]
+
+        if min(pho) < 0:
+            print u'erro: os valores da resistividade medidos devem ser positivos'
+            return [0, 0, 0]
+        elif min(es) < 0:
+            print u'erro: os valores para o espaçamento deve ser positivos'
+            return [0, 0, 0]
 
     else:
         d = 0
-
-    # aplica a formula de redução basica encontrada do scipy
-    #return fmin(funcaoEstratificacao, chuteInicial, maxfun = numeroMaximoFuncoes)
-    #print fmin(funcaoEstratificacao, chuteInicial, maxfun = numeroMaximoFuncoes)
-    #val = anneal(funcaoEstratificacao, chuteInicial)
-    #val = basinhopping(funcaoEstratificacao, chuteInicial)
 
     # FUNCIONA
     # Minimize a function using Sequential Least SQuares Programming
@@ -757,7 +765,7 @@ def testeEstratificacaoArquivos():
     # testa a estratificação em duas camadas
     print 'Inciando teste de estratificacao em 2 camadas,'
 
-    for i in range(7):
+    for i in range(9):
 
         print
         print 'caso, ', i
@@ -934,11 +942,11 @@ if __name__ == '__main__':
 
     print u'Biblioteca: Estratificação'
 
-    #testeEstratificacaoArquivos()
+    testeEstratificacaoArquivos()
     #testeResistividadeAparente()
     #testeCurvasEndrenyi()
     #testeTT()
-    sundeAlgoritmo()
+    #sundeAlgoritmo()
     #saida = raw_input('[ENTER] para sair')
 
 
