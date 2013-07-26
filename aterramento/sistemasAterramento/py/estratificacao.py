@@ -27,7 +27,7 @@ from scipy import Inf
 #------------------------------------------------------------------------------
 # VARIÁVEIS de controle
 #------------------------------------------------------------------------------
-infinito = 20 # :)
+infinito = 20 # :), usada nos cálculos relacionados com otimização em 2 camadas
 
 # as variáveis pho e es são usadas pelo funcção de estratificação do solo 
 # em duas camadas, devem ser atualizadas para que função funcione corretamente
@@ -109,6 +109,9 @@ def iniciaConstantes(ex = None, debug = None):
     #     print 'es, ', es
     #     print 'chute, ', chuteInicial
 
+#------------------------------------------------------------------------------
+# FUNÇÃO DE ESTRATIFICAÇÃO, Método dos mínimos quadrados de gauss
+#------------------------------------------------------------------------------
 def funcaoEstratificacao(x):
     '''
     entrada:
@@ -117,7 +120,7 @@ def funcaoEstratificacao(x):
     x[2] = h  - altura da primeira camada
     '''    
 
-    # aplicação da fórmula encontrada no livro do Geraldo volume 2
+    # aplicação da fórmula de Sunde encontrada no livro do Geraldo volume 2
     f = 0
     for i in range(len(es)):
         s1 = 0
@@ -129,7 +132,14 @@ def funcaoEstratificacao(x):
 
     return f
 
+#------------------------------------------------------------------------------
+
 def estratifica2Camadas(debug = None):
+    """Processo de otimização para a estratificação em duas camadas
+    Entrada:
+    pho<variavel global> = resistividades medidas em campo, ou as resistividades experimentais
+    es<variavel global> = espaçamento entre os eletrodos ou profundidade das camadas
+    """
 
     if debug:
         d = 1
@@ -154,7 +164,6 @@ def estratifica2Camadas(debug = None):
     else:
         d = 0
 
-    # FUNCIONA
     # Minimize a function using Sequential Least SQuares Programming
     # Python interface function for the SLSQP Optimization subroutine originally implemented by Dieter Kraft.
     [x, fun, nit, status, mes] = fmin_slsqp(funcaoEstratificacao, 
@@ -197,7 +206,8 @@ def funResistividade2Camadas(a, p1, k, h):
     return p1*(1+4*f)
 
 def p2solo2Camadas(p1, k):
-    # apenas para um solo de 2 camadas
+    """ Coeficiente de reflexão, para um solo de 2 camadas
+    """
     return -((k+1)*p1)/(k-1)    
 
 def lerPlanilha(planilha, debug = None):
@@ -300,6 +310,14 @@ def resistividadeMediaPlanilha(mDados, desvioPadrao = 0.5, debug = None):
 
                 q=q+1
 
+        # CUIDADO
+        # É possivel que devido as valores de entrada a correção usando o
+        # desvio padrão, pode não ser adequada. Por exemplo:
+        # Se os valores medidos são número na ordem de 10^2, caso exista
+        # algum valor da ordem de 10^5 teremos um erro grave no algoritimo
+        # já que todos os valores serão considerados fora da média.
+        # Não implementei nada para essa correção, já que considero um 
+        # erro na medição em campo.
         try:
             resistividadeCorrigida.append(media*q**-1)
         except:
@@ -332,8 +350,7 @@ def curvaEndrenyiSomatorio(a, p1, p2):
     return s
 
 def curvaEndrenyi(a, p1, p2):
-    """
-    Curva de Endrenyi
+    """Curva de Endrenyi
     Entrada:
     a - alfa, coeficiente de penetração
     p1 - resistividade da n-esima camada
@@ -488,8 +505,7 @@ def resistividadeAparenteHastesAlinhadas(n, e, p1, p2, h):
 
 
 def formulaHummelReducao2Camadas(p, d):
-    """
-    Entrada:
+    """Entrada:
     p - vetor com a resistividade das camadas
         p = [p1, p2, p3, ..., pn, pn+1]
     d - vetor com o espesura da n-esima camada
@@ -516,8 +532,7 @@ def formulaHummelReducao2Camadas(p, d):
     return [peq, deq, p[len(p)-1]]
 
 def hasteSoloVariasCamadas(p, l, d):
-    """
-    Calcula a resistencia de aterramento de uma haste cravada verticalmente 
+    """Calcula a resistência de aterramento de uma haste cravada verticalmente 
     em um solo com várias camadas. Conhecida como fórmula de Hummel.
     Entrada:
     p = vetor com a resistividade de cada camada que a haste encontrada
@@ -540,7 +555,7 @@ def hasteSoloVariasCamadas(p, l, d):
     r1 = r1haste.r1haste(pa, deq, d)
     return [pa, r1]
 
-################################################################################
+###############################################################################
 # Curva de Endrenyi, Evaluation of Resistivity tests for design os station 
 # grounds in nonuniform soil.
 #
@@ -557,7 +572,7 @@ def hasteSoloVariasCamadas(p, l, d):
 # 
 # OBS: No artigo do Endrenyi ele informa que para valores de d0 = 1 e phi = 0.5
 # a margem de erro é pequena para casos praticos.
-################################################################################
+###############################################################################
 
 def c1(m, phi, alfa): 
     return sqrt(1 + ((m+phi)/alfa)**2)
@@ -601,7 +616,7 @@ def endrenyi1963(beta,  alfa, a, phi = 0.5, d0 = 1):
 
     return N
 
-################################################################################
+###############################################################################
 # Equacionamento para estratificação do solo em várias camadas
 # Documentação utilizada:
 # [1] T. Takahashi, T. Kawase: Calculation of earth resistance for a deep- driven rod in a multi-layer earth structure
@@ -724,9 +739,9 @@ def testeTT():
 
     return 0
 
-################################################################################
+###############################################################################
 # SUNDE
-################################################################################
+###############################################################################
 
 def funSundePrimordial(p1, h1, a):
     """Função inicial para a curva teórica usando as curvas de bessel
@@ -752,9 +767,9 @@ def sundeAlgoritmo():
     iniciaConstantes(3) # valores do Mamede
     sundeAlgo(pho)
 
-################################################################################
+###############################################################################
 # ROTINAS DE TESTE
-################################################################################
+###############################################################################
 def testeEstratificacaoArquivos():
     dirAtual = getcwd()
     pastaTabelas = "tabelas"
@@ -936,7 +951,7 @@ def testeCurvasEndrenyi():
     print 'Curva de proposta por Endrenyi em 1963,'
     print endrenyi1963(.138, 2.603, 31.23, 0.5,  1)
 
-################################################################################
+###############################################################################
 
 if __name__ == '__main__':     
 
@@ -949,6 +964,3 @@ if __name__ == '__main__':
     #sundeAlgoritmo()
     #saida = raw_input('[ENTER] para sair')
 
-
-# configuração do power shell
-# %HOMEDRIVE%%HOMEPATH%
