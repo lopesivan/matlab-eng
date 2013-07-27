@@ -465,6 +465,7 @@ def lerTabelaExcel(silencioso = 0):
     return 0
 
 def estratificacaoSolo(silencioso = 0):
+    global sistemaResultados
 
     if verificaVariaveisProfResi():
         return -1
@@ -475,23 +476,24 @@ def estratificacaoSolo(silencioso = 0):
     estratificacao.pho = resistividadeMedia
     estratificacao.es = profundidade
 
-    [p1, k, h] = estratificacao.estratifica2Camadas()  
-    p2 = estratificacao.p2solo2Camadas(p1, k)  
+    if sistemaResultados['fEstratificacao'] == 0:
+        [p1, k, h] = estratificacao.estratifica2Camadas()  
+        p2 = estratificacao.p2solo2Camadas(p1, k)  
 
-    sistemaResultados['p1'] = p1
-    sistemaResultados['p2'] = p2    
-    sistemaResultados['k'] = k
-    sistemaResultados['h'] = h
+        sistemaResultados['p1'] = p1
+        sistemaResultados['p2'] = p2    
+        sistemaResultados['k'] = k
+        sistemaResultados['h'] = h
 
-    sistemaResultados['fEstratificacao'] = 1
+        sistemaResultados['fEstratificacao'] = 1
 
     if not silencioso:
-        print 'Resistividade da primeira camada(ohm*m), ', p1
-        print 'Resisitivdade da segunda camada(ohm*m), ', p2
-        print 'Coeficiente de reflexao, ', k
-        print 'Profundidade da primeira camada(m), ', h
+        print 'Resistividade da primeira camada(ohm*m), ', sistemaResultados['p1']
+        print 'Resisitivdade da segunda camada(ohm*m), ', sistemaResultados['p2']
+        print 'Coeficiente de reflexao, ', sistemaResultados['k']
+        print 'Profundidade da primeira camada(m), ', sistemaResultados['h']
 
-    return [p1, k, h]
+    return [sistemaResultados['p1'], sistemaResultados['k'], sistemaResultados['h']]
 
 def ajudaBasica():
 
@@ -518,6 +520,8 @@ Lista de comandos disponíveis
     dados               mostra as variaveis principais utilizada nos calculos
     relatorio           inicia a geração de um relatório
     ver relatorio       ver o relatorio gerado
+
+    ipython             chama o console do Ipython, interação mais elaborada
     """
 
 def ajudaCompleta():
