@@ -43,7 +43,6 @@ import potenciais
 import ConfigParser
 from os import getcwd, mkdir
 from os.path import isdir, isfile
-#from decimal import *
 
 pastaTrabalho = getcwd()+'\\tabelas'
 nomeArquivoProjeto = 'projetoMalha.cfg'
@@ -75,7 +74,44 @@ projetoMalha = {
 } 
 
 projetoResultado = {
-	
+	# Determinação de pa, vista pela malha
+	'alfa' : 0,
+	'beta' : 0,
+	'N' : 0,
+	'pa' : 0,
+
+	# Cálculo da bitolo mínima dos condutores que formam a malha de terra
+	'scobre' : 0,
+	# Bitola do cabo de ligação
+	'sCaboLigacao' : 0,
+
+	# Valores dos potenciais máximo admissíveis
+	'k' : 0,
+	'cs' : 0, 
+	'vToqueMaximo' : 0,
+	'vPassoMaximo' : 0,
+
+	# Espaçamento
+	'ea' : 0,
+	'eb' : 0,
+	'Na' : 0,
+	'Nb' : 0,
+
+	'lCabo' : 0,
+
+	# Resistência da malha
+	'rMalha' : 0,
+	'vToqueMaxMalha' : 0,
+
+	# Cálculo do potencial de malha durante o defeito
+	'km' : 0,
+	'kii' : 0,
+	'kh' : 0,
+	'ki' : 0,
+	'vMalha' : 0,
+
+	# Estimativa do mínimo comprimento do condutor
+	'lMinimo' : 0,
 }
 
 def formulaOnderdonk(scobre, tDefeito, oa, om= 0, conexao = 'outra', debug = False):
@@ -554,6 +590,8 @@ def mostraDadosProjeto():
 	print projetoMalha
 
 def projetaMalhaAterramento(debug = False):
+	global projetoResultado
+
 	largura = projetoMalha.get('mLargura')
 	comprimento = projetoMalha.get('mComprimento')
 	hMalha = projetoMalha.get('mProfundidade')
@@ -597,9 +635,8 @@ def projetaMalhaAterramento(debug = False):
 	scobreCabo = formulaOnderdonkScobre(iCurtoMaximo, tDefeito, 30, conexao = projetoMalha.get('condutorLigacoes'), debug = debug)
 
 	if debug:
-		print '-'*80
-		print 's cabo de ligacao, ', scobreCabo
-		print 'seccao do condutor de cobre, ', scobre
+		print u'secção cabo de ligação, ', scobreCabo
+		print u'secção do condutor de cobre, ', scobre
 
 	psBrita = projetoMalha.get('psBrita')
 	hsBrita = projetoMalha.get('hsBrita')
@@ -675,11 +712,95 @@ def projetaMalhaAterramento(debug = False):
 
 		print 'comprimento minimo condutor, ', lMinimo
 
+
+	projetoResultado['alfa'] = alfa
+	projetoResultado['beta'] = beta
+	projetoResultado['N'] = N
+	projetoResultado['pa'] = pa
+
+	projetoResultado['scobre'] = scobre
+	projetoResultado['sCaboLigacao'] = scobreCabo
+
+	projetoResultado['k'] = k
+	projetoResultado['cs'] = cs
+
+	projetoResultado['vToqueMaximo'] = vToqueMaximo
+	projetoResultado['vPassoMaximo'] = vPassoMaximo
+
+	projetoResultado['ea'] = ea
+	projetoResultado['eb'] = eb
+	projetoResultado['Na'] = Na
+	projetoResultado['Nb'] = Nb
+	projetoResultado['lCabo'] = lCabo
+
+	projetoResultado['rMalha'] = rMalha
+	projetoResultado['vToqueMaxMalha'] = vToqueMaximoMalha
+
+	projetoResultado['km'] = km
+	projetoResultado['kii'] = kii
+	projetoResultado['kh'] = Kh
+	projetoResultado['ki'] = ki
+
+	projetoResultado['vMalha'] = vMalha
+
+	projetoResultado['lMinimo'] = lMinimo
+
+def exibeResultados(pr = projetoResultado):
+	print u"""
+Resultados para o dimensionameto Malha de Aterramento
+
+** Resistividade aparente vista pela Malha
+
+Coeficiente de penetração      = %(alfa)f
+Coeficiente de divergência     = %(beta)f
+Razão pa e peq, Endrenyi       = %(N)f
+Resistividade aparente [ohm.m] = %(pa)f
+
+** Cálculo da bitola mínima dos condutores que formam a malha de terra
+
+Secção do cobre [mm^2]            = %(scobre)f
+
+** Bitola do cabo de ligação
+
+Secção do cobre de ligação [mm^2] = %(sCaboLigacao)f
+
+** Valores dos potenciais máximos admissíveis
+
+Tensão de toque máximo [V] = %(vToqueMaximo)f
+Tensão de passo máximo [V] = %(vPassoMaximo)f
+
+** Projeto para o espaçamento
+
+ea [m] = %(ea)f
+eb [m] = %(eb)f
+
+Número de condutores horizontais = %(Na)f
+Número de condutores verticais   = %(Nb)f
+
+Comprimento total dos cabos que formam a malha [m] = %(lCabo)f
+
+** Cálculo da resistência da malha
+
+Resistência da malha [ohm] = %(rMalha)f
+
+** Cálculo do potencial da malha durante o defeito
+
+Tensão malha durante defeito [V] = %(vToqueMaxMalha)f
+
+** Estimativa do mínimo comprimento do condutor
+
+Comprimento mínimo do condutor [m] = %(lMinimo)f
+
+	"""%pr
+
+fDebug = True
+
 if __name__ == '__main__':
+
 	#exemploKindermann()
-	
-	criarArquivoProjeto(novo = False, debug = True)
-	lerArquivoProjeto(nomeArquivoProjetoCompleto, debug = True)
-	projetaMalhaAterramento(debug = True)
+	criarArquivoProjeto(novo = False, debug = fDebug)
+	lerArquivoProjeto(nomeArquivoProjetoCompleto, debug = fDebug)
+	projetaMalhaAterramento(debug = fDebug)
+	exibeResultados()
 
 	#saida = raw_input('[ENTER] para sair')

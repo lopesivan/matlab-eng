@@ -6,6 +6,8 @@
 
 from __future__ import division
 
+print 'iniciando...'
+
 import sys
 import random
 import hashlib
@@ -897,8 +899,9 @@ def projetoMalha():
 
     try:
         malhaAterramento.lerArquivoProjeto(sistemaVar['arqMalha'], debug = fDebug())
-        malhaAterramento.mostraDadosProjeto()
+        #malhaAterramento.mostraDadosProjeto()
         malhaAterramento.projetaMalhaAterramento(debug = fDebug())
+        malhaAterramento.exibeResultados()
     except:
         print u'erro: problema no projeto da malha'
 
