@@ -76,7 +76,7 @@ sistemaVar = {
     # se 0 a entrada para o diâmetro da haste é dada em m
     # se 1 a entrada para o diâmetro da haste é dada em mm
     # se 2 a entrada para o diâmetro da haste é dada em polegas
-    'unidadeHaste' : 0,
+    'unidadeHaste' : 'pol',
 
     'usaValoresArquivo' : 1,
     'debugAterramento' : 0, 
@@ -100,6 +100,7 @@ sistemaVar = {
 sistemaResultados = {
     'fEstratificacao' : 0,
     'p1' : 0,
+    'p2' : 0,
     'k' : 0, 
     'h' : 0
 }
@@ -450,7 +451,7 @@ def lerTabelaExcel(silencioso = 0):
         return -3
 
     [profundidade, resistividadeMedia] = estratificacao.resistividadeMediaPlanilha(mDados, debug = fDebug())        
-
+    sistemaResultados['fEstratificacao'] = 0
     if not silencioso:
         print 'Valores disponiveis da tabela,'
         print mDados
@@ -460,6 +461,7 @@ def lerTabelaExcel(silencioso = 0):
 
     if not silencioso:
         print 'aviso: valores de profundidade e resistividade foram atualizados'
+
     return 0
 
 def estratificacaoSolo(silencioso = 0):
@@ -475,6 +477,14 @@ def estratificacaoSolo(silencioso = 0):
 
     [p1, k, h] = estratificacao.estratifica2Camadas()  
     p2 = estratificacao.p2solo2Camadas(p1, k)  
+
+    sistemaResultados['p1'] = p1
+    sistemaResultados['p2'] = p2    
+    sistemaResultados['k'] = k
+    sistemaResultados['h'] = h
+
+    sistemaResultados['fEstratificacao'] = 1
+
     if not silencioso:
         print 'Resistividade da primeira camada(ohm*m), ', p1
         print 'Resisitivdade da segunda camada(ohm*m), ', p2
