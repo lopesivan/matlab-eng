@@ -37,6 +37,7 @@ from tkFileDialog import askopenfilename
 from Tkinter import Tk
 
 from IPython import embed
+from platform import system as os
 
 #----#----#----#----#----#----#----#----#----#----#----#----#----#----#----#----
 # MINHAS BIBLIOTECAS
@@ -61,15 +62,21 @@ SAL = 'validade12'
 ################################################################################################
 # GLOBAIS
 
+# Qual sistema eu estou usando?
+if os() == 'Linux':
+	separador = '/'
+else:
+	separador = '\\'	# para o Windows
+
 # identificação do arquivo do excel ou arquivo qualquer, usado na criação de 
 # arquivos com plot ou no armazenamento de variaveis
 idPlanilha = ''
 # diretório para armazenamento das curvas
 ndirCurvas = 'curvas'
-dirCurvas = getcwd()+'\\'+ndirCurvas
+dirCurvas = getcwd()+separador+ndirCurvas
 # diretório para armazenamento dos resultados
 ndirResultados = 'resultados'
-dirResultados = getcwd()+'\\'+ndirResultados
+dirResultados = getcwd()+separador+ndirResultados
 
 # Dicionário com todas as principais variáveis de controle do sistema
 sistemaVar = {
@@ -807,7 +814,7 @@ def plotPhoH():
     plt.grid(True)
 
 
-    plt.savefig(dirCurvas+'\\curvadeResistividade_'+idPlanilha+'_'+formataHora()+'_.png')
+    plt.savefig(dirCurvas+separador+'curvadeResistividade_'+idPlanilha+'_'+formataHora()+'_.png')
     print 'aviso: arquivo png da figura salvo na pasta <curvas>'
     
     #plt.show()
