@@ -9,10 +9,10 @@
 #
 # Teoria, Kindermann:
 # Dimensionar uma malha de terra é verificar se potenciais que surgem na superfície
-# do solo, quando da ocorreência do máximo defeito à terra, são inferiores aos
+# do solo, quando da ocorrência do máximo defeito à terra, são inferiores aos
 # máximos potenciais de passo e toque que uma pessoa pode suportar sem a ocorrência
 # de fibrilação ventricular. Além disso, deve ser dimensionado o condutor da malha, de
-# forma a suportar os esforços mecânicos e térmicosa que estarão sujeitos ao longo de
+# forma a suportar os esforços mecânicos e térmicos que estarão sujeitos ao longo de
 # sua vida útil. É fundamental também, levar-se em conta que o valor da resistência de
 # terra da malha deve ser compatível com a sensibilidade da proteção. Isto é, o relé de
 # sobrecorrente de neutro deve atuar adequadamente para o nível de corrente de curto
@@ -75,6 +75,8 @@ projetoMalha = {
     'condutorLigacoes' : '',
 
     # chute inicial para o espaçamento da malha
+    # Um espaçamento inicial típico adotado está entre 5% e 10% do comprimento
+    # dos respectivos lados da malha.
     'ea' : 0,
     'eb' : 0,
 
@@ -702,8 +704,8 @@ def projetaMalhaAterramento(debug = False):
     # Iniciando todos os cálculos relacionados as tensões de passo, toque     #
     # permitidos para o projeto, levando em consideração corrente de curto    #
     # tempo em que o curto permanecerá no sistema até que a proteção funcione #
-    # Equações encontrada no livro do Kindermann                   #
-    #                                      #
+    # Equações encontrada no livro do Kindermann                              #
+    #                                                                         #
     # OBS: Verificar a sua validade com a IEEE e utilizando Elementos finitos #
     ###########################################################################
 
