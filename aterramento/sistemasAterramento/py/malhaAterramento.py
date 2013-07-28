@@ -8,8 +8,8 @@
 # Dimensionamento de uma malha de aterramento
 #
 # Teoria, Kindermann:
-# Dimensionar uma malha de terra é verificar se potenciais que surgem na superfície 
-# do solo, quando da ocorreência do máximo defeito à terra, são inferiores aos 
+# Dimensionar uma malha de terra é verificar se potenciais que surgem na superfície
+# do solo, quando da ocorreência do máximo defeito à terra, são inferiores aos
 # máximos potenciais de passo e toque que uma pessoa pode suportar sem a ocorrência
 # de fibrilação ventricular. Além disso, deve ser dimensionado o condutor da malha, de
 # forma a suportar os esforços mecânicos e térmicosa que estarão sujeitos ao longo de
@@ -18,7 +18,7 @@
 # sobrecorrente de neutro deve atuar adequadamente para o nível de corrente de curto
 # circuito à terra no final do trecho protegido. Deve-se ressaltar que o dimensionamento
 # de uma malha de terra é um processo iterativo. Parte-se de uma malha inicial e
-# verificam se os potenciais, na superfície do solo, quando do máximo defeito à terra, 
+# verificam se os potenciais, na superfície do solo, quando do máximo defeito à terra,
 # são inferiores aos valores máximo suportáveis por um ser humano.
 #
 # Itens necessários ao Projeto:
@@ -53,7 +53,7 @@ nomeArquivoProjetoCompleto = pastaTrabalho+ajudante.separador()+nomeArquivoProje
 projetoMalha = {
     # configurações do solo
     'peq' : 0,
-    'pn1' : 0, 
+    'pn1' : 0,
     'deq' : 0,
 
     # configurações da brita
@@ -73,7 +73,7 @@ projetoMalha = {
     # informações sobre o tipo de ligação
     'condutorMalha' : '',
     'condutorLigacoes' : ''
-} 
+}
 
 projetoResultado = {
     # Determinação de pa, vista pela malha
@@ -89,7 +89,7 @@ projetoResultado = {
 
     # Valores dos potenciais máximo admissíveis
     'k' : 0,
-    'cs' : 0, 
+    'cs' : 0,
     'vToqueMaximo' : 0,
     'vPassoMaximo' : 0,
 
@@ -117,7 +117,7 @@ projetoResultado = {
 }
 
 def formulaOnderdonk(scobre, tDefeito, oa, om= 0, conexao = 'outra', debug = False):
-    """Dimensionamento térmico de um condutor do tipo cobre a suportar 
+    """Dimensionamento térmico de um condutor do tipo cobre a suportar
      corrente de curto
 
      Entrada:
@@ -172,7 +172,7 @@ def formulaOnderdonk(scobre, tDefeito, oa, om= 0, conexao = 'outra', debug = Fal
 
 
 def formulaOnderdonkScobre(iDefeito, tDefeito, oa, om= 0, conexao = 'outra', debug = False):
-    """Dimensionamento térmico de um condutor do tipo cobre a suportar 
+    """Dimensionamento térmico de um condutor do tipo cobre a suportar
      corrente de curto
 
      Entrada:
@@ -280,7 +280,7 @@ def espacamentoEntreCondutores(N, a):
 
 def resistenciaMalhaSverak(pa, lTotal, aMalha, h):
     """Aproximação da resistência da malha pela fórmula de Sverak
-    Está resistência da malha representa a resistência elétrica da malha até o 
+    Está resistência da malha representa a resistência elétrica da malha até o
     infinito. Seu valor deverá ser menor do que a máxima resistência limite da
     sensibilidade(ajuste) do relé de neutro.
 
@@ -345,7 +345,7 @@ def coeficienteMalha(e, h, d, kh, N, kii = 1):
         return
 
     km = (1/(2*pi))*(log((e**2)/(16*h*d)+((e+2*h)**2)/(8*e*d)-h/(4*d))+(kii/kh)*log(8/(pi*(2*N-1))))
-    
+
     return km
 
 def Kii(N):
@@ -359,7 +359,7 @@ def coeficienteIrregularidade(N):
 
 def potencialMalha(pa, km, ki, iMalha, lTotal):
     """Potência de malha máximo se encontra nos cantos da malha
-    
+
     Entrada:
     pa = resistividade aparente do solo
     km = coeficiente de malha
@@ -374,7 +374,7 @@ def potencialMalha(pa, km, ki, iMalha, lTotal):
     return vMalha
 
 def comprimentoTotal15(lCabo, lHastes):
-    """No caso de malhas onde são colocadas hastes cravadas nos cantos e/ou 
+    """No caso de malhas onde são colocadas hastes cravadas nos cantos e/ou
     no perímetro, as correntes têm maior facilidade de escoar mais profundamente
     no solo, alterando, portanto, o potencial de malha.
     comprimento virtual ponderado em 15%   do total
@@ -494,7 +494,7 @@ def exemploKindermann():
     hs = .2
     k = kCoeficienteReflexao(pa, pbrita)
 
-    print 'k, ', k 
+    print 'k, ', k
 
     cs = potenciais.fatorCorrecaoBrita(hs, pa, pbrita)
     print 'fator de correcao, ', cs
@@ -507,7 +507,7 @@ def exemploKindermann():
 
     print '-'*80
 
-    
+
 def criarArquivoProjeto(novo = False, debug = False):
 
     if debug:
@@ -527,7 +527,7 @@ def criarArquivoProjeto(novo = False, debug = False):
     if isdir(pastaTrabalho) == False:
         if debug:
             print 'aviso: criando pasta <tabelas>'
-        mkdir(pastaTrabalho)    
+        mkdir(pastaTrabalho)
 
     projeto = ConfigParser.RawConfigParser()
 
@@ -546,13 +546,13 @@ def criarArquivoProjeto(novo = False, debug = False):
     projeto.set('malha', 'profundidade', '.6')
 
     projeto.add_section('curto')
-    projeto.set('curto', 'iCurtoMaximo', '3000')    
-    projeto.set('curto', 'iMalha', '1200')    
-    projeto.set('curto', 'tDefeito', '.6')    
+    projeto.set('curto', 'iCurtoMaximo', '3000')
+    projeto.set('curto', 'iMalha', '1200')
+    projeto.set('curto', 'tDefeito', '.6')
 
     projeto.add_section('condutores')
-    projeto.set('condutores', 'malha', 'solda')    
-    projeto.set('condutores', 'ligacao', 'pressao')    
+    projeto.set('condutores', 'malha', 'solda')
+    projeto.set('condutores', 'ligacao', 'pressao')
 
     with open(nomeArquivoProjetoCompleto, 'wb') as configfile:
         projeto.write(configfile)
@@ -603,13 +603,13 @@ def projetaMalhaAterramento(debug = False):
     ####################################
     # Cálculos da resistência da malha #
     ####################################
-    
+
     largura = projetoMalha.get('mLargura')
     comprimento = projetoMalha.get('mComprimento')
     hMalha = projetoMalha.get('mProfundidade')
 
     deq = projetoMalha.get('deq')
-    pn1 = projetoMalha.get('pn1')    
+    pn1 = projetoMalha.get('pn1')
     peq = projetoMalha.get('peq')
 
     area = largura*comprimento
@@ -619,7 +619,7 @@ def projetaMalhaAterramento(debug = False):
     alfa = r/deq
     beta = pn1/peq
 
-    ###############################################################    
+    ###############################################################
     # CURVA DE ENDRENYI
     # OBS:
     # AINDA NÃO TESTEI PARA DIVERSOS CASOS
@@ -629,7 +629,7 @@ def projetaMalhaAterramento(debug = False):
     N = estratificacao.endrenyi1963(beta, alfa, r)
 
     # Resistividade aparente vista pela malha
-    pa = peq*N 
+    pa = peq*N
 
     if debug:
         print '-'*80
@@ -673,7 +673,7 @@ def projetaMalhaAterramento(debug = False):
 
     if debug:
         print '-'*80
-        print 'k, ', k 
+        print 'k, ', k
         print 'V toque maximo, ', vToqueMaximo
         print 'fator de correcao, ', cs
         print'V passo maximo, ', vPassoMaximo
@@ -711,7 +711,7 @@ def projetaMalhaAterramento(debug = False):
 
     N = nCondutoresMalha(Na, Nb)
 
-    kii = Kii(N) 
+    kii = Kii(N)
 
     d = diametroCondutor(scobre)
 
@@ -731,7 +731,7 @@ def projetaMalhaAterramento(debug = False):
         print 'resistencia da malha, ', rMalha
         print 'v toque maximo da malha, ', vToqueMaximoMalha
         if vToqueMaximoMalha > vToqueMaximo:
-            print 'erro projeto: tensao de toque ultrapassa os limites'    
+            print 'erro projeto: tensao de toque ultrapassa os limites'
 
         print 'Kh, ', Kh
         print 'Kii, ', kii
@@ -841,5 +841,6 @@ if __name__ == '__main__':
     lerArquivoProjeto(nomeArquivoProjetoCompleto, debug = fDebug)
     projetaMalhaAterramento(debug = fDebug)
     exibeResultados()
-    
+
     #saida = raw_input('[ENTER] para sair')
+
