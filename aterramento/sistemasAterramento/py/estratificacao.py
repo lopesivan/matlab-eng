@@ -6,7 +6,7 @@
 #
 #------------------------------------------------------------------------------
 # Processo de estratificação do solo
-# 
+#
 # - estratificação do solo em duas camadas
 # - curvas de Endrevyi
 # - formúlas de Hummel
@@ -33,7 +33,7 @@ from scipy import Inf
 #------------------------------------------------------------------------------
 infinito = 20 # :), usada nos cálculos relacionados com otimização em 2 camadas
 
-# as variáveis pho e es são usadas pelo funcção de estratificação do solo 
+# as variáveis pho e es são usadas pelo funcção de estratificação do solo
 # em duas camadas, devem ser atualizadas para que função funcione corretamente
 pho = []
 es = []
@@ -62,7 +62,7 @@ def iniciaConstantes(ex = None, debug = None):
         # de 2 camadas. A otimização para duas pode não ser satifatória.
         pho = [320, 245, 182, 162, 168, 152]
         es = [2.5, 5, 7.5, 10, 12.5, 15]
-        #chuteInicial = [0, 0, 0] 
+        #chuteInicial = [0, 0, 0]
 
     elif ex == 1:
 
@@ -78,10 +78,10 @@ def iniciaConstantes(ex = None, debug = None):
 
     # tabela do Mamede
     elif ex == 3:
-        pho = [470.22200000000004, 
-               467.07600000000002, 
-               450.27600000000007, 
-               409.14800000000002, 
+        pho = [470.22200000000004,
+               467.07600000000002,
+               450.27600000000007,
+               409.14800000000002,
                397.28800000000001]
         es = [2.0, 4.0, 8.0, 16.0, 32.0]
         #chuteInicial = [100, 1, 1]
@@ -122,7 +122,7 @@ def funcaoEstratificacao(x):
     x[0] = p1 - resistividade da primeira camada
     x[1] = k  - coeficiente de reflexão
     x[2] = h  - altura da primeira camada
-    '''    
+    '''
 
     # aplicação da fórmula de Sunde encontrada no livro do Geraldo volume 2
     f = 0
@@ -170,10 +170,10 @@ def estratifica2Camadas(debug = None):
 
     # Minimize a function using Sequential Least SQuares Programming
     # Python interface function for the SLSQP Optimization subroutine originally implemented by Dieter Kraft.
-    [x, fun, nit, status, mes] = fmin_slsqp(funcaoEstratificacao, 
-                                            chuteInicial, 
-                                            bounds = limites, 
-                                            iprint = d, 
+    [x, fun, nit, status, mes] = fmin_slsqp(funcaoEstratificacao,
+                                            chuteInicial,
+                                            bounds = limites,
+                                            iprint = d,
                                             full_output = 1)
 
 
@@ -212,7 +212,7 @@ def funResistividade2Camadas(a, p1, k, h):
 def p2solo2Camadas(p1, k):
     """ Coeficiente de reflexão, para um solo de 2 camadas
     """
-    return -((k+1)*p1)/(k-1)    
+    return -((k+1)*p1)/(k-1)
 
 def lerPlanilha(planilha, debug = None):
     # p = open_workbook(planilha)
@@ -226,7 +226,7 @@ def lerPlanilha(planilha, debug = None):
     #     print
 
     dadosMedidos = open_workbook(planilha)
-    
+
     # inicio dos valores númericos contidos na planilha
     localDados = 2
     # número de linhas utilizadas pela planilha apenas para informações
@@ -290,7 +290,7 @@ def resistividadeMediaPlanilha(mDados, desvioPadrao = 0.5, debug = None):
         print mediaResistividade
 
     # tabelaCalculo = zeros(shape = (nLinha, nColuna))
-    
+
     q = 0
     media = 0
     resistividadeCorrigida = []
@@ -301,7 +301,7 @@ def resistividadeMediaPlanilha(mDados, desvioPadrao = 0.5, debug = None):
         for c in range(1, nColuna):
 
             if((abs(mDados[l, c]-mediaResistividade[l]))/mediaResistividade[l]) >= desvioPadrao:
-                
+
                 if debug:
                     print 'Valor com desvio maior que ', desvioPadrao*100, ' %'
                     print mDados[l, c]
@@ -320,7 +320,7 @@ def resistividadeMediaPlanilha(mDados, desvioPadrao = 0.5, debug = None):
         # Se os valores medidos são número na ordem de 10^2, caso exista
         # algum valor da ordem de 10^5 teremos um erro grave no algoritimo
         # já que todos os valores serão considerados fora da média.
-        # Não implementei nada para essa correção, já que considero um 
+        # Não implementei nada para essa correção, já que considero um
         # erro na medição em campo.
         try:
             resistividadeCorrigida.append(media*q**-1)
@@ -390,7 +390,7 @@ def curvaEdnrenyiBeta(a, b):
     return 2*curvaEndrenyiSomatorioBeta(a, k) - curvaEndrenyiSomatorioBeta(2*a, k)
 
 def plotCurvaEndrenyi():
-    #eixo das abscissas 
+    #eixo das abscissas
 
     # print 'plotando a curva de Endrenyi'
 
@@ -482,7 +482,7 @@ def resistividadeAparente1Haste(l):
 def resistividadeAparenteHastesAlinhadas(n, e, p1, p2, h):
     """
     Entrada:
-    n = número de hastes cravadas verticalmente 
+    n = número de hastes cravadas verticalmente
     e = espaçamento entre as hastes
     p1 = resistividade da primeira camada
     p2 = resistividade da segunda camada
@@ -536,7 +536,7 @@ def formulaHummelReducao2Camadas(p, d):
     return [peq, deq, p[len(p)-1]]
 
 def hasteSoloVariasCamadas(p, l, d):
-    """Calcula a resistência de aterramento de uma haste cravada verticalmente 
+    """Calcula a resistência de aterramento de uma haste cravada verticalmente
     em um solo com várias camadas. Conhecida como fórmula de Hummel.
     Entrada:
     p = vetor com a resistividade de cada camada que a haste encontrada
@@ -560,7 +560,7 @@ def hasteSoloVariasCamadas(p, l, d):
     return [pa, r1]
 
 ###############################################################################
-# Curva de Endrenyi, Evaluation of Resistivity tests for design os station 
+# Curva de Endrenyi, Evaluation of Resistivity tests for design os station
 # grounds in nonuniform soil.
 #
 # beta = coeficiente de diverência
@@ -571,29 +571,29 @@ def hasteSoloVariasCamadas(p, l, d):
 #
 # Os termos c1, c2, c3, k1, k2, k3 são coeficientes da solução de uma integral
 # eliptica. Ver:
-# http://en.wikipedia.org/wiki/Elliptic_integral 
+# http://en.wikipedia.org/wiki/Elliptic_integral
 # http://mathworld.wolfram.com/EllipticIntegral.html
-# 
+#
 # OBS: No artigo do Endrenyi ele informa que para valores de d0 = 1 e phi = 0.5
 # a margem de erro é pequena para casos praticos.
 ###############################################################################
 
-def c1(m, phi, alfa): 
+def c1(m, phi, alfa):
     return sqrt(1 + ((m+phi)/alfa)**2)
 
-def c2(m, phi, alfa): 
+def c2(m, phi, alfa):
     return sqrt(1 + ((m-phi)/alfa)**2)
 
-def c3(m, alfa): 
+def c3(m, alfa):
     return sqrt(1 + ((m)/alfa)**2)
 
-def k1(m, phi, alfa): 
+def k1(m, phi, alfa):
     return alfa/sqrt(alfa**2 + (m+phi)**2)
 
-def k2(m, phi, alfa): 
+def k2(m, phi, alfa):
     return alfa/sqrt(alfa**2 + (m-phi)**2)
 
-def k3(m, alfa): 
+def k3(m, alfa):
     return alfa/sqrt(alfa**2 + m**2)
 
 # Equacionamento válido apenas para quando p1>p2
@@ -693,7 +693,7 @@ def parteB_TakahashiKawase(h, p, l, N, a):
 
 def duasCamadasTakahashiKawase():
     #f = lambda t, la: (exp(-la*t)/(1-0.818*exp(-2*la)))*jn(0, la)
-    #r = (1-.818)*dblquad(f, 0, Inf, lambda t: 1, lambda t: 2)[0]    
+    #r = (1-.818)*dblquad(f, 0, Inf, lambda t: 1, lambda t: 2)[0]
     # k1 = 0.818
     # h = 1
     # l = 2
@@ -737,7 +737,7 @@ def testeTT():
     print 'parte A, ', parteA_TakahashiKawase(hTT, pTT, l, N, a)
     print 'parte B, ', parteB_TakahashiKawase(hTT, pTT, l, N, a)
 
-    print 
+    print
     print 'Solo em duas camadas'
     #duasCamadasTakahashiKawase()
 
@@ -777,9 +777,9 @@ def sundeAlgoritmo():
 def testeEstratificacaoArquivos():
     dirAtual = getcwd()
     pastaTabelas = "tabelas"
-    planilhas = [dirAtual+"\\"+pastaTabelas+"\\"+"tabelaExemplo2_12GeraldoKindermann.xlsx", 
+    planilhas = [dirAtual+"\\"+pastaTabelas+"\\"+"tabelaExemplo2_12GeraldoKindermann.xlsx",
                  dirAtual+"\\"+pastaTabelas+"\\"+"subestacaoMamede.xlsx"]
-    
+
     #--------------------------------------------------------------------------
     # testa a estratificação em duas camadas
     print 'Inciando teste de estratificacao em 2 camadas,'
@@ -815,8 +815,8 @@ def testeEstratificacaoArquivos():
 
     #--------------------------------------------------------------------------
     # testa a leitura da planilha com os dados
-    
-    print 'Iniciando teste leitura de uma planilha' 
+
+    print 'Iniciando teste leitura de uma planilha'
 
     for i in planilhas:
         print 'lendo planilha, ', i
@@ -848,7 +848,7 @@ def testeEstratificacaoArquivos():
 
 def testeResistividadeAparente():
     #--------------------------------------------------------------------------
-    # testando os cálculos de resistividade aparente    
+    # testando os cálculos de resistividade aparente
 
     #print 'calculando a resistividade aparente'
 
@@ -875,7 +875,7 @@ def testeResistividadeAparente():
 
     print 'testando a formula de hummel para reducao de 2 camadas'
     print 'para haste unica e verticalmente no solo'
-    
+
     print 'caso 1'
     # exemplo do Kindermann
     p = [200, 500, 65, 96]
@@ -896,7 +896,7 @@ def testeResistividadeAparente():
     p = [500, 200, 120]
     l = [2, 5, 3]
     pa = hasteSoloVariasCamadas(p, l, 15e-3)
-    print pa    
+    print pa
 
     print
 
@@ -908,7 +908,7 @@ def testeCurvasEndrenyi():
     #--------#
     alfa = 1.15
     beta = 4.3
-    
+
     N = curvaEdnrenyiBeta(alfa, beta)
 
     print 'curva de Endrenyi, caso 1'
@@ -923,7 +923,7 @@ def testeCurvasEndrenyi():
     #--------#
     alfa = .3333
     beta = .119
-    
+
     N = curvaEdnrenyiBeta(alfa, beta)
 
     print 'curva de Endrenyi, caso 2'
@@ -936,7 +936,7 @@ def testeCurvasEndrenyi():
     #--------#
     alfa = 2.6
     beta = .138
-    
+
     N = curvaEdnrenyiBeta(alfa, beta)
 
     print 'curva de Endrenyi, caso 3'
@@ -957,7 +957,7 @@ def testeCurvasEndrenyi():
 
 ###############################################################################
 
-if __name__ == '__main__':     
+if __name__ == '__main__':
 
     print u'Biblioteca: Estratificação'
 

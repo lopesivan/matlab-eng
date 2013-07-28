@@ -782,6 +782,12 @@ def projetaMalhaAterramento(debug = False):
 
     projetoResultado['lMinimo'] = lMinimo
 
+def correcaoProjeto(pr = projetoResultado, debug = False):
+    if debug:
+        print u'Corrigindo o projeto da malha'
+
+
+
 def exibeResultados(pr = projetoResultado):
     """Mostra os resultados de forma organizada e limpa no terminal
     """
@@ -830,10 +836,13 @@ Tensão malha durante defeito [V] = %(vToqueMaxMalha)f
 ** Estimativa do mínimo comprimento do condutor
 
 Comprimento mínimo do condutor [m] = %(lMinimo)f
-
     """%pr
 
+#######################################################################
+# MAIN                                                                #
+#                                                                     #
 fDebug = True
+#######################################################################
 
 if __name__ == '__main__':
     #exemploKindermann()
@@ -841,6 +850,6 @@ if __name__ == '__main__':
     lerArquivoProjeto(nomeArquivoProjetoCompleto, debug = fDebug)
     projetaMalhaAterramento(debug = fDebug)
     exibeResultados()
-
-    #saida = raw_input('[ENTER] para sair')
+    correcaoProjeto(debug = fDebug)
+    saida = raw_input('[ENTER] para sair')
 
