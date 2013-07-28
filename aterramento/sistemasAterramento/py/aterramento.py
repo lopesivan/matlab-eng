@@ -50,6 +50,8 @@ import malhaAterramento
 import rAnel
 import potenciais
 import relatorioEstratificacao
+
+import ajudante
 #----#----#----#----#----#----#----#----#----#----#----#----#----#----#----#----
 
 ################################################################################################
@@ -63,20 +65,22 @@ SAL = 'validade12'
 # GLOBAIS
 
 # Qual sistema eu estou usando?
-if os() == 'Linux':
-	separador = '/'
-else:
-	separador = '\\'	# para o Windows
+#if os() == 'Linux':
+#	separador = '/'
+#	cmdLimpaTela = 'clear'
+#else:
+#	separador = '\\'	# para o Windows
+#	cmdLimpaTela = 'cls'
 
 # identificação do arquivo do excel ou arquivo qualquer, usado na criação de 
 # arquivos com plot ou no armazenamento de variaveis
 idPlanilha = ''
 # diretório para armazenamento das curvas
 ndirCurvas = 'curvas'
-dirCurvas = getcwd()+separador+ndirCurvas
+dirCurvas = getcwd()+ajudante.separador()+ndirCurvas
 # diretório para armazenamento dos resultados
 ndirResultados = 'resultados'
-dirResultados = getcwd()+separador+ndirResultados
+dirResultados = getcwd()+ajudante.separador()+ndirResultados
 
 # Dicionário com todas as principais variáveis de controle do sistema
 sistemaVar = {
@@ -814,7 +818,7 @@ def plotPhoH():
     plt.grid(True)
 
 
-    plt.savefig(dirCurvas+separador+'curvadeResistividade_'+idPlanilha+'_'+formataHora()+'_.png')
+    plt.savefig(dirCurvas+ajudante.separador()+'curvadeResistividade_'+idPlanilha+'_'+formataHora()+'_.png')
     print 'aviso: arquivo png da figura salvo na pasta <curvas>'
     
     #plt.show()
@@ -1042,7 +1046,7 @@ def inicializacao():
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 def limpaTela():
-    return system('cls')
+    return system(ajudante.cmdLimpaTela())
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 

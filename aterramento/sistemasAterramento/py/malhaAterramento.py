@@ -44,9 +44,11 @@ import ConfigParser
 from os import getcwd, mkdir
 from os.path import isdir, isfile
 
-pastaTrabalho = getcwd()+'\\tabelas'
+import ajudante
+
+pastaTrabalho = getcwd()+ajudante.separador()+'tabelas'
 nomeArquivoProjeto = 'projetoMalha.cfg'
-nomeArquivoProjetoCompleto = pastaTrabalho+'\\'+nomeArquivoProjeto
+nomeArquivoProjetoCompleto = pastaTrabalho+ajudante.separador()+nomeArquivoProjeto
 
 projetoMalha = {
 	# configurações do solo
