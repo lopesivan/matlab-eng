@@ -72,7 +72,12 @@ projetoMalha = {
 
     # informações sobre o tipo de ligação
     'condutorMalha' : '',
-    'condutorLigacoes' : ''
+    'condutorLigacoes' : '',
+
+    # chute inicial para o espaçamento da malha
+    'ea' : 0,
+    'eb' : 0,
+
 }
 
 projetoResultado = {
@@ -668,6 +673,8 @@ def projetaMalhaAterramento(debug = False):
 
     k = kCoeficienteReflexao(pa, psBrita)
     cs = potenciais.fatorCorrecaoBrita(hsBrita, pa, psBrita)
+
+    # Potenciais máximos admissiveis
     vToqueMaximo = potenciais.potencialMaximoToqueCS(psBrita, tDefeito, cs)
     vPassoMaximo = potenciais.potencialMaximoPassoCS(psBrita, tDefeito, cs)
 
@@ -705,6 +712,12 @@ def projetaMalhaAterramento(debug = False):
 
     iMalha = projetoMalha.get('iMalha')
 
+    # Potencial de toque máximo da malha em relação ao infinito
+    # Expressão leva em consideração a maior corrente de curto-circuito
+    # monofásica à terra, entre as partes metálicas dos equipamentos e um ponto
+    # no infinito.
+    # Observação importante, o fato deste valor não atender à condição , não
+    # significa que a malha é inadequada.
     vToqueMaximoMalha = rMalha * iMalha
 
     Kh = correcaoProfundidade(hMalha)
@@ -722,7 +735,6 @@ def projetaMalhaAterramento(debug = False):
     vMalha = potencialMalha(pa, km, ki, iMalha, lCabo)
 
     lMinimo = comprimentoMinimoCondutor(pa, km, ki, iMalha, vToqueMaximo)
-
 
     if debug:
         print 'numero de condutores Na, ', Na
@@ -786,6 +798,10 @@ def correcaoProjeto(pr = projetoResultado, debug = False):
     if debug:
         print u'Corrigindo o projeto da malha'
 
+    print pr['vMalha']
+    print pr['vToqueMaximo']
+    if pr['vMalha'] >= pr['vToqueMaximo']:
+        print u'erro: limite de tensão na malha ultrapassa o permitido'
 
 
 def exibeResultados(pr = projetoResultado):
