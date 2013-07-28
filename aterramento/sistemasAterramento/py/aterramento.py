@@ -66,11 +66,11 @@ SAL = 'validade12'
 
 # Qual sistema eu estou usando?
 #if os() == 'Linux':
-#	separador = '/'
-#	cmdLimpaTela = 'clear'
+#    separador = '/'
+#    cmdLimpaTela = 'clear'
 #else:
-#	separador = '\\'	# para o Windows
-#	cmdLimpaTela = 'cls'
+#    separador = '\\'    # para o Windows
+#    cmdLimpaTela = 'cls'
 
 # identificação do arquivo do excel ou arquivo qualquer, usado na criação de 
 # arquivos com plot ou no armazenamento de variaveis
