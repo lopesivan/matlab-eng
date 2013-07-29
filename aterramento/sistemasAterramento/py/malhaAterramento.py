@@ -77,8 +77,8 @@ projetoMalha = {
     # chute inicial para o espaçamento da malha
     # Um espaçamento inicial típico adotado está entre 5% e 10% do comprimento
     # dos respectivos lados da malha.
-    'ea' : 0,
-    'eb' : 0,
+    'ea' : 3,
+    'eb' : 3,
 
 }
 
@@ -110,6 +110,7 @@ projetoResultado = {
 
     # Resistência da malha
     'rMalha' : 0,
+    # Situação extrema de tensão na malha
     'vToqueMaxMalha' : 0,
 
     # Cálculo do potencial de malha durante o defeito
@@ -117,6 +118,7 @@ projetoResultado = {
     'kii' : 0,
     'kh' : 0,
     'ki' : 0,
+    # Tensão na malha quando o defeito ocorre
     'vMalha' : 0,
 
     # Estimativa do mínimo comprimento do condutor
@@ -598,12 +600,11 @@ def mostraDadosProjeto():
     print 'entrada para o projeto,'
     print projetoMalha
 
-def projetaMalhaAterramento(debug = False):
+def projetaMalhaAterramento(dadosProjeto = projetoMalha, debug = False):
     """Projeto para a malha de aterramento, usando os valores globais
     encontrados no arquivo de projeto da malha. É mostrado os valores
     máximo de tensão de passo e informado se algo saiu errado no projeto
     qualquer iniciativa para mudança não é tomada nessa função.
-    Considere sempre a utilização de variáveis globais.
     """
     global projetoResultado
 
@@ -611,13 +612,12 @@ def projetaMalhaAterramento(debug = False):
     # Cálculos da resistência da malha #
     ####################################
 
-    largura = projetoMalha.get('mLargura')
-    comprimento = projetoMalha.get('mComprimento')
-    hMalha = projetoMalha.get('mProfundidade')
-
-    deq = projetoMalha.get('deq')
-    pn1 = projetoMalha.get('pn1')
-    peq = projetoMalha.get('peq')
+    largura = dadosProjeto['mLargura']
+    comprimento = dadosProjeto['mComprimento']
+    hMalha = dadosProjeto['mProfundidade']
+    deq = dadosProjeto['deq']
+    pn1 = dadosProjeto['pn1']
+    peq = dadosProjeto['peq']
 
     area = largura*comprimento
     dimensao = sqrt(largura**2 + comprimento**2)
@@ -647,9 +647,9 @@ def projetaMalhaAterramento(debug = False):
         print 'N de Endrenyi, ', N
         print 'resistividade aparente, vista pela malha', pa
 
-    iCurtoMaximo = projetoMalha.get('iCurtoMaximo')
+    iCurtoMaximo = dadosProjeto['iCurtoMaximo']
     iDefeito = .6*iCurtoMaximo
-    tDefeito =     projetoMalha.get('tDefeito')
+    tDefeito = dadosProjeto['tDefeito']
 
     if debug:
         print '-'*80
@@ -659,19 +659,22 @@ def projetaMalhaAterramento(debug = False):
     ##########################################
     # calculando a bitola dos cabos da malha #
     ##########################################
-    scobre = formulaOnderdonkScobre(iDefeito, tDefeito, 30, conexao = projetoMalha.get('condutorMalha'), debug = debug)
+    scobre = formulaOnderdonkScobre(iDefeito, tDefeito, 30, conexao = dadosProjeto['condutorMalha'], debug = debug)
 
     #############################################
     # calculando a bitola dos cabos de ligações #
     #############################################
-    scobreCabo = formulaOnderdonkScobre(iCurtoMaximo, tDefeito, 30, conexao = projetoMalha.get('condutorLigacoes'), debug = debug)
+    scobreCabo = formulaOnderdonkScobre(iCurtoMaximo, tDefeito, 30, conexao = dadosProjeto['condutorLigacoes'], debug = debug)
 
     if debug:
         print u'secção cabo de ligação, ', scobreCabo
         print u'secção do condutor de cobre, ', scobre
 
-    psBrita = projetoMalha.get('psBrita')
-    hsBrita = projetoMalha.get('hsBrita')
+    #psBrita = projetoMalha.get('psBrita')
+    psBrita = dadosProjeto['psBrita']
+    #hsBrita = projetoMalha.get('hsBrita')
+    hsBrita = dadosProjeto['hsBrita']
+
 
     k = kCoeficienteReflexao(pa, psBrita)
     cs = potenciais.fatorCorrecaoBrita(hsBrita, pa, psBrita)
@@ -688,8 +691,8 @@ def projetaMalhaAterramento(debug = False):
         print'V passo maximo, ', vPassoMaximo
 
     # valores iniciais para o espaçamento da malha
-    ea = 3
-    eb = 3
+    ea = dadosProjeto['ea']
+    eb = dadosProjeto['eb']
     [Na, Nb, lCabo] = numeroCondutores(comprimento, largura, ea, eb)
 
     # Número de condutores é um número inteiro
@@ -712,7 +715,7 @@ def projetaMalhaAterramento(debug = False):
     # calculando a resistência da malha
     rMalha = resistenciaMalhaSverak(pa, lCabo, area, hMalha)
 
-    iMalha = projetoMalha.get('iMalha')
+    iMalha = dadosProjeto['iMalha']
 
     # Potencial de toque máximo da malha em relação ao infinito
     # Expressão leva em consideração a maior corrente de curto-circuito
@@ -796,13 +799,34 @@ def projetaMalhaAterramento(debug = False):
 
     projetoResultado['lMinimo'] = lMinimo
 
+    return projetoResultado
+
 def correcaoProjeto(pr = projetoResultado, debug = False):
     if debug:
         print u'Corrigindo o projeto da malha'
 
-    if pr['vMalha'] >= pr['vToqueMaximo']:
-        print u'erro: limite de tensão na malha ultrapassa o permitido'
+    if pr['vMalha'] > pr['vToqueMaximo']:
+        print u'erro projeto: potencial da malha ultrapassa o máximo permitido'
+        print u'    valor máximo permitido, ', pr['vToqueMaximo']
+        print u'    valor encontrado      , ', pr['vMalha']
 
+    if pr['vToqueMaxMalha'] > pr['vToqueMaximo']:
+        print u'erro projeto: potencial máximo ultrapassa o máximo permitido'
+        print u'    valor máximo permitido, ', pr['vToqueMaximo']
+        print u'    valor encontrado max  , ', pr['vToqueMaxMalha']
+
+    # Iniciando o processo de mudança, usando o fluxograma
+    # proposto por Kindermann
+    modificacaoProjeto = projetoMalha
+
+    # Tentativa fútil de encontra a "melhor" solução
+    modificacaoProjeto['ea'] = 3
+    modificacaoProjeto['eb'] = 3
+    modificacaoProjeto['mLargura'] = modificacaoProjeto['mLargura']+10
+    modificacaoProjeto['mComprimento'] = modificacaoProjeto['mComprimento']+10
+    resultado = projetaMalhaAterramento(dadosProjeto=modificacaoProjeto)
+    print resultado['vToqueMaxMalha']
+    print resultado['vMalha']
 
 def exibeResultados(pr = projetoResultado):
     """Mostra os resultados de forma organizada e limpa no terminal
@@ -864,8 +888,13 @@ if __name__ == '__main__':
     #exemploKindermann()
     criarArquivoProjeto(novo = False, debug = fDebug)
     lerArquivoProjeto(nomeArquivoProjetoCompleto, debug = fDebug)
-    projetaMalhaAterramento(debug = fDebug)
+
+    # projeto inicial, utilizando os valores iniciais do projetista
+    a = projetaMalhaAterramento(debug = fDebug)
     exibeResultados()
-    correcaoProjeto(debug = fDebug)
-    saida = raw_input('[ENTER] para sair')
+
+    # correção até da certo
+    correcaoProjeto(pr = a, debug = fDebug)
+
+    #saida = raw_input('[ENTER] para sair')
 
