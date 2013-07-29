@@ -800,8 +800,6 @@ def correcaoProjeto(pr = projetoResultado, debug = False):
     if debug:
         print u'Corrigindo o projeto da malha'
 
-    print pr['vMalha']
-    print pr['vToqueMaximo']
     if pr['vMalha'] >= pr['vToqueMaximo']:
         print u'erro: limite de tensão na malha ultrapassa o permitido'
 
