@@ -1,6 +1,0 @@
-Caderno de anotações
-Felipe Bandeira, 29-07-2013
-
-Projeto pyAterramento.
-
-
