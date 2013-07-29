@@ -828,6 +828,20 @@ def correcaoProjeto(pr = projetoResultado, debug = False):
     print resultado['vToqueMaxMalha']
     print resultado['vMalha']
 
+    # A ideia é implementar um algoritimo de otimização ou não, genético ou não
+    # que encontre a malhor solução em um mar limitado de possibilidades. Esta
+    # limitação será informada pelo projetista, como sendo, o máximo
+    # espaçamento entre as junções da malha, máximo ou minimo comprimento ou
+    # largura da malha, a profundidade que a malha pode ficar. Tudo isso deve
+    # ser análisado de tal forma que a melhor solução deve ser encontrada.
+    # Para tanto penso em utilizar alguma algoritmo de otimização ou até mesmo
+    # algoritmo genéticos. Encontrei recentemente o pyevolve, mas esse só
+    # funcionando legal para as versões 2.5 e 2.6 do python, como estou na
+    # versão 2.7 e não pretendo mudar isso é um problema. Talvez eu tenha que
+    # implementa do zero algum algoritimo o problema é, TEMPO!
+
+
+
 def exibeResultados(pr = projetoResultado):
     """Mostra os resultados de forma organizada e limpa no terminal
     """
