@@ -739,6 +739,8 @@ def projetaMalhaAterramento(dadosProjeto = projetoMalha, debug = False):
 
     vMalha = potencialMalha(pa, km, ki, iMalha, lCabo)
 
+    # Estimatica do comprimento mínimo de condutor que a malha deve ter
+    # para ficar no limite de segurança
     lMinimo = comprimentoMinimoCondutor(pa, km, ki, iMalha, vToqueMaximo)
 
     if debug:
@@ -803,17 +805,26 @@ def projetaMalhaAterramento(dadosProjeto = projetoMalha, debug = False):
 
 def correcaoProjeto(pr = projetoResultado, debug = False):
     if debug:
+        print
         print u'Corrigindo o projeto da malha'
+
+    correcao = 0
 
     if pr['vMalha'] > pr['vToqueMaximo']:
         print u'erro projeto: potencial da malha ultrapassa o máximo permitido'
         print u'    valor máximo permitido, ', pr['vToqueMaximo']
         print u'    valor encontrado      , ', pr['vMalha']
+        correcao = 1
 
     if pr['vToqueMaxMalha'] > pr['vToqueMaximo']:
         print u'erro projeto: potencial máximo ultrapassa o máximo permitido'
         print u'    valor máximo permitido, ', pr['vToqueMaximo']
         print u'    valor encontrado max  , ', pr['vToqueMaxMalha']
+        correcao = 1
+
+    if correcao == 0:
+        print u'aviso: não é necessário corrigir o projeto'
+        return 0
 
     # Iniciando o processo de mudança, usando o fluxograma
     # proposto por Kindermann
@@ -839,6 +850,18 @@ def correcaoProjeto(pr = projetoResultado, debug = False):
     # funcionando legal para as versões 2.5 e 2.6 do python, como estou na
     # versão 2.7 e não pretendo mudar isso é um problema. Talvez eu tenha que
     # implementa do zero algum algoritimo o problema é, TEMPO!
+
+    # Possibilidades para a correção do projeto:
+    # 1- Colocar hastes ao longo da periféria da malha
+    # 2- Aumentar a área da malha
+    # 3- Diminuir o espaçamento entre os quadrados internos da malha
+    # Qual a melhor opção?
+    # A melhor opção é a que mais se adequa ao projeto do responsável, logo é
+    # necessário questionar qual a melhor opção, mas não de forma direta e sim
+    # quais as dimensões do terreno ou limitações de verba para a construção.
+
+    valorUnidadeHaste = 0
+    valorMetroCaboMalha = 0
 
 
 

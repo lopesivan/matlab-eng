@@ -72,7 +72,7 @@ SAL = 'validade12'
 #    separador = '\\'    # para o Windows
 #    cmdLimpaTela = 'cls'
 
-# identificação do arquivo do excel ou arquivo qualquer, usado na criação de 
+# identificação do arquivo do excel ou arquivo qualquer, usado na criação de
 # arquivos com plot ou no armazenamento de variaveis
 idPlanilha = ''
 # diretório para armazenamento das curvas
@@ -90,7 +90,7 @@ sistemaVar = {
     'unidadeHaste' : 'pol',
 
     'usaValoresArquivo' : 1,
-    'debugAterramento' : 0, 
+    'debugAterramento' : 0,
     'idPlanilha' : '',
     'arqMalha' : '',
     'arqTabela' : '',
@@ -112,7 +112,7 @@ sistemaResultados = {
     'fEstratificacao' : 0,
     'p1' : 0,
     'p2' : 0,
-    'k' : 0, 
+    'k' : 0,
     'h' : 0
 }
 
@@ -142,39 +142,39 @@ def hal9000():
         """
         #print "I'm sorry,"+getuser()+". I'm afraid I can't do that."
         espera = raw_input()
-        limpaTela() 
-               
+        limpaTela()
+
     elif n == 1:
         print """
-        Dave: Hello, HAL. Do you read me, HAL? 
-        HAL : Affirmative, Dave. I read you. 
-        Dave: Open the pod bay doors, HAL. 
-        HAL : I'm sorry, Dave. I'm afraid I can't do that. 
-        Dave: What's the problem? 
-        HAL : I think you know what the problem is just 
-              as well as I do. 
-        Dave: What are you talking about, HAL? 
-        HAL : This mission is too important for me to allow 
-              you to jeopardize it. 
-        Dave: I don't know what you're talking about, HAL. 
-        HAL : I know that you and Frank were planning to 
-              disconnect me, and I'm afraid that's something 
-              I cannot allow to happen. 
-        Dave: Where the hell'd you get that idea, HAL? 
-        HAL : Dave, although you took very thorough precautions 
-              in the pod against my hearing you, I could see your lips move. 
-        Dave: Alright, HAL. I'll go in through the emergency airlock. 
-        HAL : Without your space helmet, Dave, you're going 
-              to find that rather difficult. 
-        Dave: HAL, I won't argue with you anymore. Open the doors. 
+        Dave: Hello, HAL. Do you read me, HAL?
+        HAL : Affirmative, Dave. I read you.
+        Dave: Open the pod bay doors, HAL.
+        HAL : I'm sorry, Dave. I'm afraid I can't do that.
+        Dave: What's the problem?
+        HAL : I think you know what the problem is just
+              as well as I do.
+        Dave: What are you talking about, HAL?
+        HAL : This mission is too important for me to allow
+              you to jeopardize it.
+        Dave: I don't know what you're talking about, HAL.
+        HAL : I know that you and Frank were planning to
+              disconnect me, and I'm afraid that's something
+              I cannot allow to happen.
+        Dave: Where the hell'd you get that idea, HAL?
+        HAL : Dave, although you took very thorough precautions
+              in the pod against my hearing you, I could see your lips move.
+        Dave: Alright, HAL. I'll go in through the emergency airlock.
+        HAL : Without your space helmet, Dave, you're going
+              to find that rather difficult.
+        Dave: HAL, I won't argue with you anymore. Open the doors.
         HAL : Dave, this conversation can serve no purpose anymore. Goodbye
         """
         espera = raw_input()
-        limpaTela()  
+        limpaTela()
     elif n == 2:
         print "I'm sorry, "+getuser()+". I'm afraid I can't do that."
         espera = raw_input()
-        limpaTela()  
+        limpaTela()
 
     else:
         print u'erro: comando não encontrado'
@@ -243,7 +243,7 @@ def entradaPhold():
         print 'pa: ', pa
         print 'l: ', l
         print 'd: ', d
-        
+
     return [pa, l, d]
 
 def entradaHastesLinha():
@@ -257,10 +257,10 @@ def entradaHastesLinha():
 
         e = input('espacamento entre duas hastes(m): ')
         q = input('quantidade de hastes: ')
-    
+
     except:
         print u'erro: entrada invalida, usando valores padrões'
-        
+
         pa = 100    #resistividade aparente do solo
         l = 2.4     #comprimento da haste
         e = 3       #espacamento entre os eletrodos
@@ -288,7 +288,7 @@ def entradaHastesQuadradoCheio():
         m = input('quantidade de hastes colocadas horizontalmente')
         n = input('quantidade de hastes colocadas verticalmente')
     except:
-        print u'erro: entrada invalida, usando valores padrões'        
+        print u'erro: entrada invalida, usando valores padrões'
         pa = 100
         l = 2.4
         e = 2
@@ -314,25 +314,25 @@ def levantaCurvaK(pa, l, e, d, q, fim, passo):
     plt.plot(numeroHastes, res)
     plt.xlabel('Numero de Hastes')
     plt.ylabel('Resistencia')
-    plt.show() 
-    
+    plt.show()
+
 def curvaK():
     en = entradaHastesLinha()
     fim = input('quantidade final de hastes: ')
     passo = input('passo: ')
 
     levantaCurvaK(en[0], en[1], en[2], en[3], en[4], fim, passo)
-    
-def calculosResistividade(): 
+
+def calculosResistividade():
     print u'0 - cálculo para 1 haste'
     print u'1 - cálculo para n hastes em paralelo(linha)'
     print u'2 - quadrado cheio'
     print u'3 - triângulo'
     print u'4 - circunfêrencia'
     print u'5 - anel'
-    
+
     a = raw_input(']]')
-    
+
     if a == '0':
         en = entradaPhold()
         res = r1haste.r1haste(en[0], en[1], en[2])
@@ -359,13 +359,13 @@ def calculosResistividade():
 
 #         idPlanilha = basename(nome)
 #         idPlanilha = splitext(idPlanilha)[0]
-#         print u'identificação atualizada, e, ', 
+#         print u'identificação atualizada, e, ',
 #         print idPlanilha
 
 #     elif tipo == 'arquivo':
 
 #         idPlanilha = nome
-#         print u'identificação atualizada, a, ', 
+#         print u'identificação atualizada, a, ',
 #         print idPlanilha
 
 #     else:
@@ -390,7 +390,7 @@ def calculosResistividade():
 #                 return 1
 
 #             if debug:
-#                 print planilha    
+#                 print planilha
 #         except:
 #             atualizaIdArquivo('', tipo = 'erro')
 #             planilha = None
@@ -402,10 +402,10 @@ def calculosResistividade():
 #             a = open(planilha, 'rb')
 #         except:
 #             print u'erro: planilha não encontrada'
-#             return 
+#             return
 #             atualizaIdArquivo(planilha, tipo = 'excel')
 #         atualizaIdArquivo(planilha, tipo = 'arquivo')
-        
+
 #     #atualizaIdArquivo(planilha)
 
 #     try:
@@ -415,7 +415,7 @@ def calculosResistividade():
 #         planilha = None
 #         return 2
 
-#     [profundidade, resistividadeMedia] = estratificacao.resistividadeMediaPlanilha(mDados, debug = fDebug())        
+#     [profundidade, resistividadeMedia] = estratificacao.resistividadeMediaPlanilha(mDados, debug = fDebug())
 
 #     if debug:
 #         print 'Valores disponiveis da tabela,'
@@ -432,16 +432,16 @@ def lerTabelaExcel(silencioso = 0):
     a = 0
     if isfile(sistemaVar['arqTabela']) and len(sistemaVar['arqTabela']) > 0:
         print u'usar o último arquivo[S/n]?',
-        if raw_input() == 'n': 
+        if raw_input() == 'n':
             a = 1
     else:
         a = 1
 
-    if a == 1:      
+    if a == 1:
         try:
             mainTkinter = Tk()
             sistemaVar['arqTabela'] = askopenfilename()
-            mainTkinter.destroy() 
+            mainTkinter.destroy()
             if len(sistemaVar['arqTabela']) > 0:
                 if not silencioso:
                     print 'usando,'
@@ -461,7 +461,7 @@ def lerTabelaExcel(silencioso = 0):
         print u'erro: não foi possível ler o arquivo do excel'
         return -3
 
-    [profundidade, resistividadeMedia] = estratificacao.resistividadeMediaPlanilha(mDados, debug = fDebug())        
+    [profundidade, resistividadeMedia] = estratificacao.resistividadeMediaPlanilha(mDados, debug = fDebug())
     sistemaResultados['fEstratificacao'] = 0
     if not silencioso:
         print 'Valores disponiveis da tabela,'
@@ -488,11 +488,11 @@ def estratificacaoSolo(silencioso = 0):
     estratificacao.es = profundidade
 
     if sistemaResultados['fEstratificacao'] == 0:
-        [p1, k, h] = estratificacao.estratifica2Camadas()  
-        p2 = estratificacao.p2solo2Camadas(p1, k)  
+        [p1, k, h] = estratificacao.estratifica2Camadas()
+        p2 = estratificacao.p2solo2Camadas(p1, k)
 
         sistemaResultados['p1'] = p1
-        sistemaResultados['p2'] = p2    
+        sistemaResultados['p2'] = p2
         sistemaResultados['k'] = k
         sistemaResultados['h'] = h
 
@@ -514,14 +514,14 @@ Lista de comandos disponíveis
     h, ajuda            exibe ajuda básica
     o, sistema          configura o sistema de cálculos
     s, sair             finaliza o programa
-    c, topologias       cálcula a resistência de uma topologia 
-                        específica de aterramento. 
+    c, topologias       cálcula a resistência de uma topologia
+                        específica de aterramento.
     k, curvak           levanta a curva K
     e, estratificacao   inicia o processo de estratificação do solo
     a, excel            ler uma planilha(excel) de dados
     p, plothp           plota curva h-pho
     pt                  plota a curva teorica e a medida em campo
-    l, aparente         resistividade aparente 
+    l, aparente         resistividade aparente
     n, equacoes         mostra algumas equações
     m, malha            abre um arquivo para o projeto de malha
 
@@ -538,9 +538,9 @@ Lista de comandos disponíveis
 def ajudaCompleta():
     #limpaTela()
 
-    ajudaBasica()   
+    ajudaBasica()
 
-def sistema(): 
+def sistema():
     global profundidade
     global resistividadeMedia
     global sistemaVar
@@ -600,7 +600,7 @@ def sistema():
             sistemaVar['debugAterramento'] = 'nao'
             print 'debug desativado'
 
-    print u'Atualmente o diâmetro/raio da haste é informado em', 
+    print u'Atualmente o diâmetro/raio da haste é informado em',
     if sistemaVar['unidadeHaste'] == 'm':
         print u'metros'
     elif sistemaVar['unidadeHaste'] == 'mm':
@@ -733,7 +733,7 @@ def lerArquivoConfiguracao(arquivo = 'configuracoes.cfg'):
 def atualizaArquivoConf(arquivo = 'configuracoes.cfg'):
     if not isfile(arquivo):
         print u'erro: arquivo de configuração não existe'
-        print u'      não foi possível atualizar o mesmo' 
+        print u'      não foi possível atualizar o mesmo'
         return -1
 
     print u'aviso: atualizando o arquivo de configuração'
@@ -785,14 +785,14 @@ def alteraLimitesOtimizacao():
         p1i = input()
 
         print u'Limite superior de k: ',
-        ks = input()        
+        ks = input()
         print u'Limite inferior de k: ',
-        ki = input()        
+        ki = input()
 
         print u'Limite superior de h1: ',
-        h1s = input()        
+        h1s = input()
         print u'Limite inferior de h1: ',
-        h1i = input()        
+        h1i = input()
     except:
         print u'erro: entrada inválida'
         return -1
@@ -809,7 +809,7 @@ def alteraLimitesOtimizacao():
 def plotPhoH():
     if verificaVariaveisProfResi():
         return -1
-        
+
     #plt.subplot(211)
     plt.plot(profundidade, resistividadeMedia)
     plt.xlabel('Profundidade [m]')
@@ -820,7 +820,7 @@ def plotPhoH():
 
     plt.savefig(dirCurvas+ajudante.separador()+'curvadeResistividade_'+idPlanilha+'_'+formataHora()+'_.png')
     print 'aviso: arquivo png da figura salvo na pasta <curvas>'
-    
+
     #plt.show()
     #s = UnivariateSpline(profundidade, resistividadeMedia, s=1)
     #xs = linspace(0, profundidade[len(profundidade)-1], 1000)
@@ -829,7 +829,7 @@ def plotPhoH():
     #plt.plot(xs, ys)
 
     plt.show()
-    
+
 def plotCurvaTeorica2Camadas():
     global sistemaResultados
 
@@ -901,7 +901,7 @@ def projetoMalha():
     a = 0
     if len(sistemaVar['arqMalha']) > 0:
         print u'usar o último arquivo[S/n]?',
-        if raw_input() == 'n':       
+        if raw_input() == 'n':
             a = 1
     else:
         a = 1
@@ -910,7 +910,7 @@ def projetoMalha():
         try:
             mainTkinter = Tk()
             sistemaVar['arqMalha'] = askopenfilename()
-            mainTkinter.destroy() 
+            mainTkinter.destroy()
             if len(sistemaVar['arqMalha']) > 0:
                 print 'usando,'
                 print sistemaVar['arqMalha']
@@ -951,7 +951,7 @@ def testaLatex():
     a = conteudo%args.__dict__
 
     print a
-    print args.__dict__    
+    print args.__dict__
 
 def preparaRelatorioEstratificacaoLatex():
     #print docLatex%dicRelatorioEstratificacaoLatex
@@ -961,7 +961,7 @@ def preparaRelatorioEstratificacaoLatex():
 
 def geraRelatorioLatex():
     print u'Deseja gerar relatório para a estratificação[S/n]?',
-    if raw_input() != 'n':    
+    if raw_input() != 'n':
         cmdPdfLatex = r'pdflatex .\resultados\%s -output-directory .\resultados' % (nomeRelatorioEstratificacao)
 
         #arquivoLatex = open(dirResultados+'\\'+nomeRelatorioEstratificacao, 'wb')
@@ -1006,7 +1006,7 @@ def chamaIpython():
 # CONTROLE DO PROGRAMA
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-def exterminaPrograma(): 
+def exterminaPrograma():
     print 'saindo...'
     sys.exit()
 
@@ -1027,7 +1027,7 @@ def inicializacao():
         mkdir(dirCurvas)
     except Exception, e:
         if fDebug():
-            print u'aviso: não foi possivel criar diretório para as curvas, talvez ele já exista'        
+            print u'aviso: não foi possivel criar diretório para as curvas, talvez ele já exista'
 
     try:
         mkdir(dirResultados)
@@ -1067,7 +1067,8 @@ def login():
 
 def mensagemInicial():
     print u'Cálculos para sistemas de aterramento , v.', versao
-    print u'Felipe Bandeira, junho/2013, Fortaleza-CE'
+    #print u'Felipe Bandeira, junho/2013, Fortaleza-CE'
+    print u'Felipe Bandeira, 2013, Fortaleza-CE'
     print
     print u'digite <ajuda> para mais informações'
 
@@ -1075,15 +1076,15 @@ def mensagemInicial():
 # COMANDOS CADASTRADOS
 ################################################################################################
 
-dicionarioComandos = {  
+dicionarioComandos = {
     'h' : ajudaBasica,
     'ajuda' : ajudaCompleta,
 
-    'o' : sistema, 
+    'o' : sistema,
     'sistema' : sistema,
 
-    's' : exterminaPrograma, 
-    'sair' :  exterminaPrograma, 
+    's' : exterminaPrograma,
+    'sair' :  exterminaPrograma,
 
     'c' : calculosResistividade,
     'topologias' : calculosResistividade,
@@ -1106,7 +1107,7 @@ dicionarioComandos = {
 
     'pt' : plotCurvaTeorica2Camadas,
 
-    'n' : mostraEquacoes, 
+    'n' : mostraEquacoes,
     'equacoes' : mostraEquacoes,
 
     'm' : projetoMalha,
@@ -1124,7 +1125,7 @@ dicionarioComandos = {
 }
 
 # interpreta os comandos do usuário
-def cmds(cmd): 
+def cmds(cmd):
     return dicionarioComandos.get(cmd, nada)()
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -1162,7 +1163,7 @@ if __name__ == '__main__':
 
         while True:
             entrada = raw_input(sistemaVar['prompt'])
-            
+
             if entrada == "":
                 continue
 
