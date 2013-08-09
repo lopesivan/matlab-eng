@@ -25,6 +25,47 @@ def energiaCampoEletrico(U, C):
 def velocidadePropagacao(L, C):
     return 1/sqrt(L*C)
 
+def Ur(Z2, Z0, Ud):
+    return kr(Z2, Z0)*Ud
+
+def Ir(Z2, Z0, Id):
+    return kr(Z2, Z0)*Id
+
+def kr(Z2, Z0):
+    """ Coeficiente de reflexão """
+    if Z2 == Z0:
+        return 0
+    return (Z2-Z0)/(Z2+Z0)
+
+def tempoPropagacao(l, v):
+    return l/v
+
+def ondasViajantes(R2, Z0):
+    print
+    print u'Informações relevantes:'
+    print
+
+    if R2>Z0:
+        print "R2 > Z0"
+        print u"""-a onda de tensão refletida possui o mesmo sinal
+que a onda de tensão incidente. A tensão resultante será, então,
+maior do que a da onda incidente.
+- a onda da corrente refletida possui sinal contrário do da onda
+incidente, resultanto em corrente menor do que a incidente.
+"""
+    elif R2==Z0:
+        print "R2 igual Z0"
+        print u"""- tanto a onda refletida da tensão como a da corrente
+são nulas, não havendo, portanto, alterações em seus valores.
+"""
+    elif R2<Z0:
+        print "R2 < Z0"
+        print u"""- a onda da tensão se reflete com sinal oposto ao da
+incidente, resultando em diminuição da tensão.
+- a onda da corrente se reflete com o mesmo sinal, o que leva ao seu
+aumento.
+"""
+
 def exemplo1():
     """Uma linha de transmissão bifilar aérea é suprida por
     uma fonte de tensão constante e igual a 800[volt]. A indutância
@@ -56,12 +97,39 @@ def exemplo1():
     Et = Em+Ee  # energia total armazenada
     v = velocidadePropagacao(induCondutor, capaCondutor)
 
+    Z2a = 100
+    Z2b = 400
+    Z2c = 1600
+
+    #ondasViajantes(Z2a, Z0)
+    #ondasViajantes(Z2b, Z0)
+    #ondasViajantes(Z2c, Z0)
+
+    # para Z2a
+    kru2_Z2a = kr(Z2a, Z0)
+    U2a_2 = tensao*(1-kru2_Z2a**2)
+    U2a_1 = tensao*(1+kru2_Z2a)
+    # para Z2b
+    kru2_Z2b = kr(Z2b, Z0)
+    U2b_2 = tensao*(1-kru2_Z2b**2)
+    U2b_1 = tensao*(1+kru2_Z2b)
+    # para Z2c
+    kru2_Z2c = kr(Z2c, Z0)
+    U2c_2 = tensao*(1-kru2_Z2c**2)
+    U2c_1 = tensao*(1+kru2_Z2c)
+
     print u'Impedância natural [ohm]:', Z0
     print u'Corrente I0[A]          :', I0
     print u'Energia magnética [Ws]  :', Em
     print u'Energia elétrica [Ws]   :', Ee
     print u'Energia total [Ws]      :', Et
     print u'Velocidade prop. [km/s] :', v
+
+    print u'coeficientes de reflexão:'
+    print u'> Z2 = %f -> kr = %f, u2_2 = %f, u2_1 = %f' % (Z2a, kru2_Z2a, U2a_2, U2a_1)
+    print u'> Z2 = %f -> kr = %f, u2_2 = %f, u2_1 = %f' % (Z2b, kru2_Z2b, U2b_2, U2b_1)
+    print u'> Z2 = %f -> kr = %f, u2_2 = %f, u2_1 = %f' % (Z2c, kru2_Z2c, U2c_2, U2c_1)
+
 if __name__ == '__main__':
     print u'Transmissão bifilar'
     exemplo1()

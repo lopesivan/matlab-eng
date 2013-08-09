@@ -7,6 +7,7 @@
 from  __future__ import division
 import cargaModelagem
 import sys
+import bifilar
 
 def dadosCargaMod():
     try:
@@ -14,6 +15,10 @@ def dadosCargaMod():
         potMVA = float(raw_input())
         print u'fator de potência                 :',
         fp = float(raw_input())
+
+        if abs(fp) > 1:
+            raise Exception()
+
         print u'tensão nominal da carga [kV]      :',
         vn = float(raw_input())
         print u'tensão de linha no barramento [kV]:',
@@ -81,18 +86,38 @@ def entradaCargaMod():
         print u'erro: opção não reconhecida'
         return -1
 
+def sistemaBifilar():
+    print u'1 - exemplo 1'
+
+    try:
+        a = input('>')
+    except:
+        print u'erro: algo inesperado ocorreu na entrada do usuario'
+        return -2
+
+    if a == 1:
+        bifilar.exemplo1()
+    else:
+        print u'erro: opção não reconhecida'
+        return -1
+
+    return 0
+
 def ajuda():
     print 'Comandos cadastrados'
-    print 'h - ajuda'
+    print u's - finaliza o programa'
+    print u'm - modelagem de uma carga'
+    print u'b - sistema bifilar'
 
 def sair():
     print u'finalizando...'
     sys.exit(0)
 
 dicionarioComandos = {
-    'h' : ajuda,
+    'a' : ajuda,
     's' : sair,
     'm' : entradaCargaMod,
+    'b' : sistemaBifilar,
 }
 
 def nada():
