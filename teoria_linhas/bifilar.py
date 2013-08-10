@@ -33,7 +33,8 @@ def Ir(Z2, Z0, Id):
 
 def kr(Z2, Z0):
     """ Coeficiente de reflexão """
-    if Z2 == Z0:
+    if (Z2+Z0)==0 or (Z2-Z0)== 0:
+        print u'aviso: divisão por zero no coeficiente de reflexão'
         return 0
     return (Z2-Z0)/(Z2+Z0)
 
@@ -129,6 +130,37 @@ def exemplo1():
     print u'> Z2 = %f -> kr = %f, u2_2 = %f, u2_1 = %f' % (Z2a, kru2_Z2a, U2a_2, U2a_1)
     print u'> Z2 = %f -> kr = %f, u2_2 = %f, u2_1 = %f' % (Z2b, kru2_Z2b, U2b_2, U2b_1)
     print u'> Z2 = %f -> kr = %f, u2_2 = %f, u2_1 = %f' % (Z2c, kru2_Z2c, U2c_2, U2c_1)
+
+def problema1(tensao, capaCondutor, induCondutor, comprimento, Zs, debug = False):
+
+    Z0 = impedanciaNatural(induCondutor, capaCondutor)
+    I0 = correnteI0(tensao, Z0)
+    Em = energiaCampoMagnetico(I0, induCondutor)
+    Ee = energiaCampoEletrico(tensao, capaCondutor)
+    Et = Em+Ee  # energia total armazenada
+    v = velocidadePropagacao(induCondutor, capaCondutor)
+
+    Z2a, Z2b, Z2c = Zs
+    # para Z2a
+    kru2_Z2a = kr(Z2a, Z0)
+    U2a_2 = tensao*(1-kru2_Z2a**2)
+    U2a_1 = tensao*(1+kru2_Z2a)
+    # para Z2b
+    kru2_Z2b = kr(Z2b, Z0)
+    U2b_2 = tensao*(1-kru2_Z2b**2)
+    U2b_1 = tensao*(1+kru2_Z2b)
+    # para Z2c
+    kru2_Z2c = kr(Z2c, Z0)
+    U2c_2 = tensao*(1-kru2_Z2c**2)
+    U2c_1 = tensao*(1+kru2_Z2c)
+
+    U22 = [U2a_2, U2b_2, U2c_2]
+    U21 = [U2a_1, U2b_1, U2c_1]
+
+    return [Z0, I0, Em, Ee, Et, v, U22, U21]
+
+def problema9(resistencia, reatanciaIndutiva, condutibilidade, susceptancia, freq):
+    return -1
 
 if __name__ == '__main__':
     print u'Transmissão bifilar'
