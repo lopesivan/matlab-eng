@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # Felippe Bandeira da Silva
 # Fortaleza-CE, 29/06/2013
