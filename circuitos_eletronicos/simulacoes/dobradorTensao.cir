@@ -1,0 +1,15 @@
+** Um circuito dobrador de tensão **
+** Descrição do circuito **
+Vi 1 0 sin(0 10V 1kHz)
+C1 1 2 1u
+C2 3 0 1u
+D1 2 0 D1N4148
+D2 3 2 D1N4148
+* declaração do modelo do diodo
+.model D1N4148 D (IS=0.1pA Rs=16 CJO=2p Tt=12n Bv=100 Ibv=0.1p)
+
+** Analise solicitadas **
+*TRAN 100u 10m 0m 100u
+*PLOT TRAN V(1) V(2) V(3)
+.end
+

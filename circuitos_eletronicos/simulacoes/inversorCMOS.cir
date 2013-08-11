@@ -1,0 +1,21 @@
+** INVERSOR CMOS **
+
+* FONTE DC
+Vdd 1 0 DC +5V
+* SINAL DIGITAL DE ENTRADA
+Vi 3 0 DC  +5V
+* CIRCUITO INVERSOR MOSFET
+M1 2 3 0 0 MN L=3um W=3um
+M2 2 3 1 1 MP L=3um W=9um
+* BNR 3um declaracao dos modelos dos transistores (nivel 3)
+.MODEL MN nmos level=3 vto=.7 kp=4.e-05 gamma=1.1 phi=.6
++ lambda=.01 rd=40 rs=40 pb=.7 cgso=3.e-10 cgdo=3.e-10
++ cgbo=5.e-10 rsh=25 cj=.00044 mj=.5 cjsw=4.e-10 mjsw=.3
++ js=1.e-05 tox=5.e-08 nsub=1.7e+16 nss=0 nfs=0 tpg=1 xj=6.e-07
++ ld=3.5e-07 uo=775 vmax=100000 tetha=.11 eta=.05 kappa=1
+.MODEL MP pmos level=3 vto=-.8 kp=1.2e-05 gamma=.6 phi=.6
++ lambda=.03 rd=100 rs=100 pb=.6 cgso=2.5e-10 cgdo=2.5e-10
++ cgbo=5.e-10 rsh=80 cj=.00015 mj=.6 cjsw=4.e-10 mjsw=.6
++ js=1.e-05 tox=5.e-08 nsub=5.e+15 nss=0 nfs=0 tpg=1 xj=5.e-07
++ ld=2.5e-07 uo=250 vmax=70000 tetha=.13 eta=.3 kappa=1
+
