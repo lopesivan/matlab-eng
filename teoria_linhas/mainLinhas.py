@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 # -*- coding: utf-8 -*-
 # Felipe Bandeira da Silva
 # Fortaleza-CE, 29/06/2013
