@@ -193,11 +193,41 @@ c - z2 = x [ohm]
 
     return 0
 
+def trifasico():
+    print '1 - linha trifásica, espaçamento equilateral'
+    try:
+        a = input('>')
+    except:
+        print u'erro: algo inesperado ocorreu na entrada do usuario'
+        return -2
+
+    if a == 1:
+        try:
+            print u'Espaçamento    [m]:',
+            espacamento = float(raw_input())
+            print u'Raio condutor [mm]:',
+            raio = float(raw_input())
+            print u'Comprimento   [km]:',
+            comprimento = float(raw_input())
+        except:
+            print u'erro: inesperado'
+            return -1
+
+        Lkm, L, Xl, Zl = bifilar.linhaTrifasicaIndutancia(espacamento, raio, comprimento)
+        print u'Indutância de uma linha trifásica com espaçamento equilaterais:'
+        print '[H/km] :', Lkm
+        print '[H]    :', L
+        print 'Reatância:'
+        print 'Ohm    :', Xl
+        print 'Impedância:'
+        print 'Ohm    :', Zl
+
 def ajuda():
     print 'Comandos cadastrados'
     print u's - finaliza o programa'
     print u'm - modelagem de uma carga'
     print u'b - sistema bifilar'
+    print u'i - indutância sistema trifásico'
 
 def sair():
     print u'finalizando...'
@@ -208,6 +238,7 @@ dicionarioComandos = {
     's' : sair,
     'm' : entradaCargaMod,
     'b' : sistemaBifilar,
+    'i' : trifasico,
 }
 
 def nada():

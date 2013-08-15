@@ -9,7 +9,7 @@
 
 from __future__ import division
 import sys
-from math import sqrt
+from math import sqrt, exp, log, pi
 
 def impedanciaNatural(L, C):
     return sqrt(L/C)
@@ -163,7 +163,43 @@ def problema1(tensao, capaCondutor, induCondutor, comprimento, Zs, debug = False
 def problema9(resistencia, reatanciaIndutiva, condutibilidade, susceptancia, freq):
     return -1
 
+def exemplo2():
+    Lkm, L, Xl, Zl = linhaTrifasicaIndutancia(2.5, 25/2, 60)
+
+    print u'Indutância de uma linha trifásica com espaçamento equilaterais:'
+    print '[H/km] :', Lkm
+    print '[H]    :', L
+    print 'Reatância:'
+    print 'Ohm    :', Xl
+    print 'Impedância:'
+    print 'Ohm    :', Zl
+
+def linhaTrifasicaIndutancia(espEqui, raio, comprimento, freq = 60):
+    """Indutância de uma linha de transmissão trifásica com
+    espaçamento equilateral.
+    Entrada:
+        espEqui - espaçamento equilateral entre os condutores [m]
+        raio - raio do condutor [mm]
+        comprimento - comprimento total da linha [km]
+        freq = frequência da linha [Hz]
+    Saída:
+        IndutânciaKm [H/km]
+        Indutância [H]
+        Modulo da reatância indutiva [OHM]
+        Impedância [OHM]
+    """
+    c1 = 2e-7
+    e4 = exp(-1/4)
+    re = e4*raio    # raio efetivo do condutor
+    Lkm = c1*log(espEqui*1e3/re)*1e3
+    L = comprimento*Lkm
+
+    Xl = 2*pi*freq*L
+    Zl = Xl*1j
+
+    return [Lkm, L, Xl, Zl]
+
 if __name__ == '__main__':
     print u'Transmissão bifilar'
     exemplo1()
-
+    exemplo2()
