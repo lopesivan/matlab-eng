@@ -187,6 +187,28 @@ def linhaTrifasicaIndutancia(espEqui, raio, comprimento, freq = 60):
         Indutância [H]
         Modulo da reatância indutiva [OHM]
         Impedância [OHM]
+
+    Introdução teórica:
+        Um linha de transmissão de energia elétrica possui quatro
+        parâmetros: resistência, indutância, capacitância e condutância.
+        que influem em seu comportamente como componentes de um
+        sistema de potência. A condutância entre condutores ou entre
+        condutor e terra leva em conta a corrente de fuga nos isoladores
+        das linhas aéreas de transmissão ou na isolção dos cabos
+        subterrâneos. No entanto, a condutância entre condutores de
+        uma linha aérea pode ser considerada nula pois a fuga nos
+        seus isoladores é desprezível. Uma variação de corrente nos
+        condutores provoca uma variação do número de linhas de fluxo
+        magnético contatenadas com o circuito. Por sua vez, qualquer
+        vairação do fluxo concatenado com o circuito lhe induz uma
+        tensão, cujo valor é proporcional à taxa de variação do fluxo.
+        Indutância é o parâmetro do circuito que relaciona a tensão
+        induzida por variação de fluxo com a taxa de variação da corrente.
+        Com maior diâmetro, a densidade de fluxo elétrico na superfície
+        do condutor de aluminio é menor que a mesma tensão. Isto
+        significa menor gradiente de potencial na superfície e menor
+        tendência à ionização do ar em volta do condutor. Esta ionização
+        do ar produz um efeito chamado efeito corona.
     """
     c1 = 2e-7
     e4 = exp(-1/4)
@@ -199,7 +221,61 @@ def linhaTrifasicaIndutancia(espEqui, raio, comprimento, freq = 60):
 
     return [Lkm, L, Xl, Zl]
 
+def linhaMono3solidos2retornos(raioSolido, raioRetorno, espLadoX, espXY):
+    Dad = Dbc = espXY
+    Dae = Dbd = Dce = sqrt(espLadoX**2+espXY**2)
+    Dcd = sqrt(espXY**2+(2*espLadoX)**2)
+    Dm = (espXY**2*Dcd*(Dae**(3/2)))**(1/6)
+
+    Ds = 0
+    return Dad, Dbc, Dae, Dbd, Dce, Dcd, Dm, Ds
+
+def exemplo3():
+    raioSolido = .25
+    raioRetorno = .5
+    espXY = 9
+    espLadoX = 6
+    Dad, Dbc, Dae, Dbd, Dce, Dcd, Dm, Ds =  \
+            linhaMono3solidos2retornos(raioSolido,  \
+                                       raioRetorno, \
+                                       espLadoX,    \
+                                       espXY)
+
+    print 'Dad: ', Dad
+    print 'Dae: ', Dae
+    print 'Dcd: ', Dcd
+    print 'Dm : ', Dm
+
+def linhaInduEspAssimetrico(D12, D23, D31, Ds):
+    """Indutância de linhas trifásicas com espaçamento assimétrico
+    O fluxo concatenado e a indutância correspondente a cada fase não
+    são os mesmos. O circuito fica desequilibrado quando cada fase
+    tem indutância diferentes. Pode-se restaurar o equilíbrio entre
+    as três fases trocando, a intervalos regulares, a posição relativa
+    entre os condutores, de mode que cada condutor ocupe a posição
+    original de cada um dos outros por uma distância igual.
+    Chama-se transposição a essa troca de posições.
+    """
+    c1 = 2e-7
+    Deq = (D12*D23*D31)**(1/3)
+    La = c1*log(Deq/Ds)
+
+    return [Deq, La]
+
+def exemploLinhaAssimetrica():
+    D12 = 20
+    D23 = 20
+    D31 = 38
+    Ds = 0.0373
+
+    Deq, La = linhaInduEspAssimetrico(D12, D23, D31, Ds)
+    print 'Linha assimetrica'
+    print 'Deq: ', Deq
+    print 'L  : ', La
 if __name__ == '__main__':
     print u'Transmissão bifilar'
     exemplo1()
     exemplo2()
+    exemplo3()
+    exemploLinhaAssimetrica()
+
