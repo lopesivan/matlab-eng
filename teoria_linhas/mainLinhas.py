@@ -154,7 +154,7 @@ def sistemaBifilar():
 
     if a == 1:
         bifilar.exemplo1()
-    if a == 2:
+    elif a == 2:
         print  """Uma linha de transmissão bifilar aérea é suprida por
 uma fonte de tensão constante e igual a x[volt].
 A indutância dos condutores é de -[henry/m](fluxo interno considerado)
@@ -174,6 +174,10 @@ c - z2 = x [ohm]
 """
 
         tensao, L, C,  l, Zs = entradaBifilar()
+        if tensao == -1:
+            print 'erro: entrada inválida'
+            return -1
+
         Z0, I0, Em, Ee, Et, v, U22, U21= bifilar.problema1(tensao, C, L, l, Zs)
 
         print u'Impedância natural [ohm]:', Z0

@@ -69,23 +69,23 @@ aumento.
 """
 
 def exemplo1():
-    """Uma linha de transmissão bifilar aérea é suprida por
-    uma fonte de tensão constante e igual a 800[volt]. A indutância
-    dos condutores é de 0.001358[henry/m](fluxo interno considerado)
-    sua capacitância é igual a 0.008488e-6 [farad/km]
-    Tratando-se de uma linha sem perdas, deseja-se saber, sendo
-    seu comprimento igual a 100[km]
-    a - sua impedância natural
-    b - energia armazenada por quilômetro de linha nos campos
-    elétricos e magnéticos
-    c - velocidade de propagação
-    d - qual o valor da tensão no recpetor no decorrido tempo
-    t=(3l)/v do instante em que a linha foi energizada, para as
-    seguintes condições:
-        a - z2 = 100 [ohm]
-        b - z2 = 400 [ohm]
-        c - z2 = 1600 [ohm]
-    """
+    print """Uma linha de transmissão bifilar aérea é suprida por
+uma fonte de tensão constante e igual a 800[volt]. A indutância
+dos condutores é de 0.001358[henry/m](fluxo interno considerado)
+sua capacitância é igual a 0.008488e-6 [farad/km]
+Tratando-se de uma linha sem perdas, deseja-se saber, sendo
+seu comprimento igual a 100[km]
+a - sua impedância natural
+b - energia armazenada por quilômetro de linha nos campos
+elétricos e magnéticos
+c - velocidade de propagação
+d - qual o valor da tensão no recpetor no decorrido tempo
+t=(3l)/v do instante em que a linha foi energizada, para as
+seguintes condições:
+a - z2 = 100 [ohm]
+b - z2 = 400 [ohm]
+c - z2 = 1600 [ohm]
+"""
 
     tensao = 800
     induCondutor = 0.001358
@@ -272,7 +272,17 @@ def exemploLinhaAssimetrica():
     print 'Linha assimetrica'
     print 'Deq: ', Deq
     print 'L  : ', La
+
 if __name__ == '__main__':
+
+    """Em corrente alternada, devido ao efeito pelicular(skin) a corrente
+    tende a concentrar-se na superfície  do condutor. Isto provoca um
+    acréscimo na resistência efetiva(proporcional a frequência)
+    observavel a 60Hz(em torno de 3%)
+    """
+
+
+
     print u'Transmissão bifilar'
     exemplo1()
     exemplo2()
