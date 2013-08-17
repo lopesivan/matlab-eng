@@ -273,6 +273,16 @@ def exemploLinhaAssimetrica():
     print 'Deq: ', Deq
     print 'L  : ', La
 
+def indLinhaMono2Fios(D, rl):
+    """Indutância de uma linha monofásica a dois fios
+    Entrada:
+        D - espaçamento entre os condutores [metros]
+        rl - raio do condutor   [metros]
+    Saída:
+        Indutância por metro
+    """
+    return 4e-7*log(D/rl)
+
 if __name__ == '__main__':
 
     """Em corrente alternada, devido ao efeito pelicular(skin) a corrente
@@ -280,8 +290,6 @@ if __name__ == '__main__':
     acréscimo na resistência efetiva(proporcional a frequência)
     observavel a 60Hz(em torno de 3%)
     """
-
-
 
     print u'Transmissão bifilar'
     exemplo1()
