@@ -59,7 +59,7 @@ plot(t, x1, t, x2)
 
 disp('6 - Encontre o valor mínimo...')
 
-x = -20:0.01:20;
+x = -20:1:20;
 f = x.^2-8*x+4;
 
 minimo = f(1);
