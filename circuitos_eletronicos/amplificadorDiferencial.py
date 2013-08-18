@@ -61,7 +61,7 @@ def conf1Exemplo():
 
 def modeloAC_ampDif(mNPN, VCC, VEE, RE, RC, RB):
     return -1
-,
+
 if __name__ == '__main__':
     print 'Amplificador diferencial'
     conf1Exemplo()
