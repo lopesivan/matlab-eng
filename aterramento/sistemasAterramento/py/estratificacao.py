@@ -28,6 +28,7 @@ import ConfigParser
 from scipy.integrate import quad, romberg, dblquad
 from scipy.special import jn, jv
 from scipy import Inf
+import ajudante
 
 #------------------------------------------------------------------------------
 # VARIÁVEIS de controle
@@ -778,8 +779,8 @@ def sundeAlgoritmo():
 def testeEstratificacaoArquivos():
     dirAtual = getcwd()
     pastaTabelas = "tabelas"
-    planilhas = [dirAtual+"\\"+pastaTabelas+"\\"+"tabelaExemplo2_12GeraldoKindermann.xlsx",
-                 dirAtual+"\\"+pastaTabelas+"\\"+"subestacaoMamede.xlsx"]
+    planilhas = [dirAtual+ajudante.separador()+pastaTabelas+ajudante.separador()+"tabelaExemplo2_12GeraldoKindermann.xlsx",
+                 dirAtual+ajudante.separador()+pastaTabelas+ajudante.separador()+"subestacaoMamede.xlsx"]
 
     #--------------------------------------------------------------------------
     # testa a estratificação em duas camadas
