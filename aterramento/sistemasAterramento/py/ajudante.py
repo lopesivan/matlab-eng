@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from platform import system
 
 def osAtual():

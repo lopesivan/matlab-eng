@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # Felipe Bandeira da Silva
 # Fortaleza-CE, 29/06/2013
@@ -34,8 +35,8 @@ def resistenciaHastesLinha(pa, l, e, d, q):
     d - diamentro da haste
     q - quantidade
     '''
-    
-    rh = [[0 for i in range(q)] for j in range(q)]        
+
+    rh = [[0 for i in range(q)] for j in range(q)]
 
     for j in range(q):
         for i in range(q):
@@ -53,7 +54,7 @@ def resistenciaHastesLinha(pa, l, e, d, q):
             print rh[j][i],
         print
     '''
-    
+
     acumulador1 = 0
     acumulador2 = 0
     for j in range(q):
@@ -61,7 +62,7 @@ def resistenciaHastesLinha(pa, l, e, d, q):
             acumulador1 = acumulador1 + rh[j][i]
         acumulador2 = acumulador2 + 1/acumulador1
         acumulador1 = 0
-                
+
     resitenciaEquivalente = 1/acumulador2
 
     #print 'resistencia: ', resitenciaEquivalente
@@ -80,7 +81,7 @@ def quadradoCheio(m, n, esp, pa, l, d, debug = None):
     '''
     r = zeros(shape = (m, n))
     r1 = r1haste.r1haste(pa, l, d)
-    
+
     if debug:
         print r1
 
@@ -90,7 +91,7 @@ def quadradoCheio(m, n, esp, pa, l, d, debug = None):
                 for y in range(1, n+1):
                     if (i==x) and (j==y):
                         r[i-1, j-1] = r[i-1, j-1]+r1
-                        
+
                         if debug:
                             print r
                     else:

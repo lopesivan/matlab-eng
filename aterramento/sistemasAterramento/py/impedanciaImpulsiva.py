@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # Felipe Bandeira da Silva
 # Fortaleza-CE, 29/06/2013
@@ -40,11 +41,11 @@ def zpDir(dir, nivelRecursao = 50, ddir = None, debug = 0):
         else:
             dfile = None
         if not os.path.isdir(nomeCompleto):
-            
+
             if nomeCompleto[-3:].lower() == idArquivoCSV:
                 arquivos.append(nomeCompleto)
                 qArquivos += 1
-        
+
             if qArquivos == 2:
                 #for i in arquivos:
                     #int(i[-5:-4])
@@ -53,7 +54,7 @@ def zpDir(dir, nivelRecursao = 50, ddir = None, debug = 0):
 
                 if debug:
                     print '*'*80
-                    print 'arquivos <csv> no diretorio atual'                    
+                    print 'arquivos <csv> no diretorio atual'
                     print arquivos
                     print
 
@@ -62,7 +63,7 @@ def zpDir(dir, nivelRecursao = 50, ddir = None, debug = 0):
             elif qArquivos > 2 and debug:
                 print 'erro: mais de um arquivo <csv> no diretorio'
                 print arquivos
-            
+
             sucesso = 0
 
         elif nivelRecursao > 0  and \

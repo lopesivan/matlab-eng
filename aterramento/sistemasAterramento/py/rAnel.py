@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # Felipe Bandeira da Silva
 # Fortaleza-CE, 29/06/2013
@@ -17,7 +18,7 @@ def ranel(pa, p, r, d):
     pa = resistividade do solo
     p = profundida que está enterrado o anel[m]
     r = raio do anel[m]
-    d = diâmetro do circulo equivalente à soma de seção transversal dos 
+    d = diâmetro do circulo equivalente à soma de seção transversal dos
     condutores que formam o anel [m]
     """
     return (pa/((pi**2) * r))*log((4*(r**2))/(d*p))
