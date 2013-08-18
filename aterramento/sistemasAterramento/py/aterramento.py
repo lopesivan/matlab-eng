@@ -866,6 +866,7 @@ def plotCurvaTeorica2Camadas():
     plt.xlabel('Profundidade [m]')
     plt.ylabel('Resistividade Media [ohm*m]')
     plt.title('Curva teoria e medida')
+    plt.grid(True)
     plt.plot(a, p, profundidade, resistividadeMedia)
     plt.show()
 

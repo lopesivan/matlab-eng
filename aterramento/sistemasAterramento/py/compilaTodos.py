@@ -7,5 +7,5 @@
 
 import compileall
 
-compileall.compile_dir('.', force = True)
+compileall.compile_dir('.', force = False)
 raw_input('[ENTER para sair]')
