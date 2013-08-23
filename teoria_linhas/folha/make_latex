@@ -1,0 +1,3 @@
+latex formulas_np1.tex
+dvipdf formulas_np1.dvi
+
