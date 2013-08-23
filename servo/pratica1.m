@@ -15,6 +15,7 @@ r5 = x ^ y
 r6 = sin(x) + cos(y)
 r7 = exp(x)*log(y)
 r8 = sqrt(x*y)
+p = input('Proximo item[ENTER]?');
 
 disp('2 - Defina duas variáveis de números complexos...')
 
@@ -28,6 +29,7 @@ r12 = real(cx*cy)
 r13 = imag(cx/cy)
 r14 = x*conj(cy)
 r15 = atan(imag(cx)/real(cx))
+p = input('Proximo item[ENTER]?');
 
 disp('3 - Defina duas listas contendo cinco números reais...')
 
@@ -40,6 +42,7 @@ r18 = lx*ly
 r19 = lx.*ly'
 r20 = lx(5)/ly(2)
 r21 = lx+ly'
+p = input('Proximo item[ENTER]?');
 
 disp('4 - Defina uma matriz...')
 
@@ -48,6 +51,7 @@ Mt = M'
 Ms = sum(M(1,:))
 Mi = inv(M)
 Md = det(M)
+p = input('Proximo item[ENTER]?');
 
 disp('5 - Crie um vetor de 1000 pontos...')
 t = 0:0.01:10;
@@ -56,6 +60,7 @@ x1 = 5*exp(-t).*sin(2*t)+2*exp(-t).*cos(2*t);
 x2 = exp(-2*t);
 
 plot(t, x1, t, x2)
+p = input('Proximo item[ENTER]?');
 
 disp('6 - Encontre o valor mínimo...')
 
