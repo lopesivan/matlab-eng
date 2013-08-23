@@ -1,6 +1,7 @@
 % Prática de laboratório 1
 % Aluno:
 % - Felipe Bandeira da Silva, 1020942-X
+% - Ivanilda
 
 disp('1 - Defina duas variáveis de números reais...')
 
