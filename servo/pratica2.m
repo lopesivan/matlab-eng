@@ -1,23 +1,27 @@
+% Pr·tica de laboratÛrio 2
+% Aluno:
+% - Felipe Bandeira da Silva, 1020942-X
+
 %%%%%%%%%%%%%%%%%%%%
-% Primeira quest√£o %
+% Primeira quest„o %
 %%%%%%%%%%%%%%%%%%%%
 
-disp('Primeira quest√£o');
-disp('Plotando o gr√°fico');
+disp('Primeira quest„o');
+disp('Plotando o gr·fico');
 t = linspace(0, 10, 1000); 
 f = 5*exp(-t).*sin(2*t)+2*exp(-t).*cos(2*t);
 g = 2*exp(-t)-exp(-2*t);
 plot(t, f, t, g);
-title('Primeira quest√£o');
+title('Primeira quest„o');
 xlabel('tempo (s)');
 
 p = input('Proximo item[ENTER]?');
 
 %%%%%%%%%%%%%%%%%%%%
-% Segunda quest√£o  %
+% Segunda quest„o  %
 %%%%%%%%%%%%%%%%%%%%
 
-disp('Segunda quest√£o');
+disp('Segunda quest„o');
 x = -20:1:20;
 f = x.^2-8*x+4;
 
@@ -37,7 +41,7 @@ disp(posicao)
 p = input('Proximo item[ENTER]?');
 
 %%%%%%%%%%%%%%%%%%%%
-% Terceira quest√£o %
+% Terceira quest„o %
 %%%%%%%%%%%%%%%%%%%%
 
 a = [1 3 6 9 11];
@@ -49,11 +53,11 @@ for R = 1:length(a)
    plot(t, y);
 end
 
-title('Segunda quest√£o');
+title('Segunda quest„o');
 p = input('Proximo item[ENTER]?');
 
 %%%%%%%%%%%%%%%%%%
-% Quarta quest√£o %
+% Quarta quest„o %
 %%%%%%%%%%%%%%%%%%
 
 t = 0:0.01:10;
@@ -79,7 +83,7 @@ disp(tPico);
 p = input('Proximo item[ENTER]?');
 
 %%%%%%%%%%%%%%%%%%
-% Quinta quest√£o %
+% Quinta quest„o %
 %%%%%%%%%%%%%%%%%%
 % s^3+12*s^2+5*s+1
 A = [1 12 5 1]
