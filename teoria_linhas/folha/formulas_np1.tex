@@ -2,18 +2,18 @@
 \usepackage[brazil]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{amsthm}
-
+\usepackage{graphicx}
 
 \newcommand{\unit}[1]{\ensuremath{\, \mathrm{#1}}}
 
-\title{Linhas e Transmissão}
-\author{Felipe Bandeira da Silva\\Fortaleza-CE}
+\title{Formulário\\Linhas e Transmissão}
+\author{Felipe Bandeira da Silva}
 
 \begin{document}
 \maketitle
 \section{Modelagem de Carga}
 
-A modelagem de uma carga elétrica pode ser:
+A modelagem de uma carga elétrica pode ser feita para:
 
 \begin{itemize}
 \item Potência ativa constante
@@ -23,71 +23,87 @@ A modelagem de uma carga elétrica pode ser:
 
 \subsection{Potência ativa constante(PCTE)}
     
-    $$
-        P = VA \cdot fp
-    $$
-    
-    $$
-        Q_{modelada} = P \cdot tan(cos^{-1}fp)
-    $$
-    
-    $$
-        S = P+jQ_{modelada}
-    $$
+\begin{equation}
+P = VA \cdot fp
+\end{equation}
+
+\begin{equation}   
+Q_{modelada} = P \cdot tan(cos^{-1}fp)
+\end{equation}
+
+\begin{equation}
+S = P+jQ_{modelada}
+\end{equation}
 
 \subsection{Impedância Constante (ZCTE)}
-    $$
-        P_{modelada} = P \cdot \frac{V_{barramento}}{V_{carga}}
-    $$
-    
-    $$
-        S = P_{modelada} + jQ_{modelada}  
-    $$
+
+\begin{equation}
+P_{modelada} = P \cdot \frac{V_{barramento}}{V_{carga}}
+\end{equation}
+
+\begin{equation}   
+S = P_{modelada} + jQ_{modelada}  
+\end{equation}
 
 \subsection{Carga Mista}
-    $$
-        P_{modelada} =PCTE \cdot P +  ZCTE \cdot  P \cdot \frac{V_{barramento}}{V_{carga}}
-    $$
 
-    $$
-       S = P_{modelada} + jQ_{modelada}  
-    $$
+\begin{equation}
+P_{modelada} =PCTE \cdot P +  ZCTE \cdot  P \cdot \frac{V_{barramento}}{V_{carga}}
+\end{equation}
+
+\begin{equation}
+S = P_{modelada} + jQ_{modelada}  
+\end{equation}
 
 \section{Indutância em LT's}
 
-Indutância L de uma linha de transmissão, desprezando a altura
-da linha e não linearidade do meio.
+A indutância de uma linha de transmissão é relacionada pelo
+comprimento da linha, área efetiva do condução e o efeito da 
+indutância mútua entre as linhas. Os cálculos apresentado nas
+próximas secções são válidos para linhas monofásicas e trifásicas. 
 
 \subsection{Linha monofásica}
 
-    $$
-        L = 2 \cdot 10^{-4} ln\frac{D}{R'} \unit{H/km}
-    $$
+\begin{equation}
+L = 2 \cdot 10^{-4} \ln\frac{D}{R'} \unit{H/km}
+\end{equation}
     
-    $$
-        L = 2 \cdot 10^{-7} ln\frac{D}{R'} \unit{H/m}
-    $$
+\begin{equation}
+L = 2 \cdot 10^{-7} \ln\frac{D}{R'} \unit{H/m}
+\end{equation}
 
-    $$
-        R' = e^{-\frac{1}{4}}R = 0.7788R
-    $$
+\begin{equation}
+R' = e^{-\frac{1}{4}}R = 0.7788R
+\end{equation}
 
 \subsection{Linha trifásica}
 Indutância final de uma linha trifásica com $n$ condutores por fase é data por:
 
-$$
-    L = 2 \cdot 10^{-4} ln\frac{D_m}{D_s}
-$$
+\begin{equation}
+L = 2 \cdot 10^{-4} \ln\frac{D_m}{D_s}
+\end{equation}
 
-Onde $Dm$ é a distância média geométrica entre as fases,
+Onde $D_m$ é a distância média geométrica entre as fases,
 
-$$
+\begin{equation}
 D_m = (D_{12} D_{21} D_{31})^{\frac{1}{3}}
-$$
+\end{equation}
 
-E $D_s$ é definida para os $n$ condutores por fase,
+$D_s$ é definida para os $n$ condutores por fase,
+\begin{center}
+\begin{tabular}{|c||c|}
+    \hline
+    Número de condutores & $D_s$ \\
+    \hline
+    1 & $R'$ \\
+    2 & $(R' d)^{\frac{1}{2}}$ \\
+    3 & $(R' d^2)^{\frac{1}{3}}$ \\
+    4 & $(2^{\frac{1}{2}} R' d^2)^{\frac{1}{4}}$ \\ 
+    \hline
+\end{tabular}
+\end{center}
 
-
+Considerando o espaçamento $d$ igual entre os condutores que estão na mesma coluna ou linha.
 
 \end{document}
 
