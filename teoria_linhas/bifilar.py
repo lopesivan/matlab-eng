@@ -283,6 +283,52 @@ def indLinhaMono2Fios(D, rl):
     """
     return 4e-7*log(D/rl)
 
+def indLinha3Fases_HKm(Dm, Ds):
+    return 2e-4*log(Dm/Ds)
+
+def ds1Condutor(R):
+    return exp(-1/4)*R
+
+def ds2Condutores(R, d):
+    return (exp(-1/4)*R*d)**(1/2)
+
+def ds3Condutores(R, d):
+    return (exp(-1/4)*R*d**2)**(1/3)
+
+def ds4Condutores(R, d):
+    return (exp(-1/4) * (2**(1/2)) * R * (d**3))**(1/4)
+
+def dmLinha3FasesEspUnico(d):
+    return (d*d*(d+d))**(1/3)
+
+def ind3Fases1Condutores(EspFases, RaioCondutores):
+    Ds = ds1Condutor(RaioCondutores)
+    Dm = dmLinha3FasesEspUnico(EspFases)
+    L = indLinha3Fases_HKm(Dm, Ds)
+
+    return [L, Ds, Dm]
+
+def ind3Fases2Condutores(EspFases, EspCondutores, RaioCondutores):
+    Ds = ds2Condutores(RaioCondutores, EspCondutores)
+    Dm = dmLinha3FasesEspUnico(EspFases)
+    L = indLinha3Fases_HKm(Dm, Ds)
+
+    return [L, Ds, Dm]
+
+def ind3Fases3Condutores(EspFases, EspCondutores, RaioCondutores):
+    Ds = ds3Condutores(RaioCondutores, EspCondutores)
+    Dm = dmLinha3FasesEspUnico(EspFases)
+    L = indLinha3Fases_HKm(Dm, Ds)
+
+    return [L, Ds, Dm]
+
+def ind3Fases4Condutores(EspFases, EspCondutores, RaioCondutores):
+    Ds = ds4Condutores(RaioCondutores, EspCondutores)
+    Dm = dmLinha3FasesEspUnico(EspFases)
+    L = indLinha3Fases_HKm(Dm, Ds)
+
+    return [L, Ds, Dm]
+
 if __name__ == '__main__':
 
     """Em corrente alternada, devido ao efeito pelicular(skin) a corrente

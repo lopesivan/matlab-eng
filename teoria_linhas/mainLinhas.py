@@ -9,6 +9,7 @@ from  __future__ import division
 import cargaModelagem
 import sys
 import bifilar
+import formatacao
 
 dadosEntBifilar = {
     'tensao' : 0,
@@ -197,8 +198,34 @@ c - z2 = x [ohm]
 
     return 0
 
-def trifasico():
-    print '1 - linha trifásica, espaçamento equilateral'
+def entradaIndutancia(nCondutores=3):
+
+    try:
+        print u'Espaçamento entre as fases       [m]:',
+        espFases = float(raw_input())
+        if nCondutores > 1:
+            print u'Espaçamento entre os condutores [cm]:',
+            espCondutores= float(raw_input())
+        else:
+            espCondutores = 0
+
+        print u'Raio condutor                   [mm]:',
+        raio = float(raw_input())
+        print u'Comprimento da linha            [km]:',
+        compLinha = float(raw_input())
+    except:
+        print u'erro: inesperado'
+        return [-1, -1, -1, -1]
+
+    return [espFases, espCondutores, raio, compLinha]
+
+def indutancia():
+    print u'Linha trifásica:'
+    print u'1 - 1 condutor por fase'
+    print u'2 - 2 condutores por fase'
+    print u'3 - 3 condutores por fase'
+    print u'4 - 4 condutores por fase'
+
     try:
         a = input('>')
     except:
@@ -206,25 +233,40 @@ def trifasico():
         return -2
 
     if a == 1:
-        try:
-            print u'Espaçamento    [m]:',
-            espacamento = float(raw_input())
-            print u'Raio condutor [mm]:',
-            raio = float(raw_input())
-            print u'Comprimento   [km]:',
-            comprimento = float(raw_input())
-        except:
-            print u'erro: inesperado'
+        espFases, espCondutores, raio, comprimento = entradaIndutancia(1)
+        if espFases == -1:
             return -1
+        L, Ds, Dm = bifilar.ind3Fases1Condutores(espFases*1e3, raio)
 
-        Lkm, L, Xl, Zl = bifilar.linhaTrifasicaIndutancia(espacamento, raio, comprimento)
-        print u'Indutância de uma linha trifásica com espaçamento equilaterais:'
-        print '[H/km] :', Lkm
-        print '[H]    :', L
-        print 'Reatância:'
-        print 'Ohm    :', Xl
-        print 'Impedância:'
-        print 'Ohm    :', Zl
+    elif a == 2:
+        espFases, espCondutores, raio, comprimento = entradaIndutancia()
+        if espFases == -1:
+            return -1
+        L, Ds, Dm = bifilar.ind3Fases2Condutores(espFases*1e3, espCondutores*10, raio)
+
+    elif a == 3:
+        espFases, espCondutores, raio, comprimento = entradaIndutancia()
+        if espFases == -1:
+            return -1
+        L, Ds, Dm = bifilar.ind3Fases3Condutores(espFases*1e3, espCondutores*10, raio)
+
+    elif a == 4:
+        espFases, espCondutores, raio, comprimento = entradaIndutancia()
+        if espFases == -1:
+            return -1
+        L, Ds, Dm = bifilar.ind3Fases4Condutores(espFases*1e3, espCondutores*10, raio)
+
+    else:
+        print u'erro: opção não disponivel'
+        return -1
+
+    print u'Indutância [H/km]: ', L
+    print u'Indutância    [H]: ', L * comprimento
+    print u'Ds           [mm]: ', Ds
+    print u'Dm           [mm]: ', Dm
+
+    return [L, L*comprimento, Ds, Dm]
+
 
 def ajuda():
     print 'Comandos cadastrados'
@@ -242,7 +284,7 @@ dicionarioComandos = {
     's' : sair,
     'm' : entradaCargaMod,
     'b' : sistemaBifilar,
-    'i' : trifasico,
+    'i' : indutancia,
 }
 
 def nada():
