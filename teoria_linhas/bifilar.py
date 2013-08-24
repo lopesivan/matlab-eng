@@ -287,21 +287,56 @@ def indLinha3Fases_HKm(Dm, Ds):
     return 2e-4*log(Dm/Ds)
 
 def ds1Condutor(R):
+    """Ds para um 1 condutor por fase, em um sistema trifásico
+    Entrada:
+        R - raio do condutor
+    """
     return exp(-1/4)*R
 
 def ds2Condutores(R, d):
+    """Ds para um 2 condutor por fase, em um sistema trifásico
+    Entrada:
+        R - raio do condutor
+        d - espaçamento entre os condutores
+    """
     return (exp(-1/4)*R*d)**(1/2)
 
 def ds3Condutores(R, d):
+    """Ds para um 3 condutor por fase, em um sistema trifásico
+    Entrada:
+        R - raio do condutor
+        d - espaçamento entre os condutores
+    """
     return (exp(-1/4)*R*d**2)**(1/3)
 
 def ds4Condutores(R, d):
+    """Ds para um 4 condutor por fase, em um sistema trifásico
+    Entrada:
+        R - raio do condutor
+        d - espaçamento entre os condutores
+    """
     return (exp(-1/4) * (2**(1/2)) * R * (d**3))**(1/4)
 
 def dmLinha3FasesEspUnico(d):
+    """Espaçamento Dm entre os condutores, considerando que
+    os mesmo estão a uma mesma distância tanto da linha ou coluna.
+    Entrada:
+        d - Espaçamento
+    """
     return (d*d*(d+d))**(1/3)
 
 def ind3Fases1Condutores(EspFases, RaioCondutores):
+    """ Indutância em um sistema trifásico com 1 condutor
+    por fase.
+    Entrada:
+        EspFases - Espaçamento entre as fases
+        EspCondutores - Espaçamento entre os condutores
+        RaioCondutores - Raio dos condutores
+    Saída:
+        L - indutância [Henry/Km]
+        Ds
+        Dm
+    """
     Ds = ds1Condutor(RaioCondutores)
     Dm = dmLinha3FasesEspUnico(EspFases)
     L = indLinha3Fases_HKm(Dm, Ds)
@@ -309,6 +344,17 @@ def ind3Fases1Condutores(EspFases, RaioCondutores):
     return [L, Ds, Dm]
 
 def ind3Fases2Condutores(EspFases, EspCondutores, RaioCondutores):
+    """ Indutância em um sistema trifásico com 2 condutores
+    por fase.
+    Entrada:
+        EspFases - Espaçamento entre as fases
+        EspCondutores - Espaçamento entre os condutores
+        RaioCondutores - Raio dos condutores
+    Saída:
+        L - indutância [Henry/Km]
+        Ds
+        Dm
+    """
     Ds = ds2Condutores(RaioCondutores, EspCondutores)
     Dm = dmLinha3FasesEspUnico(EspFases)
     L = indLinha3Fases_HKm(Dm, Ds)
@@ -316,6 +362,17 @@ def ind3Fases2Condutores(EspFases, EspCondutores, RaioCondutores):
     return [L, Ds, Dm]
 
 def ind3Fases3Condutores(EspFases, EspCondutores, RaioCondutores):
+    """ Indutância em um sistema trifásico com 3 condutores
+    por fase.
+    Entrada:
+        EspFases - Espaçamento entre as fases
+        EspCondutores - Espaçamento entre os condutores
+        RaioCondutores - Raio dos condutores
+    Saída:
+        L - indutância [Henry/Km]
+        Ds
+        Dm
+    """
     Ds = ds3Condutores(RaioCondutores, EspCondutores)
     Dm = dmLinha3FasesEspUnico(EspFases)
     L = indLinha3Fases_HKm(Dm, Ds)
@@ -323,6 +380,17 @@ def ind3Fases3Condutores(EspFases, EspCondutores, RaioCondutores):
     return [L, Ds, Dm]
 
 def ind3Fases4Condutores(EspFases, EspCondutores, RaioCondutores):
+    """ Indutância em um sistema trifásico com 4 condutores
+    por fase.
+    Entrada:
+        EspFases - Espaçamento entre as fases
+        EspCondutores - Espaçamento entre os condutores
+        RaioCondutores - Raio dos condutores
+    Saída:
+        L - indutância [Henry/Km]
+        Ds
+        Dm
+    """
     Ds = ds4Condutores(RaioCondutores, EspCondutores)
     Dm = dmLinha3FasesEspUnico(EspFases)
     L = indLinha3Fases_HKm(Dm, Ds)

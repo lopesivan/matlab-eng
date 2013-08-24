@@ -43,6 +43,9 @@ def dadosCargaMod():
     return [potMVA, fp, vn, vl]
 
 def entradaCargaMod():
+    """Modelagem de carga trifásica equilibrada
+    """
+
     print u'1- potência constante'
     print u'2- impedância constante'
     print u'3- carga mista'
@@ -220,6 +223,9 @@ def entradaIndutancia(nCondutores=3):
     return [espFases, espCondutores, raio, compLinha]
 
 def indutancia():
+    """Cálculos para indutância em um sistema trifásico
+    """
+
     print u'Linha trifásica:'
     print u'1 - 1 condutor por fase'
     print u'2 - 2 condutores por fase'
