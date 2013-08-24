@@ -21,6 +21,7 @@ def potenciaConstante(potMVA, fpCarga, vNominalkV, vLinhakV, debug = False):
     smod = potAtiva+qmod*1j
 
     if debug:
+        print '-'*10
         print u'Potência ativa[MW]       : ', potAtiva
         print u'Potência reativa[MVAr]   : ', potReativa
         print u'Potência reativa modelada: ', qmod
@@ -40,6 +41,7 @@ def impedanciaConstante(potMVA, fpCarga, vNominalkV, vLinhakV, debug = False):
     smod = pmod + qmod*1j
 
     if debug:
+        print '-'*10
         print u'Potência ativa[MW]       : ', potAtiva
         print u'Potência reativa[MVAr]   : ', potReativa
         print u'Potência reativa modelada: ', qmod
@@ -60,6 +62,7 @@ def cargaMista(potMVA, fpCarga, vNominalkV, vLinhakV, PCTE, ZCTE, debug = False)
     smod = pmod + qmod*1j
 
     if debug:
+        print '-'*10
         print u'Potência ativa[MW]       : ', potAtiva
         print u'Potência reativa[MVAr]   : ', potReativa
         print u'Potência reativa modelada: ', qmod
@@ -73,6 +76,7 @@ def correnteCarga(smod, vLinhakV, debug = 0):
     i = i.conjugate()
 
     if debug:
+        print '-'*10
         print 'Corrente[A]: ', i
         print 'modulo     : ', abs(i)
         print 'fase[graus]: ', degrees(phase(i))

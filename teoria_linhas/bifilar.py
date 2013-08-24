@@ -160,108 +160,6 @@ def problema1(tensao, capaCondutor, induCondutor, comprimento, Zs, debug = False
 
     return [Z0, I0, Em, Ee, Et, v, U22, U21]
 
-def problema9(resistencia, reatanciaIndutiva, condutibilidade, susceptancia, freq):
-    return -1
-
-def exemplo2():
-    Lkm, L, Xl, Zl = linhaTrifasicaIndutancia(2.5, 25/2, 60)
-
-    print u'Indutância de uma linha trifásica com espaçamento equilaterais:'
-    print '[H/km] :', Lkm
-    print '[H]    :', L
-    print 'Reatância:'
-    print 'Ohm    :', Xl
-    print 'Impedância:'
-    print 'Ohm    :', Zl
-
-def linhaTrifasicaIndutancia(espEqui, raio, comprimento, freq = 60):
-    """Indutância de uma linha de transmissão trifásica com
-    espaçamento equilateral.
-    Entrada:
-        espEqui - espaçamento equilateral entre os condutores [m]
-        raio - raio do condutor [mm]
-        comprimento - comprimento total da linha [km]
-        freq = frequência da linha [Hz]
-    Saída:
-        IndutânciaKm [H/km]
-        Indutância [H]
-        Modulo da reatância indutiva [OHM]
-        Impedância [OHM]
-
-    Introdução teórica:
-        Um linha de transmissão de energia elétrica possui quatro
-        parâmetros: resistência, indutância, capacitância e condutância.
-        que influem em seu comportamente como componentes de um
-        sistema de potência. A condutância entre condutores ou entre
-        condutor e terra leva em conta a corrente de fuga nos isoladores
-        das linhas aéreas de transmissão ou na isolção dos cabos
-        subterrâneos. No entanto, a condutância entre condutores de
-        uma linha aérea pode ser considerada nula pois a fuga nos
-        seus isoladores é desprezível. Uma variação de corrente nos
-        condutores provoca uma variação do número de linhas de fluxo
-        magnético contatenadas com o circuito. Por sua vez, qualquer
-        vairação do fluxo concatenado com o circuito lhe induz uma
-        tensão, cujo valor é proporcional à taxa de variação do fluxo.
-        Indutância é o parâmetro do circuito que relaciona a tensão
-        induzida por variação de fluxo com a taxa de variação da corrente.
-        Com maior diâmetro, a densidade de fluxo elétrico na superfície
-        do condutor de aluminio é menor que a mesma tensão. Isto
-        significa menor gradiente de potencial na superfície e menor
-        tendência à ionização do ar em volta do condutor. Esta ionização
-        do ar produz um efeito chamado efeito corona.
-    """
-    c1 = 2e-7
-    e4 = exp(-1/4)
-    re = e4*raio    # raio efetivo do condutor
-    Lkm = c1*log(espEqui*1e3/re)*1e3
-    L = comprimento*Lkm
-
-    Xl = 2*pi*freq*L
-    Zl = Xl*1j
-
-    return [Lkm, L, Xl, Zl]
-
-def linhaMono3solidos2retornos(raioSolido, raioRetorno, espLadoX, espXY):
-    Dad = Dbc = espXY
-    Dae = Dbd = Dce = sqrt(espLadoX**2+espXY**2)
-    Dcd = sqrt(espXY**2+(2*espLadoX)**2)
-    Dm = (espXY**2*Dcd*(Dae**(3/2)))**(1/6)
-
-    Ds = 0
-    return Dad, Dbc, Dae, Dbd, Dce, Dcd, Dm, Ds
-
-def exemplo3():
-    raioSolido = .25
-    raioRetorno = .5
-    espXY = 9
-    espLadoX = 6
-    Dad, Dbc, Dae, Dbd, Dce, Dcd, Dm, Ds =  \
-            linhaMono3solidos2retornos(raioSolido,  \
-                                       raioRetorno, \
-                                       espLadoX,    \
-                                       espXY)
-
-    print 'Dad: ', Dad
-    print 'Dae: ', Dae
-    print 'Dcd: ', Dcd
-    print 'Dm : ', Dm
-
-def linhaInduEspAssimetrico(D12, D23, D31, Ds):
-    """Indutância de linhas trifásicas com espaçamento assimétrico
-    O fluxo concatenado e a indutância correspondente a cada fase não
-    são os mesmos. O circuito fica desequilibrado quando cada fase
-    tem indutância diferentes. Pode-se restaurar o equilíbrio entre
-    as três fases trocando, a intervalos regulares, a posição relativa
-    entre os condutores, de mode que cada condutor ocupe a posição
-    original de cada um dos outros por uma distância igual.
-    Chama-se transposição a essa troca de posições.
-    """
-    c1 = 2e-7
-    Deq = (D12*D23*D31)**(1/3)
-    La = c1*log(Deq/Ds)
-
-    return [Deq, La]
-
 def exemploLinhaAssimetrica():
     D12 = 20
     D23 = 20
@@ -284,6 +182,29 @@ def indLinhaMono2Fios(D, rl):
     return 4e-7*log(D/rl)
 
 def indLinha3Fases_HKm(Dm, Ds):
+    """
+    Introdução teórica:
+        Um linha de transmissão de energia elétrica possui quatro
+        parâmetros: resistência, indutância, capacitância e condutância.
+        que influem em seu comportamente como componentes de um
+        sistema de potência. A condutância entre condutores ou entre
+        condutor e terra leva em conta a corrente de fuga nos isoladores
+        das linhas aéreas de transmissão ou na isolção dos cabos
+        subterrâneos. No entanto, a condutância entre condutores de
+        uma linha aérea pode ser considerada nula pois a fuga nos
+        seus isoladores é desprezível. Uma variação de corrente nos
+        condutores provoca uma variação do número de linhas de fluxo
+        magnético contatenadas com o circuito. Por sua vez, qualquer
+        vairação do fluxo concatenado com o circuito lhe induz uma
+        tensão, cujo valor é proporcional à taxa de variação do fluxo.
+        Indutância é o parâmetro do circuito que relaciona a tensão
+        induzida por variação de fluxo com a taxa de variação da corrente.
+        Com maior diâmetro, a densidade de fluxo elétrico na superfície
+        do condutor de aluminio é menor que a mesma tensão. Isto
+        significa menor gradiente de potencial na superfície e menor
+        tendência à ionização do ar em volta do condutor. Esta ionização
+        do ar produz um efeito chamado efeito corona.
+    """
     return 2e-4*log(Dm/Ds)
 
 def ds1Condutor(R):
@@ -398,16 +319,7 @@ def ind3Fases4Condutores(EspFases, EspCondutores, RaioCondutores):
     return [L, Ds, Dm]
 
 if __name__ == '__main__':
-
-    """Em corrente alternada, devido ao efeito pelicular(skin) a corrente
-    tende a concentrar-se na superfície  do condutor. Isto provoca um
-    acréscimo na resistência efetiva(proporcional a frequência)
-    observavel a 60Hz(em torno de 3%)
-    """
-
     print u'Transmissão bifilar'
+
     exemplo1()
-    exemplo2()
-    exemplo3()
-    exemploLinhaAssimetrica()
 

@@ -22,6 +22,7 @@ dadosEntBifilar = {
     'flag' : 0,
 }
 
+
 def dadosCargaMod():
     try:
         print u'potência aparente [MVA]           :',
@@ -41,6 +42,7 @@ def dadosCargaMod():
         return [-1, -1, -1, -1]
 
     return [potMVA, fp, vn, vl]
+
 
 def entradaCargaMod():
     """Modelagem de carga trifásica equilibrada
@@ -273,13 +275,22 @@ def indutancia():
 
     return [L, L*comprimento, Ds, Dm]
 
+def capacitancia():
+    return -1
 
+################################################################################
+# Interação homem maquina
+# -Ajuda
+# -Processamento de comandos
+# -Loop principal
+################################################################################
 def ajuda():
     print 'Comandos cadastrados'
     print u's - finaliza o programa'
     print u'm - modelagem de uma carga'
     print u'b - sistema bifilar'
     print u'i - indutância sistema trifásico'
+    print u'c - capacitância sistema trifásico'
 
 def sair():
     print u'finalizando...'
@@ -291,6 +302,7 @@ dicionarioComandos = {
     'm' : entradaCargaMod,
     'b' : sistemaBifilar,
     'i' : indutancia,
+    'c' : capacitancia,
 }
 
 def nada():
@@ -298,6 +310,8 @@ def nada():
 
 def comandos(cmd):
     return dicionarioComandos.get(cmd, nada)()
+
+################################################################################
 
 if __name__ == '__main__':
     print u'Transmissão de energia elétrica, linhas aéreas'
