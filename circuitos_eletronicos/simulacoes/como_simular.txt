@@ -13,3 +13,4 @@ Sintaxe do comando "TRAN"
 
 tran <tstep> <tstop> <tstart> <tmax>
 
+Para a simulação "operation point analysis" 
