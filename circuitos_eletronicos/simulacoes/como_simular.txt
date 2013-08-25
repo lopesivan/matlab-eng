@@ -1,11 +1,18 @@
+Simples explicação de como usar o ngspice
+##########
+
 1 - Inicie o ngspice
 
-2 - Carregue o codigo, use o comando, "source", seguido do 
+##########
+
+2 - Carregue o código, use o comando, "source", seguido do 
 nome do arquivo. Exemplo
 -> source ampop_inversor.cir
 
-3 - Nesse ponto é possivel trabalhar com o circuito com as diversas
-possiveis simulacoes. Pode ser feita uma analise no dominio do tempo
+##########
+
+3 - Nesse ponto é possível trabalhar com o circuito com as diversas
+possíveis simulações. Pode ser feita uma analise no domínio do tempo
 usando o comando "TRAN". Exemplo para o comando "TRAN",
 -> tran 100u 10m 0m 100u
 
@@ -14,3 +21,20 @@ Sintaxe do comando "TRAN"
 tran <tstep> <tstop> <tstart> <tmax>
 
 Para a simulação "operation point analysis" 
+simplesmente use o comando,
+-> op
+Nesse momento foi feita uma analise em regime estacionário
+para a mostragem dos valores use,
+-> print v(1)
+para ver a tensão no nó 1
+é possível amplicar operações matemáticas para o print, como 
+adição ou subtração.
+Para visualizar a corrente em um determinado ponto use
+-> print -i(vcc)
+Com isso é possível ver a corrente de entrada na fonte.
+
+Para uma análise paramétrica do problem use "dc sweep"
+-> dv vcc 1V 10V .01V
+Com isso a fonte vcc varia de 1 a 10 volts com passo de .01 volts
+
+
