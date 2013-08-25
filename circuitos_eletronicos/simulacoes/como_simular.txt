@@ -1,0 +1,15 @@
+1 - Inicie o ngspice
+
+2 - Carregue o codigo, use o comando, "source", seguido do 
+nome do arquivo. Exemplo
+-> source ampop_inversor.cir
+
+3 - Nesse ponto é possivel trabalhar com o circuito com as diversas
+possiveis simulacoes. Pode ser feita uma analise no dominio do tempo
+usando o comando "TRAN". Exemplo para o comando "TRAN",
+-> tran 100u 10m 0m 100u
+
+Sintaxe do comando "TRAN"
+
+tran <tstep> <tstop> <tstart> <tmax>
+
