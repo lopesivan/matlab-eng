@@ -34,7 +34,7 @@ Para visualizar a corrente em um determinado ponto use
 Com isso é possível ver a corrente de entrada na fonte.
 
 Para uma análise paramétrica do problem use "dc sweep"
--> dv vcc 1V 10V .01V
+-> dc vcc 1V 10V .01V
 Com isso a fonte vcc varia de 1 a 10 volts com passo de .01 volts
 
 
