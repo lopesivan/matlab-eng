@@ -1,8 +1,11 @@
-V1 1 0 1V
+OPINV.CIR - OPAMP INVERTING AMPLIFIER
+*
+VS	1	0	AC	1	SIN(0V	1VPEAK	10KHZ)
+*
 R1	1	2	5K
 R2	2	4	10K
 XOP	0 2	4	OPAMP1	
-
+*
 * OPAMP MACRO MODEL, SINGLE-POLE 
 * connections:      non-inverting input
 *                   |   inverting input
@@ -20,7 +23,14 @@ CP1	4	0	1.5915UF
 EBUFFER	5 0	4 0	1
 ROUT	5	6	10
 .ENDS
-
-
+*
+* ANALYSIS 
+.AC 	DEC 	5 1K 10MEG
+.TRAN 	0.005MS  0.2MS
+* VIEW RESULTS
+.PRINT	AC 	VM(1) VM(4)
+.PLOT	AC 	VM(1) VM(4)
+.PRINT	TRAN 	V(1) V(4)
+.PLOT	TRAN 	V(1) V(4)
+.PROBE
 .END
-
