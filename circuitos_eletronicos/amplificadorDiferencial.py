@@ -5,7 +5,8 @@
 # felipeband18@gmail.com
 # graduando em Engenharia Elétrica
 
-# Circuitos com amplificador diferencial
+# Análise de circuitos utilizando o par diferencial TBJ
+# Circuitos comuns encontrados na literatura e no mundo academico
 
 from __future__ import division
 import sys
