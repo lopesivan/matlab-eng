@@ -318,8 +318,101 @@ def ind3Fases4Condutores(EspFases, EspCondutores, RaioCondutores):
 
     return [L, Ds, Dm]
 
+def dsCapacitor1Condutores(R):
+    """Ds para a análise capacitiva de uma linha trifásica
+    Entrada:
+        R - Raio real dos condutores
+    Saída:
+        Ds
+    """
+
+    # usando a mesma fórmula para o Ds indutivo só que retirando
+    # o termo exp(-1/4)
+    return ds1Condutor(R/exp(-1/4))
+
+def dsCapacitor2Condutores(R, d):
+    """Ds para a análise capacitiva de uma linha trifásica
+    Entrada:
+        R - Raio real dos condutores
+        d - espaçamento entre os condutores
+    Saída:
+        Ds
+    """
+
+    return ds2Condutores(R/exp(-1/4), d)
+
+def dsCapacitor3Condutores(R, d):
+    """Ds para a análise capacitiva de uma linha trifásica
+    Entrada:
+        R - Raio real dos condutores
+        d - espaçamento entre os condutores
+    Saída:
+        Ds
+    """
+
+    return ds3Condutores(R/exp(-1/4), d)
+
+def dsCapacitor4Condutores(R, d):
+    """Ds para a análise capacitiva de uma linha trifásica
+    Entrada:
+        R - Raio real dos condutores
+        d - espaçamento entre os condutores
+    Saída:
+        Ds
+    """
+
+    return ds4Condutores(R/exp(-1/4), d)
+
+def formCapLT(Dm, Ds):
+    """Capacitância para uma linha trifásica
+    Entrada:
+        Dm
+        Ds
+    Saída:
+        Capacitância em km
+    """
+    C = (2*pi*8.85e-9)/log(Dm/Ds)
+    return C
+
+def capLT(EspFases, RaioCondutores, EspCondutores, NumCondutores = 1):
+    """ Capacitância em uma linha de transmissao.
+    Entrada:
+        EspFases - Espaçamento entre as fases
+        RaioCondutores - Raio dos condutores
+        EspCondutores - espaçamento entre os condutores
+        NumCondutores - Número de condutores por fase
+    Saída:
+        C - capacitância [C/Km]
+        Ds
+        Dm
+    """
+    if EspFases > 0:
+        if NumCondutores == 1:
+            Ds = dsCapacitor1Condutores(RaioCondutores)
+        elif NumCondutores == 2:
+            Ds = dsCapacitor2Condutores(RaioCondutores, EspCondutores)
+        elif NumCondutores == 3:
+            Ds = dsCapacitor3Condutores(RaioCondutores, EspCondutores)
+        elif NumCondutores == 4:
+            Ds = dsCapacitor4Condutores(RaioCondutores, EspCondutores)
+        else:
+            print 'erro: formula para esse número (%d) de condutores não disponivel' % NumCondutores
+            return -1
+        Dm = dmLinha3FasesEspUnico(EspFases)
+        C = formCapLT(Dm, Ds)
+
+    return [C, Ds, Dm]
+
+
+def zonaTeste():
+    print 'Zona de teste'
+    print
+
+    print 'Ds capacitor, 3 condutores: ', dsCapacitor3Condutores(16, 420)
+
 if __name__ == '__main__':
     print u'Transmissão bifilar'
 
     exemplo1()
+    zonaTeste()
 

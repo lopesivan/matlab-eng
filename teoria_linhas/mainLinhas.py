@@ -11,6 +11,10 @@ import sys
 import bifilar
 import formatacao
 
+# frequencia base para qualquer cálculo que leve frequencia
+# No Brasil temos a maior parte 60Hz
+freqREDE = 60
+
 dadosEntBifilar = {
     'tensao' : 0,
     'impedancia' : 0,
@@ -22,6 +26,28 @@ dadosEntBifilar = {
     'flag' : 0,
 }
 
+
+# Cores no terminal, muito massa
+# http://stackoverflow.com/questions/8924173/python-print-bold-text
+# mais informações interessantes
+# http://ascii-table.com/ansi-escape-sequences.php
+class colortext:
+    PURPLE = '\033[95m'
+    CYAN = '\033[96m'
+    DARKCYAN = '\033[36m'
+    BLUE = '\033[94m'
+    GREEN = '\033[92m'
+    YELLOW = '\033[93m'
+    RED = '\033[91m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+    END = '\033[0m'
+
+def impedanciaIndutiva(L, f):
+    return L*f*1j
+
+def impedanciaCapacitiva(C, f):
+    return 1/(C*f*1j)
 
 def dadosCargaMod():
     try:
@@ -203,7 +229,14 @@ c - z2 = x [ohm]
 
     return 0
 
-def entradaIndutancia(nCondutores=3):
+def entradaIndCap(nCondutores=3, mono = 0):
+    """Processamento da entrada do usuário para os cálculos
+    dos parametros indutivos e capacitivos de uma linha de transmissao
+    Entrada:
+        nCondutores - número de condutores
+        mono - 0 = linha trifásica
+               1 = linha monofásica
+    """
 
     try:
         print u'Espaçamento entre as fases       [m]:',
@@ -241,19 +274,19 @@ def indutancia():
         return -2
 
     if a == 1:
-        espFases, espCondutores, raio, comprimento = entradaIndutancia(1)
+        espFases, espCondutores, raio, comprimento = entradaIndCap(1, 0)
         if espFases == -1:
             return -1
         L, Ds, Dm = bifilar.ind3Fases1Condutores(espFases*1e3, raio)
 
     elif a == 2:
-        espFases, espCondutores, raio, comprimento = entradaIndutancia()
+        espFases, espCondutores, raio, comprimento = entradaIndCap()
         if espFases == -1:
             return -1
         L, Ds, Dm = bifilar.ind3Fases2Condutores(espFases*1e3, espCondutores*10, raio)
 
     elif a == 3:
-        espFases, espCondutores, raio, comprimento = entradaIndutancia()
+        espFases, espCondutores, raio, comprimento = entradaIndCap()
         if espFases == -1:
             return -1
         L, Ds, Dm = bifilar.ind3Fases3Condutores(espFases*1e3, espCondutores*10, raio)
@@ -270,13 +303,123 @@ def indutancia():
 
     print u'Indutância [H/km]: ', L
     print u'Indutância    [H]: ', L * comprimento
-    print u'Ds           [mm]: ', Ds
+    print u'DsI          [mm]: ', Ds
     print u'Dm           [mm]: ', Dm
 
     return [L, L*comprimento, Ds, Dm]
 
+
 def capacitancia():
-    return -1
+    """Cálculos para capacitância de um linha de transmissão
+    """
+
+    print u'Linha trifásica:'
+    print u'1 - 1 condutor por fase'
+    print u'2 - 2 condutores por fase'
+    print u'3 - 3 condutores por fase'
+    print u'4 - 4 condutores por fase'
+
+    try:
+        a = input('>')
+    except:
+        print u'erro: algo inesperado ocorreu na entrada do usuario'
+        return -2
+
+    if a == 1:
+        espFases, espCondutores, raio, comprimento = entradaIndCap(1, 0)
+        if espFases == -1:
+            return -1
+        C, Ds, Dm = bifilar.capLT(espFases*1e3, raio)
+
+    elif a == 2:
+        espFases, espCondutores, raio, comprimento = entradaIndCap(2, 0)
+        if espFases == -1:
+            return -1
+        C, Ds, Dm = bifilar.capLT(espFases*1e3, raio, espCondutores*10, 2)
+
+    elif a == 3:
+        espFases, espCondutores, raio, comprimento = entradaIndCap(3, 0)
+        if espFases == -1:
+            return -1
+        C, Ds, Dm = bifilar.capLT(espFases*1e3, raio, espCondutores*10, 3)
+
+    elif a == 4:
+        espFases, espCondutores, raio, comprimento = entradaIndCap(4, 0)
+        if espFases == -1:
+            return -1
+        C, Ds, Dm = bifilar.capLT(espFases*1e3, raio, espCondutores*10, 4)
+
+    else:
+        print u'erro: opção não disponivel'
+        return -1
+
+    print u'Capacitância [H/km]: ', C
+    print u'Capacitância    [H]: ', C * comprimento
+    print u'DsC            [mm]: ', Ds
+    print u'Dm             [mm]: ', Dm
+
+    return [C, C*comprimento, Ds, Dm]
+
+def parametrosLT():
+    print """Cálculos para capacitância, indutancia e resistência de um linha de transmissão
+    """
+
+
+    print u'Linha trifásica:'
+    print u'1 - 1 condutor por fase'
+    print u'2 - 2 condutores por fase'
+    print u'3 - 3 condutores por fase'
+    print u'4 - 4 condutores por fase'
+
+    try:
+        a = input('>')
+    except:
+        print u'erro: algo inesperado ocorreu na entrada do usuario'
+        return -2
+
+    if a == 1:
+        espFases, espCondutores, raio, comprimento = entradaIndCap(1, 0)
+        if espFases == -1:
+            return -1
+
+        C, Ds, Dm = bifilar.capLT(espFases*1e3, raio)
+        L, DsI, Dm = bifilar.ind3Fases1Condutores(espFases*1e3, raio)
+
+    elif a == 2:
+        espFases, espCondutores, raio, comprimento = entradaIndCap(2, 0)
+        if espFases == -1:
+            return -1
+        C, Ds, Dm = bifilar.capLT(espFases*1e3, raio, espCondutores*10, 2)
+        L, DsI, Dm = bifilar.ind3Fases2Condutores(espFases*1e3, espCondutores*10, raio)
+
+    elif a == 3:
+        espFases, espCondutores, raio, comprimento = entradaIndCap(3, 0)
+        if espFases == -1:
+            return -1
+        C, Ds, Dm = bifilar.capLT(espFases*1e3, raio, espCondutores*10, 3)
+        L, DsI, Dm = bifilar.ind3Fases3Condutores(espFases*1e3, espCondutores*10, raio)
+
+    elif a == 4:
+        espFases, espCondutores, raio, comprimento = entradaIndCap(4, 0)
+        if espFases == -1:
+            return -1
+        C, Ds, Dm = bifilar.capLT(espFases*1e3, raio, espCondutores*10, 4)
+        L, DsI, Dm = bifilar.ind3Fases4Condutores(espFases*1e3, espCondutores*10, raio)
+
+    else:
+        print u'erro: opção não disponivel'
+        return -1
+
+    print u'Indutância   [H/km]: ', L
+    print u'Indutância      [H]: ', L * comprimento
+    print u'DsI            [mm]: ', DsI
+    print u'Capacitância [H/km]: ', C
+    print u'Capacitância    [H]: ', C * comprimento
+    print u'DsC            [mm]: ', Ds
+    print u'Dm             [mm]: ', Dm
+
+    return [C, C*comprimento, Ds, Dm]
+
 
 ################################################################################
 # Interação homem maquina
@@ -286,11 +429,14 @@ def capacitancia():
 ################################################################################
 def ajuda():
     print 'Comandos cadastrados'
-    print u's - finaliza o programa'
-    print u'm - modelagem de uma carga'
-    print u'b - sistema bifilar'
-    print u'i - indutância sistema trifásico'
-    print u'c - capacitância sistema trifásico'
+    print u's     - finaliza o programa'
+    print u'm     - modelagem de uma carga'
+    print u'b     - sistema bifilar'
+    print u'i     - indutância sistema trifásico'
+    print u'c     - capacitância sistema trifásico'
+    print u'plt   - parametros de um LT: capacitância, indutância e resistência'
+    print u'mod   - modelagem de uma linha de transmissão(curta, média(pi, T))'
+    print u'curto - curto circuito'
 
 def sair():
     print u'finalizando...'
@@ -303,10 +449,11 @@ dicionarioComandos = {
     'b' : sistemaBifilar,
     'i' : indutancia,
     'c' : capacitancia,
+    'plt': parametrosLT,
 }
 
 def nada():
-    print u'erro: comando não reconhecido'
+    print colortext.BOLD +  colortext.RED + u'erro: comando não reconhecido' + colortext.END
 
 def comandos(cmd):
     return dicionarioComandos.get(cmd, nada)()
@@ -314,7 +461,7 @@ def comandos(cmd):
 ################################################################################
 
 if __name__ == '__main__':
-    print u'Transmissão de energia elétrica, linhas aéreas'
+    print colortext.BOLD + u'Transmissão de energia elétrica, linhas aéreas' + colortext.END
 
     while True:
         entrada = raw_input(':')
