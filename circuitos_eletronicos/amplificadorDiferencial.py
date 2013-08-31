@@ -60,7 +60,24 @@ def conf1Exemplo():
     print 'Ib   [A]: ', Ib
     print 'Vout [V]: ', Vout
 
-def modeloAC_ampDif(mNPN, VCC, VEE, RE, RC, RB):
+def modeloAC_ampDif(mNPN, VCC, VEE, RE, RC, RB, vin):
+    It, Ie, Vout, Ib = conf1_resistoresBase(mNPN, VCC, VEE, RE, RC, RB)
+    # resistência dinâmica
+    re = 25e-3/Ie
+    # ganho do modelo
+    A = RC/(2*re)
+    # corrente ie
+    ie = vin/(2*re)
+    # impedância de entrada
+    zin = 2*mNPN['bcc']*re
+    # tensão dc de saída
+    vout_dc = VCC - (Ie*RC)
+    # ganho final levando em consideração o ganho ac
+    vout_ganho = vout_dc+vin*A
+
+    return [It, Ie, Ib, re, A, ie, zin, vout_dc, vout_ganho]
+
+def zonaTeste():
     return -1
 
 if __name__ == '__main__':
