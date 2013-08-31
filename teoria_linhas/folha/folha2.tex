@@ -169,7 +169,7 @@
 
 % *** MATH PACKAGES ***
 %
-%\usepackage[cmex10]{amsmath}
+\usepackage[cmex10]{amsmath}
 % A popular package from the American Mathematical Society that provides
 % many useful and powerful commands for dealing with mathematics. If using
 % it, be sure to load this package with the cmex10 option to ensure that
@@ -348,7 +348,7 @@
 % correct bad hyphenation here
 \hyphenation{op-tical net-works semi-conduc-tor}
 
-\usepackage{amsthm}
+%\usepackage{amsthm}
 \usepackage{graphicx}
 
 \newcommand{\unit}[1]{\ensuremath{\, \mathrm{#1}}}
@@ -366,7 +366,7 @@
 % affiliations
 \author{\IEEEauthorblockN{Felipe Bandeira da Silva}
 \IEEEauthorblockA{Engenharia Elétrica\\
-Unifor - Universidade de Fortaleza\\
+Unifor - Universidade de Fortaleza, Fortaleza-CE\\
 Email: felipeband18@gmail.com}}
 
 % conference papers do not typically use \thanks and this command
@@ -406,7 +406,7 @@ Email: felipeband18@gmail.com}}
 
 \begin{abstract}
 %\boldmath
-Formulas para a disciplina de linha e transmissão 
+Fórmulas para a disciplina de linha e transmissão 
 
 \end{abstract}
 % IEEEtran.cls defaults to using nonbold math in the Abstract.
@@ -440,13 +440,14 @@ Formulas para a disciplina de linha e transmissão
 
 \section{Modelagem de Carga}
 
-A modelagem de uma carga elétrica pode ser feita para:
+Modelagem para as 3 situações.
 
-\begin{itemize}
-\item Potência ativa constante
-\item Impedância constante
-\item Carga mista
-\end{itemize}
+%A modelagem de uma carga elétrica pode ser feita para:
+%\begin{itemize}
+%\item Potência ativa constante
+%\item Impedância constante
+%\item Carga mista
+%\end{itemize}
 
 \subsection{Potência ativa constante(PCTE)}
     
@@ -500,6 +501,8 @@ L = 2 \cdot 10^{-7} \ln\frac{D}{R'} \unit{H/m}
 R' = e^{-\frac{1}{4}}R = 0.7788R
 \end{equation}
 
+Onde $R'$ é chamado de raio efetivo.
+
 \subsection{Linha trifásica}
 Indutância final de uma linha trifásica com $n$ condutores por fase é data por:
 
@@ -531,8 +534,38 @@ Considerando o espaçamento $d$ igual entre os condutores que estão na mesma co
 
 \section{Capacitância}
 
+Capacitância para linhas trifásica assimétricas,
+
+\begin{equation}
+    C = \frac{2\pi 8.85 \cdot 10^{-9}}{\ln \frac{D_m}{D_s}}
+\end{equation}
 
 
+\subsection{Linha Trifásica}
+
+\begin{center}
+\begin{tabular}{|c||c|}
+    \hline
+    Número de condutores & $D_s$ \\
+    \hline
+    1 & $R$ \\
+    2 & $(R d)^{\frac{1}{2}}$ \\
+    3 & $(R d^2)^{\frac{1}{3}}$ \\
+    4 & $(2^{\frac{1}{2}} R d^2)^{\frac{1}{4}}$ \\ 
+    \hline
+\end{tabular}
+\end{center}
+
+Onde $R$ é o raio real do condutor(não confundir com o raio efetivo para
+análise da indutância).
+
+\section{Modelos de Linhas}
+
+\subsection{Curta}
+
+\subsection{Média "$\pi$"}
+
+\subsection{Média "T"}
 % An example of a floating figure using the graphicx package.
 % Note that \label must occur AFTER (or within) \caption.
 % For figures, \caption should occur after the \includegraphics.
