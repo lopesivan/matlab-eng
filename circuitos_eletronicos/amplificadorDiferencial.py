@@ -6,7 +6,7 @@
 # graduando em Engenharia Elétrica
 
 # Análise de circuitos utilizando o par diferencial TBJ
-# Circuitos comuns encontrados na literatura e no mundo academico
+# Circuitos comuns encontrados na literatura e no mundo acadêmico
 
 from __future__ import division
 import sys
@@ -47,7 +47,7 @@ def conf1_resistoresBase(mNPN, VCC, VEE, RE, RC, RB):
 
     # corrente de cauda
     It = (VCC - mNPN['vbe'])/(RE+RB/(2*mNPN['bcc']))
-    # corrente no emissor de cada transistor, identicos
+    # corrente no emissor de cada transistor, idênticos
     Ie = It/2
     # tensão no coletor do transistor Q2, lado direito
     Vout = VCC - Ie*RC

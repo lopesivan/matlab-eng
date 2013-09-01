@@ -4,11 +4,12 @@
 # Fortaleza-CE, 29/06/2013
 # felipeband18@gmail.com
 # graduando em Engenharia Elétrica
+#
+# Rotina principal para os cálculos de circuitos eletrônicos
 
 from  __future__ import division
 import sys
 import amplificadorDiferencial
-
 
 class ct:
     PURPLE = '\033[95m'
@@ -21,7 +22,6 @@ class ct:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
     END = '\033[0m'
-
 
 def entradaPar():
     try:
@@ -42,22 +42,34 @@ def par():
     print 'opções:'
     print '1 - configuração básica, resistor na base'
     print '2 - analise ac. malvino, figura 17.11'
+    print '3 - pequenos sinais, Sedra'
 
     tNPN = amplificadorDiferencial.modeloNPN
 
-    entrada = input('>')
+    try:
+        entrada = input('>')
+    except:
+        print ct.BOLD+ct.RED+'erro: entrada inválida'+ct.END
+        return -1
 
-    if entrada == 1:
+    if entrada == 0:
+        return 0
+
+    elif entrada == 1:
         vcc, vee, rc, re, rb, bcc = entradaPar()
         if bcc == -1:
             return -1
         tNPN['bcc'] = bcc
         it, ie, vout, ib = amplificadorDiferencial.conf1_resistoresBase(tNPN, vcc, vee, re, rc, rb)
 
+        print '-'*10
+        print ct.BOLD+'Saída,'+ct.END
         print 'Corrente de cauda                [A]: ', it
         print 'Corrente emissor cada transistor [A]: ', ie
         print 'Corrente na base                 [A]: ', ib
         print 'Tensão de saída                  [V]: ', vout
+
+        return 0
 
     elif entrada == 2:
         vcc, vee, rc, re, rb, bcc = entradaPar()
@@ -66,6 +78,8 @@ def par():
         tNPN['bcc'] = bcc
         It, Ie, Ib, re, A, ie, zin, vout_dc, vout_ganho = amplificadorDiferencial.modeloAC_ampDif(tNPN, vcc, vee, re, rc, rb, 1e-3)
 
+        print '-'*10
+        print ct.BOLD+'Saída,'+ct.END
         print 'Corrente de cauda                [A]: ', It
         print 'Corrente emissor cada transistor [A]: ', Ie
         print 'Corrente na base                 [A]: ', Ib
@@ -74,16 +88,23 @@ def par():
         print 'Corrente AC no emissor           [A]: ', ie
         print 'Impedância de entrada            [R]: ', zin
         print 'Tensão de saída DC               [V]: ', vout_dc
-        print 'Tensão de saóda DC com ganho     [V]: ', vout_ganho
+        print 'Tensão de saída DC com ganho     [V]: ', vout_ganho
 
+        return 0
+
+    elif entrada == 3:
+        pass
     else:
         print 'erro: opção indisponivel'
+        return -1
+
+    return -1
 
 def ao():
     return -1
 
 def ajuda():
-    print u'Comandos cadastrados'
+    print ct.BOLD+'Comandos cadastrados'+ct.END
     print u'a - ajuda'
     print u's - finaliza o programa'
     print u'par - análise para par diferencial'
@@ -100,15 +121,17 @@ dicionarioComandos = {
     'ao' : ao,
 }
 
-
 def nada():
-    print u'erro: comando não reconhecido'
+    print ct.BOLD+ct.RED+'erro: comando não reconhecido'+ct.END
 
 def comandos(cmd):
     return dicionarioComandos.get(cmd, nada)()
 
+################################################################################
+# MAIN
+################################################################################
 if __name__ == '__main__':
-    print u'Circuitos eletrônicos'
+    print ct.BOLD+'Circuitos eletrônicos'+ct.END
 
     while True:
         entrada = raw_input(':')
