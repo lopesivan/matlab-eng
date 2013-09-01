@@ -435,28 +435,62 @@ de excitação, a capacidade em volts amperes, e as correntes de curto-circuito.
 \section{Introdução}
 % no \IEEEPARstart
 
-Quando se estabelece um fluxo mútuo entre duas bobinas ou enrolamentos, uma
-variação na corrente que passa por um deles induz uma FEM no seu próprio
-enrolamento e no outro uma FEM induzida, proporcional ao fluxo mútuo, o 
-número de espiras e a frequência. Um transformador clássico possui
-um enrolamento(s) primário(s) e secundário(s). O enrolamento primário recebe
-a energia elétrica de uma ou mais fonte de alimentação e o diferencial
-de energia própria devido aos dipolos magnéticos do material que compõe o
-núcleo. A energia magnética líquida entregue ao secundário tem que se 
-subtrair a energia irrecuperável perdida no núcleo pelo efeito Joule.
-A variação do fluxo mútuo no tempo induz portanto uma FEM no secundário, 
-desta forma pronta para fornecer energia novamente convertida para energia
-elétrica de saída mediante a aplicação de uma carga no secundário do 
-transformador.\\
-Quando um transformador está funcionando circula uma corrente alternada
-por um dos enrolamentos(vazio) ou em ambos os enrolamentos(em carga) e 
-se estabelece um campo magnético alternado no núcleo. Como resultado,
-aparecem as perdas de cobre e ferro que representam potência real e que fazem
-com que o transformador aqueça. Para se estabelecer um campo magnético
-é necessário uma potência reativa que é obtida na linha de alimentação,
-por essa e outras condições é que a potência total entregue ao enrolamento
-primário é sempre ligeiramente maior que a potência total entregue pelo
-enrolamento secundário.
+%Quando se estabelece um fluxo mútuo entre duas bobinas ou enrolamentos, uma
+%variação na corrente que passa por um deles induz uma FEM no seu próprio
+%enrolamento e no outro uma FEM induzida, proporcional ao fluxo mútuo, o 
+%número de espiras e a frequência. Um transformador clássico possui
+%um enrolamento(s) primário(s) e secundário(s). O enrolamento primário recebe
+%a energia elétrica de uma ou mais fonte de alimentação e o diferencial
+%de energia própria devido aos dipolos magnéticos do material que compõe o
+%núcleo. A energia magnética líquida entregue ao secundário tem que se 
+%subtrair a energia irrecuperável perdida no núcleo pelo efeito Joule.
+%A variação do fluxo mútuo no tempo induz portanto uma FEM no secundário, 
+%desta forma pronta para fornecer energia novamente convertida para energia
+%elétrica de saída mediante a aplicação de uma carga no secundário do 
+%transformador.\\
+%Quando um transformador está funcionando circula uma corrente alternada
+%por um dos enrolamentos(vazio) ou em ambos os enrolamentos(em carga) e 
+%se estabelece um campo magnético alternado no núcleo. Como resultado,
+%aparecem as perdas de cobre e ferro que representam potência real e que fazem
+%com que o transformador aqueça. Para se estabelecer um campo magnético
+%é necessário uma potência reativa que é obtida na linha de alimentação,
+%por essa e outras condições é que a potência total entregue ao enrolamento
+%primário é sempre ligeiramente maior que a potência total entregue pelo
+%enrolamento secundário.
+
+Um transformador clássico possui um primário e secundário cada bobina contem
+um número fixo de voltas. $N1$ para o número de voltas do primário e $N2$ 
+para o secundário. Considerando um transformador ideal é possível estabelecer 
+algumas relações importante a primeira informa a razão $\frac{V1}{V2}$ é igual
+a razão  $\frac{N1}{N2}$, portanto,
+\begin{equation}
+    \frac{V_1}{V_2} = \frac{N_1}{N_2} = R
+\end{equation}
+Onde $R$ é a relação de espira. Existem 3 casos particulares para a relação de espiras.
+Para o caso em que $N2>N1$ o transformador é considerado elevador, já que a tensão
+no secundário é maior que a do primário. Para $N2=N1$ a tensão do secundário é 
+igual a tensão do primário. Para $N2<N1$ a tensão do secundário é menor que a do
+primário, caracterizando um transformador abaixador. Quando uma carga é conectada
+ao transformador em especial ao seu secundário uma corrente começa a fluir 
+pela carga, essa corrente pode fornecer outra relação bastante útil, 
+\begin{equation}
+I_2 N_2 = I_1 N_1
+\end{equation}
+Onde $I_1$ é a corrente no primário, $I_2$ a corrente no secundário.
+Rearranjando os termos,
+\begin{equation}
+    \frac{I_2}{I_1} = \frac{N_1}{N_2} = R
+\end{equation}
+Igualando as equações (1) e (2),
+\begin{equation}
+    \frac{I_2}{I_1} = \frac{V_1}{V_2} = \frac{N_1}{N_2} = R
+\end{equation}
+
+Em um transformador real algumas analogias feitas para o ideal não são válidas.
+Por exemplo, a tensão no secundário em um transformador ideal é a mesma invariante
+com a carga, no transformador real essa tensão fica sujeita a perdas do cobre, 
+que aumentando de forma consideração a impedância do secundário. Um transformador
+real sempre tem uma corrente de excitação.
 
 %\hfill fbs
  
@@ -577,7 +611,7 @@ pode ser obtidas,
         \hline 
         Terminais & Relação transformação \\
         \hline 
-        1 a 2 e 5 a 6 & 0.578 \\
+        1 a 2 e 5 a 6 & 1.000 \\
         1 a 2 e 3 a 4 & 0.578 \\
         \hline
     \end{tabular}
