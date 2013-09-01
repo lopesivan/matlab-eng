@@ -126,12 +126,12 @@
 % *** GRAPHICS RELATED PACKAGES ***
 %
 \ifCLASSINFOpdf
-  % \usepackage[pdftex]{graphicx}
+   \usepackage[pdftex]{graphicx}
   % declare the path(s) where your graphic files are
-  % \graphicspath{{../pdf/}{../jpeg/}}
+   \graphicspath{{../pdf/}{../jpeg/}}
   % and their extensions so you won't have to specify these with
   % every instance of \includegraphics
-  % \DeclareGraphicsExtensions{.pdf,.jpeg,.png}
+   \DeclareGraphicsExtensions{.pdf,.jpeg,.png}
 \else
   % or other class option (dvipsone, dvipdf, if not using dvips). graphicx
   % will default to the driver specified in the system graphics.cfg if no
@@ -345,6 +345,9 @@
 
 \usepackage[brazil]{babel}
 \usepackage[utf8]{inputenc}
+
+%\usepackage{pgfplots}
+
 % correct bad hyphenation here
 \hyphenation{op-tical net-works semi-conduc-tor}
 
@@ -440,7 +443,7 @@ um enrolamento(s) primário(s) e secundário(s). O enrolamento primário recebe
 a energia elétrica de uma ou mais fonte de alimentação e o diferencial
 de energia própria devido aos dipolos magnéticos do material que compõe o
 núcleo. A energia magnética líquida entregue ao secundário tem que se 
-subtrair a energia irrecupéravel perdidade no núcleo pelo efeito Joule.
+subtrair a energia irrecuperável perdida no núcleo pelo efeito Joule.
 A variação do fluxo mútuo no tempo induz portanto uma FEM no secundário, 
 desta forma pronta para fornecer energia novamente convertida para energia
 elétrica de saída mediante a aplicação de uma carga no secundário do 
@@ -450,7 +453,7 @@ por um dos enrolamentos(vazio) ou em ambos os enrolamentos(em carga) e
 se estabelece um campo magnético alternado no núcleo. Como resultado,
 aparecem as perdas de cobre e ferro que representam potência real e que fazem
 com que o transformador aqueça. Para se estabelecer um campo magnético
-é necessário uma potência reativa que é obtidade na linha de alimentação,
+é necessário uma potência reativa que é obtida na linha de alimentação,
 por essa e outras condições é que a potência total entregue ao enrolamento
 primário é sempre ligeiramente maior que a potência total entregue pelo
 enrolamento secundário.
@@ -462,7 +465,7 @@ enrolamento secundário.
 \subsection{Identificação e Caracterização dos enrolamentos}
 
 Primeira parte da experiência é a identificação dos enrolamentos do
-transformador(EMS 8341) disponivel no laboratório.\\
+transformador(EMS 8341) disponível no laboratório.\\
 Tensões nominais da cada um dos três enrolamentos,
 \begin{center}
     \begin{tabular}{|c||c|}
@@ -476,7 +479,7 @@ Tensões nominais da cada um dos três enrolamentos,
     \end{tabular}
 \end{center}
 
-Tensão entre os seguintes terminais de conecção,
+Tensão entre os seguintes terminais de conexão,
 \begin{center}
     \begin{tabular}{|c||c|}
         \hline 
@@ -492,7 +495,7 @@ Tensão entre os seguintes terminais de conecção,
     \end{tabular}
 \end{center}
 
-Corrente nominal de cada uma das seguintes conecções,
+Corrente nominal de cada uma das seguintes conexões,
 \begin{center}
     \begin{tabular}{|c||c|}
         \hline 
@@ -560,13 +563,33 @@ Medição de tensão para os enrolamentos restantes foram,
     \end{tabular}
 \end{center}
 
-Relação de transformação,
+Os valores medidos foram próximos aos nominais, qualquer variação é 
+proveniente da resistência dos enrolamentos, interação térmica com
+ambiente que provoca variações no material que o transformador 
+foi produzido. E uma inspeção visual, mostrou que a ferrugem pode
+ser um grande problema. \\
+Relação de transformação, os enrolamentos 1 a 2 e 5 a 6 têm 500 espiras.
+O enrolamento 3 a 4 tem 865 espiras. As seguintes relações de transformações
+pode ser obtidas,
+
+\begin{center}
+    \begin{tabular}{|c||c|}
+        \hline 
+        Terminais & Relação transformação \\
+        \hline 
+        1 a 2 e 5 a 6 & 0.578 \\
+        1 a 2 e 3 a 4 & 0.578 \\
+        \hline
+    \end{tabular}
+\end{center}
+
+
 
 
 \subsection{Teste de corrente do secundário}
 Transformador com o secundário em curto, com as seguinte configuração, terminais 1 e 2 como primários do transformador. Terminais 5 e 6 como secundário.
 As tensões de entrada(Vp), saída(Vs) e corrente(Io) de entrada foram medidas.
-Para a medição da corrente do secundário foi colocado um amperimetro.
+Para a medição da corrente do secundário foi colocado um amperímetro.
 Os seguintes valores foram medidos,
 
 \begin{center}
@@ -579,26 +602,34 @@ Os seguintes valores foram medidos,
     \end{tabular}
 \end{center}
 
+Com esses valores é possível concluir que a relação de transformação é $0.9439$ o que
+está próximo ao valor de $1$ que seria a relação calculada. Mostrando que
+esse transformador não é um equipamento ideal, mostrando que existem perdas na
+transformação de corrente.
 
-Mudando a configuração do secundário para 3 e 4 do transformador
+Agora, mudando a configuração do secundário para 3 e 4 do transformador
 com isso os seguintes valores foram medidos,
-
 \begin{center}
     \begin{tabular}{|c||c|}
         \hline
         Vp & 8.1 [V] \\
-        Io & 0 [A] \\
+        Io & 0.20 [A] \\
         Is & 0.23 [A] \\
         \hline
     \end{tabular}
 \end{center}
 
-\subsection{Saturação do núcleo}
+Novamente esse teste é mostra que a relação de transformação é próxima
+a $1$. Novamente foi encontrado uma leve variação, também provocada pelas
+perdas resistivas do transformador não ideal.
 
+\subsection{Saturação do núcleo}
+E1 é a tensão de entrada no primário, I1 a corrente do primário e E2 a 
+tensão de saída.
 \begin{center}
     \begin{tabular}{|c||c||c|}
         \hline
-        E1 & I1 & E2 \\
+        E1 [V] & I1 [mA] & E2 [V] \\
         \hline
         0 & 0 & 0 \\
         80 & 0 & 80 \\
@@ -610,6 +641,23 @@ com isso os seguintes valores foram medidos,
         \hline
     \end{tabular}
 \end{center}
+
+%\begin{tikzpicture}
+%    \begin{axis}[ 
+%            xlabel=$x$,
+%            ylabel={$f(x) = x^2 - x +4$}
+%        ] 
+%        \addplot {x^2 - x +4}; 
+%    \end{axis}
+%\end{tikzpicture}
+Testa tabela é possível obter o gráfico a seguir,
+\begin{center}
+    \setlength{\unitlength}{1mm}
+    \includegraphics[height=7cm]{saturacao.png}
+\end{center}
+
+O facilmente notado que a corrente de magnetização aumenta rapidamente
+após um valor de tensão $100$ V.
 
 
 % An example of a floating figure using the graphicx package.
@@ -698,7 +746,10 @@ com isso os seguintes valores foram medidos,
 
 \section{Conclusão}
 
-
+Este laboratório mostrou como um transformador pode ser inicialmente ensaiado, 
+com esses valores em mão é possível analisar as perdas na transformação inerentes
+na construção do transformador. O laboratório proporciona o primeiro contato
+do estudante com o maior e mais usado componente da engenharia elétrica.
 
 % conference papers do not normally have an appendix
 
