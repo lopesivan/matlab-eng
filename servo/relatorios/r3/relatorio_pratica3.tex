@@ -5,8 +5,9 @@
 \usepackage{amsthm}
 
 
-\usepackage[pdftex]{graphicx}
-\graphicspath{{../pdf/}{../jpeg/}}
+%\usepackage[pdftex]{graphicx}
+%\graphicspath{{../pdf/}{../jpeg/}}
+\usepackage{graphicx}
 
 
 \title{Relatório do Laboratório 3}
@@ -214,18 +215,50 @@ k =
             y(t) = \frac{3 t^2}{2} - 3 t + 3 - 3 e^{-t}
             $$
 
+            \newpage
          \item 
              Apresente um um mesmo gráfico a resposta $y(t)$  obtida no item anterior, 
              considerando um intervalo de tempo de 0seg a 10seg com passo de 0.01seg.
  
-            \input eg1
+             \begin{center}
+                \includegraphics[scale=0.6]{fig2q.eps}
+             \end{center}
+
+             %\begin{figure}
+             %   \centerline{\includegraphics[scale=0.6]{fig2q.eps}
+             %   \label{fig:TheFig}
+             %   \caption{fefe}
+             %\end{figure}
+
     \end{enumerate}
 
+\newpage
+
+\item
+    Encontre os zeros, polos e ganho da função de transferencia abaixo. Em seguida, 
+    represente e identifique os polos e zeros no plano-s.
+
+    $$
+    G(s) = \frac{4 s^2 + 16 s + 12}{s^4 + 12 s^3 +  44 s^2 + 48 s}
+    $$
 
 
+    Para a solução deste problema, criei o seguinte codigo,
 
+ 
+     \begin{lstlisting}
+num = [4 16 12];
+den = [1 12 44 48 0];
+z = roots(num);
+p = roots(den);
+k = 1;
+fun = zpk(z, p, k);
+     \end{lstlisting}
 
-
+     Obtendo os pólos e zeros no plano-s,
+        \begin{center}
+                \includegraphics[scale=0.6]{fig3q.eps}
+             \end{center}
 
 
 \end{list}
