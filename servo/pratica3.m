@@ -66,17 +66,29 @@ zpk(z, p, k);
 % Quinta questão
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-gc = tf([1 0],[1 1])
-gp = tf([2], [1 1 2])
-gs = tf([1], [1 0.5])
+gc = tf([1 0],[1 1]);
+gp = tf([2], [1 1 2]);
+gs = tf([1], [1 0.5]);
 
 % item a
-s = series(gc, gp)
-f = feedback(s, gs)
+s = series(gc, gp);
+f = feedback(s, gs);
 
 % item b
-p = parallel(gc, gp)
-f1 = feedback(p, gs)
+p = parallel(gc, gp);
+f1 = feedback(p, gs);
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Sétima questão
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+controlador = tf([1], [1 0]);
+planta = tf([10], [1 5]);
+sensor = tf([1], [1 1]);
+
+h1 = series(controlador, planta);
+funcao_transferencia = feedback(h1, sensor);
+
 
 
 

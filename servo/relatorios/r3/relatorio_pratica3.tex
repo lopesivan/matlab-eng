@@ -139,9 +139,18 @@ k =
         Usando a mesma ideia usando no item (a) é possível obter, 
 
         \begin{lstlisting}
-r = []
-p = []
-k = []
+r = 
+   -0.5000 - 0.2887i
+   -0.5000 + 0.2887i
+    1.0000 + 0.0000i
+
+p = 
+   -0.5000 + 0.8660i
+   -0.5000 - 0.8660i
+    0.0000 + 0.0000i
+
+k = 
+    []
     \end{lstlisting}
 
 
@@ -221,11 +230,10 @@ k =
             \mathcal{L}^{-1}Y(s)=\mathcal{L}^{-1}( -\frac{3}{s+1} + \frac{3}{s} ),
             $$
 
-            Resolvendo para $t$,
-
-            $$
+            Resolvendo para $t$, encontra-se a resposta para o \textbf{impulso} ,
+            \begin{equation}
                 y(t) = 3 - 3 e^{-t}
-            $$\\
+            \end{equation}\\
 
             
 
@@ -241,11 +249,11 @@ k =
             Y(s) = \frac{3}{s+1} - \frac{3}{s} + \frac{3}{s^2} 
             $$
 
-            Aplicando $\mathcal{L}^{-1}$,
+            Aplicando $\mathcal{L}^{-1}$, encontra-se a resposta para o \textbf{degrau} ,
 
-            $$
+            \begin{equation}
             y(t) = 3 - 3 t + 3 e^{-t}
-            $$\\
+            \end{equation}\\
 
 
             Para a ultima resposta, a $\mathcal{L}$ da rampa unitária é $\mathcal{L}(r(t)) = \frac{1}{s^2}$, logo,
@@ -260,12 +268,11 @@ k =
             Y(s) = \frac{3}{s^3} - \frac{3}{s^2} + \frac{3}{s} - \frac{3}{s+1}
             $$
 
-            Aplicando $\mathcal{L}^{-1}$,
+            Aplicando $\mathcal{L}^{-1}$, encontra-se a resposta para a \textbf{rampa} ,
 
-
-            $$
+           \begin{equation}
             y(t) = \frac{3 t^2}{2} - 3 t + 3 - 3 e^{-t}
-            $$
+        \end{equation}
 
             \newpage
          \item 
@@ -335,7 +342,7 @@ k = 10;
 zpk(z, p, k);               
                 \end{lstlisting}
 
-                Resultando na seguinte função de trasnferência,
+                Resultando na seguinte função de transferência,
 
                 $$
                 G(s) = \frac{10}{s^2 + 4 s + 29}
@@ -379,8 +386,8 @@ zpk(z, p, k);
             \includegraphics[scale=0.5]{fig5a.png}
             \end{center}
 
-            Usando os comandos $series$ e $feedback$ é possivel criar a função
-            de transferência, para tanto o codigo abaixo foi construido,
+            Usando os comandos $series$ e $feedback$ é possível criar a função
+            de transferência, para tanto o código abaixo foi construído,
 
             \begin{lstlisting}
 gc = tf([1 0],[1 1])
@@ -429,7 +436,7 @@ f1 = feedback(p, gs)
   Com base no sistema dinâmico abaixo, obtenha analiticamente as matrizes de estado
   \textbf{(A, B, C, D)} considerando o posição $x(t)$ e a velocidade $\frac{d x(t)}{dt}$
   com variáveis de estado, $F(t)$ como entrada e $x(t)$ como saída. Em seguida utilize
-  o Matla para encontrar a função de transferência correspondente. Considere
+  o Matlab para encontrar a função de transferência correspondente. Considere
   $m=1.0 kg$, $b=0.2 N s/m$, $k=3.0 N/m$
 
             \begin{center}
@@ -443,7 +450,64 @@ f1 = feedback(p, gs)
             \begin{center}
             \includegraphics[scale=0.6]{fig7.png}
             \end{center}
- 
+
+            O Matlab disponibiliza a função $tf2ss$ que encontra uma de varias 
+            solução possíveis para as matrizes de estados. Antes se faz
+            necessário encontrar a função de transferência para o problema, 
+            o código abaixo encontra a função de transferência para o problema 7,
+
+            \begin{lstlisting}
+controlador = tf([1], [1 0])
+planta = tf([10], [1 5])
+sensor = tf([1], [1 1])
+h1 = series(controlador, planta)
+funcao_transferencia = feedback(h1, sensor)
+                \end{lstlisting}
+
+            Após a execução do codigo, a seguinte função foi obtida,
+
+            $$
+            H(s) = \frac{10 s + 10}{s^3 + 6 s^2 + 5 s + 10}
+            $$
+
+            Usando $tf2ss$, 
+
+            \begin{lstlisting}
+[A, B, C, D] = tf2ss([10 10], [1 6 5 10])
+            \end{lstlisting}
+
+            Retorna as matrizes de estados,
+
+            $$
+            A = \left[\begin{array}{rrr}
+                    -6 & -5 & -10 \\
+                    1 & 0 & 0 \\
+                    0 & 1 & 0 \\
+            \end{array}\right]
+            $$
+
+            $$
+            B = \left[\begin{array}{r}
+                1 \\
+                0 \\
+                0 \\
+            \end{array}\right]
+            $$
+
+            $$
+            C = \left[\begin{array}{rrr}
+                0 & 10 & 10
+               \end{array}\right]
+            $$
+
+            $$
+            D = \left[\begin{array}{r}
+                0 
+               \end{array}\right]
+            $$
+
+
+
 \end{list}
 
 
