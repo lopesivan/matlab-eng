@@ -3,6 +3,7 @@
 % 09/06/2013
 
 \documentclass[a4paper, 10pt]{article}
+
 \usepackage[brazil]{babel}
 \usepackage[utf8]{inputenc}
 
@@ -21,6 +22,9 @@
 \author{Felipe Bandeira da Silva}
 \begin{document}
 \maketitle
+
+
+%\tableofcontents
 
 
 %\lstset{language = Matlab}
@@ -371,16 +375,50 @@ zpk(z, p, k);
         \item
             Figura 1
             \begin{center}
-            \includegraphics[scale=0.6]{fig5a.png}
+            \includegraphics[scale=0.5]{fig5a.png}
             \end{center}
-           
+
+            Usando os comandos $series$ e $feedback$ é possivel criar a função
+            de transferência, para tanto o codigo abaixo foi construido,
+
+            \begin{lstlisting}
+gc = tf([1 0],[1 1])
+gp = tf([2], [1 1 2])
+gs = tf([1], [1 0.5])
+s = series(gc, gp)
+f = feedback(s, gs)
+             \end{lstlisting}
+
+            Resultando na seguinte equação de transferência,
+
+            $$
+            H(s) = \frac{2 s^2 + s}{s^4 + 2.5 s^3 + 4 s^2 + 5.5 s + 1}
+            $$
+
 
         \item
              Figura 2
             \begin{center}
-            \includegraphics[scale=0.6]{fig5b.png}
+            \includegraphics[scale=0.5]{fig5b.png}
             \end{center}
-             
+            
+            Com uma pequena alteração do código usando no item a, para suportar
+            a associação em paralelo
+
+             \begin{lstlisting}
+gc = tf([1 0],[1 1])
+gp = tf([2], [1 1 2])
+gs = tf([1], [1 0.5])
+p = parallel(gc, gp)
+f1 = feedback(p, gs)
+             \end{lstlisting}
+
+             Resultando na seguinte equação de transferência,
+
+             $$
+                H(s) = \frac{s^4 + 1.5 s^3 + 4.5 s^2 + 4 s + 1}{s^4 + 3.5 s^3 + 5 s^2 + 7.5 s + 3}
+             $$
+
 
     \end{enumerate}
 

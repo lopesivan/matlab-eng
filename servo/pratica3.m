@@ -4,14 +4,14 @@
 
 a = [1 2];
 b = [1 4];
-num = 10*conv(a, b)
+num = 10*conv(a, b);
 a = [1 1];
 b = [1 3];
 c = [1 5];
-den = conv(conv(a, b), conv(c, c))
+den = conv(conv(a, b), conv(c, c));
 
 % expandindo em frações parciais
-[r, p, k] = residue(num, den)
+[r, p, k] = residue(num, den);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Segunda questão
@@ -23,9 +23,9 @@ y1 = 3-3*exp(-t);
 y2 = 3*t-3+3*exp(-t);
 y3 = 3*(t.^2)/2 - 3*t + 3 - 3*exp(-t);
 
-plot(t, y1, t, y2, t, y3);
-xlabel('tempo seg');
-print -depsc fig2q.eps;
+%plot(t, y1, t, y2, t, y3);
+%xlabel('tempo seg');
+%print -depsc fig2q.eps;
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -40,7 +40,7 @@ p = roots(den);
 k = 1;
 
 fun = zpk(z, p, k);
-pzmap(fun);
+%pzmap(fun);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Quarta questão
@@ -49,14 +49,34 @@ pzmap(fun);
 z = [];
 p = [-2+5j -2-5j];
 k = 10;
-zpk(z, p, k)
+zpk(z, p, k);
 
 z = [0];
 p = [-1+2j -1-2j];
 k = 1;
-zpk(z, p, k)
+zpk(z, p, k);
 
 z = [0 -1];
 p = [-2 -3 -2+5j -2-5j];
 k = 4;
-zpk(z, p, k)
+zpk(z, p, k);
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Quinta questão
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+gc = tf([1 0],[1 1])
+gp = tf([2], [1 1 2])
+gs = tf([1], [1 0.5])
+
+% item a
+s = series(gc, gp)
+f = feedback(s, gs)
+
+% item b
+p = parallel(gc, gp)
+f1 = feedback(p, gs)
+
+
+
