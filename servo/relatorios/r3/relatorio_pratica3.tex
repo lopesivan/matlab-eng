@@ -150,7 +150,7 @@ k =
             Função temporal $y(t)$ que representa a resposta do sistema quando excitado
             por um impulso unitário $x(t)=\delta(t)$ e rampa unitário $x(t)=r(t)$ \\
 
-            O $\mathcal{L}(\delta(t)) = 1$ com isto é possivel obter a resposta 
+            O $\mathcal{L}(\delta(t)) = 1$ com isto é possível obter a resposta 
             $Y(s)$ ao impulso, 
     
             $$
@@ -235,7 +235,7 @@ k =
 \newpage
 
 \item
-    Encontre os zeros, polos e ganho da função de transferencia abaixo. Em seguida, 
+    Encontre os zeros, polos e ganho da função de transferência abaixo. Em seguida, 
     represente e identifique os polos e zeros no plano-s.
 
     $$
@@ -243,7 +243,7 @@ k =
     $$
 
 
-    Para a solução deste problema, criei o seguinte codigo,
+    Para a solução deste problema, criei o seguinte código,
 
  
      \begin{lstlisting}
@@ -260,7 +260,73 @@ fun = zpk(z, p, k);
                 \includegraphics[scale=0.6]{fig3q.eps}
              \end{center}
 
+     
 
+
+
+\newpage
+
+         \item
+             Dados os zeros, pólos e ganho K a seguir, obtenha a função de transferência 
+             que representa o respectivo sistema:
+        \begin{enumerate}
+            \item
+
+                Não existe zeros, os pólos estão em $-2\pm5j$ e o ganho é 10.
+
+
+             \item
+                 O zero está em 0, os pólos estão em $-1\pm2j$ e o ganho é 1.
+
+             \item
+                 Os zeros estão em 0 e -1, os pólos estão em -2, -3 e 
+                 $-2\pm5j$ e o ganho é 4.
+                
+
+        \end{enumerate}
+
+
+\newpage
+    Obtenha a função de transferência equivalente dos sistemas abaixo, sendo:
+
+    \begin{enumerate}
+        \item
+            Figura 1
+            \begin{center}
+            \includegraphics[scale=0.6]{fig5a.png}
+            \end{center}
+           
+
+        \item
+             Figura 2
+            \begin{center}
+            \includegraphics[scale=0.6]{fig5b.png}
+            \end{center}
+             
+
+    \end{enumerate}
+
+
+\newpage
+\item
+  Com base no sistema dinâmico abaixo, obtenha analiticamente as matrizes de estado
+  \textbf{(A, B, C, D)} considerando o posição $x(t)$ e a velocidade $\frac{d x(t)}{dt}$
+  com variáveis de estado, $F(t)$ como entrada e $x(t)$ como saída. Em seguida utilize
+  o Matla para encontrar a função de transferência correspondente. Considere
+  $m=1.0 kg$, $b=0.2 N s/m$, $k=3.0 N/m$
+
+            \begin{center}
+            \includegraphics[scale=0.6]{fig6a.png}
+            \end{center}
+ 
+\newpage
+\item
+    Com o auxilio do Matlab, obtenha as matrizes de estado $\textbf(A, B, C, D)$ do 
+    sistema mostrado a seguir:
+            \begin{center}
+            \includegraphics[scale=0.6]{fig7.png}
+            \end{center}
+ 
 \end{list}
 
 
