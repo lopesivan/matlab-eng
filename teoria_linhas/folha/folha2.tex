@@ -438,7 +438,7 @@ Fórmulas para a disciplina de linha e transmissão
 %\hfill fbs
 %\hfill Agosto 30, 2013
 
-\section{Modelagem de Carga}
+\section{\textbf{Modelagem de Carga}}
 
 Modelagem para as 3 situações.
 
@@ -466,7 +466,7 @@ S = P+jQ_{modelada}
 \subsection{Impedância Constante (ZCTE)}
 
 \begin{equation}
-P_{modelada} = P \cdot \frac{V_{barramento}}{V_{carga}}
+P_{modelada} = P \cdot \frac{V_{linha}}{V_{carga}}
 \end{equation}
 
 \begin{equation}   
@@ -476,14 +476,14 @@ S = P_{modelada} + jQ_{modelada}
 \subsection{Carga Mista}
 
 \begin{equation}
-P_{modelada} =PCTE \cdot P +  ZCTE \cdot  P \cdot \frac{V_{barramento}}{V_{carga}}
+P_{modelada} =PCTE \cdot P +  ZCTE \cdot  P \cdot \frac{V_{linha}}{V_{carga}}
 \end{equation}
 
 \begin{equation}
 S = P_{modelada} + jQ_{modelada}  
 \end{equation}
 
-\section{Indutância em LT's}
+\section{\textbf{Indutância em LT's}}
 
 Indutância em uma linha monofásica ou trifásica.
 
@@ -532,7 +532,7 @@ $D_s$ é definida para os $n$ condutores por fase,
 
 Considerando o espaçamento $d$ igual entre os condutores que estão na mesma coluna ou linha.
 
-\section{Capacitância}
+\section{\textbf{Capacitância em LT's}}
 
 Capacitância para linhas trifásica assimétricas,
 
@@ -559,7 +559,64 @@ Capacitância para linhas trifásica assimétricas,
 Onde $R$ é o raio real do condutor(não confundir com o raio efetivo para
 análise da indutância).
 
-\section{Modelos de Linhas}
+\newpage
+
+\section{\textbf{Quadripolos}}
+
+\begin{center}
+    \includegraphics[scale=0.3]{Two-port_parameters.png}
+\end{center}
+
+\begin{equation}
+V_1 = A V_2 + B I_2
+\end{equation}
+
+\begin{equation}
+I_1 = C V_2 + D I_2
+\end{equation}
+
+\begin{equation}
+V_2 = D V_1 - B I_1
+\end{equation}
+
+\begin{equation}
+I_2 = - C V_1 + A I_1
+\end{equation}
+
+\begin{equation}
+A D - B C = 1
+\end{equation}
+
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+\begin{tabular}{|c||c||c|}
+    \hline
+    Modelo LT & \multicolumn{2}{|c|}{Parâmetro} \\
+    \hline
+    {}  & A & B  \\
+    \hline
+    Curta & 1 & $Z$   \\
+    \hline
+%    Média $\pi$ & $1 + \frac{Z Y}{2}$ & $Z$ & $Y (1+\frac{Z Y}{2})$ & $1+\frac{Z Y}{2}$ \\
+Média $\pi$ & $1 + \frac{Z Y}{2}$ & $Z$\\
+    \hline
+
+%    Média $T$ & $1+\frac{Z Y}{2}$ & $Z (1+\frac{Z Y}{2})$ & Y & $ 1 +  \frac{Z Y}{2}$ \\
+Média $T$ & $1+\frac{Z Y}{2}$ & $Z (1+\frac{Z Y}{2})$ \\
+    \hline
+    {} & {} & {} \\
+    {} & C & D \\
+    \hline
+    Curta & 0 & 1 \\
+    \hline
+    Média $\pi$ & $Y (1+\frac{Z Y}{2})$ & $1+\frac{Z Y}{2}$ \\
+    \hline
+    Média $T$ &  Y & $ 1 +  \frac{Z Y}{2}$ \\
+    \hline
+\end{tabular}
+\end{center}
+
+\section{\textbf{Modelos de Linhas}}
 
 \subsection{Curta}
 
