@@ -443,6 +443,42 @@ f1 = feedback(p, gs)
             \includegraphics[scale=0.6]{fig6a.png}
             \end{center}
  
+
+         A equação diferencial para o sistema pode ser encontrada, o pistão 
+         exerce sobre o sistema uma força, 
+         \begin{equation}
+             F_b(x) = b \frac{d x}{d t}
+         \end{equation}
+
+         A mola exerce sobre o sistema uma força,
+         \begin{equation}
+             F_k(x) = k x
+         \end{equation}
+
+         A contribuição de todas a força,
+        \begin{equation}
+            F_r = F(x) - (F_b(x) + F_k(x))
+        \end{equation}
+
+        Onde $F_r = m \frac{d^2 x}{d t^2}$ é a força resultante, desenvolvendo a equação 6,
+
+        $$ 
+        m \frac{d^2 x}{d t^2} = F - (\frac{d x}{d t} + k x)
+        $$
+
+         Portanto a equação diferencial final, 
+        \begin{equation} 
+            m \frac{d^2 x}{d t^2} +  b \frac{d x}{d t} + k x = F
+        \end{equation}
+
+        Substitundo em 7 os valores proposto pelo problema, 7 fica,
+
+        \begin{equation}
+            1 \frac{d^2 x}{d t^2} +  0.2 \frac{d x}{d t} + 3 x = F
+        \end{equation}
+
+
+
 \newpage
 \item
     Com o auxilio do Matlab, obtenha as matrizes de estado $\textbf(A, B, C, D)$ do 
