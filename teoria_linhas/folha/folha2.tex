@@ -440,7 +440,7 @@ Fórmulas para a disciplina de linha e transmissão
 
 \section{\textbf{Modelagem de Carga}}
 
-Modelagem para as 3 situações.
+%Modelagem para as 3 situações.
 
 %A modelagem de uma carga elétrica pode ser feita para:
 %\begin{itemize}
@@ -449,7 +449,7 @@ Modelagem para as 3 situações.
 %\item Carga mista
 %\end{itemize}
 
-\subsection{Potência ativa constante(PCTE)}
+\subsection{PCTE}
     
 \begin{equation}
 P = VA \cdot fp
@@ -463,7 +463,7 @@ Q_{modelada} = P \cdot tan(cos^{-1}fp)
 S = P+jQ_{modelada}
 \end{equation}
 
-\subsection{Impedância Constante (ZCTE)}
+\subsection{ZCTE}
 
 \begin{equation}
 P_{modelada} = P \cdot \frac{V_{linha}}{V_{carga}}
@@ -485,7 +485,7 @@ S = P_{modelada} + jQ_{modelada}
 
 \section{\textbf{Indutância em LT's}}
 
-Indutância em uma linha monofásica ou trifásica.
+%Indutância em uma linha monofásica ou trifásica.
 
 \subsection{Linha monofásica}
 
@@ -501,22 +501,25 @@ L = 2 \cdot 10^{-7} \ln\frac{D}{R'} \unit{H/m}
 R' = e^{-\frac{1}{4}}R = 0.7788R
 \end{equation}
 
-Onde $R'$ é chamado de raio efetivo.
+%Onde $R'$ é chamado de raio efetivo.
+Onde: $R'$ é o raio efetivo.
 
 \subsection{Linha trifásica}
-Indutância final de uma linha trifásica com $n$ condutores por fase é data por:
+%Indutância final de uma linha trifásica com $n$ condutores por fase é data por:
 
 \begin{equation}
 L = 2 \cdot 10^{-4} \ln\frac{D_m}{D_s}
 \end{equation}
 
-Onde $D_m$ é a distância média geométrica entre as fases,
+%Onde $D_m$ é a distância média geométrica entre as fases,
 
 \begin{equation}
 D_m = (D_{12} D_{21} D_{31})^{\frac{1}{3}}
 \end{equation}
 
-$D_s$ é definida para os $n$ condutores por fase,
+%$D_s$ é definida para os $n$ condutores por fase,
+\renewcommand{\arraystretch}{1.5}
+
 \begin{center}
 \begin{tabular}{|c||c|}
     \hline
@@ -530,11 +533,11 @@ $D_s$ é definida para os $n$ condutores por fase,
 \end{tabular}
 \end{center}
 
-Considerando o espaçamento $d$ igual entre os condutores que estão na mesma coluna ou linha.
+%Considerando o espaçamento $d$ igual entre os condutores que estão na mesma coluna ou linha.
 
 \section{\textbf{Capacitância em LT's}}
 
-Capacitância para linhas trifásica assimétricas,
+%Capacitância para linhas trifásica assimétricas,
 
 \begin{equation}
     C = \frac{2\pi 8.85 \cdot 10^{-9}}{\ln \frac{D_m}{D_s}}
@@ -542,6 +545,7 @@ Capacitância para linhas trifásica assimétricas,
 
 
 \subsection{Linha Trifásica}
+\renewcommand{\arraystretch}{1.5}
 
 \begin{center}
 \begin{tabular}{|c||c|}
@@ -556,10 +560,12 @@ Capacitância para linhas trifásica assimétricas,
 \end{tabular}
 \end{center}
 
-Onde $R$ é o raio real do condutor(não confundir com o raio efetivo para
-análise da indutância).
+%Onde $R$ é o raio real do condutor(não confundir com o raio efetivo para
+%análise da indutância).
 
-\newpage
+Onde: $R$ é o raio real.
+
+%\newpage
 
 \section{\textbf{Quadripolos}}
 
@@ -589,6 +595,7 @@ A D - B C = 1
 
 \renewcommand{\arraystretch}{1.5}
 \begin{center}
+
 \begin{tabular}{|c||c||c|}
     \hline
     Modelo LT & \multicolumn{2}{|c|}{Parâmetro} \\
