@@ -356,7 +356,7 @@
 %
 % paper title
 % can use linebreaks \\ within to get better formatting as desired
-\title{Laboratório de Transformadores\\Ensaio 2: Curto Circuito e Vazio}
+\title{Laboratório de Transformadores\\Ensaio 3: Curto Circuito e Vazio}
 
 
 % author names and affiliations
@@ -488,11 +488,11 @@ atinja o valor nominal. Medindo a tensão $V_{sc}$, a corrente $I_{sc}$ e a pot�
 ativa $P_{cc}$ é possível calcular os parâmetros:
 
 \begin{equation}
-    Z_{eq} = \frac{V_{sc}}{I_sc}
+    Z_{eq} = \frac{V_{sc}}{I_{sc}}
 \end{equation}
 
 \begin{equation}
-    R_{eq} = \frac{P_{cc}}{I_{cc}^2}
+    R_{eq} = \frac{W}{I_{sc}^2}
 \end{equation}
 
 \begin{equation}
@@ -502,19 +502,41 @@ ativa $P_{cc}$ é possível calcular os parâmetros:
 \subsection{Medições}
 
 No laboratório foram feitas as medições necessárias para obter os parâmetros já ditos. 
+O procedimento para a obtenção dos parâmetros já ditos acima são relativamente simples
+só requer um cuidado extra para não danificar o transformador do laboratório. Após
+os devidos cuidados, os seguintes valores foram obtidos:
 
 \begin{center}
-    \begin{tabular}{c|c}
-        \hline
-        $E_1$ & 13 [V] \\
-        $I_1$ & 500 [mA] \\
-        $I_2$ & 500 [mA] \\
-        $var$ & 5 [var] \\
-        $pat$ & 4 [W] \\
+    \begin{tabular}{c||c}
+        %\hline
+        $V_{sc}$ & 13 [V] \\
+        $I_{sc}$ & 500 [mA] \\
+        $I_{sc2}$ & 500 [mA] \\
+        $Q$ & 5 [var] \\
+        $W$ & 4 [W] \\
         $fp$ & 0.606 [ind] \\
-        \hline
+        %\hline
     \end{tabular}
 \end{center}
+
+Onde: $V_{sc}$ é a tensão no primário, $I_{sc}$ a corrente no primário, 
+$I_{sc2}$ a corrente no secundário, $Q$ e $W$ são, potência reativa e ativa consumidas
+pelo transformador, e $fp$ o fator de potência.
+Com estes valores é possível obter os parâmetros para o transformador, com isso fica,
+
+
+\begin{equation}
+    Z_{eq} = \frac{13}{0.5} = 26.0 \Omega
+\end{equation}
+
+\begin{equation}
+    R_{eq} = \frac{4}{0.5^2} = 16 \Omega
+\end{equation}
+
+\begin{equation}
+    X_{eq} = \sqrt{Z_{eq}^2 - R{eq}^2} = \sqrt{26^2-16^2} = 20.5 \Omega
+\end{equation}
+
 
 \section{\textbf{Ensaio a Vazio}}
 
@@ -546,6 +568,49 @@ calcular os parâmetros:
 \begin{equation}
     X_m = \frac{1}{\sqrt{\frac{1}{Z_\varphi}^2 - \frac{1}{R_c}^2}}
 \end{equation}
+
+
+\subsection{Medições}
+Para este ensaio os seguintes valores foram obtidos:
+
+\begin{center}
+    \begin{tabular}{c||c}
+        %\hline
+        $V_{oc}$ & 117.5 [V] \\
+        $I_{oc}$ & 103.0 [mA] \\
+        $V_{sc}$ & 124.5 [V] \\
+        $Q$ & 9.0 [var] \\
+        $W$ & 6.0 [W] \\
+        $fp$ & 0.505 [ind] \\
+        %\hline
+    \end{tabular}
+\end{center}
+
+Onde: $V_{oc}$ é a tensão no primário, $I_{oc}$ a corrente no primário, 
+$V_{sc}$ tensão no secundário, $Q$ e $W$ são, potência reativa e ativa consumidas
+pelo transformador, e $fp$ o fator de potência. Com estes valores 
+é possível obter os seguintes parâmetros:
+
+\begin{equation}
+    Z_\varphi = \frac{117.5}{0.103} = 1140.7 \Omega
+\end{equation}
+
+\begin{equation}
+    R_c = \frac{117.5^2}{6.0} = 2301.0 \Omega
+\end{equation}
+
+
+\begin{equation}
+    X_m = \frac{1}{\sqrt{\frac{1}{1140.7}^2 - \frac{1}{2301.0}^2}} = 1313.4 
+\end{equation}
+
+\section{\textbf{Questionário}}
+
+A energia ativa presente nas medições mostra que o transformador utilizado
+não é um componente ideal, com isto ele apresenta perdas em seus enrolamento.
+Mais isso não é necessariamente um problema para o modelagem matemática, já
+que esta resistência é incluída. O fator de potência é apenas uma consequencia
+natural com a presença da potência ativa e reativa.
 
 
 % An example of a floating figure using the graphicx package.
