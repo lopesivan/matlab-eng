@@ -420,6 +420,35 @@ def parametrosLT():
 
     return [C, C*comprimento, Ds, Dm]
 
+def modelagem():
+    """Modelagem de uma linha de transmissão, seja ela curta, média pi, media T
+    ou longa. Calculos necessarios para cada aproximação.
+    """
+
+    print '1 - curta'
+    print '2 - média pi'
+    print '3 - média T'
+
+    try:
+        a = input('>')
+    except:
+        print u'erro: algo inesperado ocorreu na entrada do usuario'
+        return -2
+
+    if a == 1:
+        pass
+    elif a == 2:
+        pass
+    elif a == 3:
+        pass
+    elif a == 4:
+        pass
+    else:
+        print u'erro: opção não disponivel'
+        return -1
+
+
+    return 0
 
 ################################################################################
 # Interação homem maquina
@@ -450,6 +479,7 @@ dicionarioComandos = {
     'i' : indutancia,
     'c' : capacitancia,
     'plt': parametrosLT,
+    'mod': modelagem,
 }
 
 def nada():
