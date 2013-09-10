@@ -156,6 +156,18 @@ k =
     \end{lstlisting}
 
 
+    Rearranjando os termos, 
+
+    $$
+    F(s) = \frac{-0.5000-0.2887j}{s-(-0.5000+0.8660j)} + \frac{-0.5000+0.2887j}{s-(-0.5000-0.8660j)} + \frac{1}{s}
+    $$
+
+    Aplicando a transformada inversa de laplace,
+
+    $$
+    f(t) = (-0.5-0.2887j) e^{(-0.5+0.866j) t} + (-0.5+0.2887j) e^{(-0.5-0.866j) t} + 1
+    $$
+
     \item
 
         $$
@@ -298,7 +310,7 @@ k =
     
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% QUESTAO 3
+% QUESTÃO 3
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -325,7 +337,7 @@ k = 1;
 fun = zpk(z, p, k);
      \end{lstlisting}
 
-     Obtendo os pólos e zeros no plano-s,
+     Obtendo os polos e zeros no plano-s,
         %\begin{center}
         %        \includegraphics[scale=0.6]{fig3q.eps}
         %     \end{center}
@@ -335,19 +347,19 @@ fun = zpk(z, p, k);
     
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% QUESTAO 4
+% QUESTÃO 4
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 \newpage
 
          \item
-             Dados os zeros, pólos e ganho K a seguir, obtenha 
+             Dados os zeros, polos e ganho K a seguir, obtenha 
              a função de transferência que representa o respectivo sistema:
         \begin{enumerate}
             \item
 
-                Não existe zeros, os pólos estão em $-2\pm5j$ e o ganho é 10.\\
+                Não existe zeros, os polos estão em $-2\pm5j$ e o ganho é 10.\\
                 
                 Para a solução, o seguinte código foi utilizado,
 
@@ -367,7 +379,7 @@ zpk(z, p, k);
 
 
              \item
-                 O zero está em 0, os pólos estão em $-1\pm2j$ e o ganho é 1.\\
+                 O zero está em 0, os polos estão em $-1\pm2j$ e o ganho é 1.\\
 
                  Usando o mesmo código do item a, a função de transferência fica,
 
@@ -378,7 +390,7 @@ zpk(z, p, k);
                  
 
              \item
-                 Os zeros estão em 0 e -1, os pólos estão em -2, -3 e 
+                 Os zeros estão em 0 e -1, os polos estão em -2, -3 e 
                  $-2\pm5j$ e o ganho é 4.\\
 
                  A função de transferência é,
@@ -391,7 +403,7 @@ zpk(z, p, k);
         \end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% QUESTAO 5
+% QUESTÃO 5
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -452,7 +464,7 @@ f1 = feedback(p, gs)
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% QUESTAO 6
+% QUESTÃO 6
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newpage
@@ -498,13 +510,13 @@ f1 = feedback(p, gs)
             m \frac{d^2 x}{d t^2} +  b \frac{d x}{d t} + k x = F
         \end{equation}
 
-        Substitundo em 7 os valores proposto pelo problema,
+        Substituindo em 7 os valores proposto pelo problema,
 
         \begin{equation}
             1 \frac{d^2 x}{d t^2} +  0.2 \frac{d x}{d t} + 3 x = F
         \end{equation}
         
-        Desenvolvendo 8 para se obter as matrices de estados,
+        Desenvolvendo 8 para se obter as matrizes de estados,
         
         \begin{equation}
         	q_1(t) = x(t)
@@ -514,7 +526,7 @@ f1 = feedback(p, gs)
         	q_2(t) = \frac{d x(t)}{d t}
         \end{equation}
         
-        Derivando $q_1(t)$, é possivel afirmar $\frac{d q_1(t)}{d t} = q_2(t)$, desenvolvendo,
+        Derivando $q_1(t)$, é possível afirmar $\frac{d q_1(t)}{d t} = q_2(t)$, desenvolvendo,
         
         \begin{equation}
         	\frac{d q_2(t)}{d t} = 1 \left(-3 x(t) - 0.2 \frac{d y(t)}{d t} \right) + F
@@ -588,7 +600,7 @@ f1 = feedback(p, gs)
         \end{array}\right]
         $$ 
         
-        Utilizando as matrizes de estados é possivel encontrar
+        Utilizando as matrizes de estados é possível encontrar
         a função de transferência do sistema, usando o comando       
         $ss2tf$ que retorna o numerador e denominador da função
         de transferência, tenho como resposta,
@@ -609,7 +621,7 @@ den =
 		\end{lstlisting}   
         
         O que é totalmente coerente com a seguinte resposta 
-        analitica, aplicando a transformada
+        analítica, aplicando a transformada
         inversa de laplace em 8,
         
         $$
@@ -625,7 +637,7 @@ den =
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% QUESTAO 7
+% QUESTÃO 7
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -650,7 +662,7 @@ h1 = series(controlador, planta)
 funcao_transferencia = feedback(h1, sensor)
                 \end{lstlisting}
 
-            Após a execução do codigo, a seguinte função foi obtida,
+            Após a execução do código, a seguinte função foi obtida,
 
             $$
             H(s) = \frac{10 s + 10}{s^3 + 6 s^2 + 5 s + 10}
