@@ -18,7 +18,7 @@
 \usepackage{graphicx}
 
 
-\title{Relatório do Laboratório 3}
+\title{Relatório, Laboratório 3.\\Servo 1}
 \author{Felipe Bandeira da Silva}
 \begin{document}
 \maketitle
@@ -28,7 +28,6 @@
 
 
 %\lstset{language = Matlab}
-
 % http://en.wikibooks.org/wiki/LaTeX/Source_Code_Listings
 
 \definecolor{mygreen}{rgb}{0,0.6,0}
@@ -66,6 +65,9 @@
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% QUESTAO 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 %\section{Expansão em frações parciais}
@@ -136,7 +138,7 @@ k =
         F(s) = \frac{s+1}{s(s^2+s+1)}
         $$
 
-        Usando a mesma ideia usando no item (a) é possível obter, 
+        Usando a mesma ideia do item (a) é possível obter, 
 
         \begin{lstlisting}
 r = 
@@ -160,7 +162,7 @@ k =
         F(s) = \frac{2 s^3 + 5 s^2 + 3 s + 6}{s^3 + 6 s^2 + 11 s + 6}
         $$
 
-        Usando a mesma ideia usando no item (a) é possível obter, 
+        Usando a mesma ideia do item (a) é possível obter, 
 
         \begin{lstlisting}
 r = 
@@ -194,10 +196,11 @@ k =
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% QUESTAO 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-
-
+\newpage
 
 
 \item 
@@ -274,13 +277,15 @@ k =
             y(t) = \frac{3 t^2}{2} - 3 t + 3 - 3 e^{-t}
         \end{equation}
 
-            \newpage
+            %\newpage
+            
+            
          \item 
              Apresente um um mesmo gráfico a resposta $y(t)$  obtida no item anterior, 
              considerando um intervalo de tempo de 0seg a 10seg com passo de 0.01seg.
  
              \begin{center}
-                \includegraphics[scale=0.6]{fig2q.eps}
+                \includegraphics[scale=0.15]{fig2q.png}
              \end{center}
 
              %\begin{figure}
@@ -290,6 +295,12 @@ k =
              %\end{figure}
 
     \end{enumerate}
+    
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% QUESTAO 3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 \newpage
 
@@ -315,19 +326,24 @@ fun = zpk(z, p, k);
      \end{lstlisting}
 
      Obtendo os pólos e zeros no plano-s,
+        %\begin{center}
+        %        \includegraphics[scale=0.6]{fig3q.eps}
+        %     \end{center}
         \begin{center}
-                \includegraphics[scale=0.6]{fig3q.eps}
+                \includegraphics[scale=0.15]{fig3q.png}
              \end{center}
+    
 
-     
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% QUESTAO 4
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 \newpage
 
          \item
-             Dados os zeros, pólos e ganho K a seguir, obtenha a função de transferência 
-             que representa o respectivo sistema:
+             Dados os zeros, pólos e ganho K a seguir, obtenha 
+             a função de transferência que representa o respectivo sistema:
         \begin{enumerate}
             \item
 
@@ -353,7 +369,7 @@ zpk(z, p, k);
              \item
                  O zero está em 0, os pólos estão em $-1\pm2j$ e o ganho é 1.\\
 
-                 Usando o mesmo código usando no item a, a função de transferência fica,
+                 Usando o mesmo código do item a, a função de transferência fica,
 
                  $$
                  G(s) = \frac{s}{s^2 + 2 s + 5}
@@ -373,6 +389,10 @@ zpk(z, p, k);
                 
 
         \end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% QUESTAO 5
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 \newpage
@@ -431,13 +451,20 @@ f1 = feedback(p, gs)
     \end{enumerate}
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% QUESTAO 6
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \newpage
 \item
-  Com base no sistema dinâmico abaixo, obtenha analiticamente as matrizes de estado
-  \textbf{(A, B, C, D)} considerando o posição $x(t)$ e a velocidade $\frac{d x(t)}{dt}$
-  com variáveis de estado, $F(t)$ como entrada e $x(t)$ como saída. Em seguida utilize
-  o Matlab para encontrar a função de transferência correspondente. Considere
-  $m=1.0 kg$, $b=0.2 N s/m$, $k=3.0 N/m$
+  Com base no sistema dinâmico abaixo, obtenha 
+  analiticamente as matrizes de estado
+  \textbf{(A, B, C, D)} considerando a posição $x(t)$ e a 
+  velocidade $\frac{d x(t)}{dt}$ com variáveis 
+  de estado, $F(t)$ como entrada e $x(t)$ como saída. Em 
+  seguida utilize o Matlab para encontrar a função 
+  de transferência correspondente.
+  Considere $m=1.0 kg$, $b=0.2 N s/m$, $k=3.0 N/m$
 
             \begin{center}
             \includegraphics[scale=0.6]{fig6a.png}
@@ -455,7 +482,7 @@ f1 = feedback(p, gs)
              F_k(x) = k x
          \end{equation}
 
-         A contribuição de todas a força,
+         A contribuição de todas as forças,
         \begin{equation}
             F_r = F(x) - (F_b(x) + F_k(x))
         \end{equation}
@@ -463,7 +490,7 @@ f1 = feedback(p, gs)
         Onde $F_r = m \frac{d^2 x}{d t^2}$ é a força resultante, desenvolvendo a equação 6,
 
         $$ 
-        m \frac{d^2 x}{d t^2} = F - (\frac{d x}{d t} + k x)
+        m \frac{d^2 x}{d t^2} = F - \left(\frac{d x}{d t} + k x\right)
         $$
 
          Portanto a equação diferencial final, 
@@ -471,12 +498,135 @@ f1 = feedback(p, gs)
             m \frac{d^2 x}{d t^2} +  b \frac{d x}{d t} + k x = F
         \end{equation}
 
-        Substitundo em 7 os valores proposto pelo problema, 7 fica,
+        Substitundo em 7 os valores proposto pelo problema,
 
         \begin{equation}
             1 \frac{d^2 x}{d t^2} +  0.2 \frac{d x}{d t} + 3 x = F
         \end{equation}
+        
+        Desenvolvendo 8 para se obter as matrices de estados,
+        
+        \begin{equation}
+        	q_1(t) = x(t)
+        \end{equation}
+        
+        \begin{equation}
+        	q_2(t) = \frac{d x(t)}{d t}
+        \end{equation}
+        
+        Derivando $q_1(t)$, é possivel afirmar $\frac{d q_1(t)}{d t} = q_2(t)$, desenvolvendo,
+        
+        \begin{equation}
+        	\frac{d q_2(t)}{d t} = 1 \left(-3 x(t) - 0.2 \frac{d y(t)}{d t} \right) + F
+        \end{equation}
+        
+        \begin{equation}
+        	\frac{d q_2(t)}{d t} = -3 q_1(t) - 0.2 q_2(t) + F
+        \end{equation}
+        
+        Colocando os termos nas formas matriciais, a equação de estado fica,
+        
+        
+        \begin{equation}
+          \left[\begin{array}{c}
+          \frac{d q_1(t)}{d t} \\
+          \frac{d q_2(t)}{d t}
+          \end{array}\right] = \\
+          \left[\begin{array}{rr}
+          0 & 1 \\
+          -3 & -0.2
+          \end{array}\right]  \\
+          \left[\begin{array}{c}
+          q_1(t) \\
+          q_2(t)
+          \end{array}\right] + \\
+          \left[\begin{array}{r}
+          0 \\
+          1
+          \end{array}\right] u
+        \end{equation}
 
+
+		E a equação de saída,
+        \begin{equation}
+          x = \\
+          \left[\begin{array}{rr}
+          1 & 0
+          \end{array}\right] \\
+          \left[\begin{array}{c}
+          q_1(t) \\
+          q_2(t)
+          \end{array}\right] u
+		\end{equation}
+        
+        
+        Em outros termos, as matrizes de estados são,
+        
+        $$
+        A =\left[\begin{array}{rr}
+          0 & 1 \\
+          -3 & -0.2
+          \end{array}\right]
+        $$
+        
+        $$
+        B = \left[\begin{array}{r}
+          0 \\
+          1
+          \end{array}\right]
+        $$
+        
+        $$
+        C = \left[\begin{array}{rr}
+          1 & 0
+          \end{array}\right]
+        $$
+        
+        $$
+        D = \left[\begin{array}{r}
+        0 
+        \end{array}\right]
+        $$ 
+        
+        Utilizando as matrizes de estados é possivel encontrar
+        a função de transferência do sistema, usando o comando       
+        $ss2tf$ que retorna o numerador e denominador da função
+        de transferência, tenho como resposta,
+        
+        
+		\begin{lstlisting}
+a = [0 1; -3 -0.2];
+b = [0;1];
+c = [1 0];
+d = [0];
+[num, den]=ss2tf(a, b, c, d)
+
+num = 
+         0   -0.0000    1.0000
+den =
+
+    1.0000    0.2000    3.0000
+		\end{lstlisting}   
+        
+        O que é totalmente coerente com a seguinte resposta 
+        analitica, aplicando a transformada
+        inversa de laplace em 8,
+        
+        $$
+        s^2 X(s) + 0.2 s X(s) + 3 X(s) = F(s)
+        $$
+        
+        Fazendo saída sobre a entrada, obtenho a mesma
+        função que o comando $ss2tf$.
+        
+        \begin{equation}
+        \frac{X(s)}{F(s)} = \frac{1}{s^2 + 0.2 s + 3}
+        \end{equation}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% QUESTAO 7
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 \newpage
@@ -548,4 +698,3 @@ funcao_transferencia = feedback(h1, sensor)
 
 
 \end{document}
-
