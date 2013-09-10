@@ -5,13 +5,16 @@
 # felipeband18@gmail.com
 # graduando em Engenharia Elétrica
 
+# Núcleo do programa de linha e transmissão
+
 from  __future__ import division
 import cargaModelagem
 import sys
 import bifilar
 import formatacao
+import quadripolos
 
-# frequencia base para qualquer cálculo que leve frequencia
+# frequência base para qualquer cálculo que leve frequência
 # No Brasil temos a maior parte 60Hz
 freqREDE = 60
 
@@ -81,7 +84,7 @@ def entradaCargaMod():
     try:
         a = input('>')
     except:
-        print u'erro: algo inesperado ocorreu na entrada do usuario'
+        print u'erro: algo inesperado ocorreu na entrada do usuário'
         return -2
 
     if a == 1:
@@ -142,10 +145,10 @@ def entradaBifilar():
     try:
         print u'Tensão constante [V]               :',
         tensao = float(raw_input())
-        print u'Indutância dos contudores [H/km]   :',
+        print u'Indutância dos condutores [H/km]   :',
         ind = float(raw_input())
 
-        print u'Capacitância dos contudores [F/km] :',
+        print u'Capacitância dos condutores [F/km] :',
         cap = float(raw_input())
         print u'Comprimento da linha [km]          :',
         comp = float(raw_input())
@@ -181,7 +184,7 @@ def sistemaBifilar():
     try:
         a = input('>')
     except:
-        print u'erro: algo inesperado ocorreu na entrada do usuario'
+        print u'erro: algo inesperado ocorreu na entrada do usuário'
         return -2
 
     if a == 1:
@@ -197,7 +200,7 @@ a - sua impedância natural
 b - energia armazenada por quilômetro de linha nos campos
 elétricos e magnéticos
 c - velocidade de propagação
-d - qual o valor da tensão no recpetor no decorrido tempo
+d - qual o valor da tensão no receptor no decorrido tempo
 t=(3l)/v do instante em que a linha foi energizada, para as
 seguintes condições:
 a - z2 = x [ohm]
@@ -231,7 +234,7 @@ c - z2 = x [ohm]
 
 def entradaIndCap(nCondutores=3, mono = 0):
     """Processamento da entrada do usuário para os cálculos
-    dos parametros indutivos e capacitivos de uma linha de transmissao
+    dos parâmetros indutivos e capacitivos de uma linha de transmissão
     Entrada:
         nCondutores - número de condutores
         mono - 0 = linha trifásica
@@ -270,7 +273,7 @@ def indutancia():
     try:
         a = input('>')
     except:
-        print u'erro: algo inesperado ocorreu na entrada do usuario'
+        print u'erro: algo inesperado ocorreu na entrada do usuário'
         return -2
 
     if a == 1:
@@ -298,7 +301,7 @@ def indutancia():
         L, Ds, Dm = bifilar.ind3Fases4Condutores(espFases*1e3, espCondutores*10, raio)
 
     else:
-        print u'erro: opção não disponivel'
+        print u'erro: opção não disponível'
         return -1
 
     print u'Indutância [H/km]: ', L
@@ -322,7 +325,7 @@ def capacitancia():
     try:
         a = input('>')
     except:
-        print u'erro: algo inesperado ocorreu na entrada do usuario'
+        print u'erro: algo inesperado ocorreu na entrada do usuário'
         return -2
 
     if a == 1:
@@ -350,7 +353,7 @@ def capacitancia():
         C, Ds, Dm = bifilar.capLT(espFases*1e3, raio, espCondutores*10, 4)
 
     else:
-        print u'erro: opção não disponivel'
+        print u'erro: opção não disponível'
         return -1
 
     print u'Capacitância [H/km]: ', C
@@ -361,7 +364,7 @@ def capacitancia():
     return [C, C*comprimento, Ds, Dm]
 
 def parametrosLT():
-    print """Cálculos para capacitância, indutancia e resistência de um linha de transmissão
+    print """Cálculos para capacitância, indutância e resistência de um linha de transmissão
     """
 
 
@@ -374,7 +377,7 @@ def parametrosLT():
     try:
         a = input('>')
     except:
-        print u'erro: algo inesperado ocorreu na entrada do usuario'
+        print u'erro: algo inesperado ocorreu na entrada do usuário'
         return -2
 
     if a == 1:
@@ -407,7 +410,7 @@ def parametrosLT():
         L, DsI, Dm = bifilar.ind3Fases4Condutores(espFases*1e3, espCondutores*10, raio)
 
     else:
-        print u'erro: opção não disponivel'
+        print u'erro: opção não disponível'
         return -1
 
     print u'Indutância   [H/km]: ', L
@@ -422,7 +425,7 @@ def parametrosLT():
 
 def modelagem():
     """Modelagem de uma linha de transmissão, seja ela curta, média pi, media T
-    ou longa. Calculos necessarios para cada aproximação.
+    ou longa. Cálculos necessários para cada aproximação.
     """
 
     print '1 - curta'
@@ -432,7 +435,7 @@ def modelagem():
     try:
         a = input('>')
     except:
-        print u'erro: algo inesperado ocorreu na entrada do usuario'
+        print u'erro: algo inesperado ocorreu na entrada do usuário'
         return -2
 
     if a == 1:
@@ -444,11 +447,91 @@ def modelagem():
     elif a == 4:
         pass
     else:
-        print u'erro: opção não disponivel'
+        print u'erro: opção não disponível'
         return -1
 
 
     return 0
+
+def entrada_quadripolo(topologia = 1):
+    """Entrada do usuário para a impedância e susceptância para o quadripolo
+    topologia:
+        1 - curta
+        2 - media pi
+        3 - media T
+    """
+
+    if topologia == 1:
+        print 'Impedância Z[ohm], indutância,'
+        R = float(raw_input('R  [ohm] ? '))
+        Z = float(raw_input('XL [ohm] ? '))
+        Z = R+Z*1j
+
+        return [Z, 0]
+    elif topologia >= 2:
+        print 'Impedância Z[ohm], indutância,'
+        R = float(raw_input('R  [ohm] ? '))
+        Z = float(raw_input('XL [ohm] ? '))
+        Z = R+Z*1j
+
+        print 'Susceptância Y[mho], capacitância,'
+        R = float(raw_input('S [mho] ? '))
+        Y = float(raw_input('U [mho] ? '))
+        Y = R + Y*1j
+
+        return [Z, Y]
+    else:
+        print 'erro: opção não disponível'
+        return [-1, -1]
+
+def parametros_quadripolo():
+    print 'Parâmetros para o quadripolo'
+
+    print '1 - curta'
+    print '2 - média pi'
+    print '3 - média T'
+    print '99 - ajuda'
+
+    try:
+        a = input('>')
+    except:
+        print u'erro: algo inesperado ocorreu na entrada do usuário'
+        return -2
+
+    if a == 1:
+        Z = entrada_quadripolo(1)[0]
+        A, B, C, D = quadripolos.linha_curta(Z)
+        print 'Saída,'
+        print ' A :', A
+        print ' B :', B
+        print ' C :', C
+        print ' D :', D
+
+    elif a == 2:
+        Z, Y = entrada_quadripolo(2)
+        A, B, C, D = quadripolos.linha_media_pi(Z, Y)
+        print 'Saída,'
+        print ' A :', A
+        print ' B :', B
+        print ' C :', C
+        print ' D :', D
+
+    elif a == 3:
+        Z, Y = entrada_quadripolo(2)
+        A, B, C, D = quadripolos.linha_media_T(Y)
+        print 'Saída,'
+        print ' A :', A
+        print ' B :', B
+        print ' C :', C
+        print ' D :', D
+
+    elif a == 99:
+        print 'erro: Nada aqui!!'
+    else:
+        print u'erro: opção não disponível'
+        return -1
+
+
 
 ################################################################################
 # Interação homem maquina
@@ -463,7 +546,8 @@ def ajuda():
     print u'b     - sistema bifilar'
     print u'i     - indutância sistema trifásico'
     print u'c     - capacitância sistema trifásico'
-    print u'plt   - parametros de um LT: capacitância, indutância e resistência'
+    print u'q     - quadripolo'
+    print u'plt   - parâmetros de um LT: capacitância, indutância e resistência'
     print u'mod   - modelagem de uma linha de transmissão(curta, média(pi, T))'
     print u'curto - curto circuito'
 
@@ -480,6 +564,7 @@ dicionarioComandos = {
     'c' : capacitancia,
     'plt': parametrosLT,
     'mod': modelagem,
+    'q': parametros_quadripolo,
 }
 
 def nada():
