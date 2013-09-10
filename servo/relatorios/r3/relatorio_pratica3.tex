@@ -2,7 +2,46 @@
 % Felipe Bandeira da Silva
 % 09/06/2013
 
-\documentclass[a4paper, 10pt]{article}
+%\documentclass[a4paper, 10pt]{article}
+
+
+
+\documentclass[paper=a4, fontsize=11pt]{article}
+
+%%% Custom headers/footers (fancyhdr package)
+\usepackage{fancyhdr}
+\pagestyle{fancyplain}
+\fancyhead{}                                            % No page header
+\fancyfoot[L]{}                                         % Empty 
+\fancyfoot[C]{}                                         % Empty
+\fancyfoot[R]{\thepage}                                 % Pagenumbering
+\renewcommand{\headrulewidth}{0pt}          % Remove header underlines
+\renewcommand{\footrulewidth}{0pt}              % Remove footer underlines
+\setlength{\headheight}{13.6pt}
+
+%%% Maketitle metadata
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}}     % Horizontal rule
+
+\title{
+%\vspace{-1in}  
+    \usefont{OT1}{bch}{b}{n}
+    \normalfont \normalsize \textsc{Universidade de Fortaleza} \\ [25pt]
+    \horrule{0.5pt} \\[0.4cm]
+    \huge Relatorio, Laboratorio 3\\ Servo 1
+    \horrule{2pt} \\[0.5cm]
+}
+\author{
+    \normalfont \normalsize
+    Felipe Bandeira da Silva\\[-3pt] \normalsize
+    \today
+}
+\date{}
+
+
+
+
+
+
 
 \usepackage[brazil]{babel}
 \usepackage[utf8]{inputenc}
@@ -18,8 +57,10 @@
 \usepackage{graphicx}
 
 
-\title{Relatório, Laboratório 3.\\Servo 1}
-\author{Felipe Bandeira da Silva}
+%\title{Relatório, Laboratório 3.\\Servo 1}
+%\author{Felipe Bandeira da Silva}
+
+
 \begin{document}
 \maketitle
 
@@ -66,7 +107,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% QUESTAO 1
+% QUESTÃO 1
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -95,10 +136,7 @@ b = [1 3];
 c = [1 5];
 den = conv(conv(a, b), conv(c, c));
 [r, p, k] = residue(num, den);
-
-            \end{lstlisting}
-
-
+\end{lstlisting}
         Resultado,
 
         \begin{lstlisting}
@@ -116,7 +154,6 @@ p =
 
 k = 
    []
-
         \end{lstlisting}
         Rearranjando os valores do resíduos, polos e termo de evidenciamento,
 
@@ -627,7 +664,9 @@ den =
         $$
         s^2 X(s) + 0.2 s X(s) + 3 X(s) = F(s)
         $$
-        
+       
+\newpage
+
         Fazendo saída sobre a entrada, obtenho a mesma
         função que o comando $ss2tf$.
         
