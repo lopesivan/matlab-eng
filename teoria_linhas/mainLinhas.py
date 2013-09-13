@@ -13,6 +13,7 @@ import sys
 import bifilar
 import formatacao
 import quadripolos
+import linhas
 
 # frequência base para qualquer cálculo que leve frequência
 # No Brasil temos a maior parte 60Hz
