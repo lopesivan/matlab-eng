@@ -14,6 +14,7 @@ import bifilar
 import formatacao
 import quadripolos
 import linhas
+import problemas
 
 # frequência base para qualquer cálculo que leve frequência
 # No Brasil temos a maior parte 60Hz
@@ -424,9 +425,38 @@ def parametrosLT():
 
     return [C, C*comprimento, Ds, Dm]
 
+def entrada_modelagem(tipo):
+    try:
+        c = float(raw_input('Comprimento              [km]? '))
+        xl = float(raw_input('Reatância indutiva  [ohm/km]? '))
+        r = float(raw_input('Resistência          [ohm/km]? '))
+    except:
+        print 'erro: entrada invalida'
+        c = -1
+        xl = -1
+        r = -1
+        xc = -1
+
+    if tipo != 'curta' and c > 0:
+        try:
+            xc = float(raw_input('Reatância capacitiva [ohm/km]? '))
+        except:
+            print 'erro: entrada invalida'
+            xc = -1
+
+        return [c, xl, r, xc]
+
+    return [c, xl, r]
+
 def modelagem():
     """Modelagem de uma linha de transmissão, seja ela curta, média pi, media T
     ou longa. Cálculos necessários para cada aproximação.
+    Para a modelagem de uma linha necessário:
+        - o comprimento da linha
+        - indutância da linha
+        - resistência da linha
+        - capacitância da linha
+    Com isto é possível obter os parâmetros(A, B, C, D) do quadripolo.
     """
 
     print '1 - curta'
@@ -440,11 +470,50 @@ def modelagem():
         return -2
 
     if a == 1:
-        pass
+        c, xl, r = entrada_modelagem('curta')
+
+        linhaAB = linhas.curta(r, xl, c)
+
+        print 'Parâmetros do quadripolo'
+        print 'A :', linhaAB.A
+        print 'B :', linhaAB.B
+        print 'C :', linhaAB.C
+        print 'D :', linhaAB.D
+
+        print 'R  [ohm :', linhaAB.R
+        print 'XL [ohm]:', linhaAB.XL
+
     elif a == 2:
-        pass
+        c, xl, r, xc = entrada_modelagem('media_pi')
+
+        linhaAB = linhas.media_pi(r, xl, xc, c)
+
+        print 'Parâmetros do quadripolo'
+        print 'A :', linhaAB.A
+        print 'B :', linhaAB.B
+        print 'C :', linhaAB.C
+        print 'D :', linhaAB.D
+
+        print 'R  [ohm]:', linhaAB.R
+        print 'XL [ohm]:', linhaAB.XL
+        print 'YC [mho]:', linhaAB.Y
+
     elif a == 3:
-        pass
+        c, xl, r, xc = entrada_modelagem('media_t')
+
+        linhaAB = linhas.media_t(r, xl, xc, c)
+
+        print 'Parâmetros do quadripolo'
+        print 'A :', linhaAB.A
+        print 'B :', linhaAB.B
+        print 'C :', linhaAB.C
+        print 'D :', linhaAB.D
+
+        print 'R  [ohm]:', linhaAB.R
+        print 'XL [ohm]:', linhaAB.XL
+        print 'YC [mho]:', linhaAB.Y
+
+
     elif a == 4:
         pass
     else:
@@ -532,6 +601,8 @@ def parametros_quadripolo():
         print u'erro: opção não disponível'
         return -1
 
+def diversos():
+    problemas.problemas()
 
 
 ################################################################################
@@ -550,6 +621,7 @@ def ajuda():
     print u'q     - quadripolo'
     print u'plt   - parâmetros de um LT: capacitância, indutância e resistência'
     print u'mod   - modelagem de uma linha de transmissão(curta, média(pi, T))'
+    print u'pro   - diversos problemas'
     print u'curto - curto circuito'
 
 def sair():
@@ -566,6 +638,7 @@ dicionarioComandos = {
     'plt': parametrosLT,
     'mod': modelagem,
     'q': parametros_quadripolo,
+    'pro' : diversos,
 }
 
 def nada():

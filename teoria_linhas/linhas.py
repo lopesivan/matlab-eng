@@ -6,7 +6,7 @@
 # graduando em Engenharia Elétrica
 
 # Modelos de linha de transmissão
-
+import quadripolos
 
 class curta:
     """
@@ -21,6 +21,8 @@ class curta:
         self.R = self.Z.real
         self.XL = self.Z.imag
 
+        self.A, self.B, self.C, self.D  = quadripolos.linha_curta(self.Z)
+
 class media_pi:
     """
     R - resistência [ohm/m]
@@ -31,11 +33,17 @@ class media_pi:
     def __init__(self, R, XL, XC, c):
         self.tipo = 'pi'
         self.Z = c*(R + XL*1j)
-        self.Y = (c*(XC*1j))/2
+
+        # susceptância capacitiva
+        self.B = (c*XC)/2
+        # admitância
+        self.Y = self.B * 1j
+
         self.comprimento = c
         self.R = self.Z.real
         self.XL = self.Z.imag
 
+        self.A, self.B, self.C, self.D  = quadripolos.linha_media_pi(self.Z, self.Y)
 
 class media_t:
     """
@@ -47,10 +55,17 @@ class media_t:
     def __init__(self, R, XL, XC, c):
         self.tipo = 'pi'
         self.Z = (c*(R + XL*1j))/2
-        self.Y = c*(XC*1j)
+
+        # susceptância capacitiva
+        self.B = (c*XC)/2
+        # admitância
+        self.Y = self.B * 1j
+
         self.comprimento = c
         self.R = self.Z.real
         self.XL = self.Z.imag
+
+        self.A, self.B, self.C, self.D  = quadripolos.linha_media_pi(self.Z, self.Y)
 
 def zona_teste():
     print 'Entrando na zona de teste'
