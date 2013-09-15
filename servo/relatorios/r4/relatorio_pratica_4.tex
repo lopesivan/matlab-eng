@@ -43,16 +43,48 @@ estabilidade, velocidade de resposta e erro em regime permanente.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Primeira questão}
 
+O primeiro sistema fisico é modelado com a equação 1
 \begin{equation}
     G_1(s) = \frac{1}{s+1}
 \end{equation}
 
+A equação temporal da equação 1 quando submetida a um degrau unitário
+é facilmente encontrada aplicando a transformada inversa de laplace,
+
 \begin{equation}
-    G_2(s) = \frac{1}{s-1}
+    G_1(s) = \frac{1}{s+1} \frac{1}{s}
 \end{equation}
 
-\begin{lstlisting}
-\end{lstlisting}
+Aplicando o comando $residue$ em 2 para a expansão em frações parciais,
+
+\begin{equation}
+    G_1(s) = \frac{-1}{s+1} + \frac{1}{s}
+\end{equation}
+
+De 3 é possível encontrar a reposta temporal,
+
+\begin{equation}
+    g_1(t) = -e^{-t} + 1
+\end{equation}
+
+A plotagem do gráfico pode ser usada para a facilitar o visualização
+do comportamento da função,
+
+\begin{center}
+    \includegraphics[scale=.39]{q1g1.pdf}
+\end{center}
+
+Por inspeção é possível notar que o sistema se estabiliza após um tempo
+e seu valor em regimente permanente é 1. Mostrando que o sistema apresenta
+uma estabilidade. Esta estabilidade pode ser melhor analisada plotando
+a localização dos polos no plano-s.
+
+\begin{center}
+    \includegraphics[scale=.5]{pzq1g1.pdf}
+\end{center}
+
+Como é possivel observar existem dois polos no eixo real e com valores 
+menor igual a zero, mostrando que o sistema é \textbf{estável}.
 
 
 \end{document}
