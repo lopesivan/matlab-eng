@@ -1,0 +1,16 @@
+%%HP: T(3)A(D)F(.);
+\<< "SIS. DE COORDENADAS" { { "RADIANOS / RETANGULAR" 1. } { "GRAUS / POLAR" 2. } } 1. CHOOSE \-> X
+  \<< X 0. \=/
+    IF
+    THEN \-> V
+      \<< V 1. ==
+        IF
+        THEN RAD RECT
+        END V 2. ==
+        IF
+        THEN DEG CYLIN
+        END
+      \>>
+    END
+  \>>
+\>>

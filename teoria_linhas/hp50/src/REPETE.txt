@@ -1,0 +1,3 @@
+%%HP: T(3)A(D)F(.);
+\<< DEPTH \->LIST DUP EVAL
+\>>

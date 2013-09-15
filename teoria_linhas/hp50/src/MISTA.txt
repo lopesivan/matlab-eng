@@ -1,0 +1,5 @@
+%%HP: T(3)A(D)F(.);
+\<< \-> FP P PCTE ZCTE VL VC
+  \<< FP ACOS TAN P * VL VC / 2. ^ * 'QMOD' STO PCTE P * ZCTE P * VL VC / 2. ^ * + 'PMOD' STO 'SMOD' PMOD QMOD NUMC = { PMOD QMOD } PURGE
+  \>>
+\>>

@@ -1,0 +1,5 @@
+%%HP: T(3)A(D)F(.);
+\<< \-> VR IR
+  \<< 'VTFN' A VR * B IR * + = 'IT' C VR * D IR * + =
+  \>>
+\>>

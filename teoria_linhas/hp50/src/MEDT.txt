@@ -1,0 +1,5 @@
+%%HP: T(3)A(D)F(.);
+\<< \-> Z Y VR IR
+  \<< Z Y * 2. / 1. + 'A' STO Z A * 'B' STO Y 'C' STO A 'D' STO VR 3. \v/ / IR QUA1
+  \>>
+\>>
