@@ -583,54 +583,75 @@ Onde: $R$ é o raio real.
 \end{center}
 
 \begin{equation}
-V_1 = A V_2 + B I_2
+    V_1^{FN} = A V_2^{FN} + B I_2
 \end{equation}
 
 \begin{equation}
-I_1 = C V_2 + D I_2
+I_1 = C V_2^{FN}  + D I_2
 \end{equation}
 
 \begin{equation}
-V_2 = D V_1 - B I_1
+V_2^{FN}  = D V_1^{FN}  - B I_1
 \end{equation}
 
 \begin{equation}
-I_2 = - C V_1 + A I_1
+I_2 = - C V_1^{FN}  + A I_1
 \end{equation}
 
 \begin{equation}
 A D - B C = 1
 \end{equation}
 
+%\renewcommand{\arraystretch}{1.5}
+
+%\begin{center}
+%\begin{tabular}{|c||c||c|}
+%    \hline
+%    Modelo LT & \multicolumn{2}{|c|}{Parâmetro} \\
+%    \hline
+%    {}  & A & B  \\
+%    \hline
+%    Curta & 1 & $Z$   \\
+%    \hline
+%    Média $\pi$ & $1 + \frac{Z Y}{2}$ & $Z$ & $Y (1+\frac{Z Y}{2})$ & $1+\frac{Z Y}{2}$ \\
+%Média $\pi$ & $1 + \frac{Z Y}{2}$ & $Z$\\
+%    \hline
+%
+%    Média $T$ & $1+\frac{Z Y}{2}$ & $Z (1+\frac{Z Y}{2})$ & Y & $ 1 +  \frac{Z Y}{2}$ \\
+%Média $T$ & $1+\frac{Z Y}{2}$ & $Z (1+\frac{Z Y}{2})$ \\
+%    \hline
+%    {} & {} & {} \\
+%    {} & C & D \\
+%    \hline
+%    Curta & 0 & 1 \\
+%    \hline
+%    Média $\pi$ & $Y (1+\frac{Z Y}{2})$ & $1+\frac{Z Y}{2}$ \\
+%    \hline
+%    Média $T$ &  Y & $ 1 +  \frac{Z Y}{2}$ \\
+%    \hline
+%\end{tabular}
+%\end{center}
+
+
 \renewcommand{\arraystretch}{1.5}
 \begin{center}
 
-\begin{tabular}{|c||c||c|}
-    \hline
-    Modelo LT & \multicolumn{2}{|c|}{Parâmetro} \\
-    \hline
-    {}  & A & B  \\
-    \hline
-    Curta & 1 & $Z$   \\
-    \hline
-%    Média $\pi$ & $1 + \frac{Z Y}{2}$ & $Z$ & $Y (1+\frac{Z Y}{2})$ & $1+\frac{Z Y}{2}$ \\
-Média $\pi$ & $1 + \frac{Z Y}{2}$ & $Z$\\
-    \hline
+    \begin{tabular}{|c||c||c||c|}
+        \hline
+        {} & Curta & Média $\pi$ & Média T \\
+        \hline
+        A & 1 & $1 + \frac{Z Y}{2}$  & $1 + \frac{Z Y}{2}$ \\
+        B & $Z$ & $Z$  & $ Z \left( 1 + \frac{Z Y}{2}\right)$ \\
+        C & 0 &  $ Y \left(1 + \frac{Z Y}{2}\right)$ &  $Y$ \\
+        D & 1 & $1 + \frac{Z Y}{2}$  &  $1 + \frac{Z Y}{2}$ \\
+        \hline
+    \end{tabular}
 
-%    Média $T$ & $1+\frac{Z Y}{2}$ & $Z (1+\frac{Z Y}{2})$ & Y & $ 1 +  \frac{Z Y}{2}$ \\
-Média $T$ & $1+\frac{Z Y}{2}$ & $Z (1+\frac{Z Y}{2})$ \\
-    \hline
-    {} & {} & {} \\
-    {} & C & D \\
-    \hline
-    Curta & 0 & 1 \\
-    \hline
-    Média $\pi$ & $Y (1+\frac{Z Y}{2})$ & $1+\frac{Z Y}{2}$ \\
-    \hline
-    Média $T$ &  Y & $ 1 +  \frac{Z Y}{2}$ \\
-    \hline
-\end{tabular}
 \end{center}
+
+
+
+
 
 \section{\textbf{Modelos de Linhas}}
 
