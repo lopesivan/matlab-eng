@@ -52,7 +52,7 @@ O primeiro sistema físico é modelado com a equação 1
 \end{equation}
 
 A equação temporal da equação 1 quando submetida a um degrau unitário
-é facilmente encontrada aplicando a transformada inversa de laplace,
+é facilmente encontrada aplicando a transformada inversa de Laplace,
 
 \begin{equation}
     G_1(s) = \frac{1}{s+1} \frac{1}{s}
@@ -209,7 +209,7 @@ sistema e seus comportamentos.
 
 \subsection{Analisando o sistema\\Intervalo de $K$}
 
-Para uma analise inicial, é possivel fazer $K$ unitário, encontrando com isso a
+Para uma analise inicial, é possível fazer $K$ unitário, encontrando com isso a
 função de transferência abaixo,
 
 \begin{equation}
@@ -255,5 +255,109 @@ tanto em construção e principalmente na sua analise matemática. O controle
 de ganho para os de 1ª ordem pode ser determinante no seu funcionamento. 
 Para o problema da questão conclui-se que é possível não só
 
-\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% QUARTA QUESTÃO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\newpage
+
+\section{Quarta Questão}
+
+Dois sistemas foram dados, o primeiro,
+
+\begin{equation}
+    G_1(s) = \frac{0.5}{s+0.5}
+\end{equation}
+
+e segundo,
+
+\begin{equation}
+    G_2(s) = \frac{5}{s+5}
+\end{equation}
+
+\subsection{Constante de tempo para os sistemas}
+
+A equação temporal para o primeiro sistema quando submetido a um 
+degrau unitário $u(t)=1$ em malha aberta é, no domínio da frequência fica,
+
+\begin{equation}
+    G_1(s) \frac{1}{s} = \frac{0.5}{s+0.5} \frac{1}{s} = \frac{0.5}{s^2 + 0.5 s}
+\end{equation}
+ 
+Expandindo em frações parciais,
+
+\begin{equation}
+    \frac{0.5}{s^2 + 0.5 s} = \frac{-1}{s+0.5} + \frac{1}{s}
+\end{equation}
+
+Aplicando a transformada inversa de Laplace
+
+\begin{equation}
+    g_1(t)=  -e^{-0.5 t} + 1
+\end{equation}
+
+Analisando agora o segundo sistema, da mesma forma que foi feita para o primeiro,
+
+\begin{equation}
+    G_2s) \frac{1}{s} = \frac{5}{s+5} \frac{1}{s} = \frac{5}{s^2 + 5 s}
+\end{equation}
+ 
+Expandindo em frações parciais,
+
+\begin{equation}
+    \frac{5}{s^2 + 5 s} = \frac{-1}{s+5} + \frac{1}{s}
+\end{equation}
+
+Aplicando a transformada inversa de Laplace
+
+\begin{equation}
+    g_2(t)=  -e^{-5 t} + 1
+\end{equation}
+
+A constante de tempo para os dois sistema informa algo interessante. A resposta
+a um estimulo de entrada, para $G_1$ a constante de tempo é 2 e para $G_2$ é 
+0.2, por inspeção se percebe que o sistema 2 é mais rápido do que o sistema 1.
+
+\subsection{Localização dos polos}
+
+Para o primeiro sistema a localização do polo é,
+
+\begin{center}
+    \includegraphics[scale=0.5]{q4pzg1.pdf}
+\end{center}
+
+Agora para o segundo sistema,
+
+\begin{center}
+    \includegraphics[scale=0.5]{q4pzg2.pdf}
+\end{center}
+
+Nota-se novamente que a localização dos polos alem de informa a estabilidade do sistema,
+também informa o quanto é rápido a resposta dos sistemas a entrada. A primeiro sistema
+o polo é localizado em 0.5 e o segundo sistema é 5, é possível com isto, concluir que
+o sistema que tem um polo tendendo a menos infinito, ele é mais rápido.
+
+\newpage
+
+\subsection{Gráfico a resposta ao degrau}
+
+Abaixo é mostrado o gráfico dos dois sistemas exemplificando novamente o que já foi 
+dito anteriormente, $G2$ é mais rápido que $G1$
+
+\begin{center}
+    \includegraphics[scale=0.5]{q4ic.pdf}
+\end{center}
+
+\subsection{Conclusões finais}
+
+BlaBla
+
+\section{Quinta questão}
+
+\begin{center}
+    \includegraphics[scale=0.5]{q5.png}
+\end{center}
+
+
+
+\end{document}
