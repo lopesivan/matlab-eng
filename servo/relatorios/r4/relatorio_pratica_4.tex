@@ -46,7 +46,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Primeira questão}
 
-O primeiro sistema fisico é modelado com a equação 1
+O primeiro sistema físico é modelado com a equação 1
 \begin{equation}
     G_1(s) = \frac{1}{s+1}
 \end{equation}
@@ -90,7 +90,7 @@ Como é possível observar existem dois polos no eixo real e com valores
 menor igual a zero, mostrando que o sistema é \textbf{estável}. Fato este
 que está diretamente ligado a posição dos polos no eixo $\sigma$(eixo real).
 
-Analisando agora a funçao,
+Analisando agora a função,
 
 \begin{equation}
     G_2(s) = \frac{1}{s-1}
@@ -111,7 +111,7 @@ A função no domínio do tempo com resposta ao impulso unitário é,
 A função 5 será analisada da mesma forma que a 1, só que usando comandos
 mais poderosos do matlab, para tanto, uso o comando $tf$ para construir 
 a função de transferência, após isto uso o comando $step$ para a criação
-dos vetores com os eixos do domínio e imagem, finalmente obtenho o grafico
+dos vetores com os eixos do domínio e imagem, finalmente obtenho o gráfico
 da resposta temporal,
 
 \begin{center}
@@ -151,14 +151,109 @@ Para este problema foram propostos os seguintes sistemas,
     \includegraphics[scale=.5]{s2q.png}
 \end{center}
 
-Caracterizando cada sistema, tenho para o primeiro(lado esquerdo), a posição 
-dos polos,
+\subsection{Analisando o sistema malha aberta}
+
+O sistema de malha aberta tem a localização do polo mostrados na figura abaixo,
 
 \begin{center}
     \includegraphics[scale=.5]{pz2qs1.pdf}
 \end{center}
 
+Mostrando claramente que o sistema apresenta uma instabilidade, está devida 
+simplesmente a localização do polo.
 
+\subsection{Analisando o sistema malha fechada}
 
+A localização do polo é mostrado na figura abaixo,
+
+\begin{center}
+    \includegraphics[scale=.5]{q2pzfechada.pdf}
+\end{center}
+
+Com a realimentação negativa e de ganho unitário pode ser visto que o sistema passou
+de instável para estável.
+
+\subsection{Efeitos da realimentação}
+
+É possível concluir que o efeito da realimentação negativa em um sistema de controle
+pode mudar a posição do polo, fazendo com que o mesmo passe para o lado esquerdo em
+relação ao eixo imaginário, caracterizando em um sistema estável. E mais, o ganho
+unitário não muda o ganho final da função, provando que não só o controle de ganho
+é possível mudar a região de estabilidade.
+
+Para finalizar a conclusão do efeito da realimentação, é mostrado abaixo o gráfico da resposta
+ao degrau unitário $\frac{1}{s}$ para o sistema com e sem realimentação,
+
+\begin{center}
+    \includegraphics[scale=.5]{q2ib.pdf}
+\end{center}
+
+Como pode ser visto na figura a reposta em malha aberta ao degrau unitário 
+tente ao infinito, contrastando com a resposta em malha fechada que em 
+regime permanente é 2.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TERCEIRA QUESTÃO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Terceira questão}
+
+O seguinte sistema de controle é proposto,
+
+\begin{center}
+    \includegraphics[scale=0.5]{q3.png}
+\end{center}
+
+Se faz necessário antes de iniciar a resolução dos itens do problema analisar o
+sistema e seus comportamentos.
+
+\subsection{Analisando o sistema\\Intervalo de $K$}
+
+Para uma analise inicial, é possivel fazer $K$ unitário, encontrando com isso a
+função de transferência abaixo,
+
+\begin{equation}
+    \frac{1}{s-1}
+\end{equation}
+
+Esta função de transferência indica que o polo está em 1,com isto 
+o sistema é instável. Para a correção desta instabilidade é possível
+modificar o ganho, impondo que a condição aceitável para a estabilidade
+no caso proposto é quando o polo fica no semi-plano esquerdo do plano-s, 
+é possível então fazer,
+
+\begin{equation}
+    \frac{C(s)}{U(s)} = \frac{\frac{1}{s-2} K}{1 + \frac{1}{s-2} } = \frac{K}{K+s-2}
+\end{equation}
+
+Isolando $s$ do denominador de 9 para encontrar a posição do polo,
+
+\begin{equation}
+    s = - K + 2
+\end{equation}
+
+Com isto é possível concluir que o sistema só pode ser estável se $K$ for menor que 2.
+Para o caso em que $K$ é igual a 2 o polo fica em 0.
+
+\subsection{Gráficos em função de K}
+
+O gráfico para quando $K_1=1$ e $K_2=3$ é mostrado abaixo,
+
+\begin{center}
+    \includegraphics[scale=0.5]{q3ib.pdf}
+\end{center}
+
+O valor de $K$ é um fator interessante para o controle de estabilidade do um 
+sistema de controle. Pois uma simples alteração pode fazer um sistema 
+entrar em estabilidade. Mas com os devidos cuidados já que essa mesma alteração
+pode resultar na destruição do projeto de controle.
+
+\subsection{Conclusões finais sobre a estabilidade sistema de 1ª ordem}
+
+Um sistema de primeira ordem é um dos mais simples para um sistema de controle, 
+tanto em construção e principalmente na sua analise matemática. O controle
+de ganho para os de 1ª ordem pode ser determinante no seu funcionamento. 
+Para o problema da questão conclui-se que é possível não só
 
 \end{document}
+
