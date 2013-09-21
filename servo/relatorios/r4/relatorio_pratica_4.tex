@@ -350,13 +350,137 @@ dito anteriormente, $G2$ é mais rápido que $G1$
 
 \subsection{Conclusões finais}
 
-BlaBla
+O Fator $K$ para o controle de ganho não foi explicitado no problema, mas ele é um dos 
+fatores que altera a resposta do sistema, além de corrigir a posição do polo, também
+aumenta ou diminui a resposta do sistema a um determinado estimulo. O gráfico da resposta
+mostra que o sistema que tem polos mais afastados é o sistema que resposta rapidamente
+a entrada a um impulso, no caso, unitário. 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% QUINTA QUESTÃO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Quinta questão}
 
 \begin{center}
     \includegraphics[scale=0.5]{q5.png}
 \end{center}
+
+\subsection{Localização dos pólos}
+
+Para o sistema posicionado a esquerda deste trabalho temos o seguinte gráfico 
+com a posição do seu polo,
+
+\begin{center}
+    \includegraphics[scale=0.5]{q5iama.pdf}
+\end{center}
+
+Para o mesmo sistema só que agora em malha fechada, o seguinte gráfico com a posição
+do seu polo é,
+
+\begin{center}
+    \includegraphics[scale=0.5]{q5iamb.pdf}
+\end{center}
+
+Como já vem sendo feito no decorrer deste relatório a posição do polo alem de influenciar
+a estabilidade é fator determinante para a velocidade de resposta do sistema, no primeiro
+caso apresentado o sistema apresenta o polo do lado direito em relação ao eixo $\sigma=0$
+o que torna o sistema instável, o segundo sistema por sua vez apresenta o polo do lado 
+esquerdo caracterizando assim, um sistema estável.
+
+\subsection{Gráfico de resposta}
+
+Abaixo o gráfico com a resposta sem realimentação e com realimentação,
+
+\begin{center}
+    \includegraphics[scale=0.5]{q5g.pdf}
+\end{center}
+
+Para melhor exemplificação posso fazer o ganho $K$ da realimentação variar de 1 a 5, ou seja
+
+\begin{equation}
+    \frac{C(s)}{U(s)} = \frac{1}{1+s+K}
+\end{equation}
+
+Em outras palavras,
+
+\begin{lstlisting}
+clear all
+f1 = tf([1], [1 1]);
+k = [1 2 3 4 5];
+tempo = 0:0.01:3;
+for i=1:length(k)
+    [y(:,i), t] = step(feedback(f1, k(i)), tempo);
+end
+plot(t, y)
+\end{lstlisting}
+
+Em palavras mais visuais,
+
+\begin{center}
+    \includegraphics[scale=0.5]{q5ibvr.pdf}
+\end{center}
+
+Com o gráfico acima é possível entender como a realimentação influência na
+velocidade de resposta do sistema.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SEXTA QUESTÃO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Sexta questão}
+
+O sistema da 6ª questão é modelado a partir do diagrama de blocos abaixo,
+
+\begin{center}
+    \includegraphics[scale=0.5]{q6.png}
+\end{center}
+
+\subsection{Gráfico da reposta ao degrau}
+
+Fazendo $K$ variar de 5 e 10, temos a seguintes reposta o degrau,
+
+\begin{center}
+    \includegraphics[scale=0.5]{q6ia.pdf}
+\end{center}
+
+\subsection{Comentários sobre o efeito de $K$ na realimentação}
+
+A conclusão não poderia ser mais obvia, o efeito do ganho não mais da realimentação
+e sim ainda em malha aberta, altera, novamente, a resposta do sistema em relação
+a o estimulo, no caso, degrau unitário.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% SEXTA QUESTÃO
+% SETIMA QUESTÃO
+\section{Sétima questão}
+
+Dados os 3 sistemas abaixo,
+
+\begin{center}
+    \includegraphics[scale=0.5]{q7.png}
+\end{center}
+
+Tenho aqui como principal objetivo, analisar as suas respostas em regime permanente
+e comparar os seus erros.
+
+\subsection{Erro em regime permanente malha aberta}
+
+O gráfico para análise do erro em regime permanente para o sistema em malha aberta
+é apresentado abaixo, como segue, o programa para tal,
+
+\begin{lstlisting}
+f1 = tf([1], [1 1]);
+% item a
+[y, t] = step(f1);
+plot(t, y, t, ones(length(t), 1))
+\end{lstlisting}
+ 
+Com o gráfico
+
+\begin{center}
+    \includegraphics[scale=0.5]{q7ia.pdf}
+\end{center}
+
+A entrada em regime ocorre no tempo maior que 6 segundos, o erro presente é zero porcento.
 
 
 
