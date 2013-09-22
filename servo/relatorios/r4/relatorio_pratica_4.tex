@@ -480,8 +480,62 @@ Com o gráfico
     \includegraphics[scale=0.5]{q7ia.pdf}
 \end{center}
 
-A entrada em regime ocorre no tempo maior que 6 segundos, o erro presente é zero porcento.
+Abaixo é possível ver o gráfico do erro, ou seja, entrada menos a saída,
+
+\begin{center}
+    \includegraphics[scale=0.5]{q7iaerro.pdf}
+\end{center}
+
+Nota-se que com o tempo mair que 6 segundos o erro é próximo de zero, e no infinito
+ele é zero.
+
+\newpage
+
+\subsection{Erro em regime permanente em malha fechada}
+
+Para o sistema de malha fechada temos o gráfico da resposta para uma entrada
+degrau unitária,
+
+\begin{center}
+    \includegraphics[scale=0.5]{q7ibre.pdf}
+\end{center}
+
+Gráfico do erro,
+
+\begin{center}
+    \includegraphics[scale=0.5]{q7iberro.pdf}
+\end{center}
+
+\subsection{Comparação dos erros}
+
+Comparando os dois gráficos para o erro para malha aberta e o de malha fechada, é possível
+notar que o erro para malha aberta tende a zero para o infinito, para o malha fechada, o erro
+fica parado em 0.5 em regime permanente.
+
+\subsection{Efeito do ganho em malha fechada}
+
+Para essa analise se faz necessário uma plotagem paramétrica do problema, com isso o gráfico
+da resposta ao impulso fica,
+
+\begin{center}
+    \includegraphics[scale=0.5]{q7ic.pdf}
+\end{center}
+
+Nota-se com isso que é possível modificar o erro de tal forma que, o erro, é anulado em regime
+permanente. Abaixo fica o gráfico para o erro,
+
+\begin{center}
+    \includegraphics[scale=0.5]{q7icerro.pdf}
+\end{center}
 
 
+\section{Conclusões finais}
 
+Erros são inerentes em que qualquer sistema de controle. O entendimento de funcionamento e o 
+domínio da matemática que envolve a modelagem de tais sistemas, fornece um suporte para
+conclusões que, o ganho influência no tempo de resposta de sistema e também é capaz de 
+modificar o estabilidade de um sistema, tornando, possivelmente, do estado instável para
+o estado estável. A realimentação negativa também introduz uma modificação na estabilidade
+e tempo de resposta, só que os seus efeitos são mais fortes, já que há uma tendência de 
+atenuação do ganho e aumentar o erro referente a entrada e saída.
 \end{document}
