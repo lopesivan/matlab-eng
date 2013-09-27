@@ -14,6 +14,9 @@
 \usepackage{amsthm}
 \usepackage{graphicx}
 
+\usepackage{schemabloc}
+\usetikzlibrary{circuits}
+
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{18pt}
 
@@ -109,7 +112,7 @@ end
 xlabel('tempo segundos');
 \end{lstlisting}
 
-A resposta para as diversas variações de $\zeta$ é apresentada na figura 2.
+A resposta para as diversas variações de $\zeta$ é apresentada na figura 2,
 
 \begin{figure}
     \begin{center}
@@ -118,7 +121,121 @@ A resposta para as diversas variações de $\zeta$ é apresentada na figura 2.
     \end{center}
 \end{figure}
 
-\section{Grafico 3D}
+\section{Visualização 3D das variações de $\zeta$}
+
+\section{Resposta ao impulso}
+
+O sistema proposto é modelado,
+
+\begin{equation}
+    \frac{C(s)}{R(s)} = \frac{1}{s^2+s+1}
+\end{equation}
+
+A sua resposta para o \textbf(impulso) pode ser encontrada usando as 
+seguintes linhas de códigos,
+
+\begin{lstlisting}
+gs = tf([1], [1 1 1]);
+impulse(gs);
+\end{lstlisting}
+
+A resposta para tal é,
+
+\begin{figure}
+    \begin{center}
+    \includegraphics[scale=.5]{q3ia.pdf}
+    \caption{Resposta para o impulso de $\frac{1}{s^2+s+1}$}
+    \end{center}
+\end{figure}
+
+
+\section{Servo sistema}
+
+Um servosistema possui a seguinte função de transferência,
+
+\begin{equation} \label{eq:servosistema}
+    G_p(s) = \frac{z}{J s^2 + B s}
+\end{equation}
+
+Onde $J=1 Nm/\frac{rad}{s^2}$ e $B = 4 Nm/\frac{rad}{s}$. Substituindo  os
+valores na equação ~\ref{eq:servosistema},
+
+\begin{equation} \label{eq:servosistema}
+    G_p(s) = \frac{1}{s^2 + 4 s}
+\end{equation}
+
+O sistema finalmente é caracterizado pelo seguinte diagrama de blocos,
+
+\begin{center}
+\begin{tikzpicture}
+    \sbEntree{E} % entrada
+    \sbComp{a}{E} % comparador
+    \sbBloc{b}{$K$}{a} % ganho K
+        \sbRelier[R(s)]{E}{a} % ligação entrada - comparador
+        \sbRelier{a}{b} % ligação comparador - bloco de ganho
+    \sbBloc{c}{$\frac{1}{s^2 + 4 s}$}{b} % função de transferência
+        \sbRelier{b}{c} % ligação bloco de ganho - função de transferência
+    \sbSortie{S}{c}
+    \sbRelier{c}{S}
+    \sbRenvoi{c-S}{a}{}
+\end{tikzpicture}
+\end{center}
+
+A função de transferência de malha fechada do sistema fica,
+
+\begin{equation}
+    \frac{R(s)}{C(s)} = \frac{K G_p(s)}{1 + G_p(s)} = \frac{K}{s^2 + 4 s + 1}
+\end{equation}
+
+\subsection{Resposta transitória ao degrau unitario}
+
+Para a resposta transitória faço $K$ varia: 1, 4, 6, 10, 25 e 400. Para tanto
+posso utilizar a mesmo código da primeira questão com pequenas modificações, ficando,
+
+\begin{lstlisting}
+K = [1 4 6 10 25 400];
+t = 0:0.01:40;
+cor = ['b', 'g', 'r', 'c', 'm', 'k'];
+for c = 1:length(K)
+    gs = tf([K(c)], [1 4 1]);
+    [y(c,:)] = step(gs, t);
+    hold on;
+    plot(t, y(c,:), cor(c));
+    grid on;
+end
+xlabel('tempo segundos');
+\end{lstlisting}
+
+
+\begin{figure}
+    \begin{center}
+    \includegraphics[scale=.5]{q4ia.pdf}
+    \caption{Variações de $K$}
+    \end{center}
+\end{figure}
+
+A figura 4 mostra as diversas resposta para as diversas variações
+de $K$, nota-se inicialmente que o erro relativo está diretamente ligado 
+a ganho $K$. Com isto é possível concluir que $K$ está ligado as seguintes 
+situação, o erro estacionário e resposta do sistema são diretamente proporcionais
+a $K$. Agora $K$ não está ligado ao tipo de resposta do sistema, seja ela 
+subamortecida, superamortecida, criticamente amortecida ou oscilatória. Esse
+tipo de resposta só pode ser modificado com a alteração dos pólos e suas posições
+no plano-s. Modificação que deve ser feita na equação característica da função 
+de transferência. 
+
+\section{Considerações finais}
+
+Um sistema de segunda ordem difere dos de primeira, pelo fato de possuírem dois polos
+mais o fator mais consideravel é o arranjo que este polos estão no plano-s. 
+Arranjo este que determina as 4 situações possíveis de resposta para o sistema, 
+situações estas que pode ser ou não bem vindas para os componentes do sistema, 
+sendo que suas alterações dependem de diversos fatores,  com isto as correções 
+para o sistemas de segunda ordem são mais complexas e exigem
+um domínio das ferramentas de analise matemática do problema. O Matlab novamente
+se mostra um ótimo software para este trabalho matemático, facilitando a visualização
+no domínio do tempo das diversas respostas e com simples modificações é possível
+criar gráficos complexos.
 
 
 

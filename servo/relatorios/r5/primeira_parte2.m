@@ -4,7 +4,7 @@ clear all
 
 zeta = [0 0.4 0.6 0.8 1 1.4];
 wn = 5;
-t = 0:0.001:4;
+t = 0:0.01:4;
 cor = ['b', 'g', 'r', 'c', 'm', 'y'];
 
 for c = 1:length(zeta)
