@@ -121,7 +121,36 @@ A resposta para as diversas variações de $\zeta$ é apresentada na figura 2,
     \end{center}
 \end{figure}
 
+\subsection{Comentários sobre a variação de $\omega_n$ e $\zeta$}
+
+Como já foi notado os valores de $\omega_n$ e $\zeta$ influenciam no comportamento
+de uma função de transferência de segunda ordem. $\omega_n$ está diretamente ligado
+a frequência de oscilação do sistema. $\zeta$ está ligada ao tipo de comportamento
+do sistema, onde são conhecida as seguintes situações: 
+
+\begin{enumerate}
+    \item Sistema subamortecido, quando $0<\zeta<1$
+    \item Sistema criticamente amortecido, quando $\zeta = 1$
+    \item Sistema superamortecido, quando $\zeta > 1$
+    \item Oscilatório, quando $\zeta = 0$
+\end{enumerate}
+
+O problema proposta apresenta todas as quatro situações. A analise para
+o sistema de segundo ordem pode então ser feita vendo apenas os parâmetros
+ou valores de $\omega_n$ e $\zeta$
+
+
 \section{Visualização 3D das variações de $\zeta$}
+
+O grafico 3 mostra uma visão
+
+\begin{figure}[!h]
+    \begin{center}
+    \includegraphics[scale=.5]{q1p2.pdf}
+    \caption{Gráfico 3D}
+    \end{center}
+\end{figure}
+
 
 \section{Resposta ao impulso}
 
@@ -141,7 +170,7 @@ impulse(gs);
 
 A resposta para tal é,
 
-\begin{figure}
+\begin{figure}[!h]
     \begin{center}
     \includegraphics[scale=.5]{q3ia.pdf}
     \caption{Resposta para o impulso de $\frac{1}{s^2+s+1}$}
@@ -178,6 +207,7 @@ O sistema finalmente é caracterizado pelo seguinte diagrama de blocos,
     \sbSortie{S}{c}
     \sbRelier{c}{S}
     \sbRenvoi{c-S}{a}{}
+    \sbNomLien[.8]{S}{$S_1(s)$}
 \end{tikzpicture}
 \end{center}
 
