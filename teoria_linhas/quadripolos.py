@@ -37,7 +37,7 @@ def linha_media_pi(Z, Y):
 
     A = 1 + (Z*Y)/2
     B = Z
-    C = Y*A
+    C = Y*(1 + (Z*Y)/4)
     D = A
 
     return [A, B, C, D]
@@ -49,7 +49,7 @@ def linha_media_T(Z, Y):
         return -1
 
     A = 1 + (Z*Y)/2
-    B = Z*A
+    B = Z*(1 + (Z*Y)/4)
     C = Y
     D = A
 
