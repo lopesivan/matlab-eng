@@ -1,0 +1,95 @@
+% Relatório do laboratório 5 de servo
+% Felipe Bandeira da Silva
+% 27/09/2013
+
+%\documentclass[a4paper, 10pt]{article}
+\documentclass[paper=a4, fontsize=11pt]{article}
+
+
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{amsthm}
+\usepackage{graphicx}
+
+\usepackage{schemabloc}
+\usetikzlibrary{circuits}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{18pt}
+
+\title{Lista de Exercícios 01\\Servo 1}
+\author{Felipe Bandeira da Silva}
+\date{}
+
+
+\begin{document}
+
+
+\maketitle
+
+
+\newpage
+
+\listoffigures
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Transformada de Laplace}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Valor Final}
+
+Determine o valor final da função $f(t)$ cuja transformada de laplace é dada por:
+\begin{equation}
+    F(s) = \frac{10}{s(s+1)}
+\end{equation}
+\textbf{Solução 0:}
+Expandindo em frações parciais,
+\begin{equation}
+    F(s) = \frac{10}{s(s+1)} = \frac{10}{s} - \frac{10}{s+1}
+\end{equation}
+Aplicando a transformada inversa de laplace,
+\begin{equation}
+    f(t) = 10 u(t) - 10 e^{-t}
+\end{equation}
+Onde $u(t)$ é a função degrau unitário. Por simples inspeção é possivel
+perceber que o valor final da função é 10.
+
+\textbf{Solução 1:}
+Aplicando o teorema do valor final de Laplace,
+\begin{equation}
+    \lim_{s \to 0}{s F(s)} = \lim_{s \to 0}{s \frac{10}{s(s+1)}} = \frac{10}{1} = 10
+\end{equation}
+Uma solução menos complexa e mais rápida.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{EDO domínio da frequência}
+
+Represente as seguintes equações diferenciais no domínio do tempo $s=\sigma + j w$:
+
+\subsection{item a}
+\begin{equation}
+    2 \frac{d^2 x}{d t^2} + 7 \frac{d^2 x}{d t} + 3 = 0
+\end{equation}
+Aplicando as propriedades de Laplace para equações diferenciais, e considerando
+os valores iniciais $x(0)=3$ e $x'(0)=0$,
+\begin{equation}
+    2(s X(s) - 3 s - 0) + 7(s X(s) - 3) +  3 X(s) = 0
+\end{equation}
+Desenvolvendo e isolando $X(s)$,
+\begin{equation}
+    X(s) = \frac{21 + 6 s}{9 s + 3}
+\end{equation}
+
+\subsection{item b}
+\begin{equation}
+   \frac{d^2 x}{d t^2} + 3 \frac{d^2 x}{d t} + 6 x = 0
+\end{equation}
+
+\end{document}
+
