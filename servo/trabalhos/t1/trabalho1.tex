@@ -368,9 +368,81 @@ $$
 $$
 \frac{\omega_n^2}{s^2 + 2 \zeta \omega_n + \omega_n^2}
 $$
+
 Determine os valores de $\zeta$ e $\omega_n$ de modo que o sistema responda a uma entrada em degrau
 com aproximadamente $5\%$ de sobressinal e com um tempo de acomodação de 2 segundos
 (utilize o critério de $2\%$ de tolerância).
 
+Sabendo que,
+
+$$
+t_s = \frac{4}{\zeta \omega_n} = \frac{4}{\sigma} = 4
+$$
+
+Torna,
+
+$$
+\sigma = 2
+$$
+
+Usando,
+
+$$
+M_p = e^{\frac{-\zeta \pi}{\sqrt{1-\zeta^2}} } = 0.05
+$$
+
+Encontra-se,
+
+$$
+\zeta = 690.1E-3
+$$
+
+Finalmente,
+
+$$
+\omega_n = \frac{\sigma}{\zeta} = 2.898
+$$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% decima terceira questão
+\newpage
+
+13. Considere o sistema de malha fechada apresentado na figura abaixo,
+Determine o intervalo de valores de K para que o sistema seja estável.
+
+A equação de malha fechada do sistema é,
+
+$$
+\frac{C(s)}{R(s)} = \frac{K (s-2)}{K (s-2) + s^3 + 7 s^2 + 31 s + 25}
+$$
+
+Rearranjando os denominador,
+
+$$
+\frac{C(s)}{R(s)} = \frac{K (s-2)}{s^3 7 s^2 + s(31 + K) + 25 + 2K} 
+$$
+
+Aplicando o critério de estabilidade de Routh,
+
+\begin{center}
+    \begin{tabular}{c| c c}
+        $s^3$ & 1 & $31+K$ \\
+        $s^2$ & 7 & $25+2K$ \\
+        $s^1$ & $\frac{5K+192}{7}$ & 0 \\
+        $s^0$ & $2K+25$ & 0 \\
+    \end{tabular}
+\end{center}
+
+O sistema é estável para,
+
+$$
+2 K + 25 > 0
+$$
+
+e 
+
+$$
+\frac{5K+192}{7} > 0
+$$
 \end{document}
 
