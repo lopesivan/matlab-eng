@@ -30,15 +30,347 @@
 
 Coletânea com questões selecionadas das duas lista da 1np.
 
-\newpage
+%\newpage
 
-\listoffigures
+%\listoffigures
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % primeira questão
 \newpage
 
+1. Encontre a transformada de Laplace para as seguintes funções:
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% segunda questão
+\newpage
+
+2. Determine o valor final da função $f(t)$ cuja transformada de Laplace é dada por:
+$$
+F(s) = \frac{10}{s(s+1)}
+$$
+expandindo em frações parciais,
+$$
+F(s) = \frac{10}{s} - \frac{10}{s+1}
+$$
+aplicando a transformada inversa de Laplace,
+$$
+f(t) = 10 u(t) - 10 e^{-t}
+$$
+para $t>0$,
+$$
+f(t) = 10 - 10 e^{-t}
+$$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% terceira questão
+\newpage
+
+3. Represente as seguintes equações diferenciais no domínio complexo $s=\sigma + j \omega$.
+
+a) $2 \ddot{x} + 7 \dot{x} +  3 = 0$ para $x(0)=3$ e $\dot{x(0)}=0$
+
+Aplicando as propriedades de Laplace para equações diferenciais,
+
+$$
+2 (s X(s) - 3 s - 0) + 7 (s X(s) - 3) + 3 X(s) = 0
+$$
+
+Isolando $X(s)$,
+
+$$
+X(s) = \frac{6s + 21}{9 s + 3} = \frac{2 s + 7}{3 s + 1}
+$$
+
+b) $\ddot{x} + 3 \ddot{x} + 6 x = 0$ para $x(0) = 0$ e $\dot{x(0)}=3$
+
+Aplicando novamente Laplace,
+
+$$
+s X(s) - 3 + 3 (s X(s)) + 6 X(s) = 0
+$$
+
+Isolando $X(s)$,
+
+$$
+X(s) = \frac{3}{4 s + 6}
+$$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% quarta questão
+\newpage
+
+4. Obtenha a resposta temporal do sistema abaixo para uma entrada do tipo impulso unitário
+em $t=0$. Encontre seu valor em regime permanente.
+
+$$
+G(s) = \frac{5(s+2)}{s^2(s+6)}
+$$
+
+Considerando que,
+
+$$
+\frac{Y(s)}{X(s)} = G(s)
+$$
+
+O Laplace do impulso é 1, desenvolvendo,
+
+$$
+Y(s) =  \frac{5(s+2)}{s^2(s+6)} 1 = \frac{5/3}{s^2} + \frac{5/9}{s} + \frac{-5/9}{s+6}
+$$
+
+Aplicando a transformada inversa de Laplace é possível obter a resposta temporal,
+
+$$
+y(t) = \frac{5 t}{9} + \frac{5}{9} + \frac{-5}{9} e^{-6 t}
+$$
+
+O valor de $y(t=0)$ é portanto,
+
+$$
+y(0) = 0
+$$
+
+O seu valor em regime permanente por ser encontrado, aplicando o teorema do valor final de Laplace,
+
+$$
+\lim_{s \to 0 }{s Y(s)} = \lim_{s \to 0}{\frac{5(s+2)}{s(s+6)}} = \infty
+$$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% quinta questão
+\newpage
+
+5. Determine a transformada inversa de Laplace e o valor em regime estacionário dos seguinte
+sinais,
+
+a) $Y(s) = \frac{s+3}{(s+1)(s+2)}$
+
+Expandindo em frações parciais,
+$$
+Y(s) = \frac{2}{s+1} - \frac{1}{s+2}
+$$
+Aplicando LI,
+
+$$
+y(t) = 2 e^{-t} - e^{-2 t}
+$$
+Valor em regime permanente,
+
+$$
+\lim_{s \to 0 }{s Y(s)} = \lim_{s \to 0}{s \frac{s+3}{(s+1)(s+2)}} = 0 
+$$
+
+b) $Y(s) = \frac{2 s + 12}{s^2+2 s+5}$
+
+Expandindo em frações parciais,
+$$
+Y(s) = \frac{ \frac{2+5j}{2} }{s+1+2j} + \frac{ \frac{2-5j}{2} }{s+1-2j}
+$$
+Aplicando LI,
+
+$$
+y(t) = \frac{2+5j}{2} e^{-(1+2j)t} +  \frac{2-5j}{2} e^{-(1-2j)t}
+$$
+Valor em regime permanente,
+
+$$ 
+\lim_{s \to 0 }{s Y(s)} = \lim_{s \to 0}{s \frac{2 s + 12}{s^2+2 s+5}} = 0  
+$$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% sexta questão
+\newpage
+
+6. Um dado sistema em repouso é submetido a uma entrada $u(t)$ do tipo exponencial
+decrescente com constante de tempo unitária e valor inicial $t=0$ igual a 1. Sabendo
+que o comportamento dinâmico do sistema é dado por $\ddot{x} + 3 \dot{x} + 2 x = u$,
+encontre a equação que determina a resposta temporal.
+
+O sistema é,
+
+$$
+\ddot{x} + 3 \dot{x} + 2 x = u
+$$
+Aplicando a Laplace e considerando os valores iniciais iguais a zero,
+
+$$
+s^2 X(s) + 3 s X(s) + 2 X(s) = U(s)
+$$
+Isolando $X(s)$,
+
+$$
+X(s) = \frac{1}{s^2 + 3s + 2} U(s)
+$$
+Sabendo que a transformada de Laplace da exponencial do problema é,
+
+$$
+U(s)=\frac{1}{1+s}
+$$
+A reposta para tal pode ser encontrada,
+
+$$
+Y(s) = \frac{1}{s^2 + 3s + 2} \left(\frac{1}{s+1}\right) = \frac{1}{s^3 + 4 s^2 + 5 s +2}
+$$
+
+Expandindo em frações parciais para facilitar a aplicação do Laplace inverso,
+
+$$
+Y(s) = \frac{1}{s+2} + \frac{1}{(s+1)^2} - \frac{1}{s+1}
+$$
+
+Aplicando a transformada inversa de Laplace de tal forma que a resposta temporal , para $t\geq0$, é,
+
+$$
+y(t) = e^{-2t} + t e^{-t} - e^{-t}
+$$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% sétima questão
+\newpage
+
+7. Obtenha a função de transferência de malha fechada do sistema a seguir,
+
+A função de malha aberta é,
+
+$$
+G(s) = \frac{2}{s} \left(\frac{1}{s+1}\right)
+$$
+
+O ganho de realimentação é unitária, portanto a equação de transferência pode ser 
+obtida usando,
+
+$$
+\frac{C(s)}{R(s)} = \frac{G(s)}{1 + G(s)}
+$$
+
+Substituindo os valores,
+
+$$
+\frac{C(s)}{R(s)} = \frac{2}{s^2+s+2}
+$$
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% oitava questão
+\newpage
+8. O circuito elétrico abaixo é utilizado para carregar um capacitor em um circuito eletrônico.
+Obtenha a função de transferência que representa a tensão do capacitor em relação a entrada
+$i(t)$.
+
+É sabido que a impedância capacitiva é dada por $\frac{1}{s C}$ e indutiva é $s L $. O resistor
+em paralelo com o capacitor produz uma impedância,
+
+$$
+R || \frac{1}{s C} = \frac{R}{s R C + 1}
+$$
+
+Esta nova impedância em paralelo com o indutor produz,
+
+$$
+\frac{R}{s R C + 1} || s L = \frac{s R L}{s^2 R L C + s L + R}
+$$
+
+A tensão no capacitor é mesma no resistor e indutor, utilizando $\dot{V}=\dot{Z}\dot{I}$,
+é possível encontra a função de transferência para o circuito,
+
+$$
+\frac{\dot{V}}{\dot{I}} = \frac{s R L}{s^2 R L C + s L + R}
+$$
+
+Onde $\dot{V}$, $\dot{I}$ e $\dot{Z}$ são grandezas vetoriais.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% nona questão
+\newpage
+
+9.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% decima questão
+\newpage
+
+10.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% decima primeira questão
+\newpage
+
+11. Considere a resposta ao degrau unitário do sistema de controle com realimentação 
+unitária cuja função de transferência de malha aberta seja:
+
+$$
+G(s) = \frac{1}{s(s+1)}
+$$
+
+Obtenha o tempo de subida, o máximo sobre-sinal, o tempo de acomodação com tolerância de
+$2\%$ e o erro em regime permanente.
+
+
+A função de transferência em malha fechada é,
+
+$$
+\frac{C(s)}{R(s)} = \frac{1}{s^2 + s + 1}
+$$
+
+Onde $C(s)$ representa a saída e $R(s)$ representa a entrada. Comparando a função de 
+transferência com a forma padrão de um sistema de 2ª ordem que é,
+
+$$
+\frac{\omega_n^2}{s^2 + 2 \zeta \omega_n + \omega_n^2}
+$$
+
+Nota-se então que, $\omega_n = 1$ e $2 \zeta \omega = 1$. Aplicando as equação já conhecidas
+para tal analise, é possivel, obter,
+
+$$
+\zeta = \frac{1}{2} = 0.5
+$$
+
+$$
+\omega_d = \omega_n (1-\zeta^2)^{1/2} = (1 - 0.5^2)^{1/2} = 866.0E-3
+$$
+
+$$
+\beta = tg^{-1}{\frac{\omega_d}{\zeta \omega_n}} = tg^{-1}{\frac{0.866}{0.5}} = 1.047
+$$
+
+Tempo de subida,
+
+$$
+t_r = \frac{\pi - \beta}{\omega_d} = 2.418
+$$
+
+Tempo de pico,
+
+$$
+t_p = \frac{\pi}{\omega_d} = 3.628
+$$
+
+Máximo sobressinal,
+
+$$
+M_p = e^{\frac{-\zeta \pi}{\sqrt{1-\zeta^2}} } = 16.5 \%
+$$
+
+Tempo de acomodação(critério $2\%$),
+
+$$
+t_s = \frac{4}{\zeta \omega_n} = 8
+$$
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% decima segunda questão
+\newpage
+
+12. Considere o sistema de malha fechada dado como:
+
+$$
+\frac{\omega_n^2}{s^2 + 2 \zeta \omega_n + \omega_n^2}
+$$
+Determine os valores de $\zeta$ e $\omega_n$ de modo que o sistema responda a uma entrada em degrau
+com aproximadamente $5\%$ de sobressinal e com um tempo de acomodação de 2 segundos
+(utilize o critério de $2\%$ de tolerância).
 
 \end{document}
 
