@@ -19,7 +19,7 @@
 \setlength{\parskip}{18pt}
 
 \title{Trabalho 1\\Principio de Controle e Servo Mecanismos}
-\author{Felipe Bandeira da Silva}
+\author{Felipe Bandeira da Silva, 1020942\\Deyd Jackson}
 
 %\date{}
 
@@ -444,5 +444,129 @@ e
 $$
 \frac{5K+192}{7} > 0
 $$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% decima quarta questão
+\newpage
+
+14. Determine o valor de k para que o coeficiente de amortecimento $\zeta $ seja 0,5. 
+A partir daí, obtenha o tempo de subida, o máximo sobressinal e o tempo de acomodação 
+(tolerância de $5\%$) da resposta ao degrau unitário.
+
+A função de transferência pode ser encontrada, de tal forma que, a primeira
+função da malha interna é,
+
+$$
+= \frac{\frac{16}{s+4/5}}{1 + k \frac{16}{s+4/5}} = \frac{80}{80 k + 5 s + 4}
+$$
+
+O ganho $\frac{1}{s}$ produz,
+
+$$
+= \frac{80}{5 s^2 + 80 k s + 4 s}
+$$
+A função para a ultima malha fechada é,
+
+$$
+\frac{C(s)}{R(s)} = \frac{\frac{80}{5 s^2 + 80 k s + 4 s}}{1 + \frac{80}{5 s^2 + 80 k s + 4 s}} = \frac{80}{5 s^2 + s(80 k + 4) + 80}
+$$
+
+Comparando com a forma padrão de um sistema de segunda ordem, é possível obter,
+
+$$
+\omega_n = \sqrt{80} = 4 \sqrt{5}
+$$
+
+$$
+2 \zeta \omega_n = 80 k + 4
+$$
+
+Desenvolvendo $\zeta$, é possível facilmente adquirir.
+
+$$
+2 \times 0.5 \times 4 \sqrt{5} = 80 k + 4
+$$
+
+O valor de $k$ é portanto,
+
+$$
+k = \frac{-1 + \sqrt{5}}{20} = 61.80E-3
+$$
+
+Para o cálculo do tempo de subida é necessário encontrar $\beta$,
+
+$$
+\omega_d = \omega_n \sqrt{1 - \zeta^2} = 4 \sqrt{5} \sqrt{1 - 0.5^2} = 7.746
+$$
+
+$$
+\beta = tg^{-1}\frac{\omega_d}{\zeta \omega_n} = tg^{-1}\frac{7.746}{4.472} = 1.047
+$$
+
+O tempo de subida é portanto,
+
+$$
+t_r = \frac{\pi - \beta}{\omega_d} = \frac{\pi - 1.047}{7.746} = 270.4E-3
+$$
+
+O tempo de pico é,
+
+$$
+t_p = \frac{\pi}{\omega_d} = 405.6E-3
+$$
+
+Máximo sobre sinal,
+
+$$
+M_p = 163.0E-3
+$$
+
+O tempo de acomodação,
+
+$$
+t_s  = 335.4E-3
+$$
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% decima quinta
+\newpage
+
+15. Encontre o erro estacionário deste sistema para uma entrada em degrau, rampa e parábola.
+
+O sistema final é,
+
+$$
+\frac{C(s)}{R(s)} = \frac{10}{s^2 +  s + 10}
+$$
+
+Considerando o degrau unitário, o sistema responde,
+
+$$
+C(s) = \frac{10}{s^2 +  s + 10}\left(\frac{1}{s}\right)
+$$
+
+O valor em regime permanente é,
+
+$$
+\lim_{s \to \infty}{s C(s)} = \lim_{s \to \infty}{\frac{10}{s^2 +  s + 10}} = 1
+$$
+
+Nota-se portanto que o erro em regime estacionário é $0 \%$
+
+Considerando a rampa, o sistema responde,
+
+$$
+C(s) = \frac{10}{s^2 +  s + 10}\left(\frac{1}{s^2}\right)
+$$
+
+O valor em regime permanente é,
+
+$$
+\lim_{s \to \infty}{s C(s)} = \lim_{s \to \infty}{\frac{10}{s^3 +  s^2 + 10 s}} = \infty
+$$
+
+Nota-se portanto um erro $\infty \%$
+
 \end{document}
 
