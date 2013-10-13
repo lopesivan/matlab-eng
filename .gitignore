@@ -1,1 +1,10 @@
 *.pyc
+*.dvi
+*.lof
+*.log
+*.aux
+*.nav
+*.out
+*.toc
+*.vrb
+*.snm
