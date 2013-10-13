@@ -40,6 +40,18 @@ Coletânea com questões selecionadas das duas lista da 1np.
 
 1. Encontre a transformada de Laplace para as seguintes funções:
 
+b) 
+
+$$
+f(t) = 0.03(1 - cos(2t))
+$$
+
+Aplicando a tranformada inversa de Laplace,
+
+$$
+F(s) = \frac{0.03}{s} - \frac{0.03 s}{s^2+4}
+$$
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % segunda questão
 \newpage
@@ -283,8 +295,45 @@ Onde $\dot{V}$, $\dot{I}$ e $\dot{Z}$ são grandezas vetoriais.
 % nona questão
 \newpage
 
-9.
+9. Encontre as funções de transferência para as posições dos corpos $m_1$ e $m_2$ 
 
+As equações para a figura são:
+Para o corpo $m_1$
+$$
+m_1 \ddot{x_1} = - k_1 x_1 - k_2(x_1 - x_2) - b(\dot{x_1} - \dot{x_2}) + u
+$$
+Para o corpo $m_2$
+$$
+m_2 \ddot{x_2} = -k_3 x_2 - k_2(x_2-x_1) - b(\dot{x_2} - \dot{x_1})
+$$
+Simplificando as equações para os dois sistemas,
+$$
+m_1 \ddot{x_1} + b \dot{x_1} + (k_1 + k_2) x_1 = b \dot{x_2} + k_2 x_2 + u
+$$
+$$
+m_2 \ddot{x_2} + b \dot{x_2} + (k_2 + k_3) x_2 = b \dot{x_1} +  k_2 x_1
+$$
+Aplicando a transformada inversa de Laplace para as duas equações e considerando
+as condições iniciais nulas,
+\begin{equation}
+(m_1 s^2 + b s + (k_1 + k_2))X_1(s) = (b s + k_2)X_2(s) + U(s)
+\end{equation}
+\begin{equation}
+(m_2 s^2 + b s + (k_2 + k_3))X_2(s) = (b s + k_2) X_1(s)
+\end{equation}
+Simplificando a equação 2 de tal forma que se substitui em 1,
+$$
+((m_1 s^2 +  b s + k_1 k_2)(m_2 s^2 + b s + k_2 + k_3)-(b s + k_2)^2)X_1(s) = (m_2 s^2 +  b s + k_2 + k_3)U(s)
+$$
+Logo,
+\begin{equation}
+    \frac{X_1(s)}{U(s)} = \frac{m_2 s^2 + b s + k_2 + k_3}{(m_1 s^2 + b s + k_1 + k_2)(m_2 s^2 + b s + k_2 + k_3) - (b s +  k_2)^2}
+\end{equation}
+Obtendo tambem,
+\begin{equation}
+    \frac{X_2(s)}{U(s)} = \frac{b s + k_2}{(m_1 s^2 + b s +  k_1 + k_2)(m_2 s^2 + b s +  k_2 + k_3) - (b s + k_2 )^2}
+\end{equation}
+Logo as equações 3 e 4 são funções de transferências para os corpos $m_1$ e $m_2$.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % decima questão
 \newpage
