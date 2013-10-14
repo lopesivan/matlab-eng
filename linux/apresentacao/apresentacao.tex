@@ -106,10 +106,10 @@ Universidade de Fortaleza\\Universidade de Federal do Ceará\\ % Your institutio
 \titlepage % Print the title page as the first slide
 \end{frame}
 
-\begin{frame}
-\frametitle{Conteúdo} % Table of contents slide, comment this block out to remove it
-\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
-\end{frame}
+%\begin{frame}
+%\frametitle{Conteúdo} % Table of contents slide, comment this block out to remove it
+%\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+%\end{frame}
 
 %----------------------------------------------------------------------------------------
 %	PRESENTATION SLIDES
@@ -121,28 +121,93 @@ Universidade de Fortaleza\\Universidade de Federal do Ceará\\ % Your institutio
 
 \begin{frame}
 \frametitle{O Movimento Software Livre}
-
 \begin{itemize}
     \item Idealizador principal: Richard Stallman
     \item Fundado inicialmente em 1983
     \item Criação da Free Software Foundation em 1985
 \end{itemize}
-
 \end{frame}
 
-\section{
 
 %------------------------------------------------
-\section{Comandos Básicos}
+\section{Básico}
 %------------------------------------------------
 
 \subsection{Um pouco da arquitetura}
 \begin{frame}
-    \frametitle{Um pouco da arquitetura}
+    \frametitle{O Kernel}
+    \begin{figure}
+        \includegraphics[width=1\linewidth]{kernel.pdf}
+    \end{figure}
+\end{frame}
 
-    fefjhefiehfeufe
-    feufwhifwhfiwufwf
-    wefwfwfwfew
+\subsection{Projeto GNU}
+
+\begin{frame}
+    GNU e as quatros liberdades,
+    \begin{itemize}
+        \item Executar o programa
+        \item Estudar e mudar o código-fonte do programa
+        \item Redistribuir cópias exatas
+        \item Distribuir versões modificadas
+    \end{itemize}
+\end{frame}
+
+\section{Aplicações}
+
+\begin{frame}
+    Softwares Proprietários:
+    \begin{itemize}
+    \item O Matlab(MAtrix LABoratory)
+    \item Comsol Multiphysics
+    \item LabView(Laboratory Virtual Instrument Engineering Workbench)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    Python, criada por Guido Van Rossun
+    \begin{itemize}
+        \item Orientada a objetos
+        \item Interpretada via \textbf{bytecode}
+        \item Tipagem dinâmica
+        \item Modular
+        \item Multiplataforma
+        \item Integração com C
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    SciPy
+    %\begin{figure}
+    %   \includegraphics[width=.1\linewidth]{scipy.pdf}
+    %\end{figure}
+    \begin{itemize}
+        \item Integração(Simpson, Romberg...)
+        \item Otimização(Newton Conjugate Gradient...)
+        \item Interpolação
+        \item Transformadas de Fourier
+        \item Álgebra Linear
+        \item Processamento de imagem
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+    NumPy, Numerical Python
+    \begin{itemize}
+        \item Manipulação de Matrizes
+        \item Busca, Organização e Contagem
+        \item Tratamento de strings
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    SfePy: Simple Finite Elements in Python.
+    \begin{itemize}
+        \item Suporte no desenvolvimento pela "University of West Bohemia", República Tcheca.
+        \item Suporte pelo projeto "Nanostructures with transition metals: Towards ab-initio material design) of Czech Science Foundation"
+        \item Suporte pelo projeto "Microstructure oriented hierarchical modeling of brain perfusion for CT based cerebral blood flow evaluation) of Czech Science Foundation"
+    \end{itemize}
 \end{frame}
 
 \end{document} 
