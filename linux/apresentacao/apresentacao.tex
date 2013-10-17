@@ -94,7 +94,7 @@
 \author{Felipe Bandeira da Silva} % Your name
 \institute[Unifor] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
 {
-Universidade de Fortaleza\\Universidade de Federal do Ceará\\ % Your institution for the title page
+Universidade de Fortaleza-UNIFOR\\Universidade de Federal do Ceará-UFC\\ % Your institution for the title page
 \medskip
 \textit{felipeband18@gmail.com} % Your email address
 }
@@ -128,23 +128,8 @@ Universidade de Fortaleza\\Universidade de Federal do Ceará\\ % Your institutio
 \end{itemize}
 \end{frame}
 
-
-%------------------------------------------------
-\section{Básico}
-%------------------------------------------------
-
-\subsection{Um pouco da arquitetura}
 \begin{frame}
-    \frametitle{O Kernel}
-    \begin{figure}
-        \includegraphics[width=1\linewidth]{kernel.pdf}
-    \end{figure}
-\end{frame}
-
-\subsection{Projeto GNU}
-
-\begin{frame}
-    GNU e as quatros liberdades,
+\frametitle{As 4 liberdades}
     \begin{itemize}
         \item Executar o programa
         \item Estudar e mudar o código-fonte do programa
@@ -153,10 +138,46 @@ Universidade de Fortaleza\\Universidade de Federal do Ceará\\ % Your institutio
     \end{itemize}
 \end{frame}
 
+
+
+%------------------------------------------------
+\section{Básico}
+%------------------------------------------------
+
+\begin{frame}
+    \frametitle{GNU}
+    GNU = \textbf{G}NU is \textbf{n}ot \textbf{U}nix
+    \newline
+    \newline
+    Traz consigo um conjunto de ferramentas, são elas: cp, mv, ipconfig, rm, chmod, cat, ps, grep, gcc...
+    \newline
+    \newline
+    O principal: GCC (GNU Compiler Collection), suporte as linguagens: C, C++, Fortran, Java, Ada..
+\end{frame}
+
+\begin{frame}
+    \frametitle{O Kernel Linux}
+    Criado por: Linus Torvald e a Comunidade Free Software
+    \newline
+    \newline
+    ''Você suspira pelos bons tempos do Minix-1.1, quando os homens eram homens e escreviam seus próprios device drivers'' - Linus
+    \begin{figure}
+        %\includegraphics[width=1\linewidth]{kernel.pdf}
+        \includegraphics[width=.1\linewidth]{logo.png}
+    \end{figure}
+
+    Principais responsabilidades:
+    \begin{itemize}
+        \item Criação da camada de Abstração entre Hardware e Software
+        \item Gerenciamento dos recursos para cada processo
+    \end{itemize}
+\end{frame}
+
 \section{Aplicações}
 
 \begin{frame}
-    Softwares Proprietários:
+
+    \frametitle{Softwares Proprietários}
     \begin{itemize}
     \item O Matlab(MAtrix LABoratory)
     \item Comsol Multiphysics
@@ -177,7 +198,7 @@ Universidade de Fortaleza\\Universidade de Federal do Ceará\\ % Your institutio
 \end{frame}
 
 \begin{frame}
-    SciPy
+    \frametitle{SciPy, Scientific Computing Tools for Python}
     %\begin{figure}
     %   \includegraphics[width=.1\linewidth]{scipy.pdf}
     %\end{figure}
@@ -193,7 +214,7 @@ Universidade de Fortaleza\\Universidade de Federal do Ceará\\ % Your institutio
 
 
 \begin{frame}
-    NumPy, Numerical Python
+    \frametitle{NumPy, Numerical Python}
     \begin{itemize}
         \item Manipulação de Matrizes
         \item Busca, Organização e Contagem
@@ -202,12 +223,93 @@ Universidade de Fortaleza\\Universidade de Federal do Ceará\\ % Your institutio
 \end{frame}
 
 \begin{frame}
-    SfePy: Simple Finite Elements in Python.
+    \frametitle{SfePy: Simple Finite Elements in Python}
+
     \begin{itemize}
         \item Suporte no desenvolvimento pela "University of West Bohemia", República Tcheca.
         \item Suporte pelo projeto "Nanostructures with transition metals: Towards ab-initio material design) of Czech Science Foundation"
         \item Suporte pelo projeto "Microstructure oriented hierarchical modeling of brain perfusion for CT based cerebral blood flow evaluation) of Czech Science Foundation"
     \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{GSL, GNU Scientific Library}
+
+    \begin{itemize}
+        \item Desenvolvida para C e C++
+        \item Manipulação de números complexos
+        \item Interpolação
+        \item Álgebra Linear
+        \item Manipulação de Matrizes
+        \item Diferenciação numérica
+        \item Transformada Rápida de Fourier
+        \item Algorítimos de ordenação
+    \end{itemize}
+\end{frame}
+
+\section{Computação distribuída}
+
+\begin{frame}
+    \frametitle{Cluster}
+
+\begin{itemize}
+    \item Idealizado pela IBM na década de 60
+    \item Interligação de diversos Computadores(Mainframe)
+    \item Interligação feita via rede, preferencialmente um protocolo de comunicação conhecido(TCP/IP)!
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Tipos de Cluster}
+
+\begin{itemize}
+    \item Alto desempenho
+    \item Alta disponibilidade
+    \item Balanceamento de carga
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{O Sistema distribuído}
+
+\begin{itemize}
+    \item Transforma diversos computadores em "um só"
+    \item Gerencia o compartilhamento de recursos
+    \item Adição de poder computacional com a junção
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{CENAPAD, Centro Nacional de Processamento de Alto Desempenho - UFC}
+    
+    O CENAPAD apresenta 48 Blades Bull 500, cada Blade possui:
+    \begin{itemize}
+        \item 2 x processadores Intel Westmere 6 core X5650 EP
+        \item 6 x 4GB DDR3 1333 MHz de memória RAM
+        \item 1 x 250GB Sata II
+    \end{itemize}
+
+    \textbf{Total:}
+    \begin{itemize}
+        \item 576 núcleos de processamento
+        \item 1152GB de RAM podendo chegar a 5.363e3 GFlops
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{O Software}
+    \begin{itemize}
+        \item Red Hat EL 5
+        \item Compiladores GNU
+        \item BLAS, LAPACK, PARMETIS...
+        \item Gerenciamento de comunição OpenMP
+        \item Gerenciador das filas, SLURM
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+\Huge{\centerline{Fim}}
 \end{frame}
 
 \end{document} 
