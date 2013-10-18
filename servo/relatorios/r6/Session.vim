@@ -14,7 +14,6 @@ map <F2> :NERDTreeToggle
 map <S-Insert> <MiddleMouse>
 let &cpo=s:cpo_save
 unlet s:cpo_save
-set background=dark
 set backspace=indent,eol,start
 set expandtab
 set fileencodings=ucs-bom,utf-8,default,latin1
@@ -22,6 +21,7 @@ set guifont=Monospace\ 9
 set helplang=en
 set hlsearch
 set ignorecase
+set iminsert=0
 set incsearch
 set laststatus=2
 set mouse=a
@@ -35,7 +35,6 @@ set statusline=%!PowerlinePyeval('powerline.new_window()')
 set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc,.asv
 set tabstop=4
 set termencoding=utf-8
-set window=28
 let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
 let v:this_session=expand("<sfile>:p")
 silent only
@@ -44,12 +43,12 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +0 testatudo.m
-badd +0 estabilidade.m
-badd +0 parametros.m
-badd +0 estacionario.m
-badd +0 oscila.m
-badd +0 respostadegrau.m
+badd +1 testatudo.m
+badd +1 estabilidade.m
+badd +1 parametros.m
+badd +1 estacionario.m
+badd +1 oscila.m
+badd +1 respostadegrau.m
 args testatudo.m
 edit testatudo.m
 set splitbelow splitright
@@ -160,7 +159,7 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 99 - ((16 * winheight(0) + 13) / 27)
+let s:l = 99 - ((11 * winheight(0) + 9) / 19)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -258,7 +257,7 @@ setlocal nospell
 setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
 setlocal spellfile=
 setlocal spelllang=en
-setlocal statusline=%!PowerlinePyeval('powerline.statusline(3)')
+setlocal statusline=%!PowerlinePyeval('powerline.statusline(6)')
 setlocal suffixesadd=.m
 setlocal swapfile
 setlocal synmaxcol=3000
@@ -275,7 +274,7 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 2 - ((1 * winheight(0) + 13) / 27)
+let s:l = 2 - ((1 * winheight(0) + 9) / 19)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -390,7 +389,7 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 27 - ((26 * winheight(0) + 13) / 27)
+let s:l = 27 - ((18 * winheight(0) + 9) / 19)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -488,7 +487,7 @@ setlocal nospell
 setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
 setlocal spellfile=
 setlocal spelllang=pt
-setlocal statusline=%!PowerlinePyeval('powerline.statusline(7)')
+setlocal statusline=%!PowerlinePyeval('powerline.statusline(4)')
 setlocal suffixesadd=.m
 setlocal swapfile
 setlocal synmaxcol=3000
@@ -505,7 +504,7 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 20 - ((13 * winheight(0) + 13) / 27)
+let s:l = 20 - ((9 * winheight(0) + 9) / 19)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -603,7 +602,7 @@ setlocal nospell
 setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
 setlocal spellfile=
 setlocal spelllang=pt
-setlocal statusline=%!PowerlinePyeval('powerline.statusline(9)')
+setlocal statusline=%!PowerlinePyeval('powerline.statusline(3)')
 setlocal suffixesadd=.m
 setlocal swapfile
 setlocal synmaxcol=3000
@@ -620,7 +619,7 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 13) / 27)
+let s:l = 1 - ((0 * winheight(0) + 9) / 19)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -718,7 +717,7 @@ setlocal nospell
 setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
 setlocal spellfile=
 setlocal spelllang=pt
-setlocal statusline=%!PowerlinePyeval('powerline.statusline(11)')
+setlocal statusline=%!PowerlinePyeval('powerline.statusline(2)')
 setlocal suffixesadd=.m
 setlocal swapfile
 setlocal synmaxcol=3000
@@ -735,12 +734,12 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 3 - ((2 * winheight(0) + 13) / 27)
+let s:l = 19 - ((18 * winheight(0) + 9) / 19)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-3
-normal! 019l
+19
+normal! 026l
 tabnext 6
 if exists('s:wipebuf')
   silent exe 'bwipe ' . s:wipebuf
