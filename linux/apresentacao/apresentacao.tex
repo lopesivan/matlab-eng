@@ -146,9 +146,12 @@ Universidade de Fortaleza-UNIFOR\\Universidade de Federal do Ceará-UFC\\ % Your
 
 \begin{frame}
     \frametitle{GNU}
-    GNU = \textbf{G}NU is \textbf{n}ot \textbf{U}nix
-    \newline
-    \newline
+    \centerline{GNU = \textbf{G}NU is \textbf{n}ot \textbf{U}nix}
+
+    \begin{figure}
+        \includegraphics[width=.2\linewidth]{gnulogo.png}
+    \end{figure}
+
     Traz consigo um conjunto de ferramentas, são elas: cp, mv, ipconfig, rm, chmod, cat, ps, grep, gcc...
     \newline
     \newline
@@ -157,21 +160,64 @@ Universidade de Fortaleza-UNIFOR\\Universidade de Federal do Ceará-UFC\\ % Your
 
 \begin{frame}
     \frametitle{O Kernel Linux}
-    Criado por: Linus Torvald e a Comunidade Free Software
-    \newline
-    \newline
-    ''Você suspira pelos bons tempos do Minix-1.1, quando os homens eram homens e escreviam seus próprios device drivers'' - Linus
+    
     \begin{figure}
         %\includegraphics[width=1\linewidth]{kernel.pdf}
         \includegraphics[width=.1\linewidth]{logo.png}
     \end{figure}
 
-    Principais responsabilidades:
+
+    Criado por: Linus Torvald e a Comunidade Free Software
+    \newline
+    \newline
+    ''Você suspira pelos bons tempos do Minix-1.1, quando os homens eram homens e escreviam seus próprios device drivers'' - Linus
+        Principais responsabilidades:
     \begin{itemize}
         \item Criação da camada de Abstração entre Hardware e Software
         \item Gerenciamento dos recursos para cada processo
     \end{itemize}
 \end{frame}
+
+\begin{frame}   
+    \frametitle{Linha de Comando}
+
+    O sistema GNU/Linux é \textit{Case Sensitive}.
+
+    \begin{itemize}
+        \item Todo comando tem os seus argumentos e suas saídas\\
+            Exemplo 0:\\
+            Instalando o ''gvim''\\
+            sudo apt-get install gvim\\
+            Exemplo 1: \\
+            Executando o gvim com argumento texto2 \\
+            gvim texto2 \\
+    \end{itemize}
+
+    Dica: use a tecla ''tab'' para completar o comando.
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{MANUAL}
+    
+    \begin{itemize}
+        \item Leia sempre o manual
+        \item Comandos disponíveis e uteis: man, info
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Navegando pelas pastas}
+
+    \begin{itemize}
+        \item ''cd'' - muda para um determinado diretório
+        \item ''ls'' - mostra o conteúdo de um diretório
+        \item ''grep'' - aplica um filtro nos resultados
+        \item ''pwd'' - mostra o caminho completo do diretório atual
+    \end{itemize}
+\end{frame}
+
 
 \section{Aplicações}
 
@@ -309,6 +355,17 @@ Universidade de Fortaleza-UNIFOR\\Universidade de Federal do Ceará-UFC\\ % Your
         \item BLAS, LAPACK, PARMETIS...
         \item Gerenciamento de comunição OpenMP
         \item Gerenciador das filas, SLURM
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Materiais para Estudo}
+
+    \begin{itemize}
+        \item foca linux, ''http://www.guiafoca.org/'' 
+        \item manuais dos comandos
+        \item projeto GNU, '' www.gnu.org/''
+        \item documentação do kernel, ''https://www.kernel.org/''
     \end{itemize}
 \end{frame}
 
