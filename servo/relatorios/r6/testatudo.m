@@ -97,3 +97,12 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % quarta questão
 
+fun1 = tf([25], [1 20 25]);
+fun2 = tf([25], [1 4 25]);
+
+disp('********************************************************************************');
+disp('quarta questão');
+
+fprintf('Retorno do comando "oscila" para função G1: %d\n', oscila(fun1))
+fprintf('Retorno do comando "oscila" para função G2: %d\n', oscila(fun2))
+
