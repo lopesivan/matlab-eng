@@ -1,0 +1,76 @@
+% Felipe Bandeira da Silva
+% 27/09/2013
+
+%\documentclass[a4paper, 10pt]{article}
+\documentclass[paper=a4, fontsize=11pt]{article}
+
+%\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
+
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{amsthm}
+\usepackage{graphicx}
+
+\usepackage{schemabloc}
+\usetikzlibrary{circuits}
+
+\usepackage{tabularx,ragged2e,booktabs,caption}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{18pt}
+
+\title{Laboratório de Transformadores\\Transformação Trifásica com Transformadores Monofásicos}
+\author{Felipe Bandeira da Silva\\1020942-X}
+%\date{}
+
+\begin{document}
+
+
+\maketitle
+
+%\newpage
+
+%\begin{abstract}
+\textit{Este laboratório tem como objetivo: Exemplificar as devidas ligações que tornam um
+transformador monofásico apto a trabalhar em conjunto com outros transformadores monofásico
+em uma rede trifásica equilibrada.}
+%\end{abstract}
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+\listoffigures
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% fundamentação teórica
+\newpage
+\section{Fundamentação Teórica}
+
+Um sistema trifásico tem como principal característica a defasagem de $120º$ entre
+as três fases. Para facilitar a análise para tal sistema, todo um equacionamento
+é desenvolvido tornando conhecido as seguintes relações:
+
+\begin{equation}
+    V^{FF} = \sqrt{3} \cdot V^{FN}
+\end{equation}
+
+Onde, $V^{FF}$ é conhecida como tensão fase-fase ou tensão de linha, $V^{FN}$ chamada
+de tensão fase-neutro ou apenas tensão de fase. Observação: a equação (1) só é válida
+para sistema trifásico equilibrado. Um sistema trifásico equilibrado apresenta uma
+característica bastante peculiar, a corrente do neutro é igual a zero, qualquer
+variação diferente de zero no eletrodo para o neutro, caracteriza um sistema não mais
+equilibrado e sim desequilibrado. Um transformador também não é diferente e toda a teoria
+estudada para o seu funcionamento em sistemas monofásicos também pode ser utilizada em
+sistemas trifásicos. Basta portanto, para isso, considerar o diagrama unifilar da rede.
+Para se transformar a tensão de uma fonte trifásica, se requer ou bancada de transformadores
+monofásicos, ou, alternativamente  um único transformador trifásico com seis enrolamentos
+num núcleo comum de ferro. Necessário apenas o devido cuidado com a fase de cada
+enrolamento.
+\end{document}
+
