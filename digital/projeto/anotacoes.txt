@@ -1,0 +1,9 @@
+Configurações do 74ls181
+
+M = 0 -> funções aritméticas
+M = 1 -> funçoes logicas
+
+
+CN = 1 -> com carry
+CN = 0 -> sem carry
+
