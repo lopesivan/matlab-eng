@@ -106,3 +106,17 @@ disp('quarta questão');
 fprintf('Retorno do comando "oscila" para função G1: %d\n', oscila(fun1))
 fprintf('Retorno do comando "oscila" para função G2: %d\n', oscila(fun2))
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% quarta questão
+
+fun = tf([.5], [1 .8 1]);
+
+disp('********************************************************************************');
+disp('quinta questão');
+
+[tr, tp, Mp, ts] = respostadegrau(fun, 2);
+
+fprintf('tr : %d\n', tr);
+fprintf('tp : %d\n', tp);
+fprintf('Mp : %d\n', Mp);
+fprintf('ts : %d\n', ts);
