@@ -1,0 +1,445 @@
+% Modelo de linha longa, parâmetros distribuidos
+% Felipe Bandeira da Silva
+% 27/09/2013
+
+\documentclass[a4paper, 10pt]{article}
+%\documentclass[paper=a4, fontsize=11pt]{article}
+
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{amsthm}
+\usepackage{graphicx}
+
+\usepackage{schemabloc}
+\usetikzlibrary{circuits}
+
+\usepackage{circuitikz}
+\usepackage{tikz}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{18pt}
+
+\title{Linha de Transmissão Longa}
+\author{Felipe Bandeira da Silva}
+
+%\date{}
+
+\begin{document}
+
+\maketitle
+
+%\newpage
+
+Será utilizada o modelo de parâmetro distribuído, onde:\\
+R - Resistência da LT\\
+L - Indutância da LT\\
+C - Capacitância da LT\\
+G - Condutância do AR
+
+\begin{center}
+    \begin{circuitikz}[scale=.8] \draw
+    	(0, 0) to[R=$R\Delta_x$] (2, 0)
+        (2, 0) to[L=$$, i=$I$] (4, 0)
+        (4, 0) to[R=$G \Delta_x$] (4, -2)
+        (6, 0) to[C=$C \Delta_x$] (6, -2)
+        (4, 0) to[short] (6, 0)
+        (6, 0) to[short, i=$I+\Delta I$] (8, 0)
+        (0, -2) to[short] (8, -2)
+        node[ocirc] (A) at (0,0) {}
+        node[ocirc] (B) at (0,-2) {}
+        (A) to [open, v=$V$] (B)
+        node[ocirc] (C) at (8,0) {}
+        node[ocirc] (D) at (8,-2) {}
+        (C) to [open, v^=$V+\Delta_V$] (D)       
+        ;
+    \end{circuitikz}
+\end{center}
+
+Pela lei das malhas,
+
+\begin{equation}
+V = (R \Delta_x) I + (L \Delta_x) \frac{\partial I}{\partial t} + V + \Delta V
+\end{equation}
+
+Desenvolvendo 1,
+
+\begin{equation}
+\Delta V = -(R \Delta_x) I - (L \Delta_x) \frac{\partial I}{\partial t}
+\end{equation}
+
+Pela lei dos nós,
+
+\begin{equation}
+I = (G \Delta_x)(V + \Delta V) + (C \Delta_x) \frac{\partial ( v +  \Delta V)}{\partial t} + I + \Delta I
+\end{equation}
+
+\begin{equation}
+\Delta I = (G \Delta_x)(V + \Delta V) - (C \Delta_x) \frac{\partial (v + \Delta V)}{\partial t}
+\end{equation}
+
+\begin{equation}
+\Delta I = - (G \Delta_x V) - (G \Delta_x \Delta V) - (C \Delta_x) \frac{\partial V}{\partial t} - (C \Delta V) \frac{\partial \Delta V}{\partial t}
+\end{equation}
+
+%\newpage 
+
+Substituindo o valor de $\Delta V$ dado pela equação (2) na equação (5) temos,
+
+\begin{eqnarray}
+\lefteqn{\Delta I=}\nonumber\\ 
+& &-(G \Delta_x V)-(G \Delta_x)(-(R \Delta_x)I - (L \Delta_x) \frac{\partial I}{\partial t})\nonumber\\
+& &-(C \Delta_x)\frac{\partial V}{\partial I} - (C \Delta_x) \frac{\partial}{\partial t}\left( -(R \Delta_x)I - (L \Delta_x) \frac{\partial I}{\partial t}\right)
+\end{eqnarray}
+
+Simplificando,
+
+\begin{equation}
+\Delta I = -(G \Delta_x V) + G R \Delta_x^2 I + G L \Delta_x^2 \frac{\partial I}{\partial t} - C \Delta_x \frac{\partial I}{\partial t} + C \Delta_x^2 R \frac{\partial I}{\partial t} + C L \Delta_x^2 \frac{\partial^2 I}{\partial t^2}
+\end{equation}
+
+Dividindo a equação 2 por $\Delta_x$, temos,
+
+\begin{equation}
+\frac{\Delta V}{\Delta x} = - R I - L \frac{\partial I}{\partial t}
+\end{equation}
+
+Aplicando o limite na equação 8, e tendendo $\Delta_x \to 0$ temos,
+
+\begin{equation}
+\lim_{\Delta \to 0}\frac{\Delta V}{\Delta x} = - \lim_{\Delta \to 0}{R I} - \lim_{\Delta \to 0}{L \frac{ \partial I}{\partial t}}
+\end{equation}
+
+\begin{equation}
+\frac{\partial V}{\partial x} = - R I - L \frac{\partial I}{\partial t}
+\end{equation}
+
+Dividindo a equação 7 por $\Delta_x$ temos,
+
+\begin{equation}
+\frac{\Delta I}{\Delta x} = -G V + G R \Delta_x I + G L \Delta_x \frac{\partial I}{\partial t} - C \frac{\partial V}{\partial t} + C L \Delta_x \frac{\partial^2 I}{\partial t^2}
+\end{equation}
+
+%\newpage
+
+Aplicando o limite na equação 11 e tendendo $\Delta_x \to 0$ temos,
+
+\begin{eqnarray}
+\lefteqn{\lim_{\Delta \to 0}{\frac{\Delta I}{\Delta x}} =}\nonumber\\
+& &- \lim_{\Delta \to 0}{(GV)} + \lim_{\Delta \to 0}{(G R \Delta_x I)} + \lim_{\Delta \to 0}{\left(G L \Delta_x \frac{\partial I}{\partial t}\right)}\nonumber\\ 
+& &- \lim_{\Delta \to 0}{\left( C \frac{\partial C}{\partial t}\right)} + \lim_{\Delta \to 0}{\left(C L \Delta_x \frac{\partial^2 I}{\partial t^2}\right)}
+\end{eqnarray}
+
+Simplificando,
+
+\begin{equation}
+\frac{\partial I}{\partial x} = - G V - C \frac{\partial V}{\partial t}
+\end{equation}
+
+As equações 10 e 13 são chamadas de equações fundamentais de propagação.
+Derivando a equação 10 em relação a $x$, temos,
+
+\begin{equation}
+\frac{\partial^2 V}{\partial x^2} = -R \frac{\partial I}{\partial x} - L \frac{\partial \frac{\partial I}{\partial t}}{\partial t}
+\end{equation}
+
+Substituindo o valor de $\frac{\partial I}{\partial x}$ dado pela equação
+13 na equação 14, temos,
+
+\begin{eqnarray}
+\frac{\partial^2 V}{\partial x^2} &=& - R \left( - G V - C \frac{\partial V}{\partial t}\right) - L \frac{\partial -G V - L \frac{\partial V}{\partial t}}{\partial t} \\
+&=&R G V + R C \frac{\partial V}{\partial t} + L G \frac{\partial V}{\partial t} + L C \frac{\partial^2 V}{\partial t^2} \\
+&=&R G V + (R C + L G)\frac{\partial V}{\partial t} + L C \frac{\partial^2}{\partial t^2}
+\end{eqnarray}
+
+Derivando a equação 13 em relação a ''x'', temos,
+
+\begin{equation}
+\frac{\partial^2 I}{\partial x^2} =  - G \frac{\partial V}{\partial t} - C \frac{\partial }{\partial t}\frac{\partial V}{\partial t}
+\end{equation}
+
+Substituindo o valor de $\frac{\partial V}{\partial x}$ dada pela equação
+10 na equação 18, temos,
+
+\begin{eqnarray}
+\frac{\partial^2 I}{\partial x^2} &=& -G \left( -R I -L \frac{\partial I}{\partial t}\right) - L \frac{\partial}{\partial t}\left(-R I - L \frac{\partial I}{\partial t}\right) \\
+&=& R G I + L G \frac{\partial I}{\partial t} + R C \frac{\partial I}{\partial t} + L C \frac{\partial^2 I}{\partial t^2}\\
+&=& R G I + (R C + L G)\frac{\partial I}{\partial t} + L C \frac{\partial^2 I}{\partial t^2}
+\end{eqnarray}
+
+Antes de resolver as equações 17 e 21, se faz necessário,
+
+\begin{equation}
+V = \sqrt{2} V_{ef} e^{j \omega t}
+\end{equation}
+
+\begin{equation}
+I = \sqrt{2} I_{ef} e^{j \omega t}
+\end{equation}
+
+Derivando,
+
+\begin{equation}
+\frac{\partial V}{\partial t} = j \omega \sqrt{2} V_{ef} e^{j \omega t}
+\end{equation}
+
+Logo,
+
+$$
+\frac{\partial V}{\partial t} = j \omega V
+$$
+
+Derivando novamente,
+
+\begin{equation}
+\frac{\partial^2 V}{\partial t^2} = j \omega j \omega \sqrt{2} V_{ef} e^{j \omega t}
+\end{equation}
+
+Logo,
+
+$$
+\frac{\partial^2 V}{\partial t^2} = j \omega j \omega V
+$$
+
+Aplicando para a corrente,
+
+\begin{equation}
+\frac{\partial I}{\partial t} = j \omega \sqrt{2} I_{ef} e^{j \omega t}
+\end{equation}
+
+Logo,
+
+$$
+\frac{\partial I}{\partial t} = j \omega I
+$$
+
+Desenvolvendo a equação 17, temos,
+
+\begin{eqnarray}
+\frac{\partial^2 V}{\partial x^2} &=& R G V + (R C + L G)j \omega V + L C j \omega j \omega V \nonumber\\
+&=&R G V + (R j \omega C + G j \omega L) v + j \omega L j \omega C V \nonumber\\
+&=&R G V + V (R(j \omega C) +  G(j \omega L)) + (j \omega L)(j \omega C) V\nonumber\\
+&=&V \left( (R + j \omega L) (G + j \omega C))\right) 
+\end{eqnarray}
+
+Desprezando o valor da susceptância, $G = 0$ e lembrando $R+j \omega L = Z$
+
+\begin{equation}
+\frac{\partial^2 V}{\partial x^2} - V Z Y = 0
+\end{equation}
+
+Seja $\frac{d}{d x} = D$ logo $\frac{d^2}{d x^2} = D^2$ é possivel desenvolver a equação 28 até,
+
+\begin{equation}
+D^2 V - Z V Y = 0
+\end{equation}
+
+Temos,
+
+\begin{equation}
+(D^2 - Z Y)V = 0
+\end{equation}
+
+Com $V \neq 0$,
+
+\begin{equation}
+D^2 - Z Y = 0
+\end{equation}
+
+Sendo soluções de 31,
+
+\begin{equation}
+D_1 = \sqrt{Z Y}
+\end{equation}
+
+\begin{equation}
+D_2 = -\sqrt{Z Y}
+\end{equation}
+
+A solução da equação diferencial é,
+
+\begin{equation}
+V = A_1 e^{\sqrt{Z Y} x} + A_2 e^{-\sqrt{Z Y} x}
+\end{equation}
+
+Comprovando que a equação 34 é solução para a equação 17,
+
+\begin{eqnarray*}
+\frac{\partial V}{\partial x} = \sqrt{Z Y} A_1 e^{\sqrt{Z Y}x} - \sqrt{Z Y} A_2 e^{-\sqrt{Z Y}x}
+\end{eqnarray*}
+
+\begin{eqnarray}
+\frac{\partial^2 V}{\partial x^2} &=& \sqrt{Z Y} \sqrt{Z Y} A_1 e^{\sqrt{Z Y}x} + \sqrt{Z Y} \sqrt{Z Y} A_2 e^{-\sqrt{Z Y}x} \nonumber\\
+&=& Z Y A_1 e^{\sqrt{Z Y}x} + Z Y A_2 e^{-\sqrt{Z Y}x}\nonumber\\
+&=& Z Y \left( A_1 e^{\sqrt{Z Y}x} + Z Y A_2 e^{\sqrt{Z Y}x} \right)\nonumber\\
+&=& Z Y V
+\end{eqnarray}
+
+Com a equação 35 se prova a solução da equação 34.
+
+Sabendo que,
+
+\begin{equation}
+\frac{\partial V}{\partial x} = - R I - L j \omega I = -I (R + j \omega L)
+\end{equation}
+
+Logo,
+
+$$
+\frac{\partial V}{\partial x} = - I Z
+$$
+
+Para tanto,
+
+\begin{equation}
+\sqrt{Z Y} A_1 e^{\sqrt{Z Y} x} - \sqrt{Z Y} A_2 e^{-\sqrt{Z Y} x} = - I Z
+\end{equation}
+
+\begin{equation}
+-I = \frac{\sqrt{Z Y}}{Z} A_1 e^{\sqrt{Z Y} x} - \frac{\sqrt{Z Y}}{Z} A_2 e^{-\sqrt{Z Y} x} 
+\end{equation}
+
+Sabendo que,
+
+\begin{equation}
+\frac{\sqrt{Z Y}}{Z} = \frac{1}{\sqrt{\frac{Z}{Y}}}
+\end{equation}
+
+Rearranjando a equação 38,
+
+\begin{equation}
+-I = \frac{1}{\sqrt{\frac{Z}{Y}}} A_1 e^{\sqrt{Z Y} x} - \frac{1}{\sqrt{\frac{Z}{Y}}} A_2 e^{-\sqrt{Z Y} x} 
+\end{equation}
+
+Finalmente,
+
+\begin{equation}
+V = A_1 e^{\gamma x} +   A_2 e^{- \gamma x}
+\end{equation}
+
+\begin{equation}
+I = \frac{1}{Z_C} A_1 e^{\gamma x} +  \frac{1}{Z_C} A_2 e^{- \gamma x}
+\end{equation}
+
+Onde, $\gamma$ é conhecido como constante de propagação sendo um número
+adimensional, $Z_C$ é conhecida como impedância caractéristica e é 
+independente do comprimento da linha.
+
+Para, $x=0$ faz $V=V_R$
+
+\begin{equation}
+V_T^{FN} = A_1 + A_2
+\end{equation}
+
+\begin{equation}
+I_T = \frac{1}{Z_C} A_1 - \frac{1}{Z_C} A_2
+\end{equation}
+
+Os valores de $A_1$ e $A_2$ são,
+
+\begin{equation}
+A_1 = \frac{V_R^{FN} +  Z_C I_R}{2}
+\end{equation}
+
+\begin{equation}
+A_2 = \frac{V_R^{FN} -  Z_C I_R}{2}
+\end{equation}
+
+Substituindo 45 e 46 em 41 e 42,
+
+\begin{equation}
+V_T^{FN} = \frac{V_R^{FN} +  Z_C I_R}{2} e^{\gamma x} +   \frac{V_R^{FN} -  Z_C I_R}{2} e^{- \gamma x}
+\end{equation}
+
+\begin{equation}
+I_T = \frac{1}{Z_C} \frac{V_R^{FN} +  Z_C I_R}{2} e^{\gamma x} +  \frac{1}{Z_C} \frac{V_R^{FN} -  Z_C I_R}{2} e^{- \gamma x}
+\end{equation}
+
+Pela teoria dos quadripolos,
+
+\begin{equation}
+V_T^{FN} = A V_R^{FN} + B I_R
+\end{equation}
+
+\begin{equation}
+I_T = C V_R^{FN} + D I_R
+\end{equation}
+
+Identificando os parametros dos quadripolos,
+
+\begin{equation}
+V_T^{FN} = \frac{V_R^{FN}}{2} e^{\gamma x} + \frac{Z_C I_R}{2} e^{\gamma x} +  \frac{V_R^{FN}}{2} e^{-\gamma x} - \frac{Z_C I_R}{2} e^{-\gamma x}
+\end{equation}
+
+Rearranjando os termos,
+
+\begin{equation}
+V_T^{FN} = \left( \frac{e^{\gamma x} + e^{-\gamma x}}{2}\right) V_R^{FN} + Z_C \left( \frac{e^{\gamma x} - e^{-\gamma x}}{2}\right) I_R
+\end{equation}
+
+Sabe-se que,
+
+\begin{equation}
+\cosh{\gamma x} = \left( \frac{e^{\gamma x} + e^{-\gamma x}}{2}\right)
+\end{equation}
+
+\begin{equation}
+\sinh{\gamma x} = \left( \frac{e^{\gamma x} - e^{-\gamma x}}{2}\right)
+\end{equation}
+
+Então a equação 52 fica,
+
+\begin{equation}
+V_T^{FN} = \cosh{(\gamma x)} V_R^{FN} + \sinh{(\gamma x)}  Z_C I_R 
+\end{equation}
+
+Para a corrente,
+
+\begin{equation}
+I_T = \left( \frac{\frac{V_R^{FN}}{Z_C} + I_R}{2}\right) e^{\gamma x} - \left( \frac{\frac{V_R^{FN}}{Z_C} - I_R}{2}\right) e^{-\gamma x} 
+\end{equation}
+
+Rearranjando os termos,
+
+\begin{equation}
+I_T = \frac{V_R^{FN}}{2 Z_C} e^{\gamma x} + \frac{I_R}{2} e^{\gamma x} - \frac{V_R^{FN}}{2 Z_C} e^{-\gamma x} + \frac{I_R}{2} e^{-\gamma x}
+\end{equation}
+
+Para a identificação,
+
+\begin{equation}
+I_T = \frac{1}{Z_C} \left( \frac{e^{\gamma x} - e^{-\gamma x}}{2}\right) V_R^{FN} + \left( \frac{e^{\gamma x} + e^{-\gamma x}}{2}\right) I_R
+\end{equation}
+
+Portanto,
+
+\begin{equation}
+I_T = \frac{1}{Z_C} \sinh{(\gamma x)}  V_R^{FN} + \cosh{(\gamma x)} I_R
+\end{equation}
+
+Em resumo os parâmetros do quadripolos para uma linha longa são,
+
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+\begin{tabular}{c||c}
+	A & $\cosh{\gamma x}$ \\
+    B & $Z_C \sinh{\gamma x}$ \\
+    C & $\frac{\sinh{\gamma x}}{Z_C}$ \\
+    D & $\cosh{\gamma x}$ \\
+\end{tabular}
+\end{center}
+
+Antes de finalizar, se faz necessário provar que $A D - B C = 1$
+
+\begin{equation}
+ \cosh{\gamma x} \cosh{\gamma x} - Z_C \sinh{\gamma x} \frac{\sinh{\gamma x}}{Z_C} = 1
+\end{equation}
+
+Portanto,
+
+\begin{equation}
+ \cosh^2{(\gamma x)} - \sinh^2{(\gamma x)} = 1
+\end{equation}
+
+\end{document}
