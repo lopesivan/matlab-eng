@@ -1,0 +1,111 @@
+% Relatório do laboratório 5 de servo
+% Felipe Bandeira da Silva
+% 27/09/2013
+
+%\documentclass[a4paper, 10pt]{article}
+\documentclass[paper=a4, fontsize=11pt]{article}
+
+
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{amsthm}
+\usepackage{graphicx}
+
+\usepackage{schemabloc}
+\usetikzlibrary{circuits}
+
+\usepackage{tabularx,ragged2e,booktabs,caption}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{18pt}
+
+\title{\textsc{Laboratório Transformadores\\Transformadores em Paralelo}}
+\author{Felipe Bandeira da Silva\\1020942-X}
+%\date{}
+
+\begin{document}
+
+
+\maketitle
+
+%\newpage
+
+%\begin{abstract}
+\textit{Este laboratório tem como objetivo: Aprender como se ligam transformadores
+em paralelo. Determinar a eficiência dos transformadores ligados em paralelo.}
+%\end{abstract}
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+%\listoffigures
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% fundamentação teórica
+\newpage
+\section{Fundamentação Teórica}
+
+Os transformadores podem ser ligados em paralelo para proporcionar correntes de carga
+maiores que a corrente nominal de cada transformador. Provindo maior confiabilidade
+ao sistema elétrico e como consequência maior continuidade de serviço e segurança.
+Quando os transformadores monofásicos são ligados em paralelo é necessário levar
+em conta as seguintes regras:
+\begin{itemize}
+    \item Os enrolamentos a serem ligados em paralelo devem ter o mesmo valor nominal
+        de tensão de saída.
+    \item Os enrolamentos a serem ligados em paralelo devem ter polaridades idênticas.
+    \item Relação das resistências equivalentes em ohms igual a relação das reatâncias
+        em ohms.
+    \item Mesmo barramento de Alta Tensão e o mesmo barramento de Baixa Tensão.
+    \item O mesmo deslocamento angular.
+    \item A mesma sequência de fases.
+\end{itemize}
+Recomenda-se que a potência dos trafos interligados em paralelo sejam no máximo 3:1 
+para que as relações de reatância de curto circuito sejam a diferença inferior a 10$\%$.
+Se estas regras não forem seguidas, podem ser geradas correntes de \textbf{Circulação}
+semelhantes a correntes de curto-circuito excessivamente grandes. Com efeito, os 
+transformadores, os interruptores e os circuitos associados podem sofrer graves danos
+e inclusive explodir, se as correntes de curto-circuito alcançarem certo nível.
+
+\section{Prática, o sistema em paralelo}
+
+Para tanto foi feita a configuração nos módulos EMS, os secundários e 
+primários foram ligados em paralelos. O primário de Alta tensão foi energizado
+com 120 $V_CA$ e as seguintes medições foram feitas,
+
+\begin{center}
+\begin{tabular}{c||c}
+    $E_L$ & 0\\
+    $I_L$ & 0\\
+    $I_1$ & 0\\
+    $I_2$ & 0\\
+    $P_{entrada}$ & 0\\
+    $Q_{entrada}$ & 0\\
+\end{tabular}
+\end{center}
+
+\subsection{Cálculos}
+
+Potência da carga: $0$
+\newline
+Eficiência do circuito: $0$
+\newline
+Perdas do transformador: $0$
+\newline
+Potência entregue pelo transformador 1: $0$
+\newline
+Potência entregue pelo transformador 2: $0$
+
+\section{Conclusão}
+
+Após o experimento prático é notado que é possível implementar uma solução bastante
+prática, onde existem diversos transformadores de baixa potência quando se pode colocar
+este em uma sistema de alta potência ou que requer mais potência.
+\end{document}
+
