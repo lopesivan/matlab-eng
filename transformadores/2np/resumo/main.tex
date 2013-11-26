@@ -159,5 +159,131 @@ da componente DC
 
 \section{Resultado das simulações}
 
+O sensor proposto foi simulado usando o ambiente Matlab/Simulink. O esquemático mostrado
+na figura ~\ref{fig:figura4} foi implementado. Todos os sinais foram simulados em
+um tempo de 100 us, e implementado em um DSP de baixo custo. A simulação foi feita 
+em 2 passos. Primeiro, foi solucionado para dependente da função $H=f(V_{DC})$ para 
+o conversor DC sem o uso a bobina de compensação, ou seja, em malha aberta. Enquanto
+a segunda simulação foi feita usando a bobina de compensação(em malha fechada).
+O compensador foi implementado usando um controlador PI com o tempo de amostragem igual
+a 20ms. $SI_P$ e $SI_N$ são atualizados em cada semiciclo da tensão. Para as características
+da magnetização do reator(referente a bobina do primário) mostrada na figura ~\ref{fig:figura6}.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=.8]{fig6.png}
+    \caption{Características de magnetização, referente a bobina do primário}
+    \label{fig:figura6}
+\end{figure}
+
+A resistência da bobina foi considerada de 30 ohms. Esse valor é alto, valor escolhido
+de tal forma que o sistema seja capaz de responder a uma grande variação do campo magnético
+A relação de espiras entre o enrolamento primário e de compensação foi 1:3000.
+
+Os resultados da simulação são apresentados na figura ~\ref{fig:figura7} e ~\ref{fig:figura8}.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=.8]{fig7.png}
+    \caption{Componente DC normalizada, em malha aberta}
+    \label{fig:figura7}
+\end{figure}
+
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=.8]{fig8.png}
+    \caption{Component DC normalizada, em malha fechada}
+    \label{fig:figura8}
+\end{figure}
+
+No caso do sistema em malha aberta o valor absoluto de H não é significante devido
+as fontes não lineares, então foi normalizado para o valor máximo. Enquanto que
+o circuito em malha fechada(veja figura ~\ref{fig:figura4}) a tensão é $V_{DC}$.
+É evidente que sem a compensação, há uma forte dependência da tensão da 
+amplitude da rede na polarização DC. A sensibilidade máxima é atingida
+em torno da tensão nominal de 230 $V_{RMS}$. Para valores inferiores 
+do reator é menos saturado. Enquanto que a partir dos valores mais elevados
+o efeito da polarização DC são amortecidas através da resistência parasitas.
+
+\section{Aplicação do sensor em transformadores de potência}
+
+A seções anteriores mostraram a capacidade do sensor e sua alta sensibilidade
+para pequenos valores da componente DC. Para a sua aplicação em transformadores
+comumente encontrados em sistemas de distribuição se faz necessário a criação
+de implementação de 3 sensores para um sistema de trifásico, 4 fios(neutro incluso).
+
+\section{Resultados experimentais}
+
+E por fim os autores implementaram o sistema na pratica, com o intuito de concretizar
+a ideia aqui exposta. O prototipo tem como base a figura ~\ref{fig:figura4}. Para
+implementar o conversor não linear foi utilizado um controle de motor de 24V 300W.
+A placa do DSP foi DSP MC56F8037 da Freescale. O prototipo para o reator foi
+construido e é mostrada na figura ~\ref{fig:figura11}. 
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=.8]{fig11.png}
+    \caption{Prototipo para o compensador}
+    \label{fig:figura11}
+\end{figure}
+
+O compensador foi conectado a um transformador de 3 kVA e para aumentar o níveis 
+de teste foi inserido um autotransformador. A fonte de componente continua foi
+projetada para injetar 1kW de potência ativa. O esquemático para os teste
+é mostrado na figura ~\ref{fig:figura12}.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=.8]{fig12.png}
+    \caption{Esquemático do teste}
+    \label{fig:figura12}
+\end{figure}
+
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=.8]{fig13.png}
+    \caption{Prototipo final}
+    \label{fig:figura13}
+\end{figure}
+
+Outra forma de avaliar a eficiência do sistema é mensurando a tensão na bobina versus
+a componente DC injetada. Durante os experimentos a temperatura do transformador foi
+mantida em valores constantes. Um forma de diminuir a variações da resistência 
+parasita. Os resultados das medições é mostrado na figura ~\ref{fig:figura14} ficando
+evidente a compensação do sistema garante a alta linearidade do sistema.
+A figura ~\ref{fig:figura16} mostra as formas de ondas obtidas para o
+prototipo em pleno funcionamento.
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=.8]{fig14.png}
+    \caption{Forma de onda para pleno funcionamento}
+    \label{fig:figura14}
+\end{figure}
+
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=.8]{fig16.png}
+    \caption{Forma de onda para pleno funcionamento}
+    \label{fig:figura16}
+\end{figure}
+
+\section{Conclusão}
+
+Esse paper tem como principal objetivo mostrar um novo sensor para diagnosticar a 
+extensão da componentes de saturação assimétricas em transformadores de potência
+devido as componente DC. A principal causa de componentes continuas é o uso
+de conversores eletrônicos(fontes de alimentação chaveadas, inversores de frequência,
+conversores conectados a rede para a energia renováveis) que causam e ampliam
+a componentes harmónicas da senoide da rede. A corrente continua que flui no 
+transformador de potência provoca uma queda de tensão na pequena resistência do
+enrolamento do transformador. O sensor proposto é capaz de medir e mensurar essa
+componente de tensão continua com uma alta sensibilidade e linearidade e livre de
+problemas de ruídos e baixo valores desta componente. Os resultados da simulação
+mostra uma otima resposta com os valores simulados. E principalmente para o circuito
+em malha fechada na presença de variações grande da amplitude da rede.
+
 \end{document}
  
