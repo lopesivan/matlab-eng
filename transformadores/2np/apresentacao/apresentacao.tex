@@ -91,7 +91,7 @@
 
 \title[Sensor para detecção componente DC]{Sensor para detecção componente DC em Transformadores de potência\\\small{A Sensor to Detect the DC Bias of Distribuition Power Transformers}} % The short title appears at the bottom of every slide, the full title is only on the title page
 
-\author{Felipe Bandeira da Silva\\Renan Teixeira} % Your name
+\author{Felipe Bandeira\\Renan Teixeira} % Your name
 \institute[Unifor] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
 {
 Universidade de Fortaleza-UNIFOR\\% Your institution for the title page
@@ -263,6 +263,91 @@ Universidade de Fortaleza-UNIFOR\\% Your institution for the title page
         \includegraphics[width=.8\linewidth]{fig4.png}
     \end{figure}
 \end{frame}
+
+\begin{frame}
+    \frametitle{Decompondo as componentes da senoide}
+
+    \begin{figure}
+        \includegraphics[width=.8\linewidth]{fig5.png}
+    \end{figure}
+
+    Sistema PLL-SOGI, tecnica usada para retirada de informações como tensão, corrente, frequencia... rejeitando as harmônicas menos significativas e aumentando a linearidade.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Resultados}
+
+    Sistema em malha aberta, retirada de $i_m$
+
+    \begin{figure}
+        \includegraphics[width=.8\linewidth]{fig7.png}
+    \end{figure}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Resultados}
+
+    Sistema em malha fechada,
+
+    \begin{figure}
+        \includegraphics[width=.8\linewidth]{fig8.png}
+    \end{figure}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Sistemas trifásicos}
+
+
+    \begin{figure}
+        \includegraphics[width=.8\linewidth]{fig10.png}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Resultados práticos}
+    
+    Prototipo do reator,
+    \begin{figure}
+        \includegraphics[width=.8\linewidth]{fig11.png}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Resultados práticos}
+
+    Montagem completa,
+    \begin{figure}
+        \includegraphics[width=.8\linewidth]{fig13.png}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Resultados práticos}
+
+    Linearidade do sensor
+    \begin{figure}
+        \includegraphics[width=.8\linewidth]{fig15.png}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Resultados práticos}
+
+    Valor de H, corrente e compensação
+    \begin{figure}
+        \includegraphics[width=.7\linewidth]{fig17.png}
+    \end{figure}
+    \begin{itemize} 
+        \item onda azul, valor da componente DC
+        \item onda vermelha, corrente de saturação
+        \item onda verde, corrente de compensação $i_m$
+    \end{itemize}
+\end{frame}
+
+
+
 
 \end{document}
 
