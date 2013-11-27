@@ -1,0 +1,392 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Beamer Presentation
+% LaTeX Template
+% Version 1.0 (10/11/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass{beamer}
+
+\mode<presentation> {
+
+% The Beamer class comes with a number of default slide themes
+% which change the colors and layouts of slides. Below this is a list
+% of all the themes, uncomment each in turn to see what they look like.
+
+%\usetheme{default}
+%\usetheme{AnnArbor}
+%\usetheme{Antibes}
+%\usetheme{Bergen}
+%\usetheme{Berkeley}
+%\usetheme{Berlin}
+%\usetheme{Boadilla}
+%\usetheme{CambridgeUS}
+%\usetheme{Copenhagen}
+%\usetheme{Darmstadt}
+\usetheme{Dresden}
+%\usetheme{Frankfurt}
+%\usetheme{Goettingen}
+%\usetheme{Hannover}
+%\usetheme{Ilmenau}
+%\usetheme{JuanLesPins}
+%\usetheme{Luebeck}
+%\usetheme{Madrid}
+%\usetheme{Malmoe}
+%\usetheme{Marburg}
+%\usetheme{Montpellier}
+%\usetheme{PaloAlto}
+%\usetheme{Pittsburgh}
+%\usetheme{Rochester}
+%\usetheme{Singapore}
+%\usetheme{Szeged}
+%\usetheme{Warsaw}
+
+% As well as themes, the Beamer class has a number of color themes
+% for any slide theme. Uncomment each of these in turn to see how it
+% changes the colors of your current slide theme.
+
+%\usecolortheme{albatross}
+%\usecolortheme{beaver}
+%\usecolortheme{beetle}
+%\usecolortheme{crane}
+%\usecolortheme{dolphin}
+%\usecolortheme{dove}
+%\usecolortheme{fly}
+%\usecolortheme{lily}
+%\usecolortheme{orchid}
+%\usecolortheme{rose}
+
+
+%\usecolortheme{seagull}
+
+
+
+%\usecolortheme{seahorse}
+%\usecolortheme{whale}
+%\usecolortheme{wolverine}
+
+%\setbeamertemplate{footline} % To remove the footer line in all slides uncomment this line
+%\setbeamertemplate{footline}[page number] % To replace the footer line in all slides with a simple slide count uncomment this line
+
+%\setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
+}
+
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title[GNU/Linux]{GNU/Linux e suas aplicações} % The short title appears at the bottom of every slide, the full title is only on the title page
+
+\author{Felipe Bandeira da Silva} % Your name
+\institute[Unifor] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{
+Universidade de Fortaleza-UNIFOR\\Universidade de Federal do Ceará-UFC\\ % Your institution for the title page
+\medskip
+\textit{felipeband18@gmail.com} % Your email address
+}
+\date{\today} % Date, can be changed to a custom date
+
+\begin{document}
+
+\begin{frame}
+    \begin{figure}
+        \includegraphics[width=3.0cm]{LAMOTRIZ.png}
+    \end{figure}
+\titlepage % Print the title page as the first slide
+\end{frame}
+
+%\begin{frame}
+%\frametitle{Conteúdo} % Table of contents slide, comment this block out to remove it
+%\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+%\end{frame}
+
+%----------------------------------------------------------------------------------------
+%	PRESENTATION SLIDES
+%----------------------------------------------------------------------------------------
+
+%------------------------------------------------
+\section{Introdução Histórica} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
+%------------------------------------------------
+
+\begin{frame}
+    \frametitle{O Começo de tudo, UNIX}
+
+    \begin{itemize}
+        \item Consórcio entre AT\&T(Bell), GE(General Electric), MIT(Massachussets Institute of Technology) em 1965
+        \item Criação do sistema Multics
+        \item Criação do UNIX escrito em assembler
+        \item Inicio da comercialização do UNIX, em 1969
+        \item O Monopólio da AT\&T muda a forma que os softwares eram comercializados
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{O Movimento Software Livre}
+\begin{itemize}
+    \item Idealizador principal: Richard Stallman
+    \item Movimento iniciado oficialmente em 1983
+    \item Criação da Free Software Foundation em 1985
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{As 4 liberdades}
+    \begin{itemize}
+        \item Executar o programa
+        \item Estudar e mudar o código-fonte do programa
+        \item Redistribuir cópias exatas
+        \item Distribuir versões modificadas
+    \end{itemize}
+\end{frame}
+
+
+
+%------------------------------------------------
+\section{Básico}
+%------------------------------------------------
+
+\begin{frame}
+    \frametitle{GNU}
+    \centerline{GNU = \textbf{G}NU is \textbf{n}ot \textbf{U}nix}
+
+    \begin{figure}
+        \includegraphics[width=.2\linewidth]{gnulogo.png}
+    \end{figure}
+
+    Traz consigo um conjunto de ferramentas, são elas: cp, mv, ipconfig, rm, chmod, cat, ps, grep, gcc...
+    \newline
+    \newline
+    O principal: GCC (GNU Compiler Collection), suporte as linguagens: C, C++, Fortran, Java, Ada..
+\end{frame}
+
+\begin{frame}
+    \frametitle{O Kernel Linux}
+    
+    \begin{figure}
+        %\includegraphics[width=1\linewidth]{kernel.pdf}
+        \includegraphics[width=.1\linewidth]{logo.png}
+    \end{figure}
+
+
+    Criado por: Linus Torvald e a Comunidade Free Software
+    \newline
+    \newline
+    ''Você suspira pelos bons tempos do Minix-1.1, quando os homens eram homens e escreviam seus próprios device drivers'' - Linus
+        Principais responsabilidades:
+    \begin{itemize}
+        \item Criação da camada de Abstração entre Hardware e Software
+        \item Gerenciamento dos recursos para cada processo
+    \end{itemize}
+\end{frame}
+
+\begin{frame}   
+    \frametitle{Linha de Comando}
+
+    O sistema GNU/Linux é \textit{Case Sensitive}.
+
+    \begin{itemize}
+        \item Todo comando tem os seus argumentos e suas saídas\\
+            \textbf{Exemplo 0, instalando o ''gvim'':}\\
+            $\>$ sudo apt-get install gvim\\
+            \textbf{Exemplo 1, executando o ''gvim'' com argumento ''texto2'' }\\
+            $\>$ gvim texto2 \\
+    \end{itemize}
+
+    Dica: use a tecla ''tab'' para completar o comando.\\
+    Observação: os programas executáveis do GNU/Linux, ao contrário dos programas
+    Windows, não são executáveis a partir de extensões .exe, .com ou .bat. O GNU/Linux
+    usa a \textit{permissão de execução} de arquivo.
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{MANUAL}
+    
+    \begin{itemize}
+        \item Leia sempre o manual
+        \item Comandos disponíveis e uteis: man, info
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Navegando pelas pastas}
+
+    \begin{itemize}
+        \item ''cd'' - muda para um determinado diretório
+        \item ''ls'' - mostra o conteúdo de um diretório
+        \item ''grep'' - aplica um filtro nos resultados
+        \item ''pwd'' - mostra o caminho completo do diretório atual
+    \end{itemize}
+\end{frame}
+
+
+\section{Aplicações}
+
+\begin{frame}
+
+    \frametitle{Softwares Proprietários}
+    \begin{itemize}
+    \item O Matlab(MAtrix LABoratory)
+    \item Comsol Multiphysics
+    \item LabView(Laboratory Virtual Instrument Engineering Workbench)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Python}
+    \begin{figure}
+        \includegraphics[width=.3\linewidth]{pylogo.png}
+    \end{figure}   
+    Criada por Guido Van Rossun em 1991
+    \begin{itemize}
+        \item Orientada a objetos
+        \item Interpretada via \textbf{bytecode}
+        \item Tipagem dinâmica
+        \item Modular
+        \item Multiplataforma
+        \item Integração com C
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{SciPy, Scientific Computing Tools for Python}
+    %\begin{figure}
+    %   \includegraphics[width=.1\linewidth]{scipy.pdf}
+    %\end{figure}
+    \begin{itemize}
+        \item Integração(Simpson, Romberg...)
+        \item Otimização(Newton Conjugate Gradient...)
+        \item Interpolação
+        \item Transformadas de Fourier
+        \item Álgebra Linear
+        \item Processamento de imagem
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{NumPy, Numerical Python}
+    \begin{itemize}
+        \item Manipulação de Matrizes
+        \item Busca, Organização e Contagem
+        \item Tratamento de strings
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{SfePy: Simple Finite Elements in Python}
+
+    \begin{itemize}
+        \item Suporte no desenvolvimento pela "University of West Bohemia", República Tcheca.
+        \item Suporte pelo projeto "Nanostructures with transition metals: Towards ab-initio material design) of Czech Science Foundation"
+        \item Suporte pelo projeto "Microstructure oriented hierarchical modeling of brain perfusion for CT based cerebral blood flow evaluation) of Czech Science Foundation"
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{GSL, GNU Scientific Library}
+
+    \begin{itemize}
+        \item Desenvolvida para C e C++
+        \item Manipulação de números complexos
+        \item Interpolação
+        \item Álgebra Linear
+        \item Manipulação de Matrizes
+        \item Diferenciação numérica
+        \item Transformada Rápida de Fourier
+        \item Algorítimos de ordenação
+    \end{itemize}
+\end{frame}
+
+\section{Computação distribuída}
+
+\begin{frame}
+    \frametitle{Cluster}
+
+\begin{itemize}
+    \item Idealizado pela IBM na década de 60
+    \item Interligação de diversos Computadores(Mainframe)
+    \item Interligação feita via rede, preferencialmente um protocolo de comunicação conhecido(TCP/IP)!
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Tipos de Cluster}
+
+\begin{itemize}
+    \item Alto desempenho
+    \item Alta disponibilidade
+    \item Balanceamento de carga
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{O Sistema distribuído}
+
+\begin{itemize}
+    \item Transforma diversos computadores em "um só"
+    \item Gerencia o compartilhamento de recursos
+    \item Adição de poder computacional com a junção
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{CENAPAD, Centro Nacional de Processamento de Alto Desempenho - UFC}
+    
+    O CENAPAD apresenta 48 Blades Bull 500, cada Blade possui:
+    \begin{itemize}
+        \item 2 x processadores Intel Westmere 6 core X5650 EP
+        \item 6 x 4GB DDR3 1333 MHz de memória RAM
+        \item 1 x 250GB Sata II
+    \end{itemize}
+
+    \textbf{Total:}
+    \begin{itemize}
+        \item 576 núcleos de processamento
+        \item 1152GB de RAM podendo chegar a 5.363e3 GFlops
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{O Software}
+    \begin{itemize}
+        \item Red Hat EL(Enterprise Linux) 5
+        \item Compiladores GNU
+        \item BLAS, LAPACK, PARMETIS...
+        \item Gerenciamento de comunição OpenMP
+        \item Gerenciador das filas, SLURM
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Materiais para Estudo}
+
+    \begin{itemize}
+        \item foca linux, ''http://www.guiafoca.org/'' 
+        \item manuais dos comandos
+        \item projeto GNU, '' www.gnu.org/''
+        \item documentação do kernel, ''https://www.kernel.org/''
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+\Huge{\centerline{Fim}}
+\end{frame}
+
+\end{document} 
