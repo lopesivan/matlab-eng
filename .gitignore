@@ -8,3 +8,8 @@
 *.toc
 *.vrb
 *.snm
+*.mk
+*.svn
+*.directory
+*.lot
+*.blg
