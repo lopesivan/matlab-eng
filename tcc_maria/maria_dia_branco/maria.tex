@@ -1,0 +1,127 @@
+% Modelo de Trabalhos em LaTeX da UFC
+%
+% Na criação deste modelo foi tomada como base os modelos de monografia da UECE
+% criados por Rudy Matela e Sergio Correia, sem a ajuda deles este trabalho teria sido muito mais
+% difícil. Este modelo utiliza o abnTeX e um pacote (ufc.sty) para formatação
+% de alguns anexos necessários da UFC (folha de rosto, CIP, epígrafe, ...).
+%
+% Este documento não clama possuir conformidade de 100\% com as normas de
+% trabalhos da UFC. Consulte os guias oficiais.
+%
+% Agradeço ao Lincoln que contribui com o brasão da UFC.
+% Agradeço ao Regis e a Mônica pelas contribuições com relação ao "Lorem
+% ipsum"
+%
+% OBS: O modelo de monografias da UECE criado por Rudy Matela encontra-se
+% disponível em: http://matela.com.br/pub/modelo_monografia/
+%
+% Autor: Diego Victor Simões de Sousa
+% Data: 10/06/2011
+
+
+\documentclass[pnumabnt,normaltoc,espacoumemeio,capchap]{abnt}		
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{abnt-alf}
+\usepackage{graphicx}
+\usepackage{ufc}
+\usepackage{multicol}
+\usepackage{listings}
+\usepackage{eufrak}
+\usepackage{subfig}
+\usepackage[T1]{fontenc}
+\bibliographystyle{abnt-alf}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+% Informações gerais do documento
+\autor{Lourena Maria Domingos}
+\autorr{CHAGAS, F. F. S.}
+\titulo{}
+\local{Fortaleza, Ceará}
+\cidade{Fortaleza}
+\data{2013}
+\orientador{Prof. Dr. Herminio Borges Neto}
+\coorientador{Profa. Me. Dina Mara Pinheiro}
+\codigocip{A000z}{CDD:000.0}
+
+% Descrição para folha de rosto
+\comentario{
+Dissertação submetida à Coordenação do Curso
+de Pós-Graduação em Ciência da Computação da
+Universidade Federal do Ceará, como requisito
+parcial para a obtenção do grau de Mestre em
+Ciência da Computação.
+}
+
+\comentarioaprovacao{
+Dissertação submetida à Coordenação do Curso
+de Pós-Graduação em Ciência da Computação, da
+Universidade Federal do Ceará, como requisito
+parcial para a obtenção do grau de Mestre em
+Ciência da Computação. 
+}
+
+% Informações institucionais
+\centro{Centro de Ciências}
+\departamento{Departamento de Computação}
+\curso{Pedagogia}
+\instituicao{Universidade Federal do Ceará}
+
+\tipotrabalho{Dissertação}
+%\areaconcentracao{Banco de ...}
+%\nivel{Mestrado}
+%\tituloacademico{Mestre}
+
+\dedicatoria{Aos meus Pais.}
+% Epígrafe: citação e autor
+\epigrafe{``Ninguém, ninguém\\Verá o que eu sonhei\\Só você meu amor\\Ninguém verá o sonho\\Que eu sonhei''}
+\autorepigrafe{Geraldo Azevedo}
+
+% Membros da comissão avaliadora
+\bancaum{\ABNTorientadordata\\Universidade Federal do Ceará - UFC\\Orientador}
+\bancadois{Prof. Me. Dina Mara Pinheiro\\Universidade Federal do Ceará - UFC\\Co-orientador}
+\bancatres{Prof. Me. Mulher\\Universidade Federal do Ceará - UFC}
+%\bancaquatro{Prof. Dr. Zé Ninguém\\Universidade Federal do Ceará - UFC}
+
+% Palavras chave
+\pcs{Burocracia}{\LaTeX}{Documentos}
+\kws{Bureucracy}{\LaTeX}{Documents}
+
+\begin{document}
+
+\capa
+\folhaderosto
+%\makecippage
+\termodeaprovacao
+
+% Dedicatória (Opicional)
+\makededicatoria
+
+\pretextualchapter{Agradecimentos}
+Agradeço a Fulano de Tal, Beltrano da Silva e Cicrano das Tantas
+pela ajuda na produção do template \LaTeX\ do modelo de trabalhos
+científicos da UFC.
+\pagebreak
+
+\makeepigrafe
+\input{abstract}
+\listadefiguras
+%\listadetabelas
+\tableofcontents
+% \listadesiglas % \sigla{sigla}{Descrição}
+% \listadesimbolos % \simbolo{símbolo}{Descrição}
+
+
+
+\input{ch1}
+%\input{ch2}
+
+\bibliography{bib}
+
+%\appendix
+
+%\include{cha}
+
+\end{document}
+
