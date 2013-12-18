@@ -7,4 +7,4 @@ fprintf('\na: shorteng');
 format shorteng;
 fprintf('\na: fim\n');
 
-clear all;
+clear all
