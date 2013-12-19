@@ -1,0 +1,7 @@
+#! /bin/sh
+
+# instalando o mpi para o Mint
+# sudo apt-get install libcr-dev mpich2 mpich2-doc
+
+mpicc mpi_test.c -o mpi_test
+mpirun -np 2 ./mpi_test
