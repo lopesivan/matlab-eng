@@ -1,0 +1,3 @@
+./setup.py --downall --mpiincdir=/usr/include/mpich2/ 
+
+./setup.py --blaslib=/home/felipe/github/matlab-eng/mumps/sca/scalapack_installer_1.0.2/blas_LINUX.a --prefix=/home/felipe/tmp/ --mpiincdir=/usr/include/mpich2/ --downall
