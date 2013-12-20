@@ -1,0 +1,7 @@
+#! /bin/sh
+
+pdflatex mumps.tex >> log.txt
+pdflatex mumps.tex >> log.txt
+pdflatex mumps.tex >> log.txt
+
+echo "$0, aviso: fim, veja o log"
