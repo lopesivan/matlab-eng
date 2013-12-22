@@ -9,8 +9,8 @@
 \usepackage{amsthm}
 \usepackage{graphicx}
 
-\usepackage{schemabloc}
-\usetikzlibrary{circuits}
+%\usepackage{schemabloc}
+%\usetikzlibrary{circuits}
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{18pt}
@@ -22,11 +22,64 @@
 
 \maketitle
 
-Coletânea com questões selecionadas das duas lista da 1np.
+\begin{center}
+Documetação do trabalho feito na biblioteca MUMPS
+\end{center}
 
-%\newpage
+\newpage
+\listoffigures
 
-%\listoffigures
+\newpage
+\tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+\section{Introdução}
+
+É muito mais simples construir um diário de desenvolvimento. E por esta razão
+esse documento não é capaz e nunca será capaz de retirar qualquer duvida que
+irão surgir no decorrer da leitura. A única e exclusiva intenção, é registrar
+os fatos ou eventos que ocorrem no desenvolvimento e estudo da ferramenta
+MUMPS.
+
+\section{Construindo o MUMPS}
+
+Para a construção da biblioteca MUMPS se faz necessário o domínio de algumas
+ferramentas de desenvolvimento de software do projeto GNU. Entre as inúmeras
+as que são de fato mais visíveis e de grande importância são:
+
+\begin{itemize}
+	\item gcc
+	\item make
+\end{itemize}
+
+Boa parte do MUMPS é feita em Fortran, para isso é necessário a instalação 
+do compilador. Em muitas distribuições \textit{debian} o apt-get já é de 
+grande utilidade. Sugiro o \textbf{gfotran}. Que até o momento não apresentou
+qualquer erro. Vale ressaltar que o gfortran tem como base o Fortran 90 e não
+o Fortran 77 base do MUMPS, tal situação até o momento não gerou falhas graves
+no processamento dos cálculos pelo MUMPS.
+Para a execução em paralelo o MUMPS requer um gerenciador
+de processos, filas, recursos... Para tanto foi escolhido o MPI. Escolha
+feita para a compatibilidade os clusters do CENAPAD UFC. 
+
+\subsection{Biblioteca BLAS}
+
+A maior fonte de dores de cabeça é sem sombra de duvidas a biblioteca BLAS. 
+Sua compilação requer inúmeras mudanças do PATH do Makefile e permutações de
+compiladores. Esta biblioteca pode ser facilmente obtida na \textit{netlib}.
+Partindo do ponto em que as ferramentas básicas de compilação já estão
+devidamente instaladas na maquina alvo. No meu caso um Linux/Mint 13 Maya.
+
+Importante lembrar que o projeto BLAS é datado nos anos 90 e com ultima 
+atualização importante em 97. A novas atualização são para manutenção da biblioteca
+em novas arquiteturas, em sua maioria computadores de alto poder de processamento.
+
+
+
+
 
 
 \end{document}
