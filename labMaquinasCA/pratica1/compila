@@ -1,0 +1,14 @@
+#! /bin/sh
+
+pdflatex main
+bibtex main
+pdflatex main
+pdflatex main
+
+rm *.aux
+rm *.bbl
+rm *.blg
+rm *.log
+rm *.out
+rm *.lof
+rm *.toc
