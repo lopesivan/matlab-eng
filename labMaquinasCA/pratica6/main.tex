@@ -1,0 +1,124 @@
+%\documentclass[a4paper, 10pt]{article}
+\documentclass[paper=a4, fontsize=11pt]{article}
+
+
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{cite}
+
+\usepackage{schemabloc}
+\usetikzlibrary{circuits}
+
+\usepackage{tabularx,ragged2e,booktabs,caption}
+
+\usepackage{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{18pt}
+
+\title{Laboratório de Máquinas de Corrente Alternada\\Motor Monofásico de Indução Partida a Capacitor.}
+\author{Felipe Bandeira da Silva\\1020942-X}
+%\date{}
+
+\begin{document}
+
+
+\maketitle
+
+%\newpage
+
+%\begin{abstract}
+\textit{Este laboratório tem como objetivo: Medir as características de partida
+e funcionamento do motor com partida por capacitor. Comparar seu funcionamento
+durante a patida e operação contínua com o do motor monofásico de fase dividida.}
+%\end{abstract}
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+%\listoffigures
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% fundamentação teórica
+\newpage
+\section{Introdução}
+
+Quando se interrompe uma das fases de um motor trifásico enquanto ele
+será girando, este continua a funcionar como motor monofásico suportando
+a carga, ainda que a menor velocidade. Entretanto, se o motor estiver
+parado, não poderia arrancar porque faltaria o campo magnético rotativo
+e não teria partida automática. 
+
+Para que o motor possa funcionar é 
+necessário fazer o arranque por algum meio exterior, e então, a reação
+do rotor, provoca o nascimento de um campo magnético rotativo.
+Assim como o motor trifásico não arranca, sozinho quando lhe falta
+uma fase, um motor monofásico para ser posto em marcha precisa também 
+utilizar-se de um dispositivo auxiliar.
+
+O sistema de partida por capacitor é uma modificação do método de 
+fase divida, e utiliza um capacitor de pouca reatância ligado em série
+com o enrolamento de partida do estator a fim de proporcionar uma
+variação de fase de aproximadamento 90 graus para a corrente de partida,
+resultando num torque de partida muito superior ao obtido no sistema
+normal de fase divida. 
+O capacitor e o enrolamento de partida é desligado por meio de um 
+interruptor centrífugo, como se faz no caso normal do motor de fase divida.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% pratica, parte II
+
+\section{Prática, parte II}
+
+A segunda parte da experiência consistem em encontrar
+os valores práticos para o motor monofásico de partida a capacitor.
+
+\subsection{Corrente de partida}
+
+Utilizando o módulo EMS de fase divida com partida a capacitor
+e uma alimentação fixa de 120 volts. A corrente de partida
+ficou em 10.6 Amperes para o enrolamento primário. Alimentando
+agora, apenas, o enrolamento auxiliar em série com
+o capacitor a corrente foi de 7.8 Amperes.
+
+Conectando em paralelo as duas bobinas do motor, principal e 
+auxiliar, usando o eletro dinamómetro com sua carga máxima. A
+corrente mensurada foi de 11.4 Amperes.
+
+\subsection{Operação com carga variável}
+
+O teste agora foi para um acoplamento com o eletro dinamómetro.
+Observação importante, o motor foi alimentando com uma tensão 
+de 120 Volts, entretanto devido a grande corrente de consumo
+em seus terminais foram obtidos apenas 103.1 Volts.
+
+\begin{center}
+    \begin{tabular}{c|c|c|c|c}
+            Conjungado (lbf.in) & I (Amperes) & VA & P (Watts) & Velocidade (rpm) \\
+            \hline
+            0 & 3.00 & 309.30 & 69.00 & 1781 \\
+            3 & 3.17 & 326.83 & 123.00 & 1751 \\
+            6 & 3.72 & 383.54 & 210.00 & 1717 \\
+            9 & 4.513 & 465.30 & 294.00 & 1661 \\
+    \end{tabular}
+    \captionof{table}{}
+\end{center}
+
+O conjugado de partida foi da ordem de 1.3 Newton por metro.
+
+\section{Conclusão}
+
+O Motor monofásico apresenta características bem semelhantes
+ao motores de fase divida. Só que o conjugado de partida é levemente
+maior que os motores de fase divida. 
+
+
+\end{document}
