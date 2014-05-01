@@ -1,0 +1,224 @@
+%\documentclass[a4paper, 10pt]{article}
+\documentclass[paper=a4, fontsize=11pt]{article}
+
+
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{cite}
+
+\usepackage{schemabloc}
+\usetikzlibrary{circuits}
+
+\usepackage{tabularx,ragged2e,booktabs,caption}
+
+\usepackage{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{18pt}
+
+\title{Laboratório de Máquinas de Corrente Alternada\\Motor Monofásico de Fase Dividida, Parte I e II}
+\author{Felipe Bandeira da Silva\\1020942-X}
+%\date{}
+
+\begin{document}
+
+
+\maketitle
+
+%\newpage
+
+%\begin{abstract}
+\textit{Este laboratório tem como objetivo: Conhecer as conexões básicas do motor.
+Observar as operações de partida e de marcha do motor monofásica de fase divida.
+Medir as características de partida e funcionamento do motor monofásico de fase
+divida, em condições de carga e vazio. Estudar o fator de potência e a eficiência 
+do motor monofásico de fase divida.}
+%\end{abstract}
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+%\listoffigures
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% fundamentação teórica
+\newpage
+\section{Introdução}
+
+Os motores monofásicos apresentam bastante semelhança com os motores
+de gaiola de esquilo. São diferentes pelas partes em relação a 
+disposição dos enrolamentos do estador. No lugar de uma bobina
+concentrada, o enrolamento real do estator está distribuído em 
+ranhuras de modo a produzir uma distribuição espacial de FMM 
+aproximadamente senoidal. Quando está em repouso, é evidente que
+por simetria esse motor basicamente não apresenta nenhum conjugado
+de partida porque ele está produzindo conjugados iguais em ambos
+os sentidos. Para que este motor tenha partida, ou rotação no seu
+eixo é necessário uma movimento inicial. Movimento este produzido
+por uma bobina auxiliar. Controlada por um sistema eletro mecânico
+que faz a mesma entrar e sair em momentos específicos e dependentes
+do estado do motor em rotação e consumo de corrente.
+
+Os motores de indução monofásicos são classificados de acordo 
+com os seus métodos de partida. O método estudado na experiência
+é o de fase divida. 
+
+Os motores de fase divida apresentam dois enrolamentos no estator, 
+o enrolamento principal (também referido como enrolamento de trabalho)
+que será indicado pelo subscrito ``principal'' e o enrolamento auxiliar.
+Como em um motor bifásico, os eixos desses enrolamentos estão deslocados
+entre si de noventa graus elétricos no espaço. O enrolamento auxiliar
+tem uma razão mais elevada entre resistências e reatância do que 
+o enrolamento principal. A consequência disso é que as duas correntes
+estarão fora de fase. Os motores de fase divida têm conjugados de partida
+moderados para uma baixa corrente de partida. Aplicações típicas incluem
+ventiladores, sopradores, bombas centrífugas e equipamento de escritório. 
+As potências nominais tipicas estão entre 50 e 500 watts. Dentro desta
+faixa, são os motores de menor custo disponíveis.
+
+Motores de fase divida apresentam uma alta corrente de partida. 
+Compreendendo valores de 4 a 5 vezes a corrente nominal em plana
+carga. Produzindo dois efeitos, o primeiro é o aumento da temperatura
+do motor durante a partida. A segunda, a já falada, corrente de partida
+que prova uma grande queda de tensão, reduzindo assim o conjugado
+de partida. 
+
+Correntes a vazio produzidas pelo motor de fase divida é 
+da ordem de 60 a 80 porcento de plena carga. Valores estes que 
+são elevados quando comparados com motores gaiola de esquilo. São
+motores barulhentos que os equivalentes trifásicos, devido
+a sua vibração mecânica.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% parte prática
+\section{Prática, parte I}
+
+\begin{enumerate}
+    \item O enrolamento principal do motor de fase divida está submetido 
+            a uma tensão de 100 Volts. 
+            \begin{enumerate}
+                \item O motor produz um ruído branco.
+                \item O motor não girou.
+            \end{enumerate}
+
+    \item O eixo agora é submetido a uma força externa, mão do aluno.
+            \begin{enumerate}
+                    \item O motor não girou.
+                    \item O sentido da rotação foi determinado pelo aluno com a mão.
+            \end{enumerate}
+
+    \item Agora apenas o enrolamento auxiliar esta submetido a tensão de 100 volts.
+            \begin{enumerate}
+        \item O motor produziu um ruído branco.
+        \item O motor não girou.
+            \end{enumerate}
+
+    \item Os enrolamentos estão agora em paralelo.
+            \begin{enumerate}
+                    \item O motor ``deu'' partida.
+                    \item O motor produziu um ruído tipico quando a força mecânica.
+                    \item Sentido horário.
+            \end{enumerate}
+
+    \item Invertendo os cabos de alimentação.
+        \begin{enumerate}
+            \item O sentido de rotação não mudou.
+        \end{enumerate}
+
+\item Usando agora a chave centrifuga e um capacitor.
+
+        \begin{enumerate}
+            \item O motor deu partida.
+            \item O interruptor centrífugo funcionou.
+            \item O tempo de partida foi de aproximadamente 1.5 segundos.
+            \item O tacómetro marcou 1790 rpms.
+            \item A redução da tensão não alterou a velocidade.
+            
+
+        \end{enumerate}
+
+\item Usando a chave centrifuga para a criação de uma histerese no ligamento
+        e desligamento do motor.
+
+        \begin{enumerate}
+            \item Fluirá corrente em ambos os enrolamentos.
+            \item Será produzido um conjugado de partida.
+            \item O motor começará a funcionar.
+            \item O motor irá funcionar e depois que alcançar uma determinada velocidade a chave centrifuga ira abrir e com isso, desligando o motor e depois ela vai ligar novamente iniciando o ciclo. De ligar e desligar o motor.
+        \end{enumerate}
+
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% pratica, parte II
+
+\section{Prática, parte II}
+
+A segunda parte da experiência consistem em encontrar
+os valores práticos para o motor de fase divida.
+
+\subsection{Corrente de partida}
+
+Utilizando o módulo EMS de fase divida com partida a capacitor
+e uma alimentação fixa de 120 volts. A corrente de partida
+ficou em 11.13 Amperes para o enrolamento primário. Alimentando
+agora, apenas, o enrolamento auxiliar a corrente foi de 10 Amperes.
+
+Conectando em paralelo as duas bobinas do motor, principal e 
+auxiliar, usando o eletro dinamómetro com sua carga máxima. A
+corrente mensurada foi de 16.2 Amperes.
+
+\subsection{Operação em vazio}
+
+Para um operação em vazio do motor foram obtido os seguintes 
+valores, 
+
+\begin{center}
+    \begin{tabular}{c|c|c|c|c}
+            E (Volts) & I (Amperes) & P (Watts) & Velocidade (rpm) & Vibração \\
+            \hline
+            120 & 3.08 & 12 & 1783 & Sim \\
+            90 & 2.53 & 61 & 1776 & Sim \\
+            60 & 1.857 & 53 & 17737 & Sim \\
+    \end{tabular}
+    \captionof{table}{}
+\end{center}
+
+Os valores para a tensão de 30 Volts não foram obtidos porque a corrente
+na bobina ultrapassou o valor nominal.
+
+\subsection{Operação em plena carga}
+
+O teste agora foi para um acoplamento com o eletro dinamómetro.
+
+\begin{center}
+    \begin{tabular}{c|c|c|c|c}
+            Conjungado (lbf.in) & I (Amperes) & VA & P (Watts) & Velocidade (rpm) \\
+            \hline
+            0 & 3.41 & 405.7 & 123 & 1783 \\
+            3 & 3.56 & 422 & 198 & 1768 \\
+            6 & 3.90 & 456 & 271 & 1752 \\
+            9 & 4.418 & 520 & 365 & 1709 \\
+            12 & 4.93 & 575 & 425 & 1685 \\
+    \end{tabular}
+    \captionof{table}{}
+\end{center}
+
+O conjugado de partida foi da ordem de 1.4 Newton por metro.
+
+\section{Conclusão}
+
+A prática mostra que o motor de fase divida requer mais componentes 
+e um cuidados a mais da hora de colocá-lo para funcionar. 
+É um motor caro e de baixa potência podendo ser utilizado em 
+situações simples e onde apenas uma rede monofásica está disponível.
+
+\end{document}
