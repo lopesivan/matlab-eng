@@ -20,7 +20,7 @@
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{18pt}
 
-\title{Laboratório de Máquinas de Corrente Alternada\\Motor Monofásico com Capacitor Permanente.}
+\title{Laboratório de Máquinas de Corrente Alternada\\Motor Universal.}
 \author{Felipe Bandeira da Silva\\1020942-X}
 %\date{}
 
@@ -32,7 +32,7 @@
 %\newpage
 
 %\begin{abstract}
-\textit{Este laboratório tem como objetivo: Analisar a estrutura do motor de operação continua por capacitor. Determinar suas características de partida e operação contínua. Comparar estas características com as dos motores monofásicos com partida por capacitor e de fase dividida.}
+\textit{Este laboratório tem como objetivo: Analisar a estrutura do motor universal. Determinar as características em vazio e a plena carga quando funciona com corrente alternada. Determinar suas características em vazio e a plena carga quando funciona com corrente continua.}
 %\end{abstract}
 
 \newpage
@@ -49,81 +49,106 @@
 \newpage
 \section{Introdução}
 
-O motor aqui estudado, como todos os outros, é empregado em ventiladores, 
-compressores, bombas, talhas, guinchos, transportadoras, alimentadoras de uso
-rural, trituradores, bombas para adubação, descarregamentos de silos e 
-outras de uso geral. A WEG disponibiliza estes motores com potência 
-que vão de 1/12 a 3/4 de CV, tensão de alimentação 127 ou 220 Volts.
+O motor universal é um motor que trabalha com tensão alternada ou 
+continua. O dispositivo utilizado para a comutação entre AC e CC é 
+realizado por um comutador em série com a bobina no estator.
+Os motores universais tem um alto torque inicial, apresentam 
+uma alta velocidade, são pequenos e normalmente usados em 
+equipamento pequenos, comumente em eletrodomésticos. Entretanto é um 
+motor que produz muito barulho devido ao comutador universal.
 
-Em comparação com os motores trifásicos os motores monofásicos 
-apresentam muitas desvantagens:
+Quando funcionando com corrente alternada a rotação do motor é 
+diretamente dependente da frequência da fonte de alimentação. A
+eficiência do motor quando comparado com motores de indução tipo 
+gaiola de esquilo é da ordem de 30 $\%$ menor. Para motores de 
+potência superiores a eficiência chega a ser 70 a 75 $\%$ menor.
 
-\begin{itemize}
-    \item apresentam maiores volume e peso para potências e velocidades 
-            iguais.
-    \item necessitam de manutêncão mais apurada devido ao circuito de 
-            partida e seus acessórios.
-    \item apresentam rendimento e fator de potência menores para a mesma potência.
-    \item possuem menor conjugado de partida
-    \item são difíceis de encontrar no comércio para potências mais elevadas.
-\end{itemize}
+Motores universais tem velocidade de 4000 a 16000 rpm podendo 
+chegar a 20 mil rpm. Caso a velocidade supere as velocidade 
+estabelecida no projeto o motor pode ser danificado.
 
-O modo de partida do motor monofásico de capacitor permanente funciona da 
-seguinte forma. O enrolamento auxiliar e seu capacitor em série ficam permanentemente
-conectados, não sendo necessária a chave centrífuga. Isto é bom porquê a 
-ausência de partes móveis facilita a manutenção.
-O conjugado máximo, o rendimento e o fator de potência desses motores são 
-melhores que os de outros tipos, aproximado-se aos valores obtidos em 
-motores trifásicos. Em contrapartida, seu conjugado de partida  é menor
-que o dos motores de fase divida, limitando sua utilização a equipamentos 
-com pequenas serras, furadeiras e etc.
-
-\section{Parte Pratica}
-
-\textit{A seguir perguntas referentes ao estato físico do motor}.
-\newline
-Observando o motor a partir da parte frontal do módulo, 
+O motor universal é fundamentalmente um motor CC projetado especialmente
+para funcionar com CA e com CC. Um motor série normal CC funciona 
+muito deficientemente em CA. Devido sobretudo a duas razões,
 
 \begin{itemize}
-        \item Os dois enrolamentos do estator se compõem de numerosas espiras. Identifique-os.
-        \item Os enrolamentos do estator parecem idênticos? \textbf{SIM}.
-        \item Os dois enrolamentos do estator estão montados exatamente um sobre
-                o outro? \textbf{SIM}.
-        \item Quantos pólos existem? \textbf{4}.
+        \item A alta reatância dos enrolamentos de armadura e campo
+                limita a corrente CA a um valor muito menor que a corrente
+                contínua, para a mesma tensão de linha.
+        \item Quando se uso ferro sólido para o motor ou carcaça do estator, 
+                o fluxo de CA produzirá grandes correntes parasitas e, 
+                portanto aquecerá.
 \end{itemize}
 
-\subsection{Ligações básicas e testes iniciais}
+\section{Prática}
 
-Usando o módulo EMS e fazendo as ligações mostradas no manual 
-do laboratório. A tabela 9.1 foi construída e é mostrada abaixo.
+A parte prática consiste no inicio, é: Examine a estrutura do módulo
+do motor universal EMS 8254, dando especial atenção ao motor, às escovas
+e aos terminais de conexão. 
+
+Observando o motor pela parte posterior:
+
+\begin{itemize}
+    \item O estator nos pinos, 1 e 2
+    \item Enrolamento principal, 3 e 4
+    \item Enrolamento de compensação, 5 e 6
+\end{itemize}
+
+A tensão aumenta e logo diminuiu quando as escovas se aproximam 
+da outra posição extrema.
+
+\subsection{Alimentação CA}
+
+Ligando o enrolamento da armadura e compensação em série com
+a saída de 0 a 120 VCA da fonte de alimentação. 
+
+A corrente de linha foi de 1.52 Amperes.
+
+\subsection{Dinamômetro, com CA}
+
+Usando o dinamômetro acoplado com o motor universal, foi construído 
+a seguinte tabela. Não sendo pego o valor de 9 lbf.in já que o 
+motor não suporta tal carga. E alimentando o motor com corrente 
+alternada.
 
 \begin{center}
     \begin{tabular}{c|c|c|c|c}
             Conjungado (lbf.in) & I (Amperes) & VA & P (Watts) & Velocidade (rpm) \\
             \hline
-            0 & 1.05 & 127 & 123 & 1787 \\
-            3 & 1.40 & 167 & 167 & 1772 \\
-            6 & 2.01 & 238 & 234 & 1742 \\
-            9 & 2.50 & 295 & 292 & 1712 \\
+            0 & 1.22 & 146.40 & 148.00 & 3740 \\
+            3 & 1.66 & 199.20 & 195.00 & 2640 \\
+            6 & 2.28 & 273.60 & 259.00 & 1865 \\
     \end{tabular}
     \captionof{table}{}
 \end{center}
 
-Determine o conjugado máximo de partida que o motor desenvolve em 
-operação contínua por capacitor. 
+\subsection{Dinamômetro, com CC}
 
-O conjugado encontrado foi de $4.5$ lbf.in. Com muita relutância na
-partida.
+Usando o dinamômetro acoplado com o motor universal, foi construído 
+a seguinte tabela. Não sendo pego o valor de 9 lbf.in já que o 
+motor não suporta tal carga. E alimentando o motor com corrente 
+continua.
 
-A corrente de partida encontrada para esta situação foi de $6.9$ Amperes.
+\begin{center}
+    \begin{tabular}{c|c|c|c|c}
+            Conjungado (lbf.in) & I (Amperes) & VA & P (Watts) & Velocidade (rpm) \\
+            \hline
+            0 & 1.27 & - & 152.40 & 4066 \\
+            3 & 1.73 & - & 207.60 & 2676 \\
+            6 & 2.15 & - & 258.00 & 2050 \\
+    \end{tabular}
+    \captionof{table}{}
+\end{center}
 
-\section{Conclusões}
 
-O motor de capacitor de partida permanente é outro motor monofásico
-com a vantagem de não mais precisar de um chave centrifuga. Tem o 
-mesmo emprego de um motor monofásico comum, não sendo diferente entre
-a sua categoria. Entretanto como qualquer outro motor monofásico 
-quando comparado a um motor trifásico é mais desvantajoso.
+\section{Conclusão}
 
+O motor universal é uma maquina incrível, é capaz de funcionar com 
+corrente alternada como com corrente continua. Não perdendo as suas 
+principais características. Que são alta velocidade de rotação, 
+muito barulho devido ao comutador de CA e CC, alto torque inicial.
+Durante toda a prático o motor utilizado apresentou um barulho 
+bem tipico e bem alto, chegando a incomodar quando se coloca mais
+carga. 
 
 \end{document}
