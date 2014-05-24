@@ -1,0 +1,129 @@
+%\documentclass[a4paper, 10pt]{article}
+\documentclass[paper=a4, fontsize=11pt]{article}
+
+
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{cite}
+
+\usepackage{schemabloc}
+\usetikzlibrary{circuits}
+
+\usepackage{tabularx,ragged2e,booktabs,caption}
+
+\usepackage{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{18pt}
+
+\title{Laboratório de Máquinas de Corrente Alternada\\Motor Monofásico com Capacitor Permanente.}
+\author{Felipe Bandeira da Silva\\1020942-X}
+%\date{}
+
+\begin{document}
+
+
+\maketitle
+
+%\newpage
+
+%\begin{abstract}
+\textit{Este laboratório tem como objetivo: Analisar a estrutura do motor de operação continua por capacitor. Determinar suas características de partida e operação contínua. Comparar estas características com as dos motores monofásicos com partida por capacitor e de fase dividida.}
+%\end{abstract}
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+%\listoffigures
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% fundamentação teórica
+\newpage
+\section{Introdução}
+
+O motor aqui estudado, como todos os outros, é empregado em ventiladores, 
+compressores, bombas, talhas, guinchos, transportadoras, alimentadoras de uso
+rural, trituradores, bombas para adubação, descarregamentos de silos e 
+outras de uso geral. A WEG disponibiliza estes motores com potência 
+que vão de 1/12 a 3/4 de CV, tensão de alimentação 127 ou 220 Volts.
+
+Em comparação com os motores trifásicos os motores monofásicos 
+apresentam muitas desvantagens:
+
+\begin{itemize}
+    \item apresentam maiores volume e peso para potências e velocidades 
+            iguais.
+    \item necessitam de manutêncão mais apurada devido ao circuito de 
+            partida e seus acessórios.
+    \item apresentam rendimento e fator de potência menores para a mesma potência.
+    \item possuem menor conjugado de partida
+    \item são difíceis de encontrar no comércio para potências mais elevadas.
+\end{itemize}
+
+O modo de partida do motor monofásico de capacitor permanente funciona da 
+seguinte forma. O enrolamento auxiliar e seu capacitor em série ficam permanentemente
+conectados, não sendo necessária a chave centrífuga. Isto é bom porquê a 
+ausência de partes móveis facilita a manutenção.
+O conjugado máximo, o rendimento e o fator de potência desses motores são 
+melhores que os de outros tipos, aproximado-se aos valores obtidos em 
+motores trifásicos. Em contrapartida, seu conjugado de partida  é menor
+que o dos motores de fase divida, limitando sua utilização a equipamentos 
+com pequenas serras, furadeiras e etc.
+
+\section{Parte Pratica}
+
+\textit{A seguir perguntas referentes ao estato físico do motor}.
+\newline
+Observando o motor a partir da parte frontal do módulo, 
+
+\begin{itemize}
+        \item Os dois enrolamentos do estator se compõem de numerosas espiras. Identifique-os.
+        \item Os enrolamentos do estator parecem idênticos? \textbf{SIM}.
+        \item Os dois enrolamentos do estator estão montados exatamente um sobre
+                o outro? \textbf{SIM}.
+        \item Quantos pólos existem? \textbf{4}.
+\end{itemize}
+
+\subsection{Ligações básicas e testes iniciais}
+
+Usando o módulo EMS e fazendo as ligações mostradas no manual 
+do laboratório. A tabela 9.1 foi construída e é mostrada abaixo.
+
+\begin{center}
+    \begin{tabular}{c|c|c|c|c}
+            Conjungado (lbf.in) & I (Amperes) & VA & P (Watts) & Velocidade (rpm) \\
+            \hline
+            0 & 1.05 & 127 & 123 & 1787 \\
+            3 & 1.40 & 167 & 167 & 1772 \\
+            6 & 2.01 & 238 & 234 & 1742 \\
+            9 & 2.50 & 295 & 292 & 1712 \\
+    \end{tabular}
+    \captionof{table}{}
+\end{center}
+
+Determine o conjugado máximo de partida que o motor desenvolve em 
+operação contínua por capacitor. 
+
+O conjugado encontrado foi de $4.5$ lbf.in. Com muita relutância na
+partida.
+
+A corrente de partida encontrada para esta situação foi de $6.9$ Amperes.
+
+\section{Conclusões}
+
+O motor de capacitor de partida permanente é outro motor monofásico
+com a vantagem de não mais precisar de um chave centrifuga. Tem o 
+mesmo emprego de um motor monofásico comum, não sendo diferente entre
+a sua categoria. Entretanto como qualquer outro motor monofásico 
+quando comparado a um motor trifásico é mais desvantajoso.
+
+
+\end{document}
